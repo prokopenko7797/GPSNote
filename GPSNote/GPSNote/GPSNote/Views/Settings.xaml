@@ -30,13 +30,11 @@
 
 
 
-        
-        <StackLayout Grid.Row="0">
+
+        <StackLayout Grid.Row="0" RadioButtonGroup.GroupName="Lang" RadioButtonGroup.SelectedValue="{Binding SelectedLang}">
             <Label Text="{Binding Resources[SelectLang]}"  FontAttributes="Bold" />
-            <RadioButton GroupName="{Binding SelectedLang}" IsChecked="{Binding IsCheckedEn}"/>
-            <Label Text="English"></Label>
-            <RadioButton GroupName="{Binding SelectedLang}" IsChecked="{Binding IsCheckedRu}"/>
-            <Label Text="Русский"></Label>
+            <RadioButton Content="English" Value="en-US" IsChecked="{Binding IsCheckedEn}"/>
+            <RadioButton Content="Русский" Value="ru" IsChecked="{Binding IsCheckedRu}"/>
 
         </StackLayout>
 
