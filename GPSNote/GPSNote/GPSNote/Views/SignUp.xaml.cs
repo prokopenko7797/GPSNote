@@ -2,9 +2,9 @@
 
 namespace GPSNote.Views
 {
-    public partial class SignIn : ContentPage
+    public partial class SignUp : ContentPage
     {
-        public SignIn()
+        public SignUp()
         {
             InitializeComponent();
         }

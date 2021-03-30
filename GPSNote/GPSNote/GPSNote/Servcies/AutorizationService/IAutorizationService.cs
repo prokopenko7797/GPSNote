@@ -1,0 +1,16 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace GPSNote.Servcies.AutorizationService
+{
+    public interface IAuthorizationService
+    {
+        Task<bool> AuthorizeAsync(string login, string password);
+        bool IsAuthorize();
+        void LogOut();
+
+        int IdUser { get; set; }
+    }
+}

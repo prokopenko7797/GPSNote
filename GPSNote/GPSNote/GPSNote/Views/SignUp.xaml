@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="http://prismlibrary.com"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="GPSNote.Views.SignUp">
+
+    <StackLayout Padding="30,0,30,0" HorizontalOptions="FillAndExpand"  VerticalOptions="CenterAndExpand" >
+
+        <StackLayout Padding="0,0,0,150">
+
+            <Entry Placeholder = "Login" 
+                   Text="{Binding Login}" 
+                   MaxLength="16" />
+            <Entry Placeholder = "Password" 
+                   IsPassword ="True" Text="{Binding Password}" 
+                   MaxLength="16"/>
+            <Entry Placeholder = "ConfirmPass" 
+                   IsPassword ="True" 
+                   Text="{Binding ConfirmPassword}" 
+                   MaxLength="16" />
+        </StackLayout>
+        
+        <Button Text="SignInButton" BackgroundColor="DarkOrange" Command="{Binding AddUserButtonTapCommand}"></Button>
+
+
+    </StackLayout>
+
+
+</ContentPage>
