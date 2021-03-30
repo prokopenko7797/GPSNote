@@ -3,22 +3,26 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="http://prismlibrary.com"
              prism:ViewModelLocator.AutowireViewModel="True"
-             x:Class="GPSNote.Views.SignIn">
-    
-    
+             x:Class="GPSNote.Views.SignIn"
+             Title="{Binding Resources[SignInTitle]}"
+             BackgroundColor="{AppThemeBinding Light={StaticResource LightPageBackgroundColor}, Dark={StaticResource DarkPageBackgroundColor}}">
+
+
+
+
     <StackLayout Padding="30,0,30,0" HorizontalOptions="FillAndExpand"  VerticalOptions="CenterAndExpand" >
 
         <StackLayout Padding="0,0,0,150">
 
-            <Entry Placeholder = "Login"  Text="{Binding Login}" MaxLength="16" />
-            <Entry Placeholder = "Password" IsPassword ="True"  Text="{Binding Password}" MaxLength="16"/>
+            <Entry Placeholder = "{Binding Resources[Email]}"  Text="{Binding Email}" MaxLength="16" />
+            <Entry Placeholder = "{Binding Resources[Password]}" IsPassword ="True"  Text="{Binding Password}" MaxLength="16"/>
 
         </StackLayout>
 
 
 
 
-        <Button Text="SignIn" BackgroundColor="DarkOrange"  Command="{Binding NavigateMainListButtonTapCommand}"></Button>
+        <Button Text="{Binding Resources[SignInButton]}" BackgroundColor="DarkOrange"  Command="{Binding NavigateMainListButtonTapCommand}"></Button>
 
 
         <StackLayout Padding="0,15,0,0">
@@ -27,7 +31,7 @@
                 <Label.FormattedText>
                     <FormattedString>
 
-                        <Span Text="SignUp"
+                        <Span Text="{Binding Resources[SignUpButton]}"
                       TextColor="Blue"
                       TextDecorations="Underline">
                             <Span.GestureRecognizers>
@@ -45,4 +49,6 @@
 
 
     </StackLayout>
+    
+    
 </ContentPage>

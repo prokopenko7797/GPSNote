@@ -7,7 +7,7 @@ namespace GPSNote.Servcies.AutorizationService
 {
     public interface IAuthorizationService
     {
-        Task<bool> AuthorizeAsync(string login, string password);
+        Task<bool> AuthorizeAsync(string email, string password);
         bool IsAuthorize();
         void LogOut();
 

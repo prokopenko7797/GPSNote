@@ -1,4 +1,5 @@
-﻿using Prism.Commands;
+﻿using GPSNote.Servcies.LocalizationService;
+using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Navigation;
 using System;
@@ -11,17 +12,25 @@ namespace GPSNote.ViewModels
     {
         protected INavigationService NavigationService { get; private set; }
 
-        private string _title;
-        public string Title
+
+
+        public ILocalizationService Resources
         {
-            get { return _title; }
-            set { SetProperty(ref _title, value); }
+            get;
+            private set;
         }
 
-        public ViewModelBase(INavigationService navigationService)
+
+
+
+        public ViewModelBase(INavigationService navigationService, ILocalizationService localizationService)
         {
             NavigationService = navigationService;
+            Resources = localizationService;
         }
+
+
+
 
         public virtual void Initialize(INavigationParameters parameters)
         {
@@ -42,5 +51,7 @@ namespace GPSNote.ViewModels
         {
 
         }
+
+
     }
 }

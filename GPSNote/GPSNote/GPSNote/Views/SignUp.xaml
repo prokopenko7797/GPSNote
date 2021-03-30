@@ -3,25 +3,29 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="http://prismlibrary.com"
              prism:ViewModelLocator.AutowireViewModel="True"
-             x:Class="GPSNote.Views.SignUp">
+             x:Class="GPSNote.Views.SignUp" 
+             Title="{Binding Resources[SignUpTitle]}"
+             BackgroundColor="{AppThemeBinding Light={StaticResource LightPageBackgroundColor}, Dark={StaticResource DarkPageBackgroundColor}}">
 
     <StackLayout Padding="30,0,30,0" HorizontalOptions="FillAndExpand"  VerticalOptions="CenterAndExpand" >
 
         <StackLayout Padding="0,0,0,150">
 
-            <Entry Placeholder = "Login" 
-                   Text="{Binding Login}" 
+            <Entry Placeholder = "{Binding Resources[Name]}" 
+                   Text="{Binding Name}" 
                    MaxLength="16" />
-            <Entry Placeholder = "Password" 
+            <Entry Placeholder = "{Binding Resources[Email]}" 
+                   Text="{Binding Email}" 
+                   MaxLength="16" />
+            <Entry Placeholder = "{Binding Resources[Password]}" 
                    IsPassword ="True" Text="{Binding Password}" 
                    MaxLength="16"/>
-            <Entry Placeholder = "ConfirmPass" 
+            <Entry Placeholder = "{Binding Resources[ConfPas]}" 
                    IsPassword ="True" 
                    Text="{Binding ConfirmPassword}" 
                    MaxLength="16" />
         </StackLayout>
-        
-        <Button Text="SignInButton" BackgroundColor="DarkOrange" Command="{Binding AddUserButtonTapCommand}"></Button>
+        <Button Text="{Binding Resources[SignInButton]}" BackgroundColor="DarkOrange" Command="{Binding AddUserButtonTapCommand}"></Button>
 
 
     </StackLayout>

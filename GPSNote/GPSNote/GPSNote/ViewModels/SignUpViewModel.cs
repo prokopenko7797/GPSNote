@@ -1,4 +1,5 @@
 ﻿using GPSNote.Constants;
+using GPSNote.Servcies.LocalizationService;
 using GPSNote.Servcies.RegistrationService;
 using GPSNote.Validators;
 using GPSNote.Views;
@@ -26,7 +27,8 @@ namespace GPSNote.ViewModels
 
         #region _______Private_______
 
-        private string _login;
+        private string _name;
+        private string _email;
         private string _password;
         private string _confirmpassword;
 
@@ -37,8 +39,9 @@ namespace GPSNote.ViewModels
         #endregion
 
 
-        public SignUpViewModel(INavigationService navigationService, IPageDialogService pageDialogService, IRegistrationService registrationService)
-            : base(navigationService)
+        public SignUpViewModel(INavigationService navigationService, ILocalizationService localizationService, IPageDialogService pageDialogService,
+            IRegistrationService registrationService)
+            : base(navigationService, localizationService)
         {
 
             _pageDialogService = pageDialogService;
@@ -52,10 +55,17 @@ namespace GPSNote.ViewModels
         #region -----Public Properties-----
 
 
-        public string Login
+        public string Name
         {
-            get { return _login; }
-            set { SetProperty(ref _login, value); }
+            get { return _name; }
+            set { SetProperty(ref _name, value); }
+        }
+
+
+        public string Email
+        {
+            get { return _email; }
+            set { SetProperty(ref _email, value); }
         }
 
 
@@ -91,38 +101,47 @@ namespace GPSNote.ViewModels
 
         #endregion
 
+
         #region -----Private Helpers-----
 
-        private async Task<bool> LogPassCheck(string login, string password, string confirmpassword)
+        private async Task<bool> LogPassCheck(string name, string email, string password, string confirmpassword)
         {
-            if (!Validator.InRange(login, Constant.MinLoginLength, Constant.MaxLoginLength))
+            if (!Validator.InRange(name, Constant.MinLoginLength, Constant.MaxLoginLength))
             {
                 await _pageDialogService.DisplayAlertAsync(
-                        "Error", $"Login must be at least {Constant.MinLoginLength} " +
-                        $" and not more then {Constant.MaxLoginLength} symbols.", "Ok");
+                        Resources["Error"], $"{Resources["LogVal1"]} {Constant.MinLoginLength} " +
+                        $"{Resources["LogVal2"]} {Constant.MaxLoginLength} {Resources["LogVal3"]}", Resources["Ok"]);
                 return false;
             }
 
             if (!Validator.InRange(password, Constant.MinPasswordLength, Constant.MaxPasswordLength))
             {
                 await _pageDialogService.DisplayAlertAsync(
-                        "Error", $"Password must be at least {Constant.MinPasswordLength} " +
-                        $"and not more then {Constant.MaxPasswordLength} symbols", "Ok");
+                        Resources["Error"], $"{Resources["PasVal1"]} {Constant.MinPasswordLength} " +
+                        $"{Resources["LogVal2"]} {Constant.MaxPasswordLength} {Resources["LogVal3"]}", Resources["Ok"]);
                 return false;
             }
 
 
-            if (Validator.StartWithNumeral(login))
+            if (Validator.StartWithNumeral(name))
             {
                 await _pageDialogService.DisplayAlertAsync(
-                        "Error", "Login should not start with number.", "Ok");
+                        Resources["Error"], Resources["StartNum"], Resources["Ok"]);
                 return false;
             }
 
             if (!Validator.HasUpLowNum(password))
             {
                 await _pageDialogService.DisplayAlertAsync(
-                       "Error", "Password must contain at least one uppercase letter, one lowercase letter and one number.", "Ok");
+                        Resources["Error"], Resources["UpLowNum"], Resources["Ok"]);
+                return false;
+            }
+
+            if (!Validator.IsEmail(email))
+            {
+
+                await _pageDialogService.DisplayAlertAsync(
+                        Resources["Error"], Resources["EmailError"], Resources["Ok"]);
                 return false;
             }
 
@@ -130,7 +149,7 @@ namespace GPSNote.ViewModels
             {
 
                 await _pageDialogService.DisplayAlertAsync(
-                        "Error", "Password mismatch.", "Ok");
+                        Resources["Error"], Resources["PasMis"], Resources["Ok"]);
                 return false;
             }
             return true;
@@ -140,16 +159,16 @@ namespace GPSNote.ViewModels
 
         private async void ExecuteddUserButtonTapCommand()
         {
-            if (await LogPassCheck(Login, Password, ConfirmPassword))
+            if (await LogPassCheck(Name, Email, Password, ConfirmPassword))
             {
-                if (await _registrationService.RegistrateAsync(Login, Password))
+                if (await _registrationService.RegistrateAsync(Name, Email, Password))
                 {
-                    var p = new NavigationParameters { { Constant.Login, Login } };
+                    var p = new NavigationParameters { { Constant.Email, Email } };
 
                     await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(SignIn)}", p);
 
                 }
-                else await _pageDialogService.DisplayAlertAsync("Error", "Login already exist.", "Ok");
+                else await _pageDialogService.DisplayAlertAsync(Resources["Error"], Resources["EmailExist"], Resources["Ok"]);
             }
 
 
@@ -161,24 +180,18 @@ namespace GPSNote.ViewModels
 
 
         #region -----Overrides-----
-
-
         protected override void OnPropertyChanged(PropertyChangedEventArgs args)
         {
+            base.OnPropertyChanged(args);
+            if (args.PropertyName == nameof(Name) || args.PropertyName == nameof(Email) || args.PropertyName == nameof(Password) || args.PropertyName == nameof(ConfirmPassword))
             {
-                base.OnPropertyChanged(args);
-                if (args.PropertyName == nameof(Login) || args.PropertyName == nameof(Password) || args.PropertyName == nameof(ConfirmPassword))
-                {
-                    if (Login == null || Password == null || ConfirmPassword == null) return;
+                if (Name == null || Email == null || Password == null || ConfirmPassword == null) return;
 
-                    if (Login != "" && Password != "" && ConfirmPassword != "") IsEnabled = true;
+                if (Name != "" && Email != "" && Password != "" && ConfirmPassword != "") IsEnabled = true;
 
-                    else if (Login == "" || Password == "" || ConfirmPassword == "") IsEnabled = false;
-                }
+                else if (Name == "" || Email == "" || Password == "" || ConfirmPassword == "") IsEnabled = false;
             }
         }
-
-
 
         #endregion
 

@@ -1,5 +1,6 @@
 ﻿using GPSNote.Constants;
 using GPSNote.Servcies.AutorizationService;
+using GPSNote.Servcies.LocalizationService;
 using GPSNote.Views;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -9,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using Xamarin.Forms;
 
 namespace GPSNote.ViewModels
 {
@@ -25,7 +27,7 @@ namespace GPSNote.ViewModels
         #region ________Private______
 
 
-        private string _Login;
+        private string _Email;
         private string _Password;
         private bool _IsEnabled;
 
@@ -36,22 +38,24 @@ namespace GPSNote.ViewModels
         #endregion
 
 
-        public SignInViewModel(INavigationService navigationService, IPageDialogService pageDialogService, IAuthorizationService authorization)
-            : base(navigationService)
+        public SignInViewModel(INavigationService navigationService, ILocalizationService localizationService,
+            IPageDialogService pageDialogService, IAuthorizationService authorization)
+            : base(navigationService, localizationService)
         {
 
             _pageDialogService = pageDialogService;
             _authorization = authorization;
+
 
         }
 
 
         #region -----Public Properties-----
 
-        public string Login
+        public string Email
         {
-            get { return _Login; }
-            set { SetProperty(ref _Login, value); }
+            get { return _Email; }
+            set { SetProperty(ref _Email, value); }
         }
 
         public string Password
@@ -74,8 +78,7 @@ namespace GPSNote.ViewModels
 
         public DelegateCommand NavigateMainListButtonTapCommand =>
             _NavigateMainListCommand ??
-            (_NavigateMainListCommand = new DelegateCommand(ExecuteNavigateMainViewCommand)
-                                                            .ObservesCanExecute(() => IsEnabled));
+            (_NavigateMainListCommand = new DelegateCommand(ExecuteNavigateMainViewCommand).ObservesCanExecute(() => IsEnabled));
 
 
         public DelegateCommand NavigateSignUpButtonTapCommand =>
@@ -97,14 +100,14 @@ namespace GPSNote.ViewModels
 
         private async void ExecuteNavigateMainViewCommand()
         {
-            if (await _authorization.AuthorizeAsync(Login, Password))
+            if (await _authorization.AuthorizeAsync(Email, Password))
             {
-             /////////////////   await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(MainList)}");
+                await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(MainMap)}");
             }
             else
             {
                 await _pageDialogService.DisplayAlertAsync(
-                        "Error", "Incorrect login or password", "Ok");
+                        Resources["Error"], Resources["IncorrectLogPas"], Resources["Ok"]);
             }
         }
 
@@ -117,30 +120,29 @@ namespace GPSNote.ViewModels
 
         public override void OnNavigatedTo(INavigationParameters parameters)
         {
-            if (parameters.GetValue<string>(Constant.Login) != null)
+            if (parameters.GetValue<string>(Constant.Email) != null)
             {
-                Login = parameters.GetValue<string>(Constant.Login);
+                Email = parameters.GetValue<string>(Constant.Email);
             }
             Password = string.Empty;
 
         }
 
 
+
+
         protected override void OnPropertyChanged(PropertyChangedEventArgs args)
         {
             base.OnPropertyChanged(args);
-
-            if (args.PropertyName == nameof(Login) || args.PropertyName == nameof(Password))
+            if (args.PropertyName == nameof(Email) || args.PropertyName == nameof(Password))
             {
-                if (Login == null || Password == null) return;
+                if (Email == null || Password == null) return;
 
-                if (Login != "" && Password != "") IsEnabled = true;
+                if (Email != default && Password != default) IsEnabled = true;
 
-                else if (Login != "" || Password == "") IsEnabled = false;
+                else if (Email != default || Password == default) IsEnabled = false;
             }
         }
-
- 
 
 
 

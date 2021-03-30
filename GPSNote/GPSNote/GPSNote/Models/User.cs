@@ -11,8 +11,11 @@ namespace GPSNote.Models
         [PrimaryKey, AutoIncrement, Column("id")]
         public int id { get; set; }
 
-        [Unique, Column("login")]
-        public string Login { get; set; }
+        [Column("name")]
+        public string Name { get; set; }
+
+        [Unique, Column("email")]
+        public string Email { get; set; }
 
         [Column("password")]
         public string Password { get; set; }

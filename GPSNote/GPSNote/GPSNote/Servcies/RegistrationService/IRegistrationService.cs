@@ -7,6 +7,6 @@ namespace GPSNote.Servcies.RegistrationService
 {
     public interface IRegistrationService
     {
-        Task<bool> RegistrateAsync(string login, string password);
+        Task<bool> RegistrateAsync(string name, string email, string password);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.Mail;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -24,10 +25,10 @@ namespace GPSNote.Validators
 
         public static bool InRange(string str, int min, int max)
         {
-            //var inRange = new Regex($@"^(.{{{min}}}|.{{{max}}})$");
+            var inRange = new Regex($@"^(.{{{min}}},{{{max}}})$");
 
-            //return inRange.IsMatch(str);
-            return str.Length >= min && str.Length <= max;
+            return inRange.IsMatch(str);
+           // return str.Length >= min && str.Length <= max;
         }
 
         public static bool StartWithNumeral(string str)
@@ -35,6 +36,21 @@ namespace GPSNote.Validators
             var hasNumber = new Regex(@"^[0-9]");
 
             return hasNumber.IsMatch(str);
+        }
+
+
+        public static bool IsEmail(string emailaddress)
+        {
+            try
+            {
+                MailAddress m = new MailAddress(emailaddress);
+
+                return true;
+            }
+            catch (FormatException)
+            {
+                return false;
+            }
         }
 
         #endregion

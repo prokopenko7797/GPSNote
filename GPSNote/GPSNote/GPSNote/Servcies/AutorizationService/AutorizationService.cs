@@ -24,10 +24,10 @@ namespace GPSNote.Servcies.AutorizationService
 
         #region ______Public Methods______
 
-        public async Task<bool> AuthorizeAsync(string login, string password)
+        public async Task<bool> AuthorizeAsync(string email, string password)
         {
 
-            var user = await _repository.FindWithQueryAsync<User>($"SELECT * FROM {nameof(User)} WHERE login='{login}' AND password='{password}'");
+            var user = await _repository.FindWithQueryAsync<User>($"SELECT * FROM {nameof(User)} WHERE email='{email}' AND password='{password}'");
 
             if (user != null)
             {

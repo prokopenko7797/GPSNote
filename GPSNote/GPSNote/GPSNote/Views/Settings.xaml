@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="http://prismlibrary.com"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="GPSNote.Views.Settings"
+             BackgroundColor="{AppThemeBinding Light={StaticResource LightPageBackgroundColor}, Dark={StaticResource DarkPageBackgroundColor}}"
+             Title="{Binding Resources[SettingsTitle]}">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem IconImageSource="ic_save.png"
+                     Order="Primary"
+                     Priority="0" 
+                     Command="{Binding SaveToolBarCommand}"
+                     />
+    </ContentPage.ToolbarItems>
+
+
+    <Grid HorizontalOptions="Center"  VerticalOptions="CenterAndExpand">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.5*" />
+            <RowDefinition Height="0.5*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.5*"/>
+            <ColumnDefinition Width="0.5*"/>
+        </Grid.ColumnDefinitions>
+
+
+
+
+        
+        <StackLayout Grid.Row="0">
+            <Label Text="{Binding Resources[SelectLang]}"  FontAttributes="Bold" />
+            <RadioButton GroupName="{Binding SelectedLang}" IsChecked="{Binding IsCheckedEn}"/>
+            <Label Text="English"></Label>
+            <RadioButton GroupName="{Binding SelectedLang}" IsChecked="{Binding IsCheckedRu}"/>
+            <Label Text="Русский"></Label>
+
+        </StackLayout>
+
+
+
+
+
+        <Label Text="{Binding Resources[DarkTheme]}" Grid.Column="0" Grid.Row="2" FontAttributes="Bold"/>
+        <Switch Grid.Column="1" Grid.Row="2" IsToggled="{Binding IsChecked}" HorizontalOptions="Start"  VerticalOptions="Start" ></Switch>
+
+
+
+
+    </Grid>
+
+</ContentPage>
