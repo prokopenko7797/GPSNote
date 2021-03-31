@@ -1,12 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
-            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-            xmlns:prism="http://prismlibrary.com"
-            prism:ViewModelLocator.AutowireViewModel="True"
-            x:Class="GPSNote.Views.MainMap">
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="http://prismlibrary.com"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="GPSNote.Views.MainMap"
+             xmlns:maps="clr-namespace:Xamarin.Forms.GoogleMaps;assembly=Xamarin.Forms.GoogleMaps">
 
-    <TabbedPage.Children>
-        
-    </TabbedPage.Children>
-    
-</TabbedPage>
+    <Grid>
+    <maps:Map  x:Name="map" 
+                      InitialCameraUpdate="-23.68, -46.87, 13, 30, 60"
+                      VerticalOptions="FillAndExpand" />
+    </Grid>
+
+</ContentPage>
