@@ -6,9 +6,9 @@ using System.Linq;
 
 namespace GPSNote.ViewModels
 {
-    public class MainMapViewModel : BindableBase
+    public class PinListViewModel : BindableBase
     {
-        public MainMapViewModel()
+        public PinListViewModel()
         {
 
         }

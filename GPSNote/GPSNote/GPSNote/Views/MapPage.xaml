@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="http://prismlibrary.com"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="GPSNote.Views.MapPage"
+             xmlns:maps="clr-namespace:Xamarin.Forms.GoogleMaps;assembly=Xamarin.Forms.GoogleMaps"
+
+             BackgroundColor="{AppThemeBinding Light={StaticResource LightPageBackgroundColor}, Dark={StaticResource DarkPageBackgroundColor}}"
+             Title="{Binding Resources[MapTitle]}">
+
+    <Grid >
+        <maps:Map InitialCameraUpdate="{Binding CameraPos}"
+                  VerticalOptions="FillAndExpand"  
+                  x:Name="XamlMap">
+            <maps:Map.Behaviors>
+                <prism:EventToCommandBehavior EventName="MapClicked"
+                                              Command="{Binding ItemTappedCommand}"
+                                              EventArgsParameterPath="Point"/>
+
+                <prism:EventToCommandBehavior EventName="CameraIdled"
+                                              Command="{Binding MapMovedCommand}"
+                                              EventArgsParameterPath="Position"/>
+                
+                
+
+            </maps:Map.Behaviors>
+        </maps:Map>
+        
+    </Grid>
+
+</ContentPage>

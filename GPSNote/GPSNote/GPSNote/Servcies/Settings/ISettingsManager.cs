@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Xamarin.Forms.GoogleMaps;
 
 namespace GPSNote.Servcies.Settings
 {
@@ -8,5 +9,9 @@ namespace GPSNote.Servcies.Settings
     {
         string Lang { get; set; }
         int Theme { get; set; }
+        double Latitude { get; set; }
+        double Longitude { get; set; }
+        double Zoom { get; set; }
+
     }
 }

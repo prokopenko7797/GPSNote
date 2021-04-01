@@ -20,6 +20,7 @@ namespace GPSNote.Constants
 
 
 
+
         public static class ResourcesLangConst
         {
             public const string ru = "ru";

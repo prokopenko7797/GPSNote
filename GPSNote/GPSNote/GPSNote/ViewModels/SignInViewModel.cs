@@ -102,7 +102,7 @@ namespace GPSNote.ViewModels
         {
             if (await _authorization.AuthorizeAsync(Email, Password))
             {
-                await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(MainMap)}");
+                await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(TabbedPage1)}");
             }
             else
             {

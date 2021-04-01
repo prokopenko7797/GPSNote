@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Xamarin.Essentials;
+using Xamarin.Forms.GoogleMaps;
 
 namespace GPSNote.Servcies.Settings
 {
@@ -22,6 +23,23 @@ namespace GPSNote.Servcies.Settings
             get => Preferences.Get(nameof(Theme), Constant.DefaultTheme);
             set => Preferences.Set(nameof(Theme), value);
         }
+        public double Latitude
+        {
+            get => Preferences.Get(nameof(Latitude), 41.8899999412824);
+            set => Preferences.Set(nameof(Latitude), value);
+        }
+        public double Longitude
+        {
+            get => Preferences.Get(nameof(Longitude), 12.489999797344);
+            set => Preferences.Set(nameof(Longitude), value);
+        }
+        public double Zoom
+        {
+            get => Preferences.Get(nameof(Zoom), 10);
+            set => Preferences.Set(nameof(Zoom), value);
+        }
+
+
         #endregion
     }
 }

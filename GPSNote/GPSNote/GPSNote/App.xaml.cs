@@ -40,11 +40,10 @@ namespace GPSNote
 
             Application.Current.UserAppTheme = (OSAppTheme)SettingsManager.Theme;
 
-            await NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(MainMap)}");
+            await NavigationService.NavigateAsync($"{nameof(TabbedPage1)}");
             //if (AuthorizationService.IsAuthorize())
             //    await NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(SignIn)}");
-            //    //await NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(Settings)}");
-            //else await NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(TabbedPage)}");
+            //else await NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(TabbedPage1)}");
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
@@ -64,7 +63,8 @@ namespace GPSNote
             containerRegistry.RegisterForNavigation<SignUp, SignUpViewModel>();
             containerRegistry.RegisterForNavigation<Settings, SettingsViewModel>();
             containerRegistry.RegisterForNavigation<TabbedPage1, TabbedPage1ViewModel>();
-            containerRegistry.RegisterForNavigation<MainMap, MainMapViewModel>();
+            containerRegistry.RegisterForNavigation<MapPage, MapPageViewModel>();
+            containerRegistry.RegisterForNavigation<PinList, PinListViewModel>();
         }
     }
 }
