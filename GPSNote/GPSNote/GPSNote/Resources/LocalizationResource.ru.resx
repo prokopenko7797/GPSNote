@@ -204,6 +204,9 @@
   <data name="PasVal1" xml:space="preserve">
     <value>Пароль должен быть хотя бы</value>
   </data>
+  <data name="PinListTitle" xml:space="preserve">
+    <value>Закладки</value>
+  </data>
   <data name="SelectLang" xml:space="preserve">
     <value>Выбранный язык:</value>
   </data>

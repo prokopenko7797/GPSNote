@@ -38,7 +38,7 @@ namespace GPSNote.Servcies.AutorizationService
             return false;
         }
 
-        public bool IsAuthorize()
+        public bool AuthorizeCheck()
         {
             if (IdUser == Constant.NonAuthorized) return true;
             else return false;
@@ -54,6 +54,9 @@ namespace GPSNote.Servcies.AutorizationService
             get => Preferences.Get(nameof(IdUser), Constant.NonAuthorized);
             set => Preferences.Set(nameof(IdUser), value);
         }
+
+
+
 
         #endregion
     }

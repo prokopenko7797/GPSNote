@@ -4,7 +4,10 @@
             xmlns:prism="http://prismlibrary.com"
             xmlns:local="clr-namespace:GPSNote.Views"
             prism:ViewModelLocator.AutowireViewModel="True"
-            x:Class="GPSNote.Views.TabbedPage1">
+            x:Class="GPSNote.Views.TabbedPage1"
+            BackgroundColor="{AppThemeBinding Light={StaticResource LightPageBackgroundColor}, Dark={StaticResource DarkPageBackgroundColor}}">
+    
+    
     <TabbedPage.Children>
         <local:MapPage />
         <local:PinList />

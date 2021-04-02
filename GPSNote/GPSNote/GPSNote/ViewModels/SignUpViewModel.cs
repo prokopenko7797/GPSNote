@@ -106,10 +106,10 @@ namespace GPSNote.ViewModels
 
         private async Task<bool> LogPassCheck(string name, string email, string password, string confirmpassword)
         {
-            if (!Validator.InRange(name, Constant.MinLoginLength, Constant.MaxLoginLength))
+            if (!Validator.InRange(name, Constant.MinNameLength, Constant.MaxLoginLength))
             {
                 await _pageDialogService.DisplayAlertAsync(
-                        Resources["Error"], $"{Resources["LogVal1"]} {Constant.MinLoginLength} " +
+                        Resources["Error"], $"{Resources["LogVal1"]} {Constant.MinNameLength} " +
                         $"{Resources["LogVal2"]} {Constant.MaxLoginLength} {Resources["LogVal3"]}", Resources["Ok"]);
                 return false;
             }

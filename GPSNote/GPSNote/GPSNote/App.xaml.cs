@@ -41,7 +41,7 @@ namespace GPSNote
             Application.Current.UserAppTheme = (OSAppTheme)SettingsManager.Theme;
 
             await NavigationService.NavigateAsync($"{nameof(TabbedPage1)}");
-            //if (AuthorizationService.IsAuthorize())
+            //if (AuthorizationService.AuthorizeCheck())
             //    await NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(SignIn)}");
             //else await NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(TabbedPage1)}");
         }

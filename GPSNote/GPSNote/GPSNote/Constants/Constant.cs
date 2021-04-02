@@ -8,7 +8,7 @@ namespace GPSNote.Constants
     public static class Constant
     {
         public const string DB_Name = "sqlite.db";
-        public const int MinLoginLength = 4;
+        public const int MinNameLength = 4;
         public const int MaxLoginLength = 16;
         public const int MinPasswordLength = 8;
         public const int MaxPasswordLength = 16;

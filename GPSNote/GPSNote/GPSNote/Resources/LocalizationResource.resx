@@ -204,6 +204,9 @@
   <data name="PasVal1" xml:space="preserve">
     <value>Password must be at least</value>
   </data>
+  <data name="PinListTitle" xml:space="preserve">
+    <value>Pin List</value>
+  </data>
   <data name="SelectLang" xml:space="preserve">
     <value>Select Language:</value>
   </data>

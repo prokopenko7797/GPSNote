@@ -62,5 +62,8 @@
                     Value="{AppThemeBinding Light={StaticResource LightSecondaryTextColor}, Dark={StaticResource DarkSecondaryTextColor}}" />
         </Style>
 
+
+        <Style TargetType="TabbedPage"></Style>
+
     </Application.Resources>
 </prism:PrismApplication>
