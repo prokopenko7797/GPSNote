@@ -4,28 +4,15 @@
              xmlns:prism="http://prismlibrary.com"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="GPSNote.Views.MapPage"
-             xmlns:maps="clr-namespace:Xamarin.Forms.GoogleMaps;assembly=Xamarin.Forms.GoogleMaps"
-
+             xmlns:maps="clr-namespace:Xamarin.Forms.GoogleMaps;assembly=Xamarin.Forms.GoogleMaps" 
+             xmlns:custommap="clr-namespace:GPSNote.CustomControls.CustomMap"
              BackgroundColor="{AppThemeBinding Light={StaticResource LightPageBackgroundColor}, Dark={StaticResource DarkPageBackgroundColor}}"
              Title="{Binding Resources[MapTitle]}">
 
     <Grid >
-        <maps:Map InitialCameraUpdate="{Binding CameraPos}"
-                  VerticalOptions="FillAndExpand"  
-                  x:Name="XamlMap">
-            <maps:Map.Behaviors>
-                <prism:EventToCommandBehavior EventName="MapClicked"
-                                              Command="{Binding ItemTappedCommand}"
-                                              EventArgsParameterPath="Point"/>
 
-                <prism:EventToCommandBehavior EventName="CameraIdled"
-                                              Command="{Binding MapMovedCommand}"
-                                              EventArgsParameterPath="Position"/>
-                
-                
 
-            </maps:Map.Behaviors>
-        </maps:Map>
+        <custommap:CustomMap></custommap:CustomMap>
         
     </Grid>
 
