@@ -10,9 +10,8 @@
              Title="{Binding Resources[MapTitle]}">
 
     <Grid >
-        <Button Text="Satellite" Grid.Row="0" Command="{Binding ChangeMapTypeCommand}"></Button>
 
-        <custommap:CustomMap  Grid.Row="1" MapTypeSelect = "{Binding type}" PinsSelect ="{Binding pins}">
+        <custommap:CustomMap  MapTypeSelect = "{Binding type}" PinsSelect ="{Binding pins}">
             <custommap:CustomMap.Behaviors>
                 <prism:EventToCommandBehavior EventName="MapClicked"
                                               Command="{Binding ItemTappedCommand}"

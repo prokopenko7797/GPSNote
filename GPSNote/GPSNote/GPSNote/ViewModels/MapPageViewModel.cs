@@ -43,12 +43,27 @@ namespace GPSNote.ViewModels
 
         public DelegateCommand<object> ItemTappedCommand => new DelegateCommand<object>(TapCommand);
 
-        private async void TapCommand(object p)
+        private  void TapCommand(object p)
         {
             Position position = (Position)p;
 
-            await _pageDialogService.DisplayAlertAsync("It's", $"{position.Latitude} {position.Longitude}", "Ok");
+            //await _pageDialogService.DisplayAlertAsync("It's", $"{position.Latitude} {position.Longitude}", "Ok");
+            
 
+
+            Pin pin = new Pin()
+            {
+                Type = PinType.Place,
+                Label = "Central Park NYC",
+                Address = "New York City, NY 10022",
+                Position = position,
+                Tag = "id_new_york"
+            };
+
+            List<Pin> test = new List<Pin>();
+            test.Add(pin);
+
+            pins = test;
             
         }
 
@@ -68,7 +83,7 @@ namespace GPSNote.ViewModels
         }
 
 
-        private MapType _type = MapType.Hybrid;
+        private MapType _type;
 
         public MapType type
         {
