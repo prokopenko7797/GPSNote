@@ -8,20 +8,20 @@
         <Color x:Key="TransparentColor">Transparent</Color>
 
         <!-- Light colors -->
-        <Color x:Key="LightPageBackgroundColor">White</Color>
+        <Color x:Key="LightPageBackgroundColor">#ffffff</Color>
         <Color x:Key="LightNavigationBarColor">#1790fb</Color>
-        <Color x:Key="LightPrimaryColor">WhiteSmoke</Color>
-        <Color x:Key="LightSecondaryColor">White</Color>
-        <Color x:Key="LightPrimaryTextColor">Black</Color>
+        <Color x:Key="LightPrimaryColor">#FFF5F5F5</Color>
+        <Color x:Key="LightSecondaryColor">#ffffff</Color>
+        <Color x:Key="LightPrimaryTextColor">#000000</Color>
         <Color x:Key="LightSecondaryTextColor">#acacac</Color>
-        <Color x:Key="LightTertiaryTextColor">Gray</Color>
+        <Color x:Key="LightTertiaryTextColor">#808080</Color>
 
         <!-- Dark colors -->
-        <Color x:Key="DarkPageBackgroundColor">Gray</Color>
-        <Color x:Key="DarkNavigationBarColor">Black</Color>
-        <Color x:Key="DarkPrimaryColor">Teal</Color>
-        <Color x:Key="DarkSecondaryColor">White</Color>
-        <Color x:Key="DarkPrimaryTextColor">White</Color>
+        <Color x:Key="DarkPageBackgroundColor">#808080</Color>
+        <Color x:Key="DarkNavigationBarColor">#000000</Color>
+        <Color x:Key="DarkPrimaryColor">#008080</Color>
+        <Color x:Key="DarkSecondaryColor">#ffffff</Color>
+        <Color x:Key="DarkPrimaryTextColor">#ffffff</Color>
         <Color x:Key="DarkSecondaryTextColor">#c3c3c3</Color>
         <Color x:Key="DarkTertiaryTextColor">#acacac</Color>
 
@@ -63,7 +63,6 @@
         </Style>
 
 
-        <Style TargetType="TabbedPage"></Style>
 
     </Application.Resources>
 </prism:PrismApplication>

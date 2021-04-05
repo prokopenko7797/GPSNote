@@ -8,9 +8,10 @@ namespace GPSNote.Servcies.AutorizationService
     public interface IAuthorizationService
     {
         Task<bool> AuthorizeAsync(string email, string password);
-        bool AuthorizeCheck();
+        
         void LogOut();
 
         int IdUser { get; set; }
+        bool IsAutorized { get; }
     }
 }

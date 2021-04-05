@@ -5,19 +5,19 @@ using SQLite;
 
 namespace GPSNote.Models
 {
-    [Table("User")]
+    [Table(nameof(User))]
     public class User : IEntityModel
     {
-        [PrimaryKey, AutoIncrement, Column("id")]
+        [PrimaryKey, AutoIncrement, Column(nameof(id))]
         public int id { get; set; }
 
-        [Column("name")]
+        [Column(nameof(Name))]
         public string Name { get; set; }
 
-        [Unique, Column("email")]
+        [Unique, Column(nameof(Email))]
         public string Email { get; set; }
 
-        [Column("password")]
+        [Column(nameof(Password))]
         public string Password { get; set; }
 
     }

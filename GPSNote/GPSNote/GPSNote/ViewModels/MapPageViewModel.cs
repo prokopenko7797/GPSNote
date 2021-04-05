@@ -1,4 +1,5 @@
-﻿using GPSNote.Servcies.LocalizationService;
+﻿using GPSNote.CustomControls.CustomMap;
+using GPSNote.Servcies.LocalizationService;
 using GPSNote.Servcies.Settings;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -35,51 +36,37 @@ namespace GPSNote.ViewModels
             _pageDialogService = pageDialogService;
             _settingsManager = settingsManager;
 
-            CameraPos = "-23.68, -46.87, 13";
-
         }
 
 
 
-        #region ______Public Properties______
 
+        public DelegateCommand<object> ItemTappedCommand => new DelegateCommand<object>(TapCommand);
 
-        private string _CameraPos;
-        public string CameraPos
-        {
-            get { return _CameraPos; }
-            set { SetProperty(ref _CameraPos, value); }
-        }
-
-        #endregion
-
-
-
-        public ICommand ItemTappedCommand => new Command(ExecutedTapCommand);
-
-        private async void ExecutedTapCommand(object p)
+        private async void TapCommand(object p)
         {
             Position position = (Position)p;
 
             await _pageDialogService.DisplayAlertAsync("It's", $"{position.Latitude} {position.Longitude}", "Ok");
 
+            
         }
 
 
 
-        public ICommand MapMovedCommand => new Command(ExecutedMapMovedCommand);
+        public DelegateCommand<object> MapMovedCommand => new DelegateCommand<object>(ExecutedMapMovedCommand);
+ 
         private async void ExecutedMapMovedCommand(object p)
         {
             CameraPosition position = (CameraPosition)p;
 
 
             await _pageDialogService.DisplayAlertAsync("It's", $"{position.Target.Latitude} {position.Target.Longitude} {position.Zoom}", "Ok");
-            _settingsManager.Longitude = position.Target.Latitude;
-            _settingsManager.Longitude = position.Target.Longitude;
-            _settingsManager.Zoom = position.Zoom;
+
 
 
         }
+
 
         private MapType _type = MapType.Hybrid;
 
@@ -105,7 +92,7 @@ namespace GPSNote.ViewModels
 
         IList<Pin> list = new List<Pin>();
 
-        private List<Pin> _pins = new List<Pin>();
+        private List<Pin> _pins;
 
         public List<Pin> pins
         {
@@ -114,7 +101,7 @@ namespace GPSNote.ViewModels
         }
 
 
-        public ICommand ChangeMapTypeCommand => new Command(ChangeMapType);
+        public DelegateCommand<object> ChangeMapTypeCommand => new DelegateCommand<object>(ChangeMapType);
 
 
 
@@ -122,8 +109,13 @@ namespace GPSNote.ViewModels
         private void ChangeMapType(object p)
         {
             type = MapType.Satellite;
+            List<Pin> test = new List<Pin>();
+            test.Add(a);
+            pins = test;
 
         }
+
+
 
 
 

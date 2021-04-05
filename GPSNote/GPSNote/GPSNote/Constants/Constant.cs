@@ -16,7 +16,7 @@ namespace GPSNote.Constants
         public const int SQLError = -1;
         public const string DefaultLanguage = ResourcesLangConst.en;
         public const int DefaultTheme = (int)OSAppTheme.Unspecified;
-        public const string Email = "Email";
+        public const string Email = nameof(Email);
 
 
 

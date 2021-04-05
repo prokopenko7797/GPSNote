@@ -12,8 +12,16 @@
     <Grid >
         <Button Text="Satellite" Grid.Row="0" Command="{Binding ChangeMapTypeCommand}"></Button>
 
-        <custommap:CustomMapView  Grid.Row="1" MapType="{Binding type}" Pins ="{Binding pins}">
-        </custommap:CustomMapView>
+        <custommap:CustomMap  Grid.Row="1" MapTypeSelect = "{Binding type}" PinsSelect ="{Binding pins}">
+            <custommap:CustomMap.Behaviors>
+                <prism:EventToCommandBehavior EventName="MapClicked"
+                                              Command="{Binding ItemTappedCommand}"
+                                              EventArgsParameterPath="Point" />
+                <prism:EventToCommandBehavior EventName="CameraIdled"
+                                              Command="{Binding MapMovedCommand}"
+                                              EventArgsParameterPath="Position" />
+            </custommap:CustomMap.Behaviors>
+        </custommap:CustomMap>
         
     </Grid>
 

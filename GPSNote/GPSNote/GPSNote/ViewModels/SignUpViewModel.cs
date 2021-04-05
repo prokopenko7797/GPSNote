@@ -1,4 +1,5 @@
 ﻿using GPSNote.Constants;
+using GPSNote.Models;
 using GPSNote.Servcies.LocalizationService;
 using GPSNote.Servcies.RegistrationService;
 using GPSNote.Validators;
@@ -27,10 +28,7 @@ namespace GPSNote.ViewModels
 
         #region _______Private_______
 
-        private string _name;
-        private string _email;
-        private string _password;
-        private string _confirmpassword;
+
 
 
 
@@ -54,6 +52,7 @@ namespace GPSNote.ViewModels
 
         #region -----Public Properties-----
 
+        private string _name;
 
         public string Name
         {
@@ -61,6 +60,7 @@ namespace GPSNote.ViewModels
             set { SetProperty(ref _name, value); }
         }
 
+        private string _email;
 
         public string Email
         {
@@ -68,6 +68,7 @@ namespace GPSNote.ViewModels
             set { SetProperty(ref _email, value); }
         }
 
+        private string _password;
 
         public string Password
         {
@@ -76,6 +77,7 @@ namespace GPSNote.ViewModels
         }
 
 
+        private string _confirmpassword;
         public string ConfirmPassword
         {
             get { return _confirmpassword; }
@@ -96,7 +98,7 @@ namespace GPSNote.ViewModels
         #region ________Comands________
         public DelegateCommand AddUserButtonTapCommand =>
             _AddUserButtonTapCommand ?? (_AddUserButtonTapCommand =
-            new DelegateCommand(ExecuteddUserButtonTapCommand)).ObservesCanExecute(() => IsEnabled);
+            new DelegateCommand(ExecuteUserButtonTapCommand)).ObservesCanExecute(() => IsEnabled);
 
 
         #endregion
@@ -104,7 +106,7 @@ namespace GPSNote.ViewModels
 
         #region -----Private Helpers-----
 
-        private async Task<bool> LogPassCheck(string name, string email, string password, string confirmpassword)
+        private async Task<bool> LogPassCheckAsync(string name, string email, string password, string confirmpassword)
         {
             if (!Validator.InRange(name, Constant.MinNameLength, Constant.MaxLoginLength))
             {
@@ -157,11 +159,14 @@ namespace GPSNote.ViewModels
         }
 
 
-        private async void ExecuteddUserButtonTapCommand()
+        private async void ExecuteUserButtonTapCommand()
         {
-            if (await LogPassCheck(Name, Email, Password, ConfirmPassword))
+            if (await LogPassCheckAsync(Name, Email, Password, ConfirmPassword))
             {
-                if (await _registrationService.RegistrateAsync(Name, Email, Password))
+
+
+
+                if (await _registrationService.RegistrateAsync(new User() { Name = Name, Email = Email, Password = Password }))
                 {
                     var p = new NavigationParameters { { Constant.Email, Email } };
 

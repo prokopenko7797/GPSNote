@@ -11,6 +11,6 @@ namespace GPSNote.Servcies.LocalizationService
             get;
         }
 
-        void CultureChange(string lang);
+        void ChangeCulture(string lang);
     }
 }

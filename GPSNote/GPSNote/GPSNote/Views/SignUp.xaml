@@ -16,7 +16,7 @@
                    MaxLength="16" />
             <Entry Placeholder = "{Binding Resources[Email]}" 
                    Text="{Binding Email}" 
-                   MaxLength="16" />
+                   MaxLength="254" />
             <Entry Placeholder = "{Binding Resources[Password]}" 
                    IsPassword ="True" Text="{Binding Password}" 
                    MaxLength="16"/>

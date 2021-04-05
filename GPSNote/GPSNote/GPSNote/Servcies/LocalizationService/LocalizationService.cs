@@ -13,56 +13,52 @@ namespace GPSNote.Servcies.LocalizationService
     public class LocalizationService : ILocalizationService, INotifyPropertyChanged
     {
 
-
-        #region _____Services______
+        #region -- IterfaceName implementation --
 
         private readonly ISettingsManager _settingsManager;
 
         #endregion
 
-        #region _____Private______
 
-        private readonly ResourceManager ResourceManager;
-        private CultureInfo CurrentCultureInfo;
+        private readonly ResourceManager _ResourceManager;
+        private CultureInfo _CurrentCultureInfo;
 
-        #endregion
+
 
         public LocalizationService(ISettingsManager settingsManager)
         {
             _settingsManager = settingsManager;
 
 
-            CurrentCultureInfo = new CultureInfo(_settingsManager.Lang);
-            ResourceManager = new ResourceManager(typeof(LocalizationResource));
+            _CurrentCultureInfo = new CultureInfo(_settingsManager.Lang);
+            _ResourceManager = new ResourceManager(typeof(LocalizationResource));
 
             MessagingCenter.Subscribe<object, CultureInfo>(this,
                 string.Empty, OnCultureChanged);
         }
 
-        #region _____Public Methods______
 
         public string this[string key]
         {
             get
             {
-                return ResourceManager.GetString(key, CurrentCultureInfo);
+                return _ResourceManager.GetString(key, _CurrentCultureInfo);
             }
         }
 
 
-        public void CultureChange(string lang)
+        public void ChangeCulture(string lang)
         {
 
             MessagingCenter.Send<object, CultureInfo>(this, string.Empty, new CultureInfo(lang));
         }
 
-        #endregion
 
         #region _____Private Helpers______
 
         private void OnCultureChanged(object s, CultureInfo ci)
         {
-            CurrentCultureInfo = ci;
+            _CurrentCultureInfo = ci;
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Item"));
         }
 

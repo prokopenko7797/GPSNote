@@ -24,10 +24,7 @@ namespace GPSNote.ViewModels
 
         private OSAppTheme appTheme;
 
-        private string _SelectedLang;
-        private bool _IsChecked;
-        private bool _IsCheckedEn;
-        private bool _IsCheckedRu;
+        
 
 
 
@@ -47,12 +44,15 @@ namespace GPSNote.ViewModels
 
         #region ______Public Properties______
 
-
+        private string _SelectedLang;
+        
         public string SelectedLang
         {
             get { return _SelectedLang; }
             set { SetProperty(ref _SelectedLang, value); }
         }
+
+        private bool _IsChecked;
 
         public bool IsChecked
         {
@@ -60,12 +60,15 @@ namespace GPSNote.ViewModels
             set { SetProperty(ref _IsChecked, value); }
         }
 
+        private bool _IsCheckedEn;
         public bool IsCheckedEn
         {
             get { return _IsCheckedEn; }
             set { SetProperty(ref _IsCheckedEn, value); }
         }
 
+
+        private bool _IsCheckedRu;
         public bool IsCheckedRu
         {
             get { return _IsCheckedRu; }
@@ -129,8 +132,13 @@ namespace GPSNote.ViewModels
             appTheme = (OSAppTheme)_settingsManager.Theme;
 
             if (_settingsManager.Theme == (int)OSAppTheme.Unspecified)
+            {
                 IsChecked = false;
-            else IsChecked = true;
+            }
+            else 
+            {
+                IsChecked = true;
+            }
         }
 
 
@@ -155,7 +163,7 @@ namespace GPSNote.ViewModels
             if (args.PropertyName == nameof(SelectedLang))
             {
 
-                Resources.CultureChange(SelectedLang);
+                Resources.ChangeCulture(SelectedLang);
             }
         }
 
@@ -166,7 +174,7 @@ namespace GPSNote.ViewModels
             base.OnNavigatedFrom(parameters);
 
             Application.Current.UserAppTheme = (OSAppTheme)_settingsManager.Theme;
-            Resources.CultureChange(_settingsManager.Lang);
+            Resources.ChangeCulture(_settingsManager.Lang);
         }
 
         #endregion

@@ -27,9 +27,7 @@ namespace GPSNote.ViewModels
         #region ________Private______
 
 
-        private string _Email;
-        private string _Password;
-        private bool _IsEnabled;
+
 
 
         private DelegateCommand _NavigateMainListCommand;
@@ -52,12 +50,15 @@ namespace GPSNote.ViewModels
 
         #region -----Public Properties-----
 
+        private string _Email;
+
         public string Email
         {
             get { return _Email; }
             set { SetProperty(ref _Email, value); }
         }
 
+        private string _Password;
         public string Password
         {
             get { return _Password; }
@@ -65,10 +66,11 @@ namespace GPSNote.ViewModels
         }
 
 
-        public bool IsEnabled
+        private bool _IsEnabledButton;
+        public bool IsEnabledButton
         {
-            get { return _IsEnabled; }
-            set { SetProperty(ref _IsEnabled, value); }
+            get { return _IsEnabledButton; }
+            set { SetProperty(ref _IsEnabledButton, value); }
         }
 
         #endregion
@@ -78,7 +80,7 @@ namespace GPSNote.ViewModels
 
         public DelegateCommand NavigateMainListButtonTapCommand =>
             _NavigateMainListCommand ??
-            (_NavigateMainListCommand = new DelegateCommand(ExecuteNavigateMainViewCommand).ObservesCanExecute(() => IsEnabled));
+            (_NavigateMainListCommand = new DelegateCommand(ExecuteNavigateMainViewCommand).ObservesCanExecute(() => IsEnabledButton));
 
 
         public DelegateCommand NavigateSignUpButtonTapCommand =>
@@ -120,9 +122,9 @@ namespace GPSNote.ViewModels
 
         public override void OnNavigatedTo(INavigationParameters parameters)
         {
-            if (parameters.GetValue<string>(Constant.Email) != null)
+            if (parameters.TryGetValue<string>(Constant.Email, out string email))
             {
-                Email = parameters.GetValue<string>(Constant.Email);
+                Email = email;
             }
             Password = string.Empty;
 
@@ -136,11 +138,20 @@ namespace GPSNote.ViewModels
             base.OnPropertyChanged(args);
             if (args.PropertyName == nameof(Email) || args.PropertyName == nameof(Password))
             {
-                if (Email == null || Password == null) return;
+                if (Email == null || Password == null)
+                {
+                    return;
+                }
 
-                if (Email != default && Password != default) IsEnabled = true;
+                if (Email != default && Password != default)
+                {
+                    IsEnabledButton = true;
+                }
 
-                else if (Email != default || Password == default) IsEnabled = false;
+                else if (Email != default || Password == default) 
+                {
+                    IsEnabledButton = false; 
+                }
             }
         }
 

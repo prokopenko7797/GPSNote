@@ -20,11 +20,11 @@ namespace GPSNote.Servcies.RegistrationService
 
 
         #region ______Public Methods______
-        public async Task<bool> RegistrateAsync(string name, string email, string password)
+        public async Task<bool> RegistrateAsync(User user)
         {
             bool result = false;
 
-            User user1 = await _repository.FindWithQueryAsync<User>($"SELECT * FROM {nameof(User)} WHERE email='{email}'");
+            User user1 = await _repository.FindWithQueryAsync<User>($"SELECT * FROM {nameof(User)} WHERE Email='{user.Email}'");
 
             if (user1 !=null)
             {
@@ -32,7 +32,7 @@ namespace GPSNote.Servcies.RegistrationService
                 return false;
             }
 
-            await _repository.InsertAsync(new User { Name = name, Email = email, Password = password });
+            await _repository.InsertAsync(user);
             return true;
         }
 

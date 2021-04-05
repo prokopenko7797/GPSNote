@@ -28,7 +28,7 @@ namespace GPSNote.Servcies.AutorizationService
         {
             bool result = false;
 
-            var user = await _repository.FindWithQueryAsync<User>($"SELECT * FROM {nameof(User)} WHERE email='{email}' AND password='{password}'");
+            var user = await _repository.FindWithQueryAsync<User>($"SELECT * FROM {nameof(User)} WHERE Email='{email}' AND Password='{password}'");
 
             if (user != null)
             {
@@ -39,14 +39,14 @@ namespace GPSNote.Servcies.AutorizationService
             return result;
         }
 
-        public bool AuthorizeCheck()
-        {
-            bool result = false;
 
-            if (IdUser == Constant.NonAuthorized) result = true;
-            
-            return result;
+
+
+        public bool IsAutorized 
+        {
+            get { return IdUser == Constant.NonAuthorized; }
         }
+
 
         public void LogOut()
         {
