@@ -10,9 +10,10 @@
              Title="{Binding Resources[MapTitle]}">
 
     <Grid >
+        <Button Text="Satellite" Grid.Row="0" Command="{Binding ChangeMapTypeCommand}"></Button>
 
-
-        <custommap:CustomMap></custommap:CustomMap>
+        <custommap:CustomMapView  Grid.Row="1" MapType="{Binding type}" Pins ="{Binding pins}">
+        </custommap:CustomMapView>
         
     </Grid>
 

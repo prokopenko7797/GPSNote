@@ -41,16 +41,20 @@ namespace GPSNote.Validators
 
         public static bool IsEmail(string emailaddress)
         {
+            bool result = false;
+
             try
             {
                 MailAddress m = new MailAddress(emailaddress);
 
-                return true;
+                result = true;
             }
             catch (FormatException)
             {
-                return false;
+                result = false;
             }
+
+            return result;
         }
 
         #endregion

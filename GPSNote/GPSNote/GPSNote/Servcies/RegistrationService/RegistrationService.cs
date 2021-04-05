@@ -22,6 +22,7 @@ namespace GPSNote.Servcies.RegistrationService
         #region ______Public Methods______
         public async Task<bool> RegistrateAsync(string name, string email, string password)
         {
+            bool result = false;
 
             User user1 = await _repository.FindWithQueryAsync<User>($"SELECT * FROM {nameof(User)} WHERE email='{email}'");
 

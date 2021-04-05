@@ -26,22 +26,26 @@ namespace GPSNote.Servcies.AutorizationService
 
         public async Task<bool> AuthorizeAsync(string email, string password)
         {
+            bool result = false;
 
             var user = await _repository.FindWithQueryAsync<User>($"SELECT * FROM {nameof(User)} WHERE email='{email}' AND password='{password}'");
 
             if (user != null)
             {
                 IdUser = user.id;
-                return true;
+                result = true;
             }
 
-            return false;
+            return result;
         }
 
         public bool AuthorizeCheck()
         {
-            if (IdUser == Constant.NonAuthorized) return true;
-            else return false;
+            bool result = false;
+
+            if (IdUser == Constant.NonAuthorized) result = true;
+            
+            return result;
         }
 
         public void LogOut()

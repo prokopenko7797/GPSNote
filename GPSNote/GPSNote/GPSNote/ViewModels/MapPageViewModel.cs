@@ -19,7 +19,7 @@ namespace GPSNote.ViewModels
 
         #region _______Services______
 
-        private readonly IPageDialogService _pageDialogService; 
+        private readonly IPageDialogService _pageDialogService;
         private readonly ISettingsManager _settingsManager;
 
         #endregion
@@ -57,12 +57,6 @@ namespace GPSNote.ViewModels
 
         public ICommand ItemTappedCommand => new Command(ExecutedTapCommand);
 
-        public ICommand MapMovedCommand => new Command(ExecutedMapMovedCommand);
-
-
-
-
-
         private async void ExecutedTapCommand(object p)
         {
             Position position = (Position)p;
@@ -72,8 +66,8 @@ namespace GPSNote.ViewModels
         }
 
 
- 
 
+        public ICommand MapMovedCommand => new Command(ExecutedMapMovedCommand);
         private async void ExecutedMapMovedCommand(object p)
         {
             CameraPosition position = (CameraPosition)p;
@@ -83,12 +77,53 @@ namespace GPSNote.ViewModels
             _settingsManager.Longitude = position.Target.Latitude;
             _settingsManager.Longitude = position.Target.Longitude;
             _settingsManager.Zoom = position.Zoom;
+
+
+        }
+
+        private MapType _type = MapType.Hybrid;
+
+        public MapType type
+        {
+            get { return _type; }
+            set { SetProperty(ref _type, value); }
         }
 
 
 
 
 
+
+        Pin a = new Pin()
+        {
+            Type = PinType.Place,
+            Label = "Central Park NYC",
+            Address = "New York City, NY 10022",
+            Position = new Position(40.78d, -73.96d),
+            Tag = "id_new_york"
+        };
+
+        IList<Pin> list = new List<Pin>();
+
+        private List<Pin> _pins = new List<Pin>();
+
+        public List<Pin> pins
+        {
+            get { return _pins; }
+            set { SetProperty(ref _pins, value); }
+        }
+
+
+        public ICommand ChangeMapTypeCommand => new Command(ChangeMapType);
+
+
+
+
+        private void ChangeMapType(object p)
+        {
+            type = MapType.Satellite;
+
+        }
 
 
 
