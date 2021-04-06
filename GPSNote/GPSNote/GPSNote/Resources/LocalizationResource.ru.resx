@@ -189,8 +189,8 @@
   <data name="No" xml:space="preserve">
     <value>Нет</value>
   </data>
-  <data name="NoProfiles" xml:space="preserve">
-    <value>Нет добавленных профилей.</value>
+  <data name="NoPins" xml:space="preserve">
+    <value>Нет добавленных мест.</value>
   </data>
   <data name="Ok" xml:space="preserve">
     <value>Oк</value>

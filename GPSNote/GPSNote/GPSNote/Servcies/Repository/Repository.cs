@@ -63,6 +63,9 @@ namespace GPSNote.Servcies.Repository
             await _database.CreateTableAsync<T>();
             return await _database.FindWithQueryAsync<T>(query);
         }
+
+
+
         #endregion
     }
 }

@@ -189,8 +189,8 @@
   <data name="No" xml:space="preserve">
     <value>No</value>
   </data>
-  <data name="NoProfiles" xml:space="preserve">
-    <value>No profiles added.</value>
+  <data name="NoPins" xml:space="preserve">
+    <value>No pins added.</value>
   </data>
   <data name="Ok" xml:space="preserve">
     <value>Ok</value>

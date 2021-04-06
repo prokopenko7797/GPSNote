@@ -6,5 +6,82 @@
              x:Class="GPSNote.Views.PinList"
              BackgroundColor="{AppThemeBinding Light={StaticResource LightPageBackgroundColor}, Dark={StaticResource DarkPageBackgroundColor}}"
              Title="{Binding Resources[PinListTitle]}">
-  
+
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+
+        <Label Text="{Binding Resources[NoPins]}" 
+               HorizontalOptions="Center"
+               VerticalOptions="Center"
+               IsVisible="{Binding IsVisible}"></Label>
+
+
+        <ListView ItemsSource="{Binding ProfileList}" 
+                      RowHeight="100" 
+                      Margin="10"
+                      SelectionMode="None"
+                      SeparatorVisibility="None"
+                      x:Name="ListView1"
+                      BackgroundColor="Transparent">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <ViewCell.ContextActions>
+                            <MenuItem Text="{Binding Path=BindingContext.Resources[Edit], 
+                                                            Source={x:Reference ListView1}}" 
+                                          Command="{Binding Path=BindingContext.EditCommandTap, 
+                                                            Source={x:Reference ListView1}}" 
+                                          CommandParameter="{Binding .}"/>
+                            <MenuItem Text="{Binding Path=BindingContext.Resources[Delete], 
+                                                            Source={x:Reference ListView1}}" 
+                                          Command="{Binding Path=BindingContext.DeleteCommandTap, 
+                                                            Source={x:Reference ListView1}}" 
+                                          CommandParameter="{Binding .}"/>
+                        </ViewCell.ContextActions>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0.3*"/>
+                                <ColumnDefinition Width="0.7*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Image Grid.RowSpan="3" Source="{Binding image_path}"  Aspect="AspectFit" Margin="5">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Path=BindingContext.ImageCommandTap, 
+                                                                Source={x:Reference ListView1}}" 
+                                              CommandParameter="{Binding .}"/>
+                                </Image.GestureRecognizers>
+                            </Image>
+                            <Label Grid.Column="1" Grid.Row="0" Text="{Binding nick_name}" FontAttributes="Bold" />
+                            <Label Grid.Column="1" Grid.Row="1" Text="{Binding name}" />
+                            <Label Grid.Column="1" Grid.Row="2" Text="{Binding date}" />
+
+                        </Grid>
+
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+
+        <Button Grid.Row="0" 
+            BackgroundColor="{AppThemeBinding Light={StaticResource LightNavigationBarColor}, Dark={StaticResource DarkNavigationBarColor}}"
+            BorderColor="{AppThemeBinding Light={StaticResource DarkPageBackgroundColor}, Dark={StaticResource LightPageBackgroundColor}}"
+            CornerRadius="50"
+            BorderWidth="7"
+            WidthRequest="100" 
+            HeightRequest="100"            
+            VerticalOptions="End"
+            HorizontalOptions="End"
+            Margin="0,0,20,20"
+            Command="{Binding AddEditButtonClicked}"           
+            ImageSource="ic_add.png"/>
+    </Grid>
+
+
+
 </ContentPage>

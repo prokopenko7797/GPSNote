@@ -1,5 +1,7 @@
 ﻿using GPSNote.CustomControls.CustomMap;
+using GPSNote.Models;
 using GPSNote.Servcies.LocalizationService;
+using GPSNote.Servcies.PinService;
 using GPSNote.Servcies.Settings;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -22,6 +24,7 @@ namespace GPSNote.ViewModels
 
         private readonly IPageDialogService _pageDialogService;
         private readonly ISettingsManager _settingsManager;
+        private readonly IPinService _pinService;
 
         #endregion
 
@@ -29,13 +32,14 @@ namespace GPSNote.ViewModels
 
 
 
-        public MapPageViewModel(INavigationService navigationService, ILocalizationService localizationService, IPageDialogService pageDialogService, ISettingsManager settingsManager)
+        public MapPageViewModel(INavigationService navigationService, ILocalizationService localizationService, IPageDialogService pageDialogService, ISettingsManager settingsManager,
+            IPinService pinService)
             : base(navigationService, localizationService)
         {
 
             _pageDialogService = pageDialogService;
             _settingsManager = settingsManager;
-
+            _pinService = pinService;
         }
 
 
@@ -43,12 +47,12 @@ namespace GPSNote.ViewModels
 
         public DelegateCommand<object> ItemTappedCommand => new DelegateCommand<object>(TapCommand);
 
-        private  void TapCommand(object p)
+        private async void TapCommand(object p)
         {
             Position position = (Position)p;
 
             //await _pageDialogService.DisplayAlertAsync("It's", $"{position.Latitude} {position.Longitude}", "Ok");
-            
+
 
 
             Pin pin = new Pin()
@@ -58,14 +62,18 @@ namespace GPSNote.ViewModels
                 Address = "New York City, NY 10022",
                 Position = position,
                 Tag = "id_new_york"
+                
             };
 
-            List<Pin> test = new List<Pin>();
-            test.Add(pin);
+            await _pinService.AddAsync(new UserPins(){ Latitude = position.Latitude, Longitude = position.Longitude, Label = "My pin"});
 
-            pins = test;
+           
+
+            pins = await _pinService.GetUserPinsAsync(); ;
             
         }
+
+
 
 
 
@@ -76,7 +84,7 @@ namespace GPSNote.ViewModels
             CameraPosition position = (CameraPosition)p;
 
 
-            await _pageDialogService.DisplayAlertAsync("It's", $"{position.Target.Latitude} {position.Target.Longitude} {position.Zoom}", "Ok");
+          //  await _pageDialogService.DisplayAlertAsync("It's", $"{position.Target.Latitude} {position.Target.Longitude} {position.Zoom}", "Ok");
 
 
 
@@ -91,22 +99,6 @@ namespace GPSNote.ViewModels
             set { SetProperty(ref _type, value); }
         }
 
-
-
-
-
-
-        Pin a = new Pin()
-        {
-            Type = PinType.Place,
-            Label = "Central Park NYC",
-            Address = "New York City, NY 10022",
-            Position = new Position(40.78d, -73.96d),
-            Tag = "id_new_york"
-        };
-
-        IList<Pin> list = new List<Pin>();
-
         private List<Pin> _pins;
 
         public List<Pin> pins
@@ -116,23 +108,10 @@ namespace GPSNote.ViewModels
         }
 
 
-        public DelegateCommand<object> ChangeMapTypeCommand => new DelegateCommand<object>(ChangeMapType);
-
-
-
-
-        private void ChangeMapType(object p)
+        public override async void Initialize(INavigationParameters parameters)
         {
-            type = MapType.Satellite;
-            List<Pin> test = new List<Pin>();
-            test.Add(a);
-            pins = test;
-
+            base.Initialize(parameters);
+            pins = await _pinService.GetUserPinsAsync();
         }
-
-
-
-
-
     }
 }
