@@ -16,42 +16,20 @@ namespace GPSNote.ViewModels
 {
     public class SignInViewModel : ViewModelBase
     {
-
-        #region _____Services____
-
         private readonly IPageDialogService _pageDialogService;
         private readonly IAuthorizationService _authorization;
-
-        #endregion
-
-        #region ________Private______
-
-
-
-
-
-        private DelegateCommand _NavigateMainListCommand;
-        private DelegateCommand _NavigateSignUpCommand;
-
-        #endregion
-
 
         public SignInViewModel(INavigationService navigationService, ILocalizationService localizationService,
             IPageDialogService pageDialogService, IAuthorizationService authorization)
             : base(navigationService, localizationService)
         {
-
             _pageDialogService = pageDialogService;
             _authorization = authorization;
-
-
         }
-
 
         #region -----Public Properties-----
 
         private string _Email;
-
         public string Email
         {
             get { return _Email; }
@@ -65,7 +43,6 @@ namespace GPSNote.ViewModels
             set { SetProperty(ref _Password, value); }
         }
 
-
         private bool _IsEnabledButton;
         public bool IsEnabledButton
         {
@@ -73,26 +50,19 @@ namespace GPSNote.ViewModels
             set { SetProperty(ref _IsEnabledButton, value); }
         }
 
-        #endregion
-
-
-        #region _______Comands______
-
+        private DelegateCommand _NavigateMainListCommand;
         public DelegateCommand NavigateMainListButtonTapCommand =>
             _NavigateMainListCommand ??
             (_NavigateMainListCommand = new DelegateCommand(ExecuteNavigateMainViewCommand).ObservesCanExecute(() => IsEnabledButton));
 
-
+        private DelegateCommand _NavigateSignUpCommand;
         public DelegateCommand NavigateSignUpButtonTapCommand =>
             _NavigateSignUpCommand ??
             (_NavigateSignUpCommand = new DelegateCommand(ExecuteNavigateSignUpCommand));
 
         #endregion 
 
-
-
-
-        #region ________Private Helpers_______
+        #region -- Private helpers --
 
         private async void ExecuteNavigateSignUpCommand()
         {
@@ -116,9 +86,7 @@ namespace GPSNote.ViewModels
         #endregion
 
 
-        #region ________Overrides_______
-
-
+        #region --Overrides--
 
         public override void OnNavigatedTo(INavigationParameters parameters)
         {
@@ -130,32 +98,32 @@ namespace GPSNote.ViewModels
 
         }
 
-
-
-
         protected override void OnPropertyChanged(PropertyChangedEventArgs args)
         {
             base.OnPropertyChanged(args);
             if (args.PropertyName == nameof(Email) || args.PropertyName == nameof(Password))
             {
-                if (Email == null || Password == null)
+                bool result = false;
+
+                if (Email != null || Password != null)
                 {
-                    return;
+                    result = true;
                 }
 
-                if (Email != default && Password != default)
+                if (result)
                 {
-                    IsEnabledButton = true;
-                }
+                    if (Email != default && Password != default)
+                    {
+                        IsEnabledButton = true;
+                    }
 
-                else if (Email != default || Password == default) 
-                {
-                    IsEnabledButton = false; 
-                }
+                    else if (Email != default || Password == default)
+                    {
+                        IsEnabledButton = false;
+                    }
+                }                
             }
         }
-
-
 
         #endregion
 

@@ -11,7 +11,7 @@
 
     <Grid >
 
-        <custommap:CustomMap  MapType="Satellite"  MapTypeSelect = "{Binding type}" PinsSelect ="{Binding pins}">
+        <custommap:CustomMap   PinsSelect ="{Binding pins}">
             <custommap:CustomMap.Behaviors>
                 <prism:EventToCommandBehavior EventName="MapClicked"
                                               Command="{Binding ItemTappedCommand}"

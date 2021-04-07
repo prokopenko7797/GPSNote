@@ -19,7 +19,8 @@ namespace GPSNote.Servcies.RegistrationService
         }
 
 
-        #region ______Public Methods______
+        #region --  IRegistrationService implementation --
+
         public async Task<bool> RegistrateAsync(User user)
         {
             bool result = false;
@@ -28,12 +29,14 @@ namespace GPSNote.Servcies.RegistrationService
 
             if (user1 !=null)
             {
-
-                return false;
+                result = false;
+            }
+            else
+            {
+                await _repository.InsertAsync(user);
             }
 
-            await _repository.InsertAsync(user);
-            return true;
+            return result;
         }
 
         #endregion

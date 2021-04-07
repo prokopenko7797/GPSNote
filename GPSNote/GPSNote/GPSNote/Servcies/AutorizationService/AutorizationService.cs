@@ -11,10 +11,8 @@ namespace GPSNote.Servcies.AutorizationService
 {
     public class AuthorizationService : IAuthorizationService
     {
-        #region ______Services_________
         private readonly IRepository _repository;
 
-        #endregion
 
         public AuthorizationService(IRepository repository)
         {
@@ -22,25 +20,9 @@ namespace GPSNote.Servcies.AutorizationService
 
         }
 
-        #region ______Public Methods______
+        #region -- IAuthorizationService implementation --
 
-        public async Task<bool> AuthorizeAsync(string email, string password)
-        {
-            bool result = false;
-
-            var user = await _repository.FindWithQueryAsync<User>($"SELECT * FROM {nameof(User)} WHERE Email='{email}' AND Password='{password}'");
-
-            if (user != null)
-            {
-                IdUser = user.id;
-                result = true;
-            }
-
-            return result;
-        }
-
-
-
+        #region -- Public properties --
 
         public bool IsAutorized 
         {
@@ -59,9 +41,24 @@ namespace GPSNote.Servcies.AutorizationService
             set => Preferences.Set(nameof(IdUser), value);
         }
 
+        #endregion
 
+        public async Task<bool> AuthorizeAsync(string email, string password)
+        {
+            bool result = false;
 
+            var user = await _repository.FindWithQueryAsync<User>($"SELECT * FROM {nameof(User)} WHERE Email='{email}' AND Password='{password}'");
+
+            if (user != null)
+            {
+                IdUser = user.id;
+                result = true;
+            }
+
+            return result;
+        }
 
         #endregion
+
     }
 }

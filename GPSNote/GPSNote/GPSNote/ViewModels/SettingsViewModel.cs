@@ -14,24 +14,8 @@ namespace GPSNote.ViewModels
 {
     public class SettingsViewModel : ViewModelBase
     {
-
-        ISettingsManager _settingsManager;
-
-
-        #region ____Private_____
-
-        private DelegateCommand _SaveToolBarCommand;
-
-        private OSAppTheme appTheme;
-
-        
-
-
-
-
-
-
-        #endregion
+        private ISettingsManager _settingsManager;
+        private OSAppTheme _appTheme;
 
         public SettingsViewModel(INavigationService navigationService, ILocalizationService localizationService,
             ISettingsManager settingsManager)
@@ -40,9 +24,7 @@ namespace GPSNote.ViewModels
             _settingsManager = settingsManager;
         }
 
-
-
-        #region ______Public Properties______
+        #region -- Public properties --
 
         private string _SelectedLang;
         
@@ -67,7 +49,6 @@ namespace GPSNote.ViewModels
             set { SetProperty(ref _IsCheckedEn, value); }
         }
 
-
         private bool _IsCheckedRu;
         public bool IsCheckedRu
         {
@@ -75,49 +56,33 @@ namespace GPSNote.ViewModels
             set { SetProperty(ref _IsCheckedRu, value); }
         }
 
-
-
-
-
-
-
-        #endregion
-
-
-        #region _______Comands_______
-
+        private DelegateCommand _SaveToolBarCommand;
         public DelegateCommand SaveToolBarCommand =>
            _SaveToolBarCommand ??
            (_SaveToolBarCommand = new DelegateCommand(SaveToolBar));
 
         #endregion
 
-        #region _____Private Helpers______
+        #region -- Private helpers --
 
         private async void SaveToolBar()
         {
-            _settingsManager.Theme = (int)appTheme;
+            _settingsManager.Theme = (int)_appTheme;
 
             _settingsManager.Lang = SelectedLang;
 
             await NavigationService.GoBackAsync();
         }
 
-
-
-
-
         #endregion
 
-        #region ________Overrides_________
+        #region --Overrides--
 
         public override void Initialize(INavigationParameters parameters)
         {
             base.Initialize(parameters);
 
             SelectedLang = _settingsManager.Lang;
-
-  
 
             switch (_settingsManager.Lang)
             {
@@ -129,7 +94,7 @@ namespace GPSNote.ViewModels
                     break;
             }
 
-            appTheme = (OSAppTheme)_settingsManager.Theme;
+            _appTheme = (OSAppTheme)_settingsManager.Theme;
 
             if (_settingsManager.Theme == (int)OSAppTheme.Unspecified)
             {
@@ -150,19 +115,18 @@ namespace GPSNote.ViewModels
             {
                 if (IsChecked == true)
                 {
-                    appTheme = OSAppTheme.Dark;
+                    _appTheme = OSAppTheme.Dark;
                     Application.Current.UserAppTheme = OSAppTheme.Dark;
                 }
                 else
                 {
-                    appTheme = OSAppTheme.Unspecified;
+                    _appTheme = OSAppTheme.Unspecified;
                     Application.Current.UserAppTheme = OSAppTheme.Unspecified;
                 }
             }
 
             if (args.PropertyName == nameof(SelectedLang))
             {
-
                 Resources.ChangeCulture(SelectedLang);
             }
         }

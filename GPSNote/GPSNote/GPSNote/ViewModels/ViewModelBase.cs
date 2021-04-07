@@ -12,25 +12,17 @@ namespace GPSNote.ViewModels
     {
         protected INavigationService NavigationService { get; private set; }
 
-
-
         public ILocalizationService Resources
         {
             get;
             private set;
         }
 
-
-
-
         public ViewModelBase(INavigationService navigationService, ILocalizationService localizationService)
         {
             NavigationService = navigationService;
             Resources = localizationService;
         }
-
-
-
 
         public virtual void Initialize(INavigationParameters parameters)
         {

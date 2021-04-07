@@ -8,7 +8,6 @@ namespace GPSNote.Validators
 {
     public static class Validator
     {
-        #region ______Public Methods______
         public static bool Match(string str, string con)
         {
             return str.Equals(con);
@@ -56,8 +55,5 @@ namespace GPSNote.Validators
 
             return result;
         }
-
-        #endregion
-
     }
 }

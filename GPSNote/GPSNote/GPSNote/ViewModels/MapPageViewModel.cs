@@ -19,31 +19,18 @@ namespace GPSNote.ViewModels
 {
     public class MapPageViewModel : ViewModelBase
     {
-
-        #region _______Services______
-
         private readonly IPageDialogService _pageDialogService;
-        private readonly ISettingsManager _settingsManager;
         private readonly IPinService _pinService;
-
-        #endregion
-
-
-
-
 
         public MapPageViewModel(INavigationService navigationService, ILocalizationService localizationService, IPageDialogService pageDialogService, ISettingsManager settingsManager,
             IPinService pinService)
             : base(navigationService, localizationService)
         {
-
             _pageDialogService = pageDialogService;
-            _settingsManager = settingsManager;
             _pinService = pinService;
         }
 
-
-
+        #region -- Public properties --
 
         public DelegateCommand<object> ItemTappedCommand => new DelegateCommand<object>(TapCommand);
 
@@ -52,8 +39,6 @@ namespace GPSNote.ViewModels
             Position position = (Position)p;
 
             //await _pageDialogService.DisplayAlertAsync("It's", $"{position.Latitude} {position.Longitude}", "Ok");
-
-
 
             Pin pin = new Pin()
             {
@@ -67,28 +52,13 @@ namespace GPSNote.ViewModels
 
             await _pinService.AddAsync(new UserPins(){ Latitude = position.Latitude, Longitude = position.Longitude, Label = "My pin"});
 
-           
-
-            pins = await _pinService.GetUserPinsAsync(); ;
-            
-        }
-
-
-
-
-
-        public DelegateCommand<object> MapMovedCommand => new DelegateCommand<object>(ExecutedMapMovedCommand);
- 
-        private async void ExecutedMapMovedCommand(object p)
-        {
-            CameraPosition position = (CameraPosition)p;
-
-
-          //  await _pageDialogService.DisplayAlertAsync("It's", $"{position.Target.Latitude} {position.Target.Longitude} {position.Zoom}", "Ok");
-
-
+            pins = GetPins(await _pinService.GetUserPinsAsync());
 
         }
+
+
+        public DelegateCommand<object> MapMovedCommand => new DelegateCommand<object>(ExecutedMapMovedCommand); 
+
 
 
         private MapType _type;
@@ -107,11 +77,44 @@ namespace GPSNote.ViewModels
             set { SetProperty(ref _pins, value); }
         }
 
+        #endregion
+
+        #region --Private helpers--
+        private List<Pin> GetPins(IEnumerable<UserPins> userPins)
+        {
+            List<Pin> pins = new List<Pin>();
+
+            foreach (UserPins p in userPins)
+            {
+                Position position = new Position(p.Latitude, p.Longitude);
+
+                pins.Add(new Pin() { Position = position, Label = p.Label, Tag = p.Tag });
+            }
+            return pins;
+        }
+
+        private async void ExecutedMapMovedCommand(object p)
+        {
+            CameraPosition position = (CameraPosition)p;
+
+            //  await _pageDialogService.DisplayAlertAsync("It's", $"{position.Target.Latitude} {position.Target.Longitude} {position.Zoom}", "Ok");
+
+        }
+
+        #endregion
+
+        #region --Overrides--
 
         public override async void Initialize(INavigationParameters parameters)
         {
             base.Initialize(parameters);
-            pins = await _pinService.GetUserPinsAsync();
+            pins = GetPins( await _pinService.GetUserPinsAsync());
         }
+
+        #endregion
+
+
+
+
     }
 }

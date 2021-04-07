@@ -11,10 +11,8 @@ namespace GPSNote.Servcies.PinService
     {
         Task<bool> DeleteAsync(int id);
         Task<bool> AddAsync(UserPins profile);
-
         Task<bool> EditAsync(UserPins profile);
-
         Task<UserPins> GetByIdAsync(int id);
-        Task<List<Pin>> GetUserPinsAsync();
+        Task<IEnumerable<UserPins>> GetUserPinsAsync();
     }
 }

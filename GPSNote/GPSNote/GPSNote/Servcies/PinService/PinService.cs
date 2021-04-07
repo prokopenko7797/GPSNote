@@ -12,12 +12,9 @@ namespace GPSNote.Servcies.PinService
 {
     public class PinService : IPinService
     {
-
-        #region ______Services_________
         private readonly IRepository _repository;
         private readonly IAuthorizationService _authorizationService;
 
-        #endregion
 
         public PinService(IRepository repository, IAuthorizationService authorizationService)
         {
@@ -25,6 +22,8 @@ namespace GPSNote.Servcies.PinService
             _authorizationService = authorizationService;
 
         }
+
+        #region -- IPinService implementation --
 
         public async Task<bool> EditAsync(UserPins userPins)
         {
@@ -36,8 +35,6 @@ namespace GPSNote.Servcies.PinService
             userPins.user_id = _authorizationService.IdUser;
             return (await _repository.InsertAsync(userPins) != Constant.SQLError);
         }
-
-
 
         public async Task<bool> DeleteAsync(int id)
         {
@@ -51,27 +48,15 @@ namespace GPSNote.Servcies.PinService
             return await _repository.GetByIdAsync<UserPins>(id);
         }
 
-        public async Task<List<Pin>> GetUserPinsAsync()
+        public async Task<IEnumerable<UserPins>> GetUserPinsAsync()
         {
             IEnumerable<UserPins> userPins = await _repository.QueryAsync<UserPins>($"SELECT * FROM {nameof(UserPins)} " +
                 $"WHERE user_id='{_authorizationService.IdUser}'");
-            List<Pin> pins = new List<Pin>();
-
-     
-
-
-            foreach (UserPins p in userPins)
-            {
-                Position position = new Position(p.Latitude, p.Longitude);
-
-                pins.Add(new Pin() {Position = position, Label = p.Label, Tag = p.Tag });
-            }
-            return pins;
+       
+            return userPins;
 
         }
 
-
-
-   
+        #endregion
     }
 }

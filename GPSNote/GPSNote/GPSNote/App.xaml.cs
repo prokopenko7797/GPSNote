@@ -17,8 +17,6 @@ namespace GPSNote
     public partial class App
     {
 
-        #region -- IterfaceName implementation --
-
         private ISettingsManager _SettingsManager;
         private ISettingsManager SettingsManager =>
             _SettingsManager ?? (_SettingsManager = Container.Resolve<ISettingsManager>());
@@ -27,7 +25,6 @@ namespace GPSNote
         private IAuthorizationService AuthorizationService =>
             _AuthorizationService ?? (_AuthorizationService = Container.Resolve<IAuthorizationService>());
 
-        #endregion
 
 
         public App(IPlatformInitializer initializer)
@@ -41,7 +38,6 @@ namespace GPSNote
 
             Application.Current.UserAppTheme = (OSAppTheme)SettingsManager.Theme;
 
-            //await NavigationService.NavigateAsync($"{nameof(TabbedPage1)}");
             if (AuthorizationService.IsAutorized)
             {
                 await NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(SignIn)}");

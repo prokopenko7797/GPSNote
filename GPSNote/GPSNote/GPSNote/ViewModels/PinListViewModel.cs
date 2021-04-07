@@ -1,4 +1,5 @@
-﻿using GPSNote.Models;
+﻿using Acr.UserDialogs;
+using GPSNote.Models;
 using GPSNote.Servcies.AutorizationService;
 using GPSNote.Servcies.LocalizationService;
 using GPSNote.Servcies.PinService;
@@ -17,9 +18,7 @@ namespace GPSNote.ViewModels
 {
     public class PinListViewModel : ViewModelBase
     {
-        public PinListViewModel(INavigationService navigationService, ILocalizationService localizationService)
-            : base(navigationService, localizationService)
-        {
+        
 
         #region _____Private______
 
@@ -91,8 +90,7 @@ namespace GPSNote.ViewModels
 
         public ICommand DeleteCommandTap => _DeleteCommandTap ?? (_DeleteCommandTap = new Command(DeleteCommand));
 
-        public ICommand ImageCommandTap => _ImageCommandTap ?? (_ImageCommandTap = new Command(ModalImageComand));
-
+   
         #endregion
 
 
@@ -128,14 +126,14 @@ namespace GPSNote.ViewModels
                 { nameof(UserPins), pins }
             };
 
-            await NavigationService.NavigateAsync(nameof(AddEditProfile), parametrs);
+           // await NavigationService.NavigateAsync(nameof(AddEditProfile), parametrs);
         }
 
 
      
         private async void NavigateAddEditProfileCommand()
         {
-            await NavigationService.NavigateAsync(nameof(AddEditProfile));
+           // await NavigationService.NavigateAsync(nameof(AddEditProfile));
 
         }
 
@@ -169,12 +167,10 @@ namespace GPSNote.ViewModels
         {
             PinList = new ObservableCollection<UserPins>(await _pinService.GetUserPinsAsync());
 
-
-
             IsVisible = PinList.Count() == 0;
         }
 
         #endregion
     }
 }
-}
+

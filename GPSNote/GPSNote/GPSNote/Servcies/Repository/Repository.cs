@@ -21,7 +21,7 @@ namespace GPSNote.Servcies.Repository
                     Environment.SpecialFolder.LocalApplicationData), Constant.DB_Name));
         }
 
-        #region ______Public Methods______
+        #region -- IRepository implementation --
         public async Task<IEnumerable<T>> GetAllAsync<T>() where T : IEntityModel, new()
         {
             await _database.CreateTableAsync<T>();
@@ -63,8 +63,6 @@ namespace GPSNote.Servcies.Repository
             await _database.CreateTableAsync<T>();
             return await _database.FindWithQueryAsync<T>(query);
         }
-
-
 
         #endregion
     }

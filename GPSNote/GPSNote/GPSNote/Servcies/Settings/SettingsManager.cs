@@ -9,7 +9,8 @@ namespace GPSNote.Servcies.Settings
 {
     public class SettingsManager : ISettingsManager
     {
-        #region ______Public Methods______
+
+        #region -- ISettingsManager implementation --
 
 
         public string Lang
