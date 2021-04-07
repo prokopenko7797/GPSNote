@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Xamarin.Forms;
 
-namespace GPSNote.Constants
+namespace GPSNote
 {
     public static class Constant
     {

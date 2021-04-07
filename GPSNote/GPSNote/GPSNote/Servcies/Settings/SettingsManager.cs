@@ -1,5 +1,4 @@
-﻿using GPSNote.Constants;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using Xamarin.Essentials;

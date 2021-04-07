@@ -54,7 +54,7 @@ namespace GPSNote.ViewModels
 
             await _pinService.AddPinAsync(new UserPins(){ Latitude = position.Latitude, Longitude = position.Longitude, Label = "My pin"});
 
-            pins = GetPins(await _pinService.GetUserPinsAsync());
+            PinList = GetPins(await _pinService.GetUserPinsAsync());
 
         }
 
@@ -73,7 +73,7 @@ namespace GPSNote.ViewModels
 
         private List<Pin> _pins;
 
-        public List<Pin> pins
+        public List<Pin> PinList
         {
             get { return _pins; }
             set { SetProperty(ref _pins, value); }
@@ -111,7 +111,23 @@ namespace GPSNote.ViewModels
         public override async void Initialize(INavigationParameters parameters)
         {
             base.Initialize(parameters);
-            pins = GetPins( await _pinService.GetUserPinsAsync());
+            PinList = GetPins( await _pinService.GetUserPinsAsync());
+        }
+
+
+        public override void OnNavigatedTo(INavigationParameters parameters)
+        {
+            base.OnNavigatedTo(parameters);
+            if (parameters.TryGetValue<List<Pin>>(nameof(this.PinList), out var newPinsValue))
+            {
+                this.PinList = newPinsValue;
+            }
+        }
+
+        public override void OnNavigatedFrom(INavigationParameters parameters)
+        {
+            base.OnNavigatedFrom(parameters);
+            parameters.Add(nameof(this.PinList), this.PinList);
         }
 
         #endregion

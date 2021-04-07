@@ -1,5 +1,4 @@
-﻿using GPSNote.Constants;
-using GPSNote.Models;
+﻿using GPSNote.Models;
 using GPSNote.Servcies.Repository;
 using GPSNote.Servcies.Settings;
 using System;

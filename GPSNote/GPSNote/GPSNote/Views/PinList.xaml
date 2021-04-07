@@ -19,8 +19,8 @@
                VerticalOptions="Center"
                IsVisible="{Binding IsVisible}"></Label>
 
-
-        <ListView ItemsSource="{Binding ProfileList}" 
+        
+        <ListView ItemsSource="{Binding PinList}" 
                       RowHeight="100" 
                       Margin="10"
                       SelectionMode="None"
@@ -56,9 +56,9 @@
                                               CommandParameter="{Binding .}"/>
                                 </Image.GestureRecognizers>
                             </Image>
-                            <Label Grid.Column="1" Grid.Row="0" Text="{Binding nick_name}" FontAttributes="Bold" />
-                            <Label Grid.Column="1" Grid.Row="1" Text="{Binding name}" />
-                            <Label Grid.Column="1" Grid.Row="2" Text="{Binding date}" />
+                            <Label Grid.Column="1" Grid.Row="0" Text="{Binding Label}" FontAttributes="Bold" />
+                            <Label Grid.Column="1" Grid.Row="1" Text="{Binding Latitude}" />
+                            <Label Grid.Column="1" Grid.Row="2" Text="{Binding Longitude}" />
 
                         </Grid>
 

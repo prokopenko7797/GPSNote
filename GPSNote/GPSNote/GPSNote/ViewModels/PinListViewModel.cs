@@ -13,22 +13,12 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
 using Xamarin.Forms;
+using Xamarin.Forms.GoogleMaps;
 
 namespace GPSNote.ViewModels
 {
     public class PinListViewModel : ViewModelBase
     {
-        
-        private ObservableCollection<UserPins> _pinList;
-
-        private ICommand _LogOutToolBarCommand;
-        private ICommand _SettingsToolBarCommand;
-        private ICommand _AddEditButtonClicked;
-        private ICommand _DeleteCommandTap;
-        private ICommand _EditCommandTap;
-
-        private bool _IsVisible;
-
         private readonly IPinService _pinService;
         private readonly IAuthorizationService _authorizationService;
 
@@ -42,32 +32,40 @@ namespace GPSNote.ViewModels
         }
 
         #region -- Public properties --
+        private ObservableCollection<UserPins> _pinList;
         public ObservableCollection<UserPins> PinList
         {
             get { return _pinList; }
             set { SetProperty(ref _pinList, value); }
         }
 
+        private bool _IsVisible;
         public bool IsVisible
         {
             get { return _IsVisible; }
             set { SetProperty(ref _IsVisible, value); }
         }
 
+        private ICommand _LogOutToolBarCommand;
         public ICommand LogOutToolBarCommand =>
             _LogOutToolBarCommand ?? (_LogOutToolBarCommand =
             new Command(NavigateLogOutToolBarCommand));
-
+       
+        private ICommand _SettingsToolBarCommand;
         public ICommand SettingsToolBarCommand =>
             _SettingsToolBarCommand ?? (_SettingsToolBarCommand =
             new Command(NavigateSettingsCommand));
 
+        private ICommand _AddEditButtonClicked;
         public ICommand AddEditButtonClicked =>
             _AddEditButtonClicked ?? (_AddEditButtonClicked =
             new Command(NavigateAddEditProfileCommand));
 
+
+        private ICommand _EditCommandTap;
         public ICommand EditCommandTap => _EditCommandTap ?? (_EditCommandTap = new Command(EditCommand));
 
+        private ICommand _DeleteCommandTap;
         public ICommand DeleteCommandTap => _DeleteCommandTap ?? (_DeleteCommandTap = new Command(DeleteCommand));
 
         #endregion
@@ -105,14 +103,14 @@ namespace GPSNote.ViewModels
                 { nameof(UserPins), pins }
             };
 
-           // await NavigationService.NavigateAsync(nameof(AddEditProfile), parametrs);
+            await NavigationService.NavigateAsync(nameof(Settings), parametrs);
         }
 
 
      
         private async void NavigateAddEditProfileCommand()
         {
-           // await NavigationService.NavigateAsync(nameof(AddEditProfile));
+            await NavigationService.NavigateAsync(nameof(Settings));
 
         }
 
@@ -129,24 +127,44 @@ namespace GPSNote.ViewModels
             await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(SignIn)}");
         }
 
-        #endregion
-
-        #region --Overrides--
-
-        public override void OnNavigatedTo(INavigationParameters parameters)
-        {
-            base.OnNavigatedTo(parameters);
-
-            UpdateCollection();
-
-
-        }
-
         private async void UpdateCollection()
         {
             PinList = new ObservableCollection<UserPins>(await _pinService.GetUserPinsAsync());
 
             IsVisible = PinList.Count() == 0;
+        }
+
+        #endregion
+
+        #region --Overrides--
+
+        //public override void OnNavigatedTo(INavigationParameters parameters)
+        //{
+        //    base.OnNavigatedTo(parameters);
+
+        //    UpdateCollection();
+
+        //}
+
+        //public override void Initialize(INavigationParameters parameters)
+        //{
+        //    base.Initialize(parameters);
+        //    UpdateCollection();
+        //}
+
+        public override void OnNavigatedTo(INavigationParameters parameters)
+        {
+            base.OnNavigatedTo(parameters);
+            if (parameters.TryGetValue<IEnumerable<Pin>>(nameof(this.PinList), out var newPinsValue))
+            {
+                this.PinList = (ObservableCollection<Pin>)newPinsValue;
+            }
+        }
+
+        public override void OnNavigatedFrom(INavigationParameters parameters)
+        {
+            base.OnNavigatedFrom(parameters);
+            parameters.Add(nameof(this.PinList), this.PinList);
         }
 
         #endregion

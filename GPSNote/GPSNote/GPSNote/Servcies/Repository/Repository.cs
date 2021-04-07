@@ -1,5 +1,4 @@
-﻿using GPSNote.Constants;
-using GPSNote.Models;
+﻿using GPSNote.Models;
 using SQLite;
 using System;
 using System.Collections.Generic;

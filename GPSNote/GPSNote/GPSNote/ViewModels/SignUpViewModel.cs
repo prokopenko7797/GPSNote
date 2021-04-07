@@ -1,5 +1,4 @@
-﻿using GPSNote.Constants;
-using GPSNote.Models;
+﻿using GPSNote.Models;
 using GPSNote.Servcies.LocalizationService;
 using GPSNote.Servcies.RegistrationService;
 using GPSNote.Validators;

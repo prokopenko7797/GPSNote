@@ -1,5 +1,4 @@
-﻿using GPSNote.Constants;
-using GPSNote.Servcies.AutorizationService;
+﻿using GPSNote.Servcies.AutorizationService;
 using GPSNote.Servcies.LocalizationService;
 using GPSNote.Views;
 using Prism.Commands;

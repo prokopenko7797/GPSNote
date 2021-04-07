@@ -67,6 +67,7 @@ namespace GPSNote
             containerRegistry.RegisterForNavigation<TabbedPage1, TabbedPage1ViewModel>();
             containerRegistry.RegisterForNavigation<MapPage, MapPageViewModel>();
             containerRegistry.RegisterForNavigation<PinList, PinListViewModel>();
+            containerRegistry.RegisterForNavigation<MainTabbedPage>();
         }
     }
 }
