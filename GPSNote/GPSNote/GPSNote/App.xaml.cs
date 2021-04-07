@@ -4,6 +4,7 @@ using GPSNote.Servcies.PinService;
 using GPSNote.Servcies.RegistrationService;
 using GPSNote.Servcies.Repository;
 using GPSNote.Servcies.Settings;
+using GPSNote.Servcies.ThemeService;
 using GPSNote.ViewModels;
 using GPSNote.Views;
 using Prism;
@@ -17,9 +18,9 @@ namespace GPSNote
     public partial class App
     {
 
-        private ISettingsManager _SettingsManager;
-        private ISettingsManager SettingsManager =>
-            _SettingsManager ?? (_SettingsManager = Container.Resolve<ISettingsManager>());
+        private IThemeService _Theme;
+        private IThemeService ThemeService =>
+            _Theme ?? (_Theme = Container.Resolve<IThemeService>());
 
         private IAuthorizationService _AuthorizationService;
         private IAuthorizationService AuthorizationService =>
@@ -36,13 +37,16 @@ namespace GPSNote
         {
             InitializeComponent();
 
-            Application.Current.UserAppTheme = (OSAppTheme)SettingsManager.Theme;
+            Application.Current.UserAppTheme = (OSAppTheme)ThemeService.Theme;
 
             if (AuthorizationService.IsAutorized)
             {
                 await NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(SignIn)}");
             }
-            else await NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(TabbedPage1)}");
+            else
+            {
+                await NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(TabbedPage1)}");
+            }
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
@@ -50,6 +54,7 @@ namespace GPSNote
 
             containerRegistry.RegisterInstance<IRepository>(Container.Resolve<Repository>());
             containerRegistry.RegisterInstance<ISettingsManager>(Container.Resolve<SettingsManager>());
+            containerRegistry.RegisterInstance<IThemeService>(Container.Resolve<ThemeService>());
             containerRegistry.RegisterInstance<IAuthorizationService>(Container.Resolve<AuthorizationService>());
             containerRegistry.RegisterInstance<IRegistrationService>(Container.Resolve<RegistrationService>());
             containerRegistry.RegisterInstance<ILocalizationService>(Container.Resolve<LocalizationService>()); 

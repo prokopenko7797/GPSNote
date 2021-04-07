@@ -19,9 +19,6 @@ namespace GPSNote.ViewModels
     public class PinListViewModel : ViewModelBase
     {
         
-
-        #region _____Private______
-
         private ObservableCollection<UserPins> _pinList;
 
         private ICommand _LogOutToolBarCommand;
@@ -29,19 +26,12 @@ namespace GPSNote.ViewModels
         private ICommand _AddEditButtonClicked;
         private ICommand _DeleteCommandTap;
         private ICommand _EditCommandTap;
-        private ICommand _ImageCommandTap;
 
         private bool _IsVisible;
-
-
-        #endregion
-
-        #region ______Services_____
 
         private readonly IPinService _pinService;
         private readonly IAuthorizationService _authorizationService;
 
-        #endregion
 
         public PinListViewModel(INavigationService navigationService, ILocalizationService localizationService, IPinService pinService,
             IAuthorizationService authorizationService)
@@ -51,28 +41,18 @@ namespace GPSNote.ViewModels
             _pinService = pinService;
         }
 
-
-        #region _______Public Properties________
-
-
+        #region -- Public properties --
         public ObservableCollection<UserPins> PinList
         {
             get { return _pinList; }
             set { SetProperty(ref _pinList, value); }
         }
 
-
-
         public bool IsVisible
         {
             get { return _IsVisible; }
             set { SetProperty(ref _IsVisible, value); }
         }
-
-        #endregion
-
-
-        #region _____Comdands______
 
         public ICommand LogOutToolBarCommand =>
             _LogOutToolBarCommand ?? (_LogOutToolBarCommand =
@@ -90,12 +70,11 @@ namespace GPSNote.ViewModels
 
         public ICommand DeleteCommandTap => _DeleteCommandTap ?? (_DeleteCommandTap = new Command(DeleteCommand));
 
-   
         #endregion
 
 
 
-        #region _______Private Helpers_____
+        #region -- Private helpers --
 
 
         private async void DeleteCommand(object sender)
@@ -110,7 +89,7 @@ namespace GPSNote.ViewModels
             });
             if (result)
             {
-                await _pinService.DeleteAsync(userPins.id);
+                await _pinService.DeletePinAsync(userPins.id);
                 PinList.Remove(userPins);
                 if (PinList.Count() == 0) IsVisible = true;
             }
@@ -152,7 +131,7 @@ namespace GPSNote.ViewModels
 
         #endregion
 
-        #region ____Overrides_____
+        #region --Overrides--
 
         public override void OnNavigatedTo(INavigationParameters parameters)
         {

@@ -1,7 +1,7 @@
 ﻿using GPSNote.Constants;
 using GPSNote.Models;
-using GPSNote.Servcies.AutorizationService;
 using GPSNote.Servcies.Repository;
+using GPSNote.Servcies.Settings;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -13,37 +13,37 @@ namespace GPSNote.Servcies.PinService
     public class PinService : IPinService
     {
         private readonly IRepository _repository;
-        private readonly IAuthorizationService _authorizationService;
+        private readonly ISettingsManager _Settings;
 
-
-        public PinService(IRepository repository, IAuthorizationService authorizationService)
+        public PinService(IRepository repository, 
+                          ISettingsManager settingsManager)
         {
             _repository = repository;
-            _authorizationService = authorizationService;
+            _Settings = settingsManager;
 
         }
 
         #region -- IPinService implementation --
 
-        public async Task<bool> EditAsync(UserPins userPins)
+        public async Task<bool> EditPinAsync(UserPins userPins)
         {
             return (await _repository.UpdateAsync(userPins) != Constant.SQLError);
         }
 
-        public async Task<bool> AddAsync(UserPins userPins)
+        public async Task<bool> AddPinAsync(UserPins userPins)
         {
-            userPins.user_id = _authorizationService.IdUser;
+            userPins.user_id = _Settings.IdUser;
             return (await _repository.InsertAsync(userPins) != Constant.SQLError);
         }
 
-        public async Task<bool> DeleteAsync(int id)
+        public async Task<bool> DeletePinAsync(int id)
         {
             if (await _repository.DeleteAsync<UserPins>(id) != Constant.SQLError)
                 return true;
             else return false;
         }
 
-        public async Task<UserPins> GetByIdAsync(int id)
+        public async Task<UserPins> GetPinByIdAsync(int id)
         {
             return await _repository.GetByIdAsync<UserPins>(id);
         }
@@ -51,10 +51,9 @@ namespace GPSNote.Servcies.PinService
         public async Task<IEnumerable<UserPins>> GetUserPinsAsync()
         {
             IEnumerable<UserPins> userPins = await _repository.QueryAsync<UserPins>($"SELECT * FROM {nameof(UserPins)} " +
-                $"WHERE user_id='{_authorizationService.IdUser}'");
+                $"WHERE user_id='{_Settings.IdUser}'");
        
             return userPins;
-
         }
 
         #endregion

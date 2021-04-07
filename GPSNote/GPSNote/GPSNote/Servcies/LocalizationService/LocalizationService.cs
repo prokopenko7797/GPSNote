@@ -13,15 +13,16 @@ namespace GPSNote.Servcies.LocalizationService
     public class LocalizationService : ILocalizationService, INotifyPropertyChanged
     {
 
-        private readonly ISettingsManager _settingsManager;
+        private readonly ISettingsManager  _settings;
 
         private readonly ResourceManager _ResourceManager;
         private CultureInfo _CurrentCultureInfo;
 
-        public LocalizationService(ISettingsManager settingsManager)
+
+        public LocalizationService(ISettingsManager settings)
         {
-            _settingsManager = settingsManager;
-            _CurrentCultureInfo = new CultureInfo(_settingsManager.Lang);
+            _settings = settings;
+            _CurrentCultureInfo = new CultureInfo(_settings.Lang);
             _ResourceManager = new ResourceManager(typeof(LocalizationResource));
 
             MessagingCenter.Subscribe<object, CultureInfo>(this,
@@ -30,7 +31,6 @@ namespace GPSNote.Servcies.LocalizationService
 
         #region -- ILocalizationService implementation --
 
-        #region -- Public properties --
 
         public string this[string key]
         {
@@ -40,12 +40,19 @@ namespace GPSNote.Servcies.LocalizationService
             }
         }
 
-        #endregion
 
         public void ChangeCulture(string lang)
         {
             MessagingCenter.Send<object, CultureInfo>(this, string.Empty, new CultureInfo(lang));
         }
+
+
+        public string Lang 
+        {
+            get => _settings.Lang; 
+            set => _settings.Lang = value;
+        }
+
 
         #endregion
 

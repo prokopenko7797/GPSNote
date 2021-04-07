@@ -26,6 +26,11 @@ namespace GPSNote.Models
 
         [Column(nameof(Tag))]
         public string Tag { get; set; }
+
+        [Column(nameof(IsEnabled))]
+        public bool IsEnabled { get; set; }
+
+
     }
 
 }

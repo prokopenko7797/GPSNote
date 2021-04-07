@@ -9,6 +9,7 @@ namespace GPSNote.Servcies.Settings
     {
         string Lang { get; set; }
         int Theme { get; set; }
+        int IdUser { get; set; }
         double Latitude { get; set; }
         double Longitude { get; set; }
         double Zoom { get; set; }

@@ -24,6 +24,13 @@ namespace GPSNote.Servcies.Settings
             get => Preferences.Get(nameof(Theme), Constant.DefaultTheme);
             set => Preferences.Set(nameof(Theme), value);
         }
+
+        public int IdUser
+        {
+            get => Preferences.Get(nameof(IdUser), Constant.NonAuthorized);
+            set => Preferences.Set(nameof(IdUser), value);
+        }
+
         public double Latitude
         {
             get => Preferences.Get(nameof(Latitude), 41.8899999412824);
@@ -39,6 +46,7 @@ namespace GPSNote.Servcies.Settings
             get => Preferences.Get(nameof(Zoom), 10);
             set => Preferences.Set(nameof(Zoom), value);
         }
+
 
 
         #endregion

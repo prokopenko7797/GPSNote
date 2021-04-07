@@ -9,9 +9,8 @@ namespace GPSNote.Servcies.RegistrationService
 {
     public class RegistrationService : IRegistrationService
     {
-        #region _____Services______
+
         private readonly IRepository _repository;
-        #endregion
 
         public RegistrationService(IRepository repository)
         {
@@ -25,9 +24,9 @@ namespace GPSNote.Servcies.RegistrationService
         {
             bool result = false;
 
-            User user1 = await _repository.FindWithQueryAsync<User>($"SELECT * FROM {nameof(User)} WHERE Email='{user.Email}'");
+            User registredUser = await _repository.FindWithQueryAsync<User>($"SELECT * FROM {nameof(User)} WHERE Email='{user.Email}'");
 
-            if (user1 !=null)
+            if (registredUser != null)
             {
                 result = false;
             }

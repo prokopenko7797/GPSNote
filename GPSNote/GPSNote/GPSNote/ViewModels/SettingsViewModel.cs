@@ -1,6 +1,7 @@
 ﻿using GPSNote.Constants;
 using GPSNote.Servcies.LocalizationService;
 using GPSNote.Servcies.Settings;
+using GPSNote.Servcies.ThemeService;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Navigation;
@@ -14,14 +15,14 @@ namespace GPSNote.ViewModels
 {
     public class SettingsViewModel : ViewModelBase
     {
-        private ISettingsManager _settingsManager;
+        private IThemeService _ThemeService;
         private OSAppTheme _appTheme;
 
         public SettingsViewModel(INavigationService navigationService, ILocalizationService localizationService,
-            ISettingsManager settingsManager)
+            IThemeService themeService)
             : base(navigationService, localizationService)
         {
-            _settingsManager = settingsManager;
+            _ThemeService = themeService;
         }
 
         #region -- Public properties --
@@ -67,9 +68,9 @@ namespace GPSNote.ViewModels
 
         private async void SaveToolBar()
         {
-            _settingsManager.Theme = (int)_appTheme;
+            _ThemeService.Theme = (int)_appTheme;
 
-            _settingsManager.Lang = SelectedLang;
+            Resources.Lang = SelectedLang;
 
             await NavigationService.GoBackAsync();
         }
@@ -82,21 +83,22 @@ namespace GPSNote.ViewModels
         {
             base.Initialize(parameters);
 
-            SelectedLang = _settingsManager.Lang;
+            SelectedLang = Resources.Lang;
 
-            switch (_settingsManager.Lang)
+            switch (Resources.Lang)
             {
                 case Constant.ResourcesLangConst.en:
                     IsCheckedEn = true;
+
                     break;
                 case Constant.ResourcesLangConst.ru:
                     IsCheckedRu = true;
                     break;
             }
 
-            _appTheme = (OSAppTheme)_settingsManager.Theme;
+            _appTheme = (OSAppTheme)_ThemeService.Theme;
 
-            if (_settingsManager.Theme == (int)OSAppTheme.Unspecified)
+            if (_ThemeService.Theme == (int)OSAppTheme.Unspecified)
             {
                 IsChecked = false;
             }
@@ -117,17 +119,21 @@ namespace GPSNote.ViewModels
                 {
                     _appTheme = OSAppTheme.Dark;
                     Application.Current.UserAppTheme = OSAppTheme.Dark;
+
                 }
                 else
                 {
                     _appTheme = OSAppTheme.Unspecified;
                     Application.Current.UserAppTheme = OSAppTheme.Unspecified;
                 }
+
+                _ThemeService.Theme = (int)_appTheme;
             }
 
             if (args.PropertyName == nameof(SelectedLang))
             {
                 Resources.ChangeCulture(SelectedLang);
+                Resources.Lang = SelectedLang;
             }
         }
 
@@ -137,8 +143,8 @@ namespace GPSNote.ViewModels
         {
             base.OnNavigatedFrom(parameters);
 
-            Application.Current.UserAppTheme = (OSAppTheme)_settingsManager.Theme;
-            Resources.ChangeCulture(_settingsManager.Lang);
+            Application.Current.UserAppTheme = (OSAppTheme)_ThemeService.Theme;
+            Resources.ChangeCulture(Resources.Lang);
         }
 
         #endregion

@@ -3,6 +3,7 @@ using GPSNote.Models;
 using GPSNote.Servcies.LocalizationService;
 using GPSNote.Servcies.PinService;
 using GPSNote.Servcies.Settings;
+using GPSNote.ViewModels.ExtendedViewModels;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Navigation;
@@ -14,6 +15,7 @@ using System.Linq;
 using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.GoogleMaps;
+using GPSNote.Extensions;
 
 namespace GPSNote.ViewModels
 {
@@ -22,8 +24,8 @@ namespace GPSNote.ViewModels
         private readonly IPageDialogService _pageDialogService;
         private readonly IPinService _pinService;
 
-        public MapPageViewModel(INavigationService navigationService, ILocalizationService localizationService, IPageDialogService pageDialogService, ISettingsManager settingsManager,
-            IPinService pinService)
+        public MapPageViewModel(INavigationService navigationService, ILocalizationService localizationService, 
+            IPageDialogService pageDialogService, IPinService pinService)
             : base(navigationService, localizationService)
         {
             _pageDialogService = pageDialogService;
@@ -50,7 +52,7 @@ namespace GPSNote.ViewModels
                 
             };
 
-            await _pinService.AddAsync(new UserPins(){ Latitude = position.Latitude, Longitude = position.Longitude, Label = "My pin"});
+            await _pinService.AddPinAsync(new UserPins(){ Latitude = position.Latitude, Longitude = position.Longitude, Label = "My pin"});
 
             pins = GetPins(await _pinService.GetUserPinsAsync());
 
@@ -98,7 +100,8 @@ namespace GPSNote.ViewModels
             CameraPosition position = (CameraPosition)p;
 
             //  await _pageDialogService.DisplayAlertAsync("It's", $"{position.Target.Latitude} {position.Target.Longitude} {position.Zoom}", "Ok");
-
+            var pinViewModel = new PinViewModel();
+            var xxx = pinViewModel.ToPin();
         }
 
         #endregion

@@ -8,6 +8,7 @@ namespace GPSNote.Validators
 {
     public static class Validator
     {
+
         public static bool Match(string str, string con)
         {
             return str.Equals(con);

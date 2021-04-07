@@ -1,6 +1,7 @@
 ﻿using GPSNote.Constants;
 using GPSNote.Models;
 using GPSNote.Servcies.Repository;
+using GPSNote.Servcies.Settings;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,36 +13,29 @@ namespace GPSNote.Servcies.AutorizationService
     public class AuthorizationService : IAuthorizationService
     {
         private readonly IRepository _repository;
+        private readonly ISettingsManager _settingsManager;
 
 
-        public AuthorizationService(IRepository repository)
+        public AuthorizationService(IRepository repository, ISettingsManager settingsManager)
         {
             _repository = repository;
+            _settingsManager = settingsManager;
 
         }
 
         #region -- IAuthorizationService implementation --
 
-        #region -- Public properties --
+
 
         public bool IsAutorized 
         {
-            get { return IdUser == Constant.NonAuthorized; }
+            get { return _settingsManager.IdUser == Constant.NonAuthorized; }
         }
-
 
         public void LogOut()
         {
-            IdUser = Constant.NonAuthorized;
+            _settingsManager.IdUser = Constant.NonAuthorized;
         }
-
-        public int IdUser
-        {
-            get => Preferences.Get(nameof(IdUser), Constant.NonAuthorized);
-            set => Preferences.Set(nameof(IdUser), value);
-        }
-
-        #endregion
 
         public async Task<bool> AuthorizeAsync(string email, string password)
         {
@@ -51,7 +45,7 @@ namespace GPSNote.Servcies.AutorizationService
 
             if (user != null)
             {
-                IdUser = user.id;
+                _settingsManager.IdUser = user.id;
                 result = true;
             }
 
