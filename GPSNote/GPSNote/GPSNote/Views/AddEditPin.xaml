@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="http://prismlibrary.com" xmlns:custommap="clr-namespace:GPSNote.CustomControls.CustomMap"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="GPSNote.Views.AddEditPin"
+             Title="{Binding Title}"
+             BackgroundColor="{AppThemeBinding Light={StaticResource LightPageBackgroundColor}, Dark={StaticResource DarkPageBackgroundColor}}">
+
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem IconImageSource="ic_save.png"
+                     Order="Primary"
+                     Priority="0" 
+                     Command="{Binding SaveToolBarCommand}"
+                     />
+    </ContentPage.ToolbarItems>
+
+    <Grid Padding="30,10,30,10" HorizontalOptions="FillAndExpand"  VerticalOptions="StartAndExpand" >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.5*" />
+            <RowDefinition Height="0.1*" />
+            <RowDefinition Height="0.1*" />
+            <RowDefinition Height="0.3*" />
+        </Grid.RowDefinitions>
+
+        <Image Source="{Binding ImagePath}" Aspect="AspectFit" Grid.Row="0">
+            <Image.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding ImageTapCommand}" />
+            </Image.GestureRecognizers>
+        </Image>
+
+        <Entry Text="{Binding NickName}" 
+               Placeholder = "{Binding Resources[NickName]}" 
+               Grid.Row="1"/>
+
+        <Entry Text="{Binding Name}" 
+               Placeholder = "{Binding Resources[Name]}"
+               Grid.Row="2"/>
+
+        <Editor Text="{Binding Description}" 
+                Placeholder="{Binding Resources[Description]}" 
+                HeightRequest="120" 
+                Grid.Row="3"/>
+
+        <custommap:CustomMap   PinsSelect ="{Binding PinList}">
+            <custommap:CustomMap.Behaviors>
+                <prism:EventToCommandBehavior EventName="MapClicked"
+                                              Command="{Binding ItemTappedCommand}"
+                                              EventArgsParameterPath="Point" />
+            </custommap:CustomMap.Behaviors>
+        </custommap:CustomMap>
+
+
+
+    </Grid>
+</ContentPage>

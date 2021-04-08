@@ -11,14 +11,11 @@
 
     <Grid >
 
-        <custommap:CustomMap   PinsSelect ="{Binding pins}">
+        <custommap:CustomMap   PinsSelect ="{Binding PinList}">
             <custommap:CustomMap.Behaviors>
                 <prism:EventToCommandBehavior EventName="MapClicked"
                                               Command="{Binding ItemTappedCommand}"
                                               EventArgsParameterPath="Point" />
-                <prism:EventToCommandBehavior EventName="CameraIdled"
-                                              Command="{Binding MapMovedCommand}"
-                                              EventArgsParameterPath="Position" />
             </custommap:CustomMap.Behaviors>
         </custommap:CustomMap>
         

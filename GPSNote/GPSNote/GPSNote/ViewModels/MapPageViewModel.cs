@@ -50,16 +50,14 @@ namespace GPSNote.ViewModels
                 Position = position,
                 Tag = "id_new_york"
                 
+                
             };
 
-            await _pinService.AddPinAsync(new UserPins(){ Latitude = position.Latitude, Longitude = position.Longitude, Label = "My pin"});
+            await _pinService.AddPinAsync(new UserPins(){ Latitude = position.Latitude, Longitude = position.Longitude, Label = "My pin", IsEnabled = true});
 
             PinList = GetPins(await _pinService.GetUserPinsAsync());
 
         }
-
-
-        public DelegateCommand<object> MapMovedCommand => new DelegateCommand<object>(ExecutedMapMovedCommand); 
 
 
 
@@ -90,18 +88,9 @@ namespace GPSNote.ViewModels
             {
                 Position position = new Position(p.Latitude, p.Longitude);
 
-                pins.Add(new Pin() { Position = position, Label = p.Label, Tag = p.Tag });
+                pins.Add(new Pin() { Position = position, Label = p.Label, IsVisible = p.IsEnabled });
             }
             return pins;
-        }
-
-        private async void ExecutedMapMovedCommand(object p)
-        {
-            CameraPosition position = (CameraPosition)p;
-
-            //  await _pageDialogService.DisplayAlertAsync("It's", $"{position.Target.Latitude} {position.Target.Longitude} {position.Zoom}", "Ok");
-            var pinViewModel = new PinViewModel();
-            var xxx = pinViewModel.ToPin();
         }
 
         #endregion

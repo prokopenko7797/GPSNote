@@ -21,7 +21,6 @@ namespace GPSNote.Droid
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
 
             Xamarin.FormsGoogleMaps.Init(this, savedInstanceState);
-            Xamarin.FormsGoogleMapsBindings.Init();
             UserDialogs.Init(this);
             LoadApplication(new App(new AndroidInitializer()));
         }

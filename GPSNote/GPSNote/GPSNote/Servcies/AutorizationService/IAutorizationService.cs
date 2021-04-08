@@ -10,5 +10,6 @@ namespace GPSNote.Servcies.AutorizationService
         Task<bool> AuthorizeAsync(string email, string password);
         void LogOut();
         bool IsAutorized { get; }
+        int IdUser { get; }
     }
 }

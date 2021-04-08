@@ -24,12 +24,12 @@ namespace GPSNote.Servcies.AutorizationService
 
         #region -- IAuthorizationService implementation --
 
-
-
         public bool IsAutorized 
         {
             get { return _settingsManager.IdUser == Constant.NonAuthorized; }
         }
+
+        public int IdUser { get => _settingsManager.IdUser; }
 
         public void LogOut()
         {

@@ -97,7 +97,7 @@ namespace GPSNote.ViewModels
         private async void EditCommand(object sender)
         {
             UserPins pins = sender as UserPins;
-
+            
             var parametrs = new NavigationParameters
             {
                 { nameof(UserPins), pins }
@@ -110,14 +110,14 @@ namespace GPSNote.ViewModels
      
         private async void NavigateAddEditProfileCommand()
         {
-            await NavigationService.NavigateAsync(nameof(Settings));
+            await NavigationService.NavigateAsync(nameof(AddEditPin));
 
         }
 
 
         private async void NavigateSettingsCommand()
         {
-            await NavigationService.NavigateAsync(nameof(Settings));
+            await NavigationService.NavigateAsync(nameof(AddEditPin));
         }
 
 
@@ -138,34 +138,20 @@ namespace GPSNote.ViewModels
 
         #region --Overrides--
 
-        //public override void OnNavigatedTo(INavigationParameters parameters)
-        //{
-        //    base.OnNavigatedTo(parameters);
-
-        //    UpdateCollection();
-
-        //}
-
-        //public override void Initialize(INavigationParameters parameters)
-        //{
-        //    base.Initialize(parameters);
-        //    UpdateCollection();
-        //}
-
         public override void OnNavigatedTo(INavigationParameters parameters)
         {
             base.OnNavigatedTo(parameters);
-            if (parameters.TryGetValue<IEnumerable<Pin>>(nameof(this.PinList), out var newPinsValue))
-            {
-                this.PinList = (ObservableCollection<Pin>)newPinsValue;
-            }
+
+            UpdateCollection();
+
         }
 
-        public override void OnNavigatedFrom(INavigationParameters parameters)
+        public override void Initialize(INavigationParameters parameters)
         {
-            base.OnNavigatedFrom(parameters);
-            parameters.Add(nameof(this.PinList), this.PinList);
+            base.Initialize(parameters);
+            UpdateCollection();
         }
+
 
         #endregion
     }

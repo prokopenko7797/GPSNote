@@ -56,6 +56,7 @@
                                               CommandParameter="{Binding .}"/>
                                 </Image.GestureRecognizers>
                             </Image>
+                            
                             <Label Grid.Column="1" Grid.Row="0" Text="{Binding Label}" FontAttributes="Bold" />
                             <Label Grid.Column="1" Grid.Row="1" Text="{Binding Latitude}" />
                             <Label Grid.Column="1" Grid.Row="2" Text="{Binding Longitude}" />
