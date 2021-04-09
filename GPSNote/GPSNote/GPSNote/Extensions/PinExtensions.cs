@@ -13,22 +13,6 @@ namespace GPSNote.Extensions
         {
             var result = new Pin();
 
-
-            return result;
-        }
-
-        public static PinViewModel ToPin(this Pin pin)
-        {
-            var result = new PinViewModel();
-
-            return result;
-        }
-
-
-        public static Pin ToPin(this UserPins pinViewModel)
-        {
-            var result = new Pin();
-
             result.Label = pinViewModel.Label;
             result.IsVisible = pinViewModel.IsEnabled;
             result.Position = new Position(pinViewModel.Latitude, pinViewModel.Longitude);
@@ -36,14 +20,79 @@ namespace GPSNote.Extensions
             return result;
         }
 
-        public static UserPins ToUserPin(this Pin pinViewModel)
+        public static PinViewModel ToPinViewModel(this Pin pin)
+        {
+            var result = new PinViewModel();
+
+            result.Label = pin.Label;
+            result.IsEnabled = pin.IsVisible;
+            result.Latitude = pin.Position.Latitude;
+            result.Longitude = pin.Position.Longitude;
+
+            
+            return result;
+        }
+
+
+
+        public static UserPins ToUserPin(this PinViewModel pinViewModel)
         {
             var result = new UserPins();
 
+            result.id = pinViewModel.Id;
+            result.Label = pinViewModel.Label;
+            result.IsEnabled = pinViewModel.IsEnabled;
+            result.Latitude = pinViewModel.Latitude;
+            result.Longitude = pinViewModel.Longitude;
+            result.Description = pinViewModel.Description;
+
+            return result;
+        }
+
+        public static PinViewModel ToPinViewModel(this UserPins pin)
+        {
+            var result = new PinViewModel();
+            id id id
+            result.Label = pin.Label;
+            result.IsEnabled = pin.IsEnabled;
+            result.Latitude = pin.Latitude;
+            result.Longitude = pin.Longitude;
+            result.Description = pin.Description;
 
 
             return result;
         }
+
+
+
+
+
+
+
+        public static Pin ToPin(this UserPins userPin)
+        {
+            var result = new Pin();
+
+            result.Label = userPin.Label;
+            result.IsVisible = userPin.IsEnabled;
+            result.Position = new Position(userPin.Latitude, userPin.Longitude);
+
+            return result;
+        }
+
+        public static UserPins ToUserPin(this Pin pin)
+        {
+            var result = new UserPins();
+            result.Label = pin.Label;
+            result.IsEnabled = pin.IsVisible;
+            result.Latitude = pin.Position.Latitude;
+            result.Longitude = pin.Position.Longitude;
+            
+
+            return result;
+        }
+
+
 
     }
 }

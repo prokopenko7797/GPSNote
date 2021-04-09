@@ -104,6 +104,7 @@ namespace GPSNote.ViewModels
             {
                 Label = "Your pin",
                 Position = position
+                
             };
 
             List<Pin> list = new List<Pin>();

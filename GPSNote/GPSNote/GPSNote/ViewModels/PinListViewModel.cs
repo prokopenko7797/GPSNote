@@ -47,6 +47,10 @@ namespace GPSNote.ViewModels
             set { SetProperty(ref _IsVisible, value); }
         }
 
+
+
+
+
         private ICommand _LogOutToolBarCommand;
         public ICommand LogOutToolBarCommand =>
             _LogOutToolBarCommand ?? (_LogOutToolBarCommand =
@@ -68,6 +72,9 @@ namespace GPSNote.ViewModels
 
         private ICommand _DeleteCommandTap;
         public ICommand DeleteCommandTap => _DeleteCommandTap ?? (_DeleteCommandTap = new Command(DeleteCommand));
+
+        private ICommand _ImageCommandTap;
+        public ICommand ImageCommandTap => _ImageCommandTap ?? (_ImageCommandTap = new Command(ChangeVisibilityComand));
 
         #endregion
 
@@ -108,7 +115,17 @@ namespace GPSNote.ViewModels
         }
 
 
-     
+        private async void ChangeVisibilityComand(object sender)
+        {
+            UserPins pin = sender as UserPins;
+
+
+            pin.IsEnabled = !pin.IsEnabled;
+             
+
+            await _pinService.EditPinAsync(pin);           
+        }
+
         private async void NavigateAddEditProfileCommand()
         {
             await NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(AddEditPin)}");

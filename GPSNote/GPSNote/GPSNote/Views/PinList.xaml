@@ -49,14 +49,23 @@
                                 <ColumnDefinition Width="0.7*"/>
                             </Grid.ColumnDefinitions>
 
-                            <Image Grid.RowSpan="3" Source="{Binding image_path}"  Aspect="AspectFit" Margin="5">
+
+                            <Image Grid.RowSpan="3" Source="favorite.png"  Aspect="AspectFit" Margin="5" >
                                 <Image.GestureRecognizers>
                                     <TapGestureRecognizer Command="{Binding Path=BindingContext.ImageCommandTap, 
-                                                                Source={x:Reference ListView1}}" 
-                                              CommandParameter="{Binding .}"/>
+                                                                    Source={x:Reference ListView1}}" 
+                                                  CommandParameter="{Binding .}"/>
                                 </Image.GestureRecognizers>
                             </Image>
-                            
+
+                            <Image Grid.RowSpan="3" Source="favorite.png"  Aspect="AspectFit" Margin="5" >
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Path=BindingContext.ImageCommandTap, 
+                                                                    Source={x:Reference ListView1}}" 
+                                                  CommandParameter="{Binding .}"/>
+                                </Image.GestureRecognizers>
+                            </Image>
+
                             <Label Grid.Column="1" Grid.Row="0" Text="{Binding Label}" FontAttributes="Bold" />
                             <Label Grid.Column="1" Grid.Row="1" Text="{Binding Latitude}" />
                             <Label Grid.Column="1" Grid.Row="2" Text="{Binding Longitude}" />
