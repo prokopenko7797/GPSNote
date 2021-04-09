@@ -20,7 +20,7 @@
                IsVisible="{Binding IsVisible}"></Label>
 
         
-        <ListView ItemsSource="{Binding PinList}" 
+        <ListView ItemsSource="{Binding PinObs}" 
                       RowHeight="100" 
                       Margin="10"
                       SelectionMode="None"

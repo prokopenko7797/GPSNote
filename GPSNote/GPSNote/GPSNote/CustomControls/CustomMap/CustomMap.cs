@@ -20,6 +20,7 @@ namespace GPSNote.CustomControls.CustomMap
         private static void PinsSelectPropertyChanged(BindableObject bindable, object oldValue, object newValue)
         {
             var control = (CustomMap)bindable;
+            control.Pins.Clear();
             foreach (Pin pin in (List<Pin>)newValue)
             { 
                 control.Pins.Add(pin); 

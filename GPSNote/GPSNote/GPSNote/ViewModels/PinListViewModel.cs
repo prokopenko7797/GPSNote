@@ -4,6 +4,7 @@ using GPSNote.Servcies.AutorizationService;
 using GPSNote.Servcies.LocalizationService;
 using GPSNote.Servcies.PinService;
 using GPSNote.Views;
+using GPSNote.Extensions;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Navigation;
@@ -33,7 +34,7 @@ namespace GPSNote.ViewModels
 
         #region -- Public properties --
         private ObservableCollection<UserPins> _pinList;
-        public ObservableCollection<UserPins> PinList
+        public ObservableCollection<UserPins> PinObs
         {
             get { return _pinList; }
             set { SetProperty(ref _pinList, value); }
@@ -88,8 +89,8 @@ namespace GPSNote.ViewModels
             if (result)
             {
                 await _pinService.DeletePinAsync(userPins.id);
-                PinList.Remove(userPins);
-                if (PinList.Count() == 0) IsVisible = true;
+                PinObs.Remove(userPins);
+                if (PinObs.Count() == 0) IsVisible = true;
             }
         }
 
@@ -103,21 +104,21 @@ namespace GPSNote.ViewModels
                 { nameof(UserPins), pins }
             };
 
-            await NavigationService.NavigateAsync(nameof(Settings), parametrs);
+            await NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(AddEditPin)}", parametrs);
         }
 
 
      
         private async void NavigateAddEditProfileCommand()
         {
-            await NavigationService.NavigateAsync(nameof(AddEditPin));
+            await NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(AddEditPin)}");
 
         }
 
 
         private async void NavigateSettingsCommand()
         {
-            await NavigationService.NavigateAsync(nameof(AddEditPin));
+            await NavigationService.NavigateAsync(nameof(Settings));
         }
 
 
@@ -129,9 +130,9 @@ namespace GPSNote.ViewModels
 
         private async void UpdateCollection()
         {
-            PinList = new ObservableCollection<UserPins>(await _pinService.GetUserPinsAsync());
+            PinObs = new ObservableCollection<UserPins>(await _pinService.GetUserPinsAsync());
 
-            IsVisible = PinList.Count() == 0;
+            IsVisible = PinObs.Count() == 0;
         }
 
         #endregion
@@ -150,6 +151,21 @@ namespace GPSNote.ViewModels
         {
             base.Initialize(parameters);
             UpdateCollection();
+        }
+
+        public override void OnNavigatedFrom(INavigationParameters parameters)
+        {
+            base.OnNavigatedFrom(parameters);
+
+            List<Pin> PinList = new List<Pin>();            
+            
+            foreach (var item in PinObs)
+            {
+                
+                PinList.Add(item.ToPin());
+            }
+
+            parameters.Add(nameof(PinList), PinList);
         }
 
 

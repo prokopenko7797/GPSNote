@@ -6,8 +6,10 @@ using GPSNote.Servcies.PinService;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Navigation;
+using Prism.Services;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Xamarin.Forms.GoogleMaps;
 
@@ -16,25 +18,27 @@ namespace GPSNote.ViewModels
     public class AddEditPinViewModel : ViewModelBase
     {
 
+   
+        private readonly IPageDialogService _PageDialogService;
+        private readonly IPinService _PinService;
+        private readonly IAuthorizationService _authorizationService;
+
+        private UserPins _UserPin = new UserPins();
+
         public AddEditPinViewModel(INavigationService navigationService,
                                 ILocalizationService localizationService,
                                 IPinService pinService,
-                                IUserDialogs userDialogs,
+                                IPageDialogService pageDialogService,
                                 IAuthorizationService authorizationService)
                                 : base(navigationService, localizationService)
         {
             _PinService = pinService;
-            _userDialogs = userDialogs;
             _authorizationService = authorizationService;
+            _PageDialogService = pageDialogService;
             PinList = new List<Pin>();
         }
 
 
-        private UserPins _userPin = new UserPins();
-
-        private readonly IPinService _PinService;
-        private readonly IUserDialogs _userDialogs;
-        private readonly IAuthorizationService _authorizationService;
 
 
 
@@ -92,8 +96,13 @@ namespace GPSNote.ViewModels
         private void ExecutedItemTappedCommand(object p)
         {
             Position position = (Position)p;
+
+            Latitude = position.Latitude;
+            Longitude = position.Longitude;
+
             Pin pin = new Pin()
             {
+                Label = "Your pin",
                 Position = position
             };
 
@@ -113,28 +122,29 @@ namespace GPSNote.ViewModels
         {
             if (Name == default || Name.Length < 1)
             {
-                await _userDialogs.AlertAsync(Resources["NickNameEmpty"], Resources["Error"], Resources["Ok"]);
+                await _PageDialogService.DisplayAlertAsync( Resources["NameEmpty"], Resources["Error"], Resources["Ok"]);
+                ///////////////////////////////////
                 return;
             }
 
-            if (_userPin.Label != Name || _userPin.Latitude != Latitude
-                    || _userPin.Longitude != Longitude || _userPin.Description != Description)
+            if (_UserPin.Label != Name || _UserPin.Latitude != Latitude
+                    || _UserPin.Longitude != Longitude || _UserPin.Description != Description)
             {
 
-                _userPin.Label = Name;
-                _userPin.Description = Description;
-                _userPin.Latitude = Latitude;
-                _userPin.Longitude = Longitude;
-                _userPin.user_id = _authorizationService.IdUser;
-                _userPin.IsEnabled = true;
+                _UserPin.Label = Name;
+                _UserPin.Description = Description;
+                _UserPin.Latitude = Latitude;
+                _UserPin.Longitude = Longitude;
+                _UserPin.user_id = _authorizationService.IdUser;
+                _UserPin.IsEnabled = true;
 
-                if (_userPin.id == default)
+                if (_UserPin.id == default)
                 {
-                    await _PinService.AddPinAsync(_userPin);
+                    await _PinService.AddPinAsync(_UserPin);
                 }
                 else
                 {
-                    await _PinService.EditPinAsync(_userPin);
+                    await _PinService.EditPinAsync(_UserPin);
                 }
             }
             await NavigationService.GoBackAsync();
@@ -152,11 +162,11 @@ namespace GPSNote.ViewModels
         {
             if (parameters.GetValue<UserPins>(nameof(UserPins)) != null)
             {
-                _userPin = parameters.GetValue<UserPins>(nameof(UserPins));
-                Name = _userPin.Label;
-                Description = _userPin.Description;
-                Latitude = _userPin.Latitude;
-                Longitude = _userPin.Longitude;
+                _UserPin = parameters.GetValue<UserPins>(nameof(UserPins));
+                Name = _UserPin.Label;
+                Description = _UserPin.Description;
+                Latitude = _UserPin.Latitude;
+                Longitude = _UserPin.Longitude;
 
                 Title = Resources["EditProfileTitle"];
             }
@@ -164,8 +174,26 @@ namespace GPSNote.ViewModels
 
         }
 
+        protected override void OnPropertyChanged(PropertyChangedEventArgs args)
+        {
+            base.OnPropertyChanged(args);
+            if (args.PropertyName == nameof(Latitude) || args.PropertyName == nameof(Longitude))
+            {
+                Position position = new Position(Latitude, Longitude); 
+                
+                Pin pin = new Pin()
+                {
+                    Label = "Your pin",
+                    Position = position
+                };
 
+                List<Pin> list = new List<Pin>();
+                list.Add(pin);
+                PinList = list;
 
-        #endregion
+            }
+        }
     }
+
+    #endregion
 }

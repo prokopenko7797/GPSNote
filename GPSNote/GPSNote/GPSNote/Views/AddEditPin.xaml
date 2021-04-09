@@ -18,32 +18,32 @@
 
     <Grid Padding="30,10,30,10" HorizontalOptions="FillAndExpand"  VerticalOptions="StartAndExpand" >
         <Grid.RowDefinitions>
+            <RowDefinition Height="0.1*" />
+            <RowDefinition Height="0.2*" />
+            <RowDefinition Height="0.1*" />
+            <RowDefinition Height="0.1*" />
             <RowDefinition Height="0.5*" />
-            <RowDefinition Height="0.1*" />
-            <RowDefinition Height="0.1*" />
-            <RowDefinition Height="0.3*" />
         </Grid.RowDefinitions>
 
-        <Image Source="{Binding ImagePath}" Aspect="AspectFit" Grid.Row="0">
-            <Image.GestureRecognizers>
-                <TapGestureRecognizer Command="{Binding ImageTapCommand}" />
-            </Image.GestureRecognizers>
-        </Image>
-
-        <Entry Text="{Binding NickName}" 
-               Placeholder = "{Binding Resources[NickName]}" 
-               Grid.Row="1"/>
 
         <Entry Text="{Binding Name}" 
-               Placeholder = "{Binding Resources[Name]}"
-               Grid.Row="2"/>
+               Placeholder = "{Binding Resources[Name]}" 
+               Grid.Row="0"/>
 
         <Editor Text="{Binding Description}" 
                 Placeholder="{Binding Resources[Description]}" 
                 HeightRequest="120" 
-                Grid.Row="3"/>
+                Grid.Row="1"/>
 
-        <custommap:CustomMap   PinsSelect ="{Binding PinList}">
+        <Entry Text="{Binding Latitude}" 
+               Placeholder = "{Binding Resources[Latitude]}"
+               Grid.Row="2"/>
+
+        <Entry Text="{Binding Longitude}" 
+               Placeholder = "{Binding Resources[Longitude]}"
+               Grid.Row="3"/>
+
+        <custommap:CustomMap  Grid.Row="4"  PinsSelect ="{Binding PinList}">
             <custommap:CustomMap.Behaviors>
                 <prism:EventToCommandBehavior EventName="MapClicked"
                                               Command="{Binding ItemTappedCommand}"

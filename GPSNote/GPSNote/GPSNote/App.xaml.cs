@@ -39,15 +39,15 @@ namespace GPSNote
 
             Application.Current.UserAppTheme = (OSAppTheme)ThemeService.Theme;
 
-            await NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(AddEditPin)}");
-            //if (AuthorizationService.IsAutorized)
-            //{
-            //    await NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(SignIn)}");
-            //}
-            //else
-            //{
-            //    await NavigationService.NavigateAsync($"{nameof(TabbedPage1)}");
-            //}
+            //await NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(AddEditPin)}");
+            if (AuthorizationService.IsAutorized)
+            {
+                await NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(SignIn)}");
+            }
+            else
+            {
+                await NavigationService.NavigateAsync($"{nameof(MainTabbedPage)}");
+            }
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
