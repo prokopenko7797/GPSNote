@@ -52,7 +52,8 @@ namespace GPSNote.Extensions
         public static PinViewModel ToPinViewModel(this UserPins pin)
         {
             var result = new PinViewModel();
-            id id id
+
+            result.Id = pin.id;
             result.Label = pin.Label;
             result.IsEnabled = pin.IsEnabled;
             result.Latitude = pin.Latitude;

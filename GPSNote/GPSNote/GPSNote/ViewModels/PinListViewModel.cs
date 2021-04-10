@@ -110,7 +110,7 @@ namespace GPSNote.ViewModels
             {
                 { nameof(UserPins), pins }
             };
-
+            
             await NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(AddEditPin)}", parametrs);
         }
 
@@ -181,6 +181,8 @@ namespace GPSNote.ViewModels
                 
                 PinList.Add(item.ToPin());
             }
+
+            
 
             parameters.Add(nameof(PinList), PinList);
         }

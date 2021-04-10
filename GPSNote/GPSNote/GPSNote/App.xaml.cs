@@ -65,7 +65,6 @@ namespace GPSNote
             containerRegistry.RegisterForNavigation<SignIn, SignInViewModel>();
             containerRegistry.RegisterForNavigation<SignUp, SignUpViewModel>();
             containerRegistry.RegisterForNavigation<Settings, SettingsViewModel>();
-            containerRegistry.RegisterForNavigation<TabbedPage1, TabbedPage1ViewModel>();
             containerRegistry.RegisterForNavigation<MapPage, MapPageViewModel>();
             containerRegistry.RegisterForNavigation<PinList, PinListViewModel>();
             containerRegistry.RegisterForNavigation<MainTabbedPage>();
