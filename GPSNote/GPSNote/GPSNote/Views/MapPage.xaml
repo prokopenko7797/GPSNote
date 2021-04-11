@@ -11,14 +11,48 @@
 
     <Grid >
 
-        <custommap:CustomMap   PinsSelect ="{Binding PinList}">
+        <Button Grid.Row="0" Text="asdads" Command="{Binding MoveToCommand}"></Button>
+        
+        <custommap:CustomMap Grid.Row="1"   PinsSelect ="{Binding PinList}" MoveTo="{Binding MoveTo}">
             <custommap:CustomMap.Behaviors>
                 <prism:EventToCommandBehavior EventName="MapClicked"
                                               Command="{Binding ItemTappedCommand}"
                                               EventArgsParameterPath="Point" />
+                <prism:EventToCommandBehavior EventName="CameraIdled"
+                                              Command="{Binding CameraIdLedCommand}"
+                                              EventArgsParameterPath="Position" />
+                <prism:EventToCommandBehavior EventName="PinClicked"
+                                              Command="{Binding PinClickedCommand}"
+                                              EventArgsParameterPath="Pin" />
             </custommap:CustomMap.Behaviors>
         </custommap:CustomMap>
-        
+
+        <Grid Grid.Row="1" 
+              BackgroundColor="{AppThemeBinding Light={StaticResource LightPageBackgroundColor}, Dark={StaticResource DarkPageBackgroundColor}}"
+              IsVisible="{Binding IsPinTapped}"         
+              VerticalOptions="End"
+              HorizontalOptions="Center"
+              Margin="0,0,0,20">
+            
+            <Label Text= "{Binding PinName}"
+                   VerticalOptions="Center"
+                   Grid.Row="0"/>
+            
+            <Label Text= "{Binding PinDescription}"
+                   VerticalOptions="Center"
+                   Grid.Row="1"/>
+            
+            <Grid Grid.Row="2">
+                
+                <Label Text= "{Binding PinLatitude}"
+                       VerticalOptions="Center"
+                       Grid.Column="0" />
+                
+                <Label Text= "{Binding PinLongitude}"
+                       VerticalOptions="Center"
+                       Grid.Column="1"/>
+            </Grid>
+        </Grid>
     </Grid>
 
 </ContentPage>

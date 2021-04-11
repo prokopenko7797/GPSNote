@@ -1,4 +1,5 @@
 using GPSNote.Servcies.AutorizationService;
+using GPSNote.Servcies.LastPositionService;
 using GPSNote.Servcies.LocalizationService;
 using GPSNote.Servcies.PinService;
 using GPSNote.Servcies.RegistrationService;
@@ -46,7 +47,7 @@ namespace GPSNote
             }
             else
             {
-                await NavigationService.NavigateAsync($"{nameof(MainTabbedPage)}");
+                await NavigationService.NavigateAsync($"/{nameof(MainTabbedPage)}");
             }
         }
 
@@ -60,6 +61,8 @@ namespace GPSNote
             containerRegistry.RegisterInstance<IRegistrationService>(Container.Resolve<RegistrationService>());
             containerRegistry.RegisterInstance<ILocalizationService>(Container.Resolve<LocalizationService>()); 
             containerRegistry.RegisterInstance<IPinService>(Container.Resolve<PinService>());
+            containerRegistry.RegisterInstance<ILastPositionService>(Container.Resolve<LastPositionService>());
+            
 
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<SignIn, SignInViewModel>();

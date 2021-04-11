@@ -10,7 +10,8 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
+            <RowDefinition Height="0.1*" />
+            <RowDefinition Height="0.9*" />
         </Grid.RowDefinitions>
 
 
@@ -19,14 +20,35 @@
                VerticalOptions="Center"
                IsVisible="{Binding IsVisible}"></Label>
 
-        
-        <ListView ItemsSource="{Binding PinObs}" 
-                      RowHeight="100" 
-                      Margin="10"
-                      SelectionMode="None"
-                      SeparatorVisibility="None"
-                      x:Name="ListView1"
-                      BackgroundColor="Transparent">
+        <SearchBar Grid.Row="0" 
+                   Placeholder="Search"
+                   BackgroundColor="AliceBlue"
+                   TextColor="Black"
+                   PlaceholderColor="Gray"
+                   Text="{Binding SearchBarText}">
+            
+            <SearchBar.Behaviors>
+                <prism:EventToCommandBehavior
+                            EventName="TextChanged"
+                            Command="{Binding OnSearchBarTypingCommand}"
+                            CommandParameter="MyParameter"  />
+
+            </SearchBar.Behaviors>
+        </SearchBar>
+
+        <ListView Grid.Row="1" ItemsSource="{Binding PinObs}" 
+                  RowHeight="100" 
+                  Margin="10"
+                  SelectedItem="{Binding SelectedItem}"
+                  x:Name="ListView1"
+                  BackgroundColor="Transparent">
+
+            <ListView.Behaviors>
+                <prism:EventToCommandBehavior EventName="ItemTapped"
+                                          Command="{Binding OnItemTappedCommand}"
+                                          CommandParameter="{Binding .}" />
+            </ListView.Behaviors>
+
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
@@ -50,6 +72,15 @@
                             </Grid.ColumnDefinitions>
 
 
+                            <Image Grid.RowSpan="3" Source="disabled.png"  Aspect="AspectFit" Margin="5" >
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Path=BindingContext.ImageCommandTap, 
+                                                                    Source={x:Reference ListView1}}" 
+                                                  CommandParameter="{Binding .}"/>
+                                </Image.GestureRecognizers>
+                            </Image>
+                            
+                            
                             <Image Grid.RowSpan="3" Source="favorite.png"  Aspect="AspectFit" Margin="5" IsVisible="{Binding IsEnabled}">
                                 <Image.GestureRecognizers>
                                     <TapGestureRecognizer Command="{Binding Path=BindingContext.ImageCommandTap, 
@@ -58,13 +89,7 @@
                                 </Image.GestureRecognizers>
                             </Image>
 
-                            <Image Grid.RowSpan="3" Source="favorite.png"  Aspect="AspectFit" Margin="5" >
-                                <Image.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding Path=BindingContext.ImageCommandTap, 
-                                                                    Source={x:Reference ListView1}}" 
-                                                  CommandParameter="{Binding .}"/>
-                                </Image.GestureRecognizers>
-                            </Image>
+
 
                             <Label Grid.Column="1" Grid.Row="0" Text="{Binding Label}" FontAttributes="Bold" />
                             <Label Grid.Column="1" Grid.Row="1" Text="{Binding Latitude}" />
@@ -78,7 +103,7 @@
         </ListView>
 
 
-        <Button Grid.Row="0" 
+        <Button Grid.Row="1" 
             BackgroundColor="{AppThemeBinding Light={StaticResource LightNavigationBarColor}, Dark={StaticResource DarkNavigationBarColor}}"
             BorderColor="{AppThemeBinding Light={StaticResource DarkPageBackgroundColor}, Dark={StaticResource LightPageBackgroundColor}}"
             CornerRadius="50"

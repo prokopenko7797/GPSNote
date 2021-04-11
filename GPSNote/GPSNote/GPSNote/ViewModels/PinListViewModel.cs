@@ -15,6 +15,8 @@ using System.Linq;
 using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.GoogleMaps;
+using Prism.Navigation.TabbedPages;
+using System.ComponentModel;
 
 namespace GPSNote.ViewModels
 {
@@ -48,8 +50,20 @@ namespace GPSNote.ViewModels
         }
 
 
+        private UserPins _SelectedItem = new UserPins();
+        public UserPins SelectedItem
+        {
+            get { return _SelectedItem; }
+            set { SetProperty(ref _SelectedItem, value); }
+        }
 
 
+        string _SearchBarText;
+        public string SearchBarText
+        {
+            get => _SearchBarText;
+            set => SetProperty(ref _SearchBarText, value);
+        }
 
         private ICommand _LogOutToolBarCommand;
         public ICommand LogOutToolBarCommand =>
@@ -76,12 +90,33 @@ namespace GPSNote.ViewModels
         private ICommand _ImageCommandTap;
         public ICommand ImageCommandTap => _ImageCommandTap ?? (_ImageCommandTap = new Command(ChangeVisibilityComand));
 
+        private ICommand _OnItemTappedCommand;
+        public ICommand OnItemTappedCommand => _OnItemTappedCommand ?? (_OnItemTappedCommand = new Command(ItemTapCommand));
+
+        public DelegateCommand<object> OnSearchBarTypingCommand => new DelegateCommand<object>(SearchBarTypingAsyncCommand);
+
         #endregion
 
 
 
         #region -- Private helpers --
 
+
+        private async void SearchBarTypingAsyncCommand(object sender)
+        {
+            if (string.IsNullOrWhiteSpace(SearchBarText))
+            {
+                PinObs = new ObservableCollection<UserPins>(await _pinService.GetUserPinsAsync());
+            }
+            else
+            {
+                PinObs = new ObservableCollection<UserPins>(PinObs.Where(pin => pin.Label.Contains(SearchBarText)));
+
+            }
+
+        }
+
+ 
 
         private async void DeleteCommand(object sender)
         {
@@ -119,9 +154,9 @@ namespace GPSNote.ViewModels
         {
             UserPins pin = sender as UserPins;
 
-
+            int i = PinObs.IndexOf(pin);
             pin.IsEnabled = !pin.IsEnabled;
-             
+            PinObs[i] = pin;
 
             await _pinService.EditPinAsync(pin);           
         }
@@ -152,6 +187,18 @@ namespace GPSNote.ViewModels
             IsVisible = PinObs.Count() == 0;
         }
 
+
+
+        private void ItemTapCommand()
+        {
+            var parameters = new NavigationParameters
+            {
+                { nameof(SelectedItem), SelectedItem }
+            };
+
+            NavigationService.SelectTabAsync($"{nameof(MapPage)}", parameters);
+        }
+
         #endregion
 
         #region --Overrides--
@@ -174,19 +221,23 @@ namespace GPSNote.ViewModels
         {
             base.OnNavigatedFrom(parameters);
 
-            List<Pin> PinList = new List<Pin>();            
-            
-            foreach (var item in PinObs)
-            {
-                
-                PinList.Add(item.ToPin());
-            }
-
-            
-
-            parameters.Add(nameof(PinList), PinList);
+            parameters.Add(nameof(PinObs), PinObs);
         }
 
+
+        protected override void OnPropertyChanged(PropertyChangedEventArgs args)
+        {
+            base.OnPropertyChanged(args);
+            if (args.PropertyName == nameof(SelectedItem)) 
+            {
+                var parameters = new NavigationParameters
+                {
+                    { nameof(SelectedItem), SelectedItem }
+                };
+
+                NavigationService.SelectTabAsync($"{nameof(MapPage)}", parameters);
+            }
+        }
 
         #endregion
     }

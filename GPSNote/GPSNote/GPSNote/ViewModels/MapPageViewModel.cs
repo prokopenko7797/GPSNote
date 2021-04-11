@@ -16,6 +16,10 @@ using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.GoogleMaps;
 using GPSNote.Extensions;
+using GPSNote.Servcies.LastPositionService;
+using System.Threading.Tasks;
+using System.ComponentModel;
+using GPSNote.Views;
 
 namespace GPSNote.ViewModels
 {
@@ -23,16 +27,40 @@ namespace GPSNote.ViewModels
     {
         private readonly IPageDialogService _pageDialogService;
         private readonly IPinService _pinService;
+        private readonly ILastPositionService _lastPositionService;
 
         public MapPageViewModel(INavigationService navigationService, ILocalizationService localizationService, 
-            IPageDialogService pageDialogService, IPinService pinService)
+            IPageDialogService pageDialogService, IPinService pinService, ILastPositionService lastPositionService)
             : base(navigationService, localizationService)
         {
             _pageDialogService = pageDialogService;
             _pinService = pinService;
+            _lastPositionService = lastPositionService;
+
+
+
         }
 
         #region -- Public properties --
+        
+
+        public DelegateCommand<object> PinClickedCommand => new DelegateCommand<object>(PinClicked);
+
+        private async void PinClicked(object p)
+        {
+            Pin SelectedPin = (Pin)p;
+
+            int i = PinList.IndexOf(SelectedPin);
+
+            await _pageDialogService.DisplayAlertAsync("asdasd", PinObs[i].Label, "Ok");
+
+            IsPinTapped = true;
+            PinLabel = PinObs[i].Label;
+            PinDescription = PinObs[i].Description;
+            PinLatitude = PinObs[i].Latitude;
+            PinLongitude = PinObs[i].Longitude;
+
+        }
 
         public DelegateCommand<object> ItemTappedCommand => new DelegateCommand<object>(TapCommand);
 
@@ -59,7 +87,66 @@ namespace GPSNote.ViewModels
 
         }
 
+        public DelegateCommand<object> CameraIdLedCommand => new DelegateCommand<object>(OnCameraMovedAsync);
 
+
+        private void OnCameraMovedAsync(object position)
+        {
+            CameraPosition cameraPosition = position as CameraPosition;
+
+            //_lastPositionService.Latitude = cameraPosition.Target.Latitude;
+            //_lastPositionService.Longitude = cameraPosition.Target.Longitude;
+            //_lastPositionService.Zoom = cameraPosition.Zoom;
+        }
+
+
+        public DelegateCommand<object> MoveToCommand => new DelegateCommand<object>(MoveToc);
+
+
+        private void MoveToc(object position)
+        {
+            MoveTo = new MapSpan(new Position(3, 3), 3, 3).WithZoom(10);
+
+
+        }
+
+        private bool _IsPinTapped;
+
+        public bool IsPinTapped
+        {
+            get { return _IsPinTapped; }
+            set { SetProperty(ref _IsPinTapped, value); }
+        }
+
+
+        private double _PinLatitude;
+        public double PinLatitude
+        {
+            get { return _PinLatitude; }
+            set { SetProperty(ref _PinLatitude, value); }
+        }
+
+        private double _PinLongitude;
+        public double PinLongitude
+        {
+            get { return _PinLongitude; }
+            set { SetProperty(ref _PinLongitude, value); }
+        }
+
+        private string _PinLabel;
+        public string PinLabel
+        {
+            get { return _PinLabel; }
+            set { SetProperty(ref _PinLabel, value); }
+        }
+
+
+        private string _PinDescription;
+        public string PinDescription
+        {
+            get { return _PinDescription; }
+            set { SetProperty(ref _PinDescription, value); }
+        }
 
         private MapType _type;
 
@@ -69,13 +156,35 @@ namespace GPSNote.ViewModels
             set { SetProperty(ref _type, value); }
         }
 
-        private List<Pin> _pins;
+        private List<Pin> _pins = new List<Pin>();
 
         public List<Pin> PinList
         {
             get { return _pins; }
             set { SetProperty(ref _pins, value); }
         }
+
+        private ObservableCollection<UserPins> _pinList;
+        public ObservableCollection<UserPins> PinObs
+        {
+            get { return _pinList; }
+            set { SetProperty(ref _pinList, value); }
+        }
+
+        private UserPins _SelectedItem;
+        public UserPins SelectedItem
+        {
+            get { return _SelectedItem; }
+            set { SetProperty(ref _SelectedItem, value); }
+        }
+
+        MapSpan _MoveTo;
+        public MapSpan MoveTo
+        {
+            get { return _MoveTo; }
+            set { SetProperty(ref _MoveTo, value); }
+        }
+
 
         #endregion
 
@@ -107,10 +216,22 @@ namespace GPSNote.ViewModels
         public override void OnNavigatedTo(INavigationParameters parameters)
         {
             base.OnNavigatedTo(parameters);
-            if (parameters.TryGetValue<List<Pin>>(nameof(this.PinList), out var newPinsValue))
+            if (parameters.TryGetValue<ObservableCollection<UserPins>>(nameof(PinObs), out var newPinsValue))
             {
-                this.PinList = newPinsValue;
+                PinObs = newPinsValue;
+
+                foreach (var item in PinObs)
+                {
+                    PinList.Add(item.ToPin());
+                }
             }
+
+            if (parameters.TryGetValue<UserPins>(nameof(SelectedItem), out var newSelectedItem))
+            {
+                SelectedItem = newSelectedItem;
+            }
+
+
         }
 
         public override void OnNavigatedFrom(INavigationParameters parameters)
@@ -119,10 +240,17 @@ namespace GPSNote.ViewModels
             parameters.Add(nameof(this.PinList), this.PinList);
         }
 
+
+        protected override void OnPropertyChanged(PropertyChangedEventArgs args)
+        {
+            base.OnPropertyChanged(args);
+
+            if (args.PropertyName == nameof(SelectedItem) )
+            {
+                MoveTo = new MapSpan(new Position(SelectedItem.Latitude, SelectedItem.Longitude), 1, 1).WithZoom(10);
+            }
+        }
+
         #endregion
-
-
-
-
     }
 }

@@ -97,7 +97,9 @@ namespace GPSNote.ViewModels
         {
             Position position = (Position)p;
 
+            Latitude = position.Latitude;
             Longitude = position.Longitude;
+
 
             Pin pin = new Pin()
             {

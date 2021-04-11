@@ -22,8 +22,8 @@ namespace GPSNote.CustomControls.CustomMap
             var control = (CustomMap)bindable;
             control.Pins.Clear();
             foreach (Pin pin in (List<Pin>)newValue)
-            { 
-                control.Pins.Add(pin); 
+            {
+                control.Pins.Add(pin);
             }
         }
 
@@ -31,6 +31,29 @@ namespace GPSNote.CustomControls.CustomMap
         {
             get { return (List<Pin>)GetValue(PinsSelectProperty); }
             set { SetValue(PinsSelectProperty, value); }
+        }
+
+
+
+
+        public static readonly BindableProperty MoveToProperty = BindableProperty.Create(
+            propertyName: nameof(MoveTo),
+            returnType: typeof(MapSpan),
+            declaringType: typeof(CustomMap),
+            defaultValue: default,
+            propertyChanged: MoveToPropertyChanged);
+
+        private static void MoveToPropertyChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            var control = (CustomMap)bindable;
+            control.MoveToRegion((MapSpan)newValue);
+
+        }
+
+        public MapSpan MoveTo
+        {
+            get { return (MapSpan)GetValue(MoveToProperty); }
+            set { SetValue(MoveToProperty, value); }
         }
 
     }

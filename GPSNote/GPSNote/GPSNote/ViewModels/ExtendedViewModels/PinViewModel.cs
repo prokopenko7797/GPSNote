@@ -56,26 +56,11 @@ namespace GPSNote.ViewModels.ExtendedViewModels
         {
             get 
             {
-                //if(IsEnabled)
-                //{
-                //    ImagePath = Constant.ImageEnabled; 
-                //}
-                //else
-                //{
-                //    ImagePath = Constant.ImageDisable;
-                //}
                 return _IsEnabled;
             }
             set { SetProperty(ref _IsEnabled, value); }
         }
 
-        private string _ImagePath;
-        public string ImagePath
-        {
-
-            get { return _ImagePath; }
-            set { SetProperty(ref _ImagePath, value); }
-        }
 
 
     }

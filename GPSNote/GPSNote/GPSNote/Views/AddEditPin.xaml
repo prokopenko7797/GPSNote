@@ -36,13 +36,13 @@
                 HeightRequest="120" 
                 Grid.Row="1"/>
 
-        <Entry Text="{Binding Latitude}" 
-               Placeholder = "{Binding Resources[Latitude]}"
+        <Label Text="{Binding Latitude}" 
                Grid.Row="2"/>
 
-        <Entry Text="{Binding Longitude}" 
-               Placeholder = "{Binding Resources[Longitude]}"
+        <Label Text="{Binding Longitude}" 
                Grid.Row="3"/>
+        
+
 
         <custommap:CustomMap  Grid.Row="4"  PinsSelect ="{Binding PinList}">
             <custommap:CustomMap.Behaviors>
