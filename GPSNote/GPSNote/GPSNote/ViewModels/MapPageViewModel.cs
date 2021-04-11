@@ -46,58 +46,17 @@ namespace GPSNote.ViewModels
 
         public DelegateCommand<object> PinClickedCommand => new DelegateCommand<object>(PinClicked);
 
-        private async void PinClicked(object p)
-        {
-            Pin SelectedPin = (Pin)p;
 
-            int i = PinList.IndexOf(SelectedPin);
-
-            await _pageDialogService.DisplayAlertAsync("asdasd", PinObs[i].Label, "Ok");
-
-            IsPinTapped = true;
-            PinLabel = PinObs[i].Label;
-            PinDescription = PinObs[i].Description;
-            PinLatitude = PinObs[i].Latitude;
-            PinLongitude = PinObs[i].Longitude;
-
-        }
 
         public DelegateCommand<object> ItemTappedCommand => new DelegateCommand<object>(TapCommand);
 
-        private async void TapCommand(object p)
+        private void TapCommand(object p)
         {
-            Position position = (Position)p;
-
-            //await _pageDialogService.DisplayAlertAsync("It's", $"{position.Latitude} {position.Longitude}", "Ok");
-
-            Pin pin = new Pin()
-            {
-                Type = PinType.Place,
-                Label = "Central Park NYC",
-                Address = "New York City, NY 10022",
-                Position = position,
-                Tag = "id_new_york"
-                
-                
-            };
-
-            await _pinService.AddPinAsync(new UserPins(){ Latitude = position.Latitude, Longitude = position.Longitude, Label = "My pin", IsEnabled = true});
-
-            PinList = GetPins(await _pinService.GetUserPinsAsync());
+            IsListViewVisible = false;
+            IsPinTapped = false;
 
         }
 
-        public DelegateCommand<object> CameraIdLedCommand => new DelegateCommand<object>(OnCameraMovedAsync);
-
-
-        private void OnCameraMovedAsync(object position)
-        {
-            CameraPosition cameraPosition = position as CameraPosition;
-
-            //_lastPositionService.Latitude = cameraPosition.Target.Latitude;
-            //_lastPositionService.Longitude = cameraPosition.Target.Longitude;
-            //_lastPositionService.Zoom = cameraPosition.Zoom;
-        }
 
 
         public DelegateCommand<object> MoveToCommand => new DelegateCommand<object>(MoveToc);
@@ -105,7 +64,8 @@ namespace GPSNote.ViewModels
 
         private void MoveToc(object position)
         {
-            MoveTo = new MapSpan(new Position(3, 3), 3, 3).WithZoom(10);
+            Position newPosition = new Position(SelectedItem.Latitude, SelectedItem.Longitude);
+            MoveTo = new MapSpan(newPosition, 3, 3).WithZoom(10);
 
 
         }
@@ -185,6 +145,22 @@ namespace GPSNote.ViewModels
             set { SetProperty(ref _MoveTo, value); }
         }
 
+        string _SearchBarText;
+        public string SearchBarText
+        {
+            get { return _SearchBarText; }
+            set { SetProperty(ref _SearchBarText, value); }
+        }
+
+        private bool _IsListViewVisible;
+
+        public bool IsListViewVisible
+        {
+            get { return _IsListViewVisible; }
+            set { SetProperty(ref _IsListViewVisible, value); }
+        }
+
+        public DelegateCommand<object> OnSearchBarTypingCommand => new DelegateCommand<object>(SearchBarTypingAsyncCommand);
 
         #endregion
 
@@ -202,6 +178,36 @@ namespace GPSNote.ViewModels
             return pins;
         }
 
+
+        private async void SearchBarTypingAsyncCommand(object sender)
+        {
+            if (string.IsNullOrWhiteSpace(SearchBarText))
+            {
+                PinObs = new ObservableCollection<UserPins>(await _pinService.GetUserPinsAsync());
+            }
+            else
+            {
+                PinObs = new ObservableCollection<UserPins>(PinObs.Where(pin => pin.Label.Contains(SearchBarText)));
+                
+            }
+            IsListViewVisible = true;
+        }
+
+
+        private void PinClicked(object p)
+        {
+            Pin SelectedPin = (Pin)p;
+
+            int i = PinList.IndexOf(SelectedPin);
+
+            IsPinTapped = true;
+            PinLabel = PinObs[i].Label;
+            PinDescription = PinObs[i].Description;
+            PinLatitude = PinObs[i].Latitude;
+            PinLongitude = PinObs[i].Longitude;
+
+        }
+
         #endregion
 
         #region --Overrides--
@@ -209,7 +215,10 @@ namespace GPSNote.ViewModels
         public override async void Initialize(INavigationParameters parameters)
         {
             base.Initialize(parameters);
+
             PinList = GetPins( await _pinService.GetUserPinsAsync());
+            PinObs = new ObservableCollection<UserPins>(await _pinService.GetUserPinsAsync());
+
         }
 
 
@@ -220,10 +229,14 @@ namespace GPSNote.ViewModels
             {
                 PinObs = newPinsValue;
 
+                List<Pin> nPin = new List<Pin>();
+
                 foreach (var item in PinObs)
                 {
-                    PinList.Add(item.ToPin());
+                    nPin.Add(item.ToPin());
                 }
+
+                PinList = nPin;
             }
 
             if (parameters.TryGetValue<UserPins>(nameof(SelectedItem), out var newSelectedItem))
@@ -237,7 +250,6 @@ namespace GPSNote.ViewModels
         public override void OnNavigatedFrom(INavigationParameters parameters)
         {
             base.OnNavigatedFrom(parameters);
-            parameters.Add(nameof(this.PinList), this.PinList);
         }
 
 
@@ -248,8 +260,11 @@ namespace GPSNote.ViewModels
             if (args.PropertyName == nameof(SelectedItem) )
             {
                 MoveTo = new MapSpan(new Position(SelectedItem.Latitude, SelectedItem.Longitude), 1, 1).WithZoom(10);
+                IsListViewVisible = false;
             }
         }
+
+        
 
         #endregion
     }

@@ -25,6 +25,7 @@ namespace GPSNote.ViewModels
         private readonly IPinService _pinService;
         private readonly IAuthorizationService _authorizationService;
 
+        private ObservableCollection<UserPins> _Current; 
 
         public PinListViewModel(INavigationService navigationService, ILocalizationService localizationService, IPinService pinService,
             IAuthorizationService authorizationService)
@@ -50,7 +51,7 @@ namespace GPSNote.ViewModels
         }
 
 
-        private UserPins _SelectedItem = new UserPins();
+        private UserPins _SelectedItem;
         public UserPins SelectedItem
         {
             get { return _SelectedItem; }
@@ -61,8 +62,8 @@ namespace GPSNote.ViewModels
         string _SearchBarText;
         public string SearchBarText
         {
-            get => _SearchBarText;
-            set => SetProperty(ref _SearchBarText, value);
+            get { return _SearchBarText; }
+            set { SetProperty(ref _SearchBarText, value); }
         }
 
         private ICommand _LogOutToolBarCommand;
@@ -90,8 +91,7 @@ namespace GPSNote.ViewModels
         private ICommand _ImageCommandTap;
         public ICommand ImageCommandTap => _ImageCommandTap ?? (_ImageCommandTap = new Command(ChangeVisibilityComand));
 
-        private ICommand _OnItemTappedCommand;
-        public ICommand OnItemTappedCommand => _OnItemTappedCommand ?? (_OnItemTappedCommand = new Command(ItemTapCommand));
+
 
         public DelegateCommand<object> OnSearchBarTypingCommand => new DelegateCommand<object>(SearchBarTypingAsyncCommand);
 
@@ -106,14 +106,13 @@ namespace GPSNote.ViewModels
         {
             if (string.IsNullOrWhiteSpace(SearchBarText))
             {
-                PinObs = new ObservableCollection<UserPins>(await _pinService.GetUserPinsAsync());
+                PinObs = _Current;
             }
             else
             {
                 PinObs = new ObservableCollection<UserPins>(PinObs.Where(pin => pin.Label.Contains(SearchBarText)));
 
             }
-
         }
 
  
@@ -132,6 +131,7 @@ namespace GPSNote.ViewModels
             {
                 await _pinService.DeletePinAsync(userPins.id);
                 PinObs.Remove(userPins);
+                _Current.Remove(userPins);
                 if (PinObs.Count() == 0) IsVisible = true;
             }
         }
@@ -155,8 +155,10 @@ namespace GPSNote.ViewModels
             UserPins pin = sender as UserPins;
 
             int i = PinObs.IndexOf(pin);
+            int j = _Current.IndexOf(pin);
             pin.IsEnabled = !pin.IsEnabled;
             PinObs[i] = pin;
+            _Current[j] = pin;
 
             await _pinService.EditPinAsync(pin);           
         }
@@ -183,21 +185,13 @@ namespace GPSNote.ViewModels
         private async void UpdateCollection()
         {
             PinObs = new ObservableCollection<UserPins>(await _pinService.GetUserPinsAsync());
-
+            _Current = PinObs;
             IsVisible = PinObs.Count() == 0;
         }
 
 
 
-        private void ItemTapCommand()
-        {
-            var parameters = new NavigationParameters
-            {
-                { nameof(SelectedItem), SelectedItem }
-            };
 
-            NavigationService.SelectTabAsync($"{nameof(MapPage)}", parameters);
-        }
 
         #endregion
 
@@ -207,7 +201,7 @@ namespace GPSNote.ViewModels
         {
             base.OnNavigatedTo(parameters);
 
-            UpdateCollection();
+
 
         }
 
@@ -221,7 +215,7 @@ namespace GPSNote.ViewModels
         {
             base.OnNavigatedFrom(parameters);
 
-            parameters.Add(nameof(PinObs), PinObs);
+            parameters.Add(nameof(PinObs), _Current);
         }
 
 
@@ -235,6 +229,7 @@ namespace GPSNote.ViewModels
                     { nameof(SelectedItem), SelectedItem }
                 };
 
+               // NavigationService.NavigateAsync(nameof(TabbedPage));
                 NavigationService.SelectTabAsync($"{nameof(MapPage)}", parameters);
             }
         }

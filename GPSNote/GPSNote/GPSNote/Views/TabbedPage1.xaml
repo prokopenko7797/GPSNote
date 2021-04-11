@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:prism="http://prismlibrary.com" 
+            xmlns:behaviors="clr-namespace:GPSNote.Behaviors" 
+            xmlns:local="clr-namespace:GPSNote.Views"
+            prism:ViewModelLocator.AutowireViewModel="True"
+            x:Class="GPSNote.Views.TabbedPage1">
+
+
+    <TabbedPage.Behaviors>
+        <behaviors:TabbedPageNavigationBehavior />
+    </TabbedPage.Behaviors>
+    <TabbedPage.Children>
+        <local:MapPage />
+        <local:PinList />
+    </TabbedPage.Children>
+
+</TabbedPage>

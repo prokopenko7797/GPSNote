@@ -14,7 +14,7 @@ namespace GPSNote.ViewModels
 {
     public class SettingsViewModel : ViewModelBase
     {
-        private IThemeService _ThemeService;
+        private readonly IThemeService _ThemeService;
         private OSAppTheme _appTheme;
 
         public SettingsViewModel(INavigationService navigationService, ILocalizationService localizationService,

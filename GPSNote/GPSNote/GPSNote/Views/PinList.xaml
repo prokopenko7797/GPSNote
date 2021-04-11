@@ -43,11 +43,7 @@
                   x:Name="ListView1"
                   BackgroundColor="Transparent">
 
-            <ListView.Behaviors>
-                <prism:EventToCommandBehavior EventName="ItemTapped"
-                                          Command="{Binding OnItemTappedCommand}"
-                                          CommandParameter="{Binding .}" />
-            </ListView.Behaviors>
+
 
             <ListView.ItemTemplate>
                 <DataTemplate>
@@ -71,7 +67,6 @@
                                 <ColumnDefinition Width="0.8*"/>
                             </Grid.ColumnDefinitions>
 
-
                             <Image Grid.RowSpan="3" Source="disabled.png"  Aspect="AspectFit" Margin="5" >
                                 <Image.GestureRecognizers>
                                     <TapGestureRecognizer Command="{Binding Path=BindingContext.ImageCommandTap, 
@@ -79,8 +74,8 @@
                                                   CommandParameter="{Binding .}"/>
                                 </Image.GestureRecognizers>
                             </Image>
-                            
-                            
+
+
                             <Image Grid.RowSpan="3" Source="favorite.png"  Aspect="AspectFit" Margin="5" IsVisible="{Binding IsEnabled}">
                                 <Image.GestureRecognizers>
                                     <TapGestureRecognizer Command="{Binding Path=BindingContext.ImageCommandTap, 
