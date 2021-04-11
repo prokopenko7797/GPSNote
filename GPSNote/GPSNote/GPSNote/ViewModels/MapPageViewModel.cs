@@ -29,6 +29,8 @@ namespace GPSNote.ViewModels
         private readonly IPinService _pinService;
         private readonly ILastPositionService _lastPositionService;
 
+        private ObservableCollection<UserPins> _Current;
+
         public MapPageViewModel(INavigationService navigationService, ILocalizationService localizationService, 
             IPageDialogService pageDialogService, IPinService pinService, ILastPositionService lastPositionService)
             : base(navigationService, localizationService)
@@ -160,7 +162,8 @@ namespace GPSNote.ViewModels
             set { SetProperty(ref _IsListViewVisible, value); }
         }
 
-        public DelegateCommand<object> OnSearchBarTypingCommand => new DelegateCommand<object>(SearchBarTypingAsyncCommand);
+        public DelegateCommand<object> OnTextChangedCommand => new DelegateCommand<object>(TextChangedCommand);
+        public DelegateCommand<object> OnFocusedCommand => new DelegateCommand<object>(FocusedCommand);
 
         #endregion
 
@@ -179,17 +182,21 @@ namespace GPSNote.ViewModels
         }
 
 
-        private async void SearchBarTypingAsyncCommand(object sender)
+        private void TextChangedCommand(object sender)
         {
             if (string.IsNullOrWhiteSpace(SearchBarText))
             {
-                PinObs = new ObservableCollection<UserPins>(await _pinService.GetUserPinsAsync());
+                PinObs = _Current;
             }
             else
             {
                 PinObs = new ObservableCollection<UserPins>(PinObs.Where(pin => pin.Label.Contains(SearchBarText)));
                 
             }
+        }
+
+        private void FocusedCommand(object sender)
+        {
             IsListViewVisible = true;
         }
 
@@ -218,7 +225,7 @@ namespace GPSNote.ViewModels
 
             PinList = GetPins( await _pinService.GetUserPinsAsync());
             PinObs = new ObservableCollection<UserPins>(await _pinService.GetUserPinsAsync());
-
+            _Current = PinObs;
         }
 
 
@@ -228,6 +235,7 @@ namespace GPSNote.ViewModels
             if (parameters.TryGetValue<ObservableCollection<UserPins>>(nameof(PinObs), out var newPinsValue))
             {
                 PinObs = newPinsValue;
+                _Current = newPinsValue;
 
                 List<Pin> nPin = new List<Pin>();
 

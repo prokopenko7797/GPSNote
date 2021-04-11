@@ -30,7 +30,7 @@
             <SearchBar.Behaviors>
                 <prism:EventToCommandBehavior
                             EventName="TextChanged"
-                            Command="{Binding OnSearchBarTypingCommand}"
+                            Command="{Binding OnTextChangedCommand}"
                             CommandParameter="MyParameter"  />
 
             </SearchBar.Behaviors>

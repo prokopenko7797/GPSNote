@@ -93,7 +93,7 @@ namespace GPSNote.ViewModels
 
 
 
-        public DelegateCommand<object> OnSearchBarTypingCommand => new DelegateCommand<object>(SearchBarTypingAsyncCommand);
+        public DelegateCommand<object> OnTextChangedCommand => new DelegateCommand<object>(TextChangedCommand);
 
         #endregion
 
@@ -102,7 +102,7 @@ namespace GPSNote.ViewModels
         #region -- Private helpers --
 
 
-        private async void SearchBarTypingAsyncCommand(object sender)
+        private void TextChangedCommand(object sender)
         {
             if (string.IsNullOrWhiteSpace(SearchBarText))
             {
