@@ -3,6 +3,8 @@ using GPSNote.Models;
 using GPSNote.Servcies.AutorizationService;
 using GPSNote.Servcies.LocalizationService;
 using GPSNote.Servcies.PinService;
+using GPSNote.ViewModels.ExtendedViewModels;
+using GPSNote.Extensions;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Navigation;
@@ -23,7 +25,7 @@ namespace GPSNote.ViewModels
         private readonly IPinService _PinService;
         private readonly IAuthorizationService _authorizationService;
 
-        private UserPins _UserPin = new UserPins();
+        private PinViewModel _pinViewModel = new PinViewModel();
 
         public AddEditPinViewModel(INavigationService navigationService,
                                 ILocalizationService localizationService,
@@ -88,19 +90,19 @@ namespace GPSNote.ViewModels
 
         private DelegateCommand _SaveToolBarCommand;
         public DelegateCommand SaveToolBarCommand =>
-            _SaveToolBarCommand ?? (_SaveToolBarCommand = new DelegateCommand(ExecuteSaveToolBarAsync));
+            _SaveToolBarCommand ?? (_SaveToolBarCommand = new DelegateCommand(OnSaveToolBarAsync));
 
 
         private DelegateCommand<object> _ItemTappedCommand;
         public DelegateCommand<object> ItemTappedCommand => 
-            _ItemTappedCommand ?? (_ItemTappedCommand = new DelegateCommand<object>(ExecutedItemTappedCommand));
+            _ItemTappedCommand ?? (_ItemTappedCommand = new DelegateCommand<object>(OnItemTappedCommand));
 
         #endregion
 
 
         #region ---Private Helpers---
 
-        private void ExecutedItemTappedCommand(object sender)
+        private void OnItemTappedCommand(object sender)
         {
             Position position = (Position)sender;
 
@@ -121,7 +123,7 @@ namespace GPSNote.ViewModels
 
         }
 
-        private async void ExecuteSaveToolBarAsync()
+        private async void OnSaveToolBarAsync()
         {
             if (string.IsNullOrWhiteSpace(Name))
             {
@@ -129,23 +131,23 @@ namespace GPSNote.ViewModels
                 return;
             }
 
-            if (_UserPin.Label != Name || _UserPin.Latitude != Latitude
-                    || _UserPin.Longitude != Longitude || _UserPin.Description != Description)
+            if (_pinViewModel.Label != Name || _pinViewModel.Latitude != Latitude
+                    || _pinViewModel.Longitude != Longitude || _pinViewModel.Description != Description)
             {
-                _UserPin.Label = Name;
-                _UserPin.Description = Description;
-                _UserPin.Latitude = Latitude;
-                _UserPin.Longitude = Longitude;
-                _UserPin.user_id = _authorizationService.IdUser;
-                _UserPin.IsEnabled = true;
+                _pinViewModel.Label = Name;
+                _pinViewModel.Description = Description;
+                _pinViewModel.Latitude = Latitude;
+                _pinViewModel.Longitude = Longitude;
+                _pinViewModel.UserId = _authorizationService.IdUser;
+                _pinViewModel.IsEnabled = true;
 
-                if (_UserPin.id == default)
+                if (_pinViewModel.Id == default)
                 {
-                    await _PinService.AddPinAsync(_UserPin); 
+                    await _PinService.AddPinAsync(_pinViewModel.ToUserPin()); 
                 }
                 else
                 {
-                    await _PinService.EditPinAsync(_UserPin);
+                    await _PinService.EditPinAsync(_pinViewModel.ToUserPin());
                 }
 
                 bool IsUpdated = true;
@@ -165,13 +167,13 @@ namespace GPSNote.ViewModels
 
         public override void OnNavigatedTo(INavigationParameters parameters)
         {
-            if (parameters.GetValue<UserPins>(nameof(UserPins)) != null)
+            if (parameters.GetValue<PinViewModel>(nameof(PinViewModel)) != null)
             {
-                _UserPin = parameters.GetValue<UserPins>(nameof(UserPins));
-                Name = _UserPin.Label;
-                Description = _UserPin.Description;
-                Latitude = _UserPin.Latitude;
-                Longitude = _UserPin.Longitude;
+                _pinViewModel = parameters.GetValue<PinViewModel>(nameof(PinViewModel));
+                Name = _pinViewModel.Label;
+                Description = _pinViewModel.Description;
+                Latitude = _pinViewModel.Latitude;
+                Longitude = _pinViewModel.Longitude;
 
                 Title = Resources["EditProfileTitle"];
             }

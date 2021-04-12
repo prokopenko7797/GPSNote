@@ -20,14 +20,11 @@ namespace GPSNote
     {
 
         private IThemeService _Theme;
-        private IThemeService ThemeService =>
-            _Theme ?? (_Theme = Container.Resolve<IThemeService>());
+        private IThemeService ThemeService => _Theme ?? (_Theme = Container.Resolve<IThemeService>());
 
         private IAuthorizationService _AuthorizationService;
         private IAuthorizationService AuthorizationService =>
             _AuthorizationService ?? (_AuthorizationService = Container.Resolve<IAuthorizationService>());
-
-
 
         public App(IPlatformInitializer initializer)
             : base(initializer)
@@ -40,7 +37,6 @@ namespace GPSNote
 
             Application.Current.UserAppTheme = (OSAppTheme)ThemeService.Theme;
 
-            //await NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(AddEditPin)}");
             if (AuthorizationService.IsAutorized)
             {
                 await NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(SignIn)}");
@@ -53,7 +49,7 @@ namespace GPSNote
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-
+            //Services
             containerRegistry.RegisterInstance<IRepository>(Container.Resolve<Repository>());
             containerRegistry.RegisterInstance<ISettingsManager>(Container.Resolve<SettingsManager>());
             containerRegistry.RegisterInstance<IThemeService>(Container.Resolve<ThemeService>());
@@ -63,7 +59,7 @@ namespace GPSNote
             containerRegistry.RegisterInstance<IPinService>(Container.Resolve<PinService>());
             containerRegistry.RegisterInstance<ILastPositionService>(Container.Resolve<LastPositionService>());
             
-
+            //Navigation
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<SignIn, SignInViewModel>();
             containerRegistry.RegisterForNavigation<SignUp, SignUpViewModel>();

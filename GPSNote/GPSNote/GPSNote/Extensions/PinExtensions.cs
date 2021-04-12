@@ -41,6 +41,7 @@ namespace GPSNote.Extensions
             var result = new UserPins();
 
             result.id = pinViewModel.Id;
+            result.user_id = pinViewModel.UserId;
             result.Label = pinViewModel.Label;
             result.IsEnabled = pinViewModel.IsEnabled;
             result.Latitude = pinViewModel.Latitude;
@@ -55,6 +56,7 @@ namespace GPSNote.Extensions
             var result = new PinViewModel();
 
             result.Id = pin.id;
+            result.UserId = pin.user_id;
             result.Label = pin.Label;
             result.IsEnabled = pin.IsEnabled;
             result.Latitude = pin.Latitude;
@@ -64,10 +66,6 @@ namespace GPSNote.Extensions
 
             return result;
         }
-
-
-
-
 
 
 
@@ -95,13 +93,37 @@ namespace GPSNote.Extensions
 
 
 
-        public static List<Pin> ToListOfPin(this ObservableCollection<UserPins> obsPin) 
+        public static List<Pin> ToListOfPin(this ObservableCollection<PinViewModel> obsPin) 
         {
             var result = new List<Pin>();
 
             foreach (var item in obsPin)
             {
                result.Add(item.ToPin());
+            }
+
+            return result;
+        }
+
+        public static ObservableCollection<PinViewModel> ToOpsOfPinView(this IEnumerable<UserPins> obsPin)
+        {
+            var result = new ObservableCollection<PinViewModel>();
+
+            foreach (var item in obsPin)
+            {
+                result.Add(item.ToPinViewModel());
+            }
+
+            return result;
+        }
+
+        public static List<Pin> ToPinList(this IEnumerable<UserPins> obsPin)
+        {
+            var result = new List<Pin>();
+
+            foreach (var item in obsPin)
+            {
+                result.Add(item.ToPin());
             }
 
             return result;

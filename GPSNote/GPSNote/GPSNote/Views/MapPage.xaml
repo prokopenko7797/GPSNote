@@ -20,16 +20,16 @@
                    BackgroundColor="AliceBlue"
                    TextColor="Black"
                    PlaceholderColor="Gray"
-                   Text="{Binding SearchBarText}">
+                   Text="{Binding SearchBarText}" >
 
             <SearchBar.Behaviors>
                 <prism:EventToCommandBehavior
                             EventName="TextChanged"
-                            Command="{Binding OnTextChangedCommand}"
+                            Command="{Binding TextChangedCommand}"
                             CommandParameter="MyParameter"  />
                 <prism:EventToCommandBehavior 
                             EventName="Focused"
-                            Command="{Binding OnFocusedCommand}"
+                            Command="{Binding FocusedCommand}"
                             CommandParameter="{Binding .}"/>
 
             </SearchBar.Behaviors>

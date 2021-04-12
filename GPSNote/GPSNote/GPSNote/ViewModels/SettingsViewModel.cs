@@ -59,13 +59,13 @@ namespace GPSNote.ViewModels
         private DelegateCommand _SaveToolBarCommand;
         public DelegateCommand SaveToolBarCommand =>
            _SaveToolBarCommand ??
-           (_SaveToolBarCommand = new DelegateCommand(SaveToolBar));
+           (_SaveToolBarCommand = new DelegateCommand(OnSaveToolBar));
 
         #endregion
 
         #region -- Private helpers --
 
-        private async void SaveToolBar()
+        private async void OnSaveToolBar()
         {
             _ThemeService.Theme = (int)_appTheme;
 

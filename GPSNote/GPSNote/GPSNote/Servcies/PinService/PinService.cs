@@ -32,14 +32,13 @@ namespace GPSNote.Servcies.PinService
         public async Task<bool> AddPinAsync(UserPins userPins)
         {
             userPins.user_id = _Settings.IdUser;
-            return (await _repository.InsertAsync(userPins) != Constant.SQLError);
+
+            return await _repository.InsertAsync(userPins) != Constant.SQLError;
         }
 
         public async Task<bool> DeletePinAsync(int id)
         {
-            if (await _repository.DeleteAsync<UserPins>(id) != Constant.SQLError)
-                return true;
-            else return false;
+            return await _repository.DeleteAsync<UserPins>(id) != Constant.SQLError;
         }
 
         public async Task<UserPins> GetPinByIdAsync(int id)

@@ -17,15 +17,83 @@ using Xamarin.Forms;
 using Xamarin.Forms.GoogleMaps;
 using Prism.Navigation.TabbedPages;
 using System.ComponentModel;
+using GPSNote.ViewModels.ExtendedViewModels;
+using System.Threading.Tasks;
+using Prism.Common;
 
 namespace GPSNote.ViewModels
 {
+    public static class NavigationServiceExtensions
+    {
+        public static async Task<INavigationResult> SelectTabAsync(this INavigationService navigationService, string name, INavigationParameters parameters = null)
+        {
+            try
+            {
+                var currentPage = ((IPageAware)navigationService).Page;
+                var canNavigate = await PageUtilities.CanNavigateAsync(currentPage, parameters);
+
+                if (!canNavigate)
+                    throw new Exception($"IConfirmNavigation for { currentPage} returned false");
+                TabbedPage tabbedPage = null;
+                if (currentPage is TabbedPage)
+                {
+                    tabbedPage = currentPage as TabbedPage;
+                }
+                if (currentPage.Parent is TabbedPage parent)
+                {
+                    tabbedPage = parent;
+                }
+                else if (currentPage.Parent is NavigationPage navPage)
+                {
+                    if (navPage.Parent != null && navPage.Parent is TabbedPage parent2)
+                    {
+                        tabbedPage = parent2;
+                    }
+                }
+                if (tabbedPage == null)
+                    throw new Exception("No parent TabbedPage could be found");
+                var tabToSelectedType = PageNavigationRegistry.GetPageType(UriParsingHelper.GetSegmentName(name));
+                if (tabToSelectedType is null)
+                    throw new Exception($"No View Type has been registered for ‘{ name}‘");
+                Page target = null;
+                foreach (var child in tabbedPage.Children)
+                {
+                    if (child.GetType() == tabToSelectedType)
+                    {
+                        target = child;
+                        break;
+                    }
+                    if (child is NavigationPage childNavPage)
+                    {
+                        if (childNavPage.CurrentPage.GetType() == tabToSelectedType ||
+                            childNavPage.RootPage.GetType() == tabToSelectedType)
+                        {
+                            target = child;
+                            break;
+                        }
+                    }
+                }
+                if (target is null)
+                    throw new Exception($"Could not find a Child Tab for ‘{ name}’");
+                var tabParameters = UriParsingHelper.GetSegmentParameters(name, parameters);
+                tabbedPage.CurrentPage = target;
+                PageUtilities.OnNavigatedFrom(currentPage, tabParameters);
+                PageUtilities.OnNavigatedTo(target, tabParameters);
+            }
+            catch (Exception ex)
+            {
+                return new NavigationResult { Exception = ex };
+            }
+            return new NavigationResult { Success = true };
+        }
+    }
+
     public class PinListViewModel : ViewModelBase
     {
         private readonly IPinService _pinService;
         private readonly IAuthorizationService _authorizationService;
 
-        private ObservableCollection<UserPins> _Current; 
+        private ObservableCollection<PinViewModel> _Current; 
 
         public PinListViewModel(INavigationService navigationService, ILocalizationService localizationService, IPinService pinService,
             IAuthorizationService authorizationService)
@@ -36,8 +104,8 @@ namespace GPSNote.ViewModels
         }
 
         #region -- Public properties --
-        private ObservableCollection<UserPins> _pinList;
-        public ObservableCollection<UserPins> PinObs
+        private ObservableCollection<PinViewModel> _pinList;
+        public ObservableCollection<PinViewModel> PinObs
         {
             get { return _pinList; }
             set { SetProperty(ref _pinList, value); }
@@ -51,8 +119,8 @@ namespace GPSNote.ViewModels
         }
 
 
-        private UserPins _SelectedItem;
-        public UserPins SelectedItem
+        private PinViewModel _SelectedItem;
+        public PinViewModel SelectedItem
         {
             get { return _SelectedItem; }
             set { SetProperty(ref _SelectedItem, value); }
@@ -68,32 +136,32 @@ namespace GPSNote.ViewModels
 
         private DelegateCommand<object> _LogOutToolBarCommand;
         public DelegateCommand<object> LogOutToolBarCommand =>
-            _LogOutToolBarCommand ?? (_LogOutToolBarCommand = new DelegateCommand<object>(NavigateLogOutToolBarCommand));
+            _LogOutToolBarCommand ?? (_LogOutToolBarCommand = new DelegateCommand<object>(OnLogOutToolBarCommand));
        
         private DelegateCommand<object> _SettingsToolBarCommand;
         public DelegateCommand<object> SettingsToolBarCommand =>
-            _SettingsToolBarCommand ?? (_SettingsToolBarCommand = new DelegateCommand<object>(NavigateSettingsCommand));
+            _SettingsToolBarCommand ?? (_SettingsToolBarCommand = new DelegateCommand<object>(OnSettingsCommand));
 
         private DelegateCommand<object> _AddEditButtonClicked;
         public DelegateCommand<object> AddEditButtonClicked =>
-            _AddEditButtonClicked ?? (_AddEditButtonClicked = new DelegateCommand<object>(NavigateAddEditProfileCommand));
+            _AddEditButtonClicked ?? (_AddEditButtonClicked = new DelegateCommand<object>(OnNavigateAddEditPinCommand));
 
 
         private DelegateCommand<object> _EditCommandTap;
         public DelegateCommand<object> EditCommandTap => 
-            _EditCommandTap ?? (_EditCommandTap = new DelegateCommand<object>(EditCommand));
+            _EditCommandTap ?? (_EditCommandTap = new DelegateCommand<object>(OnEditCommand));
 
         private DelegateCommand<object> _DeleteCommandTap;
         public DelegateCommand<object> DeleteCommandTap => 
-            _DeleteCommandTap ?? (_DeleteCommandTap = new DelegateCommand<object>(DeleteCommand));
+            _DeleteCommandTap ?? (_DeleteCommandTap = new DelegateCommand<object>(OnDeleteCommand));
 
         private DelegateCommand<object> _ImageCommandTap;
         public DelegateCommand<object> ImageCommandTap => 
-            _ImageCommandTap ?? (_ImageCommandTap = new DelegateCommand<object>(ChangeVisibilityComand));
+            _ImageCommandTap ?? (_ImageCommandTap = new DelegateCommand<object>(OnChangeVisibilityComand));
 
         private DelegateCommand<object> _OnTextChangedCommand;
         public DelegateCommand<object> OnTextChangedCommand =>
-            _OnTextChangedCommand ?? (_OnTextChangedCommand = new DelegateCommand<object>(SearchCommand));
+            _OnTextChangedCommand ?? (_OnTextChangedCommand = new DelegateCommand<object>(OnSearchCommand));
 
 
         #endregion
@@ -103,7 +171,7 @@ namespace GPSNote.ViewModels
         #region -- Private helpers --
 
 
-        private void SearchCommand(object sender)
+        private void OnSearchCommand(object sender)
         {
             if (string.IsNullOrWhiteSpace(SearchBarText))
             {
@@ -113,8 +181,7 @@ namespace GPSNote.ViewModels
             {
                 string low = SearchBarText.ToLower();
 
-
-                PinObs = new ObservableCollection<UserPins>(_Current.Where(pin => (pin.Label.ToLower()).Contains(low) ||
+                PinObs = new ObservableCollection<PinViewModel>(_Current.Where(pin =>(pin.Label.ToLower()).Contains(low) ||
                                                                                   (pin.Description.ToLower()).Contains(low) ||
                                                                                   (pin.Latitude.ToString()).Contains(low) ||
                                                                                   (pin.Longitude.ToString()).Contains(low)));
@@ -123,9 +190,9 @@ namespace GPSNote.ViewModels
 
  
 
-        private async void DeleteCommand(object sender)
+        private async void OnDeleteCommand(object sender)
         {
-            if (!(sender is UserPins userPins)) return;
+            if (!(sender is PinViewModel userPinsV)) return;
 
             var result = await UserDialogs.Instance.ConfirmAsync(new ConfirmConfig
             {
@@ -135,30 +202,30 @@ namespace GPSNote.ViewModels
             });
             if (result)
             {
-                await _pinService.DeletePinAsync(userPins.id);
-                PinObs.Remove(userPins);
-                _Current.Remove(userPins);
+                await _pinService.DeletePinAsync(userPinsV.Id);
+                PinObs.Remove(userPinsV);
+                _Current.Remove(userPinsV);
                 if (PinObs.Count() == 0) IsVisible = true;
             }
         }
 
 
-        private async void EditCommand(object sender)
+        private async void OnEditCommand(object sender)
         {
-            UserPins pins = sender as UserPins;
+            PinViewModel pins = sender as PinViewModel;
             
             var parametrs = new NavigationParameters
             {
-                { nameof(UserPins), pins }
+                { nameof(PinViewModel), pins }
             };
             
             await NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(AddEditPin)}", parametrs);
         }
 
 
-        private async void ChangeVisibilityComand(object sender)
+        private async void OnChangeVisibilityComand(object sender)
         {
-            UserPins pin = sender as UserPins;
+            PinViewModel pin = sender as PinViewModel;
 
             int i = PinObs.IndexOf(pin);
             int j = _Current.IndexOf(pin);
@@ -166,21 +233,21 @@ namespace GPSNote.ViewModels
             PinObs[i] = pin;
             _Current[j] = pin;
 
-            await _pinService.EditPinAsync(pin);           
+            await _pinService.EditPinAsync(pin.ToUserPin());           
         }
 
-        private async void NavigateAddEditProfileCommand(object sender)
+        private async void OnNavigateAddEditPinCommand(object sender)
         {
             await NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(AddEditPin)}");
 
         }
 
-        private async void NavigateSettingsCommand(object sender)
+        private async void OnSettingsCommand(object sender)
         {
             await NavigationService.NavigateAsync(nameof(Settings));
         }
 
-        private async void NavigateLogOutToolBarCommand(object sender)
+        private async void OnLogOutToolBarCommand(object sender)
         {
             _authorizationService.LogOut();
             await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(SignIn)}");
@@ -188,7 +255,7 @@ namespace GPSNote.ViewModels
 
         private async void UpdateCollectionAsync()
         {
-            PinObs = new ObservableCollection<UserPins>(await _pinService.GetUserPinsAsync());
+            PinObs = new ObservableCollection<PinViewModel>((await _pinService.GetUserPinsAsync()).ToOpsOfPinView());
             _Current = PinObs;
             IsVisible = PinObs.Count() == 0;
         }
@@ -225,7 +292,7 @@ namespace GPSNote.ViewModels
             parameters.Add(nameof(PinObs), _Current);
         }
 
-        protected override void OnPropertyChanged(PropertyChangedEventArgs args)
+        protected async override void OnPropertyChanged(PropertyChangedEventArgs args)
         {
             base.OnPropertyChanged(args);
             if (args.PropertyName == nameof(SelectedItem)) 
@@ -235,7 +302,7 @@ namespace GPSNote.ViewModels
                     { nameof(SelectedItem), SelectedItem }
                 };
 
-                NavigationService.SelectTabAsync($"{nameof(MapPage)}", parameters);
+               await NavigationService.SelectTabAsync($"{nameof(MapPage)}", parameters);
             }
         }
 

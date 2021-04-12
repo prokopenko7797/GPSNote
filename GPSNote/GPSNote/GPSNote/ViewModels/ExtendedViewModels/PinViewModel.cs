@@ -60,8 +60,5 @@ namespace GPSNote.ViewModels.ExtendedViewModels
             }
             set { SetProperty(ref _IsEnabled, value); }
         }
-
-
-
     }
 }
