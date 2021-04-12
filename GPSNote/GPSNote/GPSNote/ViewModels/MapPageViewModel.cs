@@ -45,33 +45,6 @@ namespace GPSNote.ViewModels
 
         #region -- Public properties --
         
-
-        public DelegateCommand<object> PinClickedCommand => new DelegateCommand<object>(PinClicked);
-
-
-
-        public DelegateCommand<object> ItemTappedCommand => new DelegateCommand<object>(TapCommand);
-
-        private void TapCommand(object p)
-        {
-            IsListViewVisible = false;
-            IsPinTapped = false;
-
-        }
-
-
-
-        public DelegateCommand<object> MoveToCommand => new DelegateCommand<object>(MoveToc);
-
-
-        private void MoveToc(object position)
-        {
-            Position newPosition = new Position(SelectedItem.Latitude, SelectedItem.Longitude);
-            MoveTo = new MapSpan(newPosition, 3, 3).WithZoom(10);
-
-
-        }
-
         private bool _IsPinTapped;
 
         public bool IsPinTapped
@@ -162,12 +135,53 @@ namespace GPSNote.ViewModels
             set { SetProperty(ref _IsListViewVisible, value); }
         }
 
-        public DelegateCommand<object> OnTextChangedCommand => new DelegateCommand<object>(TextChangedCommand);
-        public DelegateCommand<object> OnFocusedCommand => new DelegateCommand<object>(FocusedCommand);
+
+        private DelegateCommand<object> _OnTextChangedCommand;
+        public DelegateCommand<object> OnTextChangedCommand =>
+            _OnTextChangedCommand ?? (_OnTextChangedCommand =
+            new DelegateCommand<object>(TextChangedCommand));
+
+
+        private DelegateCommand<object> _OnFocusedCommand;
+        public DelegateCommand<object> OnFocusedCommand =>
+            _OnFocusedCommand ?? (_OnFocusedCommand =
+            new DelegateCommand<object>(FocusedCommand));
+
+
+        private DelegateCommand<object> _PinClickedCommand;
+        public DelegateCommand<object> PinClickedCommand =>
+            _PinClickedCommand ?? (_PinClickedCommand =
+            new DelegateCommand<object>(PinClicked));
+
+
+        private DelegateCommand<object> _ItemTappedCommand;
+        public DelegateCommand<object> ItemTappedCommand =>
+            _ItemTappedCommand ?? (_ItemTappedCommand =
+            new DelegateCommand<object>(TapCommand));
+
+
+        private DelegateCommand<object> _MoveToCommand;
+        public DelegateCommand<object> MoveToCommand =>
+            _MoveToCommand ?? (_MoveToCommand =
+            new DelegateCommand<object>(MoveCommand));
+
 
         #endregion
 
         #region --Private helpers--
+
+        private void TapCommand(object p)
+        {
+            IsListViewVisible = false;
+            IsPinTapped = false;
+        }
+
+        private void MoveCommand(object position)
+        {
+            Position newPosition = new Position(SelectedItem.Latitude, SelectedItem.Longitude);
+            MoveTo = new MapSpan(newPosition, 3, 3).WithZoom(10);
+        }
+
         private List<Pin> GetPins(IEnumerable<UserPins> userPins)
         {
             List<Pin> pins = new List<Pin>();
@@ -181,7 +195,6 @@ namespace GPSNote.ViewModels
             return pins;
         }
 
-
         private void TextChangedCommand(object sender)
         {
             if (string.IsNullOrWhiteSpace(SearchBarText))
@@ -190,7 +203,7 @@ namespace GPSNote.ViewModels
             }
             else
             {
-                PinObs = new ObservableCollection<UserPins>(PinObs.Where(pin => pin.Label.Contains(SearchBarText)));
+                PinObs = new ObservableCollection<UserPins>(_Current.Where(pin => pin.Label.Contains(SearchBarText)));
                 
             }
         }
@@ -199,7 +212,6 @@ namespace GPSNote.ViewModels
         {
             IsListViewVisible = true;
         }
-
 
         private void PinClicked(object p)
         {
@@ -229,7 +241,7 @@ namespace GPSNote.ViewModels
         }
 
 
-        public override void OnNavigatedTo(INavigationParameters parameters)
+        public override async void OnNavigatedTo(INavigationParameters parameters)
         {
             base.OnNavigatedTo(parameters);
             if (parameters.TryGetValue<ObservableCollection<UserPins>>(nameof(PinObs), out var newPinsValue))
@@ -252,14 +264,20 @@ namespace GPSNote.ViewModels
                 SelectedItem = newSelectedItem;
             }
 
+            bool IsUpdated = false;
+
+            if (parameters.TryGetValue<bool>(nameof(IsUpdated), out var newUpdate))
+            {
+                if (newUpdate)
+                {
+                    PinList = GetPins(await _pinService.GetUserPinsAsync());
+                    PinObs = new ObservableCollection<UserPins>(await _pinService.GetUserPinsAsync());
+                    _Current = PinObs;
+                }
+            }
+
 
         }
-
-        public override void OnNavigatedFrom(INavigationParameters parameters)
-        {
-            base.OnNavigatedFrom(parameters);
-        }
-
 
         protected override void OnPropertyChanged(PropertyChangedEventArgs args)
         {
@@ -271,8 +289,6 @@ namespace GPSNote.ViewModels
                 IsListViewVisible = false;
             }
         }
-
-        
 
         #endregion
     }

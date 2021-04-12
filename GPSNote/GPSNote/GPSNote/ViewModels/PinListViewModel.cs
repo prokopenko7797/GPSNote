@@ -66,34 +66,35 @@ namespace GPSNote.ViewModels
             set { SetProperty(ref _SearchBarText, value); }
         }
 
-        private ICommand _LogOutToolBarCommand;
-        public ICommand LogOutToolBarCommand =>
-            _LogOutToolBarCommand ?? (_LogOutToolBarCommand =
-            new Command(NavigateLogOutToolBarCommand));
+        private DelegateCommand<object> _LogOutToolBarCommand;
+        public DelegateCommand<object> LogOutToolBarCommand =>
+            _LogOutToolBarCommand ?? (_LogOutToolBarCommand = new DelegateCommand<object>(NavigateLogOutToolBarCommand));
        
-        private ICommand _SettingsToolBarCommand;
-        public ICommand SettingsToolBarCommand =>
-            _SettingsToolBarCommand ?? (_SettingsToolBarCommand =
-            new Command(NavigateSettingsCommand));
+        private DelegateCommand<object> _SettingsToolBarCommand;
+        public DelegateCommand<object> SettingsToolBarCommand =>
+            _SettingsToolBarCommand ?? (_SettingsToolBarCommand = new DelegateCommand<object>(NavigateSettingsCommand));
 
-        private ICommand _AddEditButtonClicked;
-        public ICommand AddEditButtonClicked =>
-            _AddEditButtonClicked ?? (_AddEditButtonClicked =
-            new Command(NavigateAddEditProfileCommand));
+        private DelegateCommand<object> _AddEditButtonClicked;
+        public DelegateCommand<object> AddEditButtonClicked =>
+            _AddEditButtonClicked ?? (_AddEditButtonClicked = new DelegateCommand<object>(NavigateAddEditProfileCommand));
 
 
-        private ICommand _EditCommandTap;
-        public ICommand EditCommandTap => _EditCommandTap ?? (_EditCommandTap = new Command(EditCommand));
+        private DelegateCommand<object> _EditCommandTap;
+        public DelegateCommand<object> EditCommandTap => 
+            _EditCommandTap ?? (_EditCommandTap = new DelegateCommand<object>(EditCommand));
 
-        private ICommand _DeleteCommandTap;
-        public ICommand DeleteCommandTap => _DeleteCommandTap ?? (_DeleteCommandTap = new Command(DeleteCommand));
+        private DelegateCommand<object> _DeleteCommandTap;
+        public DelegateCommand<object> DeleteCommandTap => 
+            _DeleteCommandTap ?? (_DeleteCommandTap = new DelegateCommand<object>(DeleteCommand));
 
-        private ICommand _ImageCommandTap;
-        public ICommand ImageCommandTap => _ImageCommandTap ?? (_ImageCommandTap = new Command(ChangeVisibilityComand));
+        private DelegateCommand<object> _ImageCommandTap;
+        public DelegateCommand<object> ImageCommandTap => 
+            _ImageCommandTap ?? (_ImageCommandTap = new DelegateCommand<object>(ChangeVisibilityComand));
 
+        private DelegateCommand<object> _OnTextChangedCommand;
+        public DelegateCommand<object> OnTextChangedCommand =>
+            _OnTextChangedCommand ?? (_OnTextChangedCommand = new DelegateCommand<object>(TextChangedCommand));
 
-
-        public DelegateCommand<object> OnTextChangedCommand => new DelegateCommand<object>(TextChangedCommand);
 
         #endregion
 
@@ -110,8 +111,7 @@ namespace GPSNote.ViewModels
             }
             else
             {
-                PinObs = new ObservableCollection<UserPins>(PinObs.Where(pin => pin.Label.Contains(SearchBarText)));
-
+                PinObs = new ObservableCollection<UserPins>(_Current.Where(pin => pin.Label.Contains(SearchBarText)));
             }
         }
 
@@ -163,35 +163,29 @@ namespace GPSNote.ViewModels
             await _pinService.EditPinAsync(pin);           
         }
 
-        private async void NavigateAddEditProfileCommand()
+        private async void NavigateAddEditProfileCommand(object sender)
         {
             await NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(AddEditPin)}");
 
         }
 
-
-        private async void NavigateSettingsCommand()
+        private async void NavigateSettingsCommand(object sender)
         {
             await NavigationService.NavigateAsync(nameof(Settings));
         }
 
-
-        private async void NavigateLogOutToolBarCommand()
+        private async void NavigateLogOutToolBarCommand(object sender)
         {
             _authorizationService.LogOut();
             await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(SignIn)}");
         }
 
-        private async void UpdateCollection()
+        private async void UpdateCollectionAsync()
         {
             PinObs = new ObservableCollection<UserPins>(await _pinService.GetUserPinsAsync());
             _Current = PinObs;
             IsVisible = PinObs.Count() == 0;
         }
-
-
-
-
 
         #endregion
 
@@ -201,14 +195,21 @@ namespace GPSNote.ViewModels
         {
             base.OnNavigatedTo(parameters);
 
+            bool IsUpdated = false;
 
-
+            if (parameters.TryGetValue<bool>(nameof(IsUpdated), out var newUpdate))
+            {
+                if (newUpdate)
+                {
+                    UpdateCollectionAsync();
+                }
+            }
         }
 
         public override void Initialize(INavigationParameters parameters)
         {
             base.Initialize(parameters);
-            UpdateCollection();
+            UpdateCollectionAsync();
         }
 
         public override void OnNavigatedFrom(INavigationParameters parameters)
@@ -217,7 +218,6 @@ namespace GPSNote.ViewModels
 
             parameters.Add(nameof(PinObs), _Current);
         }
-
 
         protected override void OnPropertyChanged(PropertyChangedEventArgs args)
         {
@@ -229,7 +229,6 @@ namespace GPSNote.ViewModels
                     { nameof(SelectedItem), SelectedItem }
                 };
 
-               // NavigationService.NavigateAsync(nameof(TabbedPage));
                 NavigationService.SelectTabAsync($"{nameof(MapPage)}", parameters);
             }
         }

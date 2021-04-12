@@ -125,7 +125,7 @@ namespace GPSNote.ViewModels
             if (Name == default || Name.Length < 1)
             {
                 await _PageDialogService.DisplayAlertAsync( Resources["NameEmpty"], Resources["Error"], Resources["Ok"]);
-                ///////////////////////////////////
+
                 return;
             }
 
@@ -140,22 +140,29 @@ namespace GPSNote.ViewModels
                 _UserPin.user_id = _authorizationService.IdUser;
                 _UserPin.IsEnabled = true;
 
+                bool IsUpdated = true;
+
+                var parametrs = new NavigationParameters
+                {
+                    { nameof(IsUpdated), IsUpdated }
+                };
+
+                
+
                 if (_UserPin.id == default)
                 {
-                    await _PinService.AddPinAsync(_UserPin);
+                    await _PinService.AddPinAsync(_UserPin); 
+                    await NavigationService.GoBackAsync(parametrs);
                 }
                 else
                 {
                     await _PinService.EditPinAsync(_UserPin);
+                    await NavigationService.GoBackAsync(parametrs);
                 }
             }
-            await NavigationService.GoBackAsync();
         }
 
         #endregion
-
-
-
 
 
         #region --Overrides--
@@ -175,6 +182,7 @@ namespace GPSNote.ViewModels
             else Title = Resources["AddProfileTitle"];
 
         }
+
 
         protected override void OnPropertyChanged(PropertyChangedEventArgs args)
         {

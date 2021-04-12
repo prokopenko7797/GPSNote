@@ -52,7 +52,8 @@
 
         <ListView Grid.Row="1" ItemsSource="{Binding PinObs}" 
                   RowHeight="50" 
-                  Margin="30,0,30,350"
+                  HorizontalOptions="Center" 
+                  VerticalOptions="Start"
                   SelectedItem="{Binding SelectedItem}"
                   x:Name="ListView1"
                   BackgroundColor="White"
