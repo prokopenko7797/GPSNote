@@ -36,10 +36,10 @@
                 HeightRequest="120" 
                 Grid.Row="1"/>
 
-        <Label Text="{Binding Latitude}" 
+        <Entry Text="{Binding Latitude}" 
                Grid.Row="2"/>
 
-        <Label Text="{Binding Longitude}" 
+        <Entry Text="{Binding Longitude}" 
                Grid.Row="3"/>
         
 

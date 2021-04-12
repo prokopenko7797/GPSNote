@@ -31,7 +31,7 @@ namespace GPSNote.ViewModels
 
         private ObservableCollection<UserPins> _Current;
 
-        public MapPageViewModel(INavigationService navigationService, ILocalizationService localizationService, 
+        public MapPageViewModel(INavigationService navigationService, ILocalizationService localizationService,
             IPageDialogService pageDialogService, IPinService pinService, ILastPositionService lastPositionService)
             : base(navigationService, localizationService)
         {
@@ -44,13 +44,21 @@ namespace GPSNote.ViewModels
         }
 
         #region -- Public properties --
-        
+
         private bool _IsPinTapped;
 
         public bool IsPinTapped
         {
             get { return _IsPinTapped; }
             set { SetProperty(ref _IsPinTapped, value); }
+        }
+
+        private bool _IsSelected;
+
+        public bool IsSelected
+        {
+            get { return _IsSelected; }
+            set { SetProperty(ref _IsSelected, value); }
         }
 
 
@@ -83,13 +91,8 @@ namespace GPSNote.ViewModels
             set { SetProperty(ref _PinDescription, value); }
         }
 
-        private MapType _type;
 
-        public MapType type
-        {
-            get { return _type; }
-            set { SetProperty(ref _type, value); }
-        }
+
 
         private List<Pin> _pins = new List<Pin>();
 
@@ -135,35 +138,36 @@ namespace GPSNote.ViewModels
             set { SetProperty(ref _IsListViewVisible, value); }
         }
 
+        private int _HeightRequest;
+        public int HeightRequest
+        {
+            get { return _HeightRequest; }
+            set { SetProperty(ref _HeightRequest, value); }
+        }
 
         private DelegateCommand<object> _OnTextChangedCommand;
         public DelegateCommand<object> OnTextChangedCommand =>
-            _OnTextChangedCommand ?? (_OnTextChangedCommand =
-            new DelegateCommand<object>(TextChangedCommand));
+            _OnTextChangedCommand ?? (_OnTextChangedCommand = new DelegateCommand<object>(SearchCommand));
 
 
         private DelegateCommand<object> _OnFocusedCommand;
         public DelegateCommand<object> OnFocusedCommand =>
-            _OnFocusedCommand ?? (_OnFocusedCommand =
-            new DelegateCommand<object>(FocusedCommand));
+            _OnFocusedCommand ?? (_OnFocusedCommand = new DelegateCommand<object>(FocusedCommand));
 
 
         private DelegateCommand<object> _PinClickedCommand;
         public DelegateCommand<object> PinClickedCommand =>
-            _PinClickedCommand ?? (_PinClickedCommand =
-            new DelegateCommand<object>(PinClicked));
+            _PinClickedCommand ?? (_PinClickedCommand = new DelegateCommand<object>(PinClicked));
 
 
         private DelegateCommand<object> _ItemTappedCommand;
         public DelegateCommand<object> ItemTappedCommand =>
-            _ItemTappedCommand ?? (_ItemTappedCommand =
-            new DelegateCommand<object>(TapCommand));
+            _ItemTappedCommand ?? (_ItemTappedCommand = new DelegateCommand<object>(TapCommand));
 
 
         private DelegateCommand<object> _MoveToCommand;
         public DelegateCommand<object> MoveToCommand =>
-            _MoveToCommand ?? (_MoveToCommand =
-            new DelegateCommand<object>(MoveCommand));
+            _MoveToCommand ?? (_MoveToCommand = new DelegateCommand<object>(MoveCommand));
 
 
         #endregion
@@ -179,7 +183,9 @@ namespace GPSNote.ViewModels
         private void MoveCommand(object position)
         {
             Position newPosition = new Position(SelectedItem.Latitude, SelectedItem.Longitude);
-            MoveTo = new MapSpan(newPosition, 3, 3).WithZoom(10);
+            Random zoom = new Random();
+
+            MoveTo = new MapSpan(newPosition, 3, 3).WithZoom(10 + zoom.NextDouble());
         }
 
         private List<Pin> GetPins(IEnumerable<UserPins> userPins)
@@ -195,7 +201,7 @@ namespace GPSNote.ViewModels
             return pins;
         }
 
-        private void TextChangedCommand(object sender)
+        private void SearchCommand(object sender)
         {
             if (string.IsNullOrWhiteSpace(SearchBarText))
             {
@@ -203,28 +209,46 @@ namespace GPSNote.ViewModels
             }
             else
             {
-                PinObs = new ObservableCollection<UserPins>(_Current.Where(pin => pin.Label.Contains(SearchBarText)));
-                
+                string low = SearchBarText.ToLower();
+
+                PinObs = new ObservableCollection<UserPins>(_Current.Where(pin => (pin.Label.ToLower()).Contains(low) ||
+                                                                                  (pin.Description.ToLower()).Contains(low) ||
+                                                                                  (pin.Latitude.ToString()).Contains(low) ||
+                                                                                  (pin.Longitude.ToString()).Contains(low)));
+            }
+            ChangeHeight();
+        }
+
+        private void ChangeHeight() 
+        {
+            if (PinObs.Count() < 4)
+            {
+                HeightRequest = PinObs.Count() * 50;
+            }
+            else
+            {
+                HeightRequest = 200;
             }
         }
+
 
         private void FocusedCommand(object sender)
         {
             IsListViewVisible = true;
+            ChangeHeight();
         }
 
-        private void PinClicked(object p)
+        private void PinClicked(object sender)
         {
-            Pin SelectedPin = (Pin)p;
+            Pin SelectedPin = (Pin)sender;
 
             int i = PinList.IndexOf(SelectedPin);
 
             IsPinTapped = true;
-            PinLabel = PinObs[i].Label;
-            PinDescription = PinObs[i].Description;
-            PinLatitude = PinObs[i].Latitude;
-            PinLongitude = PinObs[i].Longitude;
-
+            PinLabel = _Current[i].Label;
+            PinDescription = _Current[i].Description;
+            PinLatitude = _Current[i].Latitude;
+            PinLongitude = _Current[i].Longitude;
         }
 
         #endregion
@@ -235,9 +259,9 @@ namespace GPSNote.ViewModels
         {
             base.Initialize(parameters);
 
-            PinList = GetPins( await _pinService.GetUserPinsAsync());
             PinObs = new ObservableCollection<UserPins>(await _pinService.GetUserPinsAsync());
             _Current = PinObs;
+            PinList = PinObs.ToListOfPin();
         }
 
 
@@ -287,6 +311,8 @@ namespace GPSNote.ViewModels
             {
                 MoveTo = new MapSpan(new Position(SelectedItem.Latitude, SelectedItem.Longitude), 1, 1).WithZoom(10);
                 IsListViewVisible = false;
+                IsSelected = SelectedItem != null;
+                
             }
         }
 

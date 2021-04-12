@@ -88,14 +88,21 @@ namespace GPSNote.ViewModels
 
         private DelegateCommand _SaveToolBarCommand;
         public DelegateCommand SaveToolBarCommand =>
-            _SaveToolBarCommand ??
-            (_SaveToolBarCommand = new DelegateCommand(ExecuteSaveToolBarAsync));
+            _SaveToolBarCommand ?? (_SaveToolBarCommand = new DelegateCommand(ExecuteSaveToolBarAsync));
 
 
-        public DelegateCommand<object> ItemTappedCommand => new DelegateCommand<object>(ExecutedItemTappedCommand);
-        private void ExecutedItemTappedCommand(object p)
+        private DelegateCommand<object> _ItemTappedCommand;
+        public DelegateCommand<object> ItemTappedCommand => 
+            _ItemTappedCommand ?? (_ItemTappedCommand = new DelegateCommand<object>(ExecutedItemTappedCommand));
+
+        #endregion
+
+
+        #region ---Private Helpers---
+
+        private void ExecutedItemTappedCommand(object sender)
         {
-            Position position = (Position)p;
+            Position position = (Position)sender;
 
             Latitude = position.Latitude;
             Longitude = position.Longitude;
@@ -105,7 +112,7 @@ namespace GPSNote.ViewModels
             {
                 Label = "Your pin",
                 Position = position
-                
+
             };
 
             List<Pin> list = new List<Pin>();
@@ -114,25 +121,17 @@ namespace GPSNote.ViewModels
 
         }
 
-        #endregion
-
-
-        #region ---Private Helpers---
-
-
         private async void ExecuteSaveToolBarAsync()
         {
-            if (Name == default || Name.Length < 1)
+            if (string.IsNullOrWhiteSpace(Name))
             {
                 await _PageDialogService.DisplayAlertAsync( Resources["NameEmpty"], Resources["Error"], Resources["Ok"]);
-
                 return;
             }
 
             if (_UserPin.Label != Name || _UserPin.Latitude != Latitude
                     || _UserPin.Longitude != Longitude || _UserPin.Description != Description)
             {
-
                 _UserPin.Label = Name;
                 _UserPin.Description = Description;
                 _UserPin.Latitude = Latitude;
@@ -140,25 +139,22 @@ namespace GPSNote.ViewModels
                 _UserPin.user_id = _authorizationService.IdUser;
                 _UserPin.IsEnabled = true;
 
+                if (_UserPin.id == default)
+                {
+                    await _PinService.AddPinAsync(_UserPin); 
+                }
+                else
+                {
+                    await _PinService.EditPinAsync(_UserPin);
+                }
+
                 bool IsUpdated = true;
 
                 var parametrs = new NavigationParameters
                 {
                     { nameof(IsUpdated), IsUpdated }
                 };
-
-                
-
-                if (_UserPin.id == default)
-                {
-                    await _PinService.AddPinAsync(_UserPin); 
-                    await NavigationService.GoBackAsync(parametrs);
-                }
-                else
-                {
-                    await _PinService.EditPinAsync(_UserPin);
-                    await NavigationService.GoBackAsync(parametrs);
-                }
+                await NavigationService.GoBackAsync(parametrs);
             }
         }
 

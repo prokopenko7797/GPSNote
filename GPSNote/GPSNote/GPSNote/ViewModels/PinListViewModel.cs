@@ -93,7 +93,7 @@ namespace GPSNote.ViewModels
 
         private DelegateCommand<object> _OnTextChangedCommand;
         public DelegateCommand<object> OnTextChangedCommand =>
-            _OnTextChangedCommand ?? (_OnTextChangedCommand = new DelegateCommand<object>(TextChangedCommand));
+            _OnTextChangedCommand ?? (_OnTextChangedCommand = new DelegateCommand<object>(SearchCommand));
 
 
         #endregion
@@ -103,7 +103,7 @@ namespace GPSNote.ViewModels
         #region -- Private helpers --
 
 
-        private void TextChangedCommand(object sender)
+        private void SearchCommand(object sender)
         {
             if (string.IsNullOrWhiteSpace(SearchBarText))
             {
@@ -111,7 +111,13 @@ namespace GPSNote.ViewModels
             }
             else
             {
-                PinObs = new ObservableCollection<UserPins>(_Current.Where(pin => pin.Label.Contains(SearchBarText)));
+                string low = SearchBarText.ToLower();
+
+
+                PinObs = new ObservableCollection<UserPins>(_Current.Where(pin => (pin.Label.ToLower()).Contains(low) ||
+                                                                                  (pin.Description.ToLower()).Contains(low) ||
+                                                                                  (pin.Latitude.ToString()).Contains(low) ||
+                                                                                  (pin.Longitude.ToString()).Contains(low)));
             }
         }
 

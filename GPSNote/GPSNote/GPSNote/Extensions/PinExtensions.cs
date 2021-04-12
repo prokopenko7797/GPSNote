@@ -2,6 +2,7 @@
 using GPSNote.ViewModels.ExtendedViewModels;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 using Xamarin.Forms.GoogleMaps;
 
@@ -89,11 +90,22 @@ namespace GPSNote.Extensions
             result.Latitude = pin.Position.Latitude;
             result.Longitude = pin.Position.Longitude;
             
-
             return result;
         }
 
 
+
+        public static List<Pin> ToListOfPin(this ObservableCollection<UserPins> obsPin) 
+        {
+            var result = new List<Pin>();
+
+            foreach (var item in obsPin)
+            {
+               result.Add(item.ToPin());
+            }
+
+            return result;
+        }
 
     }
 }
