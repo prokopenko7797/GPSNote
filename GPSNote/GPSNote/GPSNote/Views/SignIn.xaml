@@ -32,11 +32,11 @@
                     <FormattedString>
 
                         <Span Text="{Binding Resources[SignUpButton]}"
-                      TextColor="Blue"
-                      TextDecorations="Underline">
+                              TextColor="Blue"
+                              TextDecorations="Underline">
                             <Span.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding NavigateSignUpButtonTapCommand}"
-                                              CommandParameter="https://xamarin.com" />
+                                                      CommandParameter="https://xamarin.com" />
                             </Span.GestureRecognizers>
                         </Span>
 

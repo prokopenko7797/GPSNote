@@ -112,7 +112,7 @@ namespace GPSNote.ViewModels
 
             Pin pin = new Pin()
             {
-                Label = "Your pin",
+                Label = Resources["NewPin"],
                 Position = position
 
             };
@@ -175,9 +175,9 @@ namespace GPSNote.ViewModels
                 Latitude = _pinViewModel.Latitude;
                 Longitude = _pinViewModel.Longitude;
 
-                Title = Resources["EditProfileTitle"];
+                Title = Resources["EditPinTitle"];
             }
-            else Title = Resources["AddProfileTitle"];
+            else Title = Resources["AddPinTitle"];
 
         }
 
@@ -191,7 +191,7 @@ namespace GPSNote.ViewModels
                 
                 Pin pin = new Pin()
                 {
-                    Label = "Your pin",
+                    Label = Resources["NewPin"],
                     Position = position
                 };
 

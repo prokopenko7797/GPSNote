@@ -75,7 +75,9 @@
                                          BackgroundColor="Transparent"
                                          Command="{Binding Path=BindingContext.ImageCommandTap, 
                                                             Source={x:Reference ListView1}}"
-                                         CommandParameter="{Binding .}"></ImageButton>
+                                         CommandParameter="{Binding .}">
+                                
+                            </ImageButton>
 
                             <ImageButton Grid.RowSpan="3" 
                                          Source="favorite.png"  
@@ -85,7 +87,9 @@
                                          Command="{Binding Path=BindingContext.ImageCommandTap, 
                                                             Source={x:Reference ListView1}}"
                                          CommandParameter="{Binding .}"
-                                         IsVisible="{Binding IsEnabled}"></ImageButton>
+                                         IsVisible="{Binding IsEnabled}">
+                                
+                            </ImageButton>
 
 
 

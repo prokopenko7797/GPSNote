@@ -117,8 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AddProfileTitle" xml:space="preserve">
-    <value>Добавить Профиль</value>
+  <data name="AddPinTitle" xml:space="preserve">
+    <value>Добавить Метку</value>
   </data>
   <data name="ConfPas" xml:space="preserve">
     <value>Подтвердите пароль</value>
@@ -138,8 +138,8 @@
   <data name="Edit" xml:space="preserve">
     <value>Ред.</value>
   </data>
-  <data name="EditProfileTitle" xml:space="preserve">
-    <value>Редактировать Профиль</value>
+  <data name="EditPinTitle" xml:space="preserve">
+    <value>Редактировать Метку</value>
   </data>
   <data name="Email" xml:space="preserve">
     <value>E-mail</value>
@@ -153,8 +153,14 @@
   <data name="Error" xml:space="preserve">
     <value>Ошибка</value>
   </data>
+  <data name="FocusToSelected" xml:space="preserve">
+    <value>К выбранному</value>
+  </data>
   <data name="IncorrectEmailPas" xml:space="preserve">
     <value>Неправильный E-mail или пароль</value>
+  </data>
+  <data name="Latitude" xml:space="preserve">
+    <value>Широта</value>
   </data>
   <data name="Login" xml:space="preserve">
     <value>Логин</value>
@@ -168,6 +174,9 @@
   <data name="LogVal3" xml:space="preserve">
     <value>символов.</value>
   </data>
+  <data name="Longtitude" xml:space="preserve">
+    <value>Долгота</value>
+  </data>
   <data name="MainList" xml:space="preserve">
     <value>Главная страница</value>
   </data>
@@ -179,6 +188,12 @@
   </data>
   <data name="Name" xml:space="preserve">
     <value>Имя</value>
+  </data>
+  <data name="NameEmpty" xml:space="preserve">
+    <value>Название пустое</value>
+  </data>
+  <data name="NewPin" xml:space="preserve">
+    <value>Новая метка</value>
   </data>
   <data name="NickName" xml:space="preserve">
     <value>Ник</value>
@@ -206,6 +221,9 @@
   </data>
   <data name="PinListTitle" xml:space="preserve">
     <value>Закладки</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Поиск</value>
   </data>
   <data name="SelectLang" xml:space="preserve">
     <value>Выбранный язык:</value>

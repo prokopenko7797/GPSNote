@@ -117,8 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AddProfileTitle" xml:space="preserve">
-    <value>Add Profile</value>
+  <data name="AddPinTitle" xml:space="preserve">
+    <value>Add Pin</value>
   </data>
   <data name="ConfPas" xml:space="preserve">
     <value>Confirm Password</value>
@@ -138,8 +138,8 @@
   <data name="Edit" xml:space="preserve">
     <value>Edit</value>
   </data>
-  <data name="EditProfileTitle" xml:space="preserve">
-    <value>Edit Profile</value>
+  <data name="EditPinTitle" xml:space="preserve">
+    <value>Edit PIn</value>
   </data>
   <data name="Email" xml:space="preserve">
     <value>E-mail</value>
@@ -153,8 +153,14 @@
   <data name="Error" xml:space="preserve">
     <value>Error</value>
   </data>
+  <data name="FocusToSelected" xml:space="preserve">
+    <value>Focus to selected</value>
+  </data>
   <data name="IncorrectEmailPas" xml:space="preserve">
     <value>Incorrect E-mail or password.</value>
+  </data>
+  <data name="Latitude" xml:space="preserve">
+    <value>Latitude</value>
   </data>
   <data name="Login" xml:space="preserve">
     <value>Login</value>
@@ -168,6 +174,9 @@
   <data name="LogVal3" xml:space="preserve">
     <value>characters.</value>
   </data>
+  <data name="Longtitude" xml:space="preserve">
+    <value>Longtitude</value>
+  </data>
   <data name="MainList" xml:space="preserve">
     <value>MainList page</value>
   </data>
@@ -179,6 +188,12 @@
   </data>
   <data name="Name" xml:space="preserve">
     <value>Name</value>
+  </data>
+  <data name="NameEmpty" xml:space="preserve">
+    <value>Name is empty</value>
+  </data>
+  <data name="NewPin" xml:space="preserve">
+    <value>New pin</value>
   </data>
   <data name="NickName" xml:space="preserve">
     <value>NickName</value>
@@ -206,6 +221,9 @@
   </data>
   <data name="PinListTitle" xml:space="preserve">
     <value>Pin List</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Search</value>
   </data>
   <data name="SelectLang" xml:space="preserve">
     <value>Select Language:</value>
