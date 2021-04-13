@@ -16,7 +16,6 @@ using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.GoogleMaps;
 using GPSNote.Extensions;
-using GPSNote.Servcies.LastPositionService;
 using System.Threading.Tasks;
 using System.ComponentModel;
 using GPSNote.Views;
@@ -27,19 +26,15 @@ namespace GPSNote.ViewModels
     {
         private readonly IPageDialogService _pageDialogService;
         private readonly IPinService _pinService;
-        private readonly ILastPositionService _lastPositionService;
 
-        private ObservableCollection<PinViewModel> _Current;
+        private ObservableCollection<PinViewModel> _ControlObs;
 
         public MapPageViewModel(INavigationService navigationService, ILocalizationService localizationService,
-            IPageDialogService pageDialogService, IPinService pinService, ILastPositionService lastPositionService)
+            IPageDialogService pageDialogService, IPinService pinService)
             : base(navigationService, localizationService)
         {
             _pageDialogService = pageDialogService;
             _pinService = pinService;
-            _lastPositionService = lastPositionService;
-
-
 
         }
 
@@ -194,13 +189,13 @@ namespace GPSNote.ViewModels
         {
             if (string.IsNullOrWhiteSpace(SearchBarText))
             {
-                PinObs = _Current;
+                PinObs = _ControlObs;
             }
             else
             {
                 string low = SearchBarText.ToLower();
 
-                PinObs = new ObservableCollection<PinViewModel>(_Current.Where(pin => (pin.Label.ToLower()).Contains(low) ||
+                PinObs = new ObservableCollection<PinViewModel>(_ControlObs.Where(pin => (pin.Label.ToLower()).Contains(low) ||
                                                                                   (pin.Description.ToLower()).Contains(low) ||
                                                                                   (pin.Latitude.ToString()).Contains(low) ||
                                                                                   (pin.Longitude.ToString()).Contains(low)));
@@ -234,10 +229,10 @@ namespace GPSNote.ViewModels
             int i = PinList.IndexOf(SelectedPin);
 
             IsPinTapped = true;
-            PinLabel = _Current[i].Label;
-            PinDescription = _Current[i].Description;
-            PinLatitude = _Current[i].Latitude;
-            PinLongitude = _Current[i].Longitude;
+            PinLabel = _ControlObs[i].Label;
+            PinDescription = _ControlObs[i].Description;
+            PinLatitude = _ControlObs[i].Latitude;
+            PinLongitude = _ControlObs[i].Longitude;
         }
 
         #endregion
@@ -249,7 +244,7 @@ namespace GPSNote.ViewModels
             base.Initialize(parameters);
 
             PinObs = new ObservableCollection<PinViewModel>((await _pinService.GetUserPinsAsync()).ToOpsOfPinView());
-            _Current = PinObs;
+            _ControlObs = PinObs;
             PinList = PinObs.ToListOfPin();
         }
 
@@ -257,19 +252,12 @@ namespace GPSNote.ViewModels
         public override async void OnNavigatedTo(INavigationParameters parameters)
         {
             base.OnNavigatedTo(parameters);
-            if (parameters.TryGetValue<ObservableCollection<PinViewModel>>(nameof(PinObs), out var newPinsValue))
+            if (parameters.TryGetValue<ObservableCollection<PinViewModel>>(nameof(PinViewModel), out var newPinsValue))
             {
                 PinObs = newPinsValue;
-                _Current = newPinsValue;
+                _ControlObs = newPinsValue;
 
-                List<Pin> nPin = new List<Pin>();
-
-                foreach (var item in PinObs)
-                {
-                    nPin.Add(item.ToPin());
-                }
-
-                PinList = nPin;
+                PinList = newPinsValue.ToListOfPin(); ;
             }
 
             if (parameters.TryGetValue<PinViewModel>(nameof(SelectedItem), out var newSelectedItem))
@@ -285,7 +273,7 @@ namespace GPSNote.ViewModels
                 {
                     PinList = (await _pinService.GetUserPinsAsync()).ToPinList();
                     PinObs = new ObservableCollection<PinViewModel>((await _pinService.GetUserPinsAsync()).ToOpsOfPinView());
-                    _Current = PinObs;
+                    _ControlObs = PinObs;
                 }
             }
 

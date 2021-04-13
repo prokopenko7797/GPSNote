@@ -68,6 +68,25 @@
                             </Grid.ColumnDefinitions>
 
 
+                            <ImageButton Grid.RowSpan="3" 
+                                         Source="disabled.png" 
+                                         Aspect="AspectFit" 
+                                         Margin="5"
+                                         BackgroundColor="Transparent"
+                                         Command="{Binding Path=BindingContext.ImageCommandTap, 
+                                                            Source={x:Reference ListView1}}"
+                                         CommandParameter="{Binding .}"></ImageButton>
+
+                            <ImageButton Grid.RowSpan="3" 
+                                         Source="favorite.png"  
+                                         Aspect="AspectFit" 
+                                         Margin="5" 
+                                         BackgroundColor="Transparent"
+                                         Command="{Binding Path=BindingContext.ImageCommandTap, 
+                                                            Source={x:Reference ListView1}}"
+                                         CommandParameter="{Binding .}"
+                                         IsVisible="{Binding IsEnabled}"></ImageButton>
+
 
 
 

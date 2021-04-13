@@ -29,7 +29,7 @@ namespace GPSNote.ViewModels
         private readonly IPinService _pinService;
         private readonly IAuthorizationService _authorizationService;
 
-        private ObservableCollection<PinViewModel> _Current; 
+        private ObservableCollection<PinViewModel> _ControlObs; 
 
         public PinListViewModel(INavigationService navigationService, ILocalizationService localizationService, IPinService pinService,
             IAuthorizationService authorizationService)
@@ -111,13 +111,13 @@ namespace GPSNote.ViewModels
         {
             if (string.IsNullOrWhiteSpace(SearchBarText))
             {
-                PinObs = _Current;
+                PinObs = _ControlObs;
             }
             else
             {
                 string low = SearchBarText.ToLower();
 
-                PinObs = new ObservableCollection<PinViewModel>(_Current.Where(pin =>(pin.Label.ToLower()).Contains(low) ||
+                PinObs = new ObservableCollection<PinViewModel>(_ControlObs.Where(pin =>(pin.Label.ToLower()).Contains(low) ||
                                                                                   (pin.Description.ToLower()).Contains(low) ||
                                                                                   (pin.Latitude.ToString()).Contains(low) ||
                                                                                   (pin.Longitude.ToString()).Contains(low)));
@@ -140,7 +140,7 @@ namespace GPSNote.ViewModels
             {
                 await _pinService.DeletePinAsync(userPinsV.Id);
                 PinObs.Remove(userPinsV);
-                _Current.Remove(userPinsV);
+                _ControlObs.Remove(userPinsV);
                 if (PinObs.Count() == 0) IsVisible = true;
             }
         }
@@ -164,10 +164,10 @@ namespace GPSNote.ViewModels
             PinViewModel pin = sender as PinViewModel;
 
             int i = PinObs.IndexOf(pin);
-            int j = _Current.IndexOf(pin);
+            int j = _ControlObs.IndexOf(pin);
             pin.IsEnabled = !pin.IsEnabled;
             PinObs[i] = pin;
-            _Current[j] = pin;
+            _ControlObs[j] = pin;
 
             await _pinService.EditPinAsync(pin.ToUserPin());           
         }
@@ -192,7 +192,7 @@ namespace GPSNote.ViewModels
         private async void UpdateCollectionAsync()
         {
             PinObs = new ObservableCollection<PinViewModel>((await _pinService.GetUserPinsAsync()).ToOpsOfPinView());
-            _Current = PinObs;
+            _ControlObs = PinObs;
             IsVisible = PinObs.Count() == 0;
         }
 
@@ -225,7 +225,7 @@ namespace GPSNote.ViewModels
         {
             base.OnNavigatedFrom(parameters);
 
-            parameters.Add(nameof(PinObs), _Current);
+            parameters.Add(nameof(PinViewModel), _ControlObs);
         }
 
         protected async override void OnPropertyChanged(PropertyChangedEventArgs args)

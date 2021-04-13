@@ -1,6 +1,6 @@
 ﻿using GPSNote.Models;
+using GPSNote.Servcies.Authentication;
 using GPSNote.Servcies.LocalizationService;
-using GPSNote.Servcies.RegistrationService;
 using GPSNote.Validators;
 using GPSNote.Views;
 using Prism.Commands;
@@ -19,15 +19,15 @@ namespace GPSNote.ViewModels
     public class SignUpViewModel : ViewModelBase
     {
         private readonly IPageDialogService _pageDialogService;
-        private readonly IRegistrationService _registrationService;
+        private readonly IAuthenticationService _AuthenticationService;
 
         public SignUpViewModel(INavigationService navigationService, ILocalizationService localizationService, IPageDialogService pageDialogService,
-            IRegistrationService registrationService)
+            IAuthenticationService authenticationService)
             : base(navigationService, localizationService)
         {
 
             _pageDialogService = pageDialogService;
-            _registrationService = registrationService;
+            _AuthenticationService = authenticationService;
         }
 
         #region -----Public Properties-----
@@ -153,7 +153,7 @@ namespace GPSNote.ViewModels
         {
             if (await LogPassCheckAsync(Name, Email, Password, ConfirmPassword))
             {
-                if (await _registrationService.RegistrateAsync(new User() { Name = Name, Email = Email, Password = Password }))
+                if (await _AuthenticationService.SignUpAsync(Name, Email, Password ))
                 {
                     var p = new NavigationParameters { { Constant.Email, Email } };
 

@@ -24,12 +24,12 @@ namespace GPSNote.Servcies.PinService
 
         #region -- IPinService implementation --
 
-        public async Task<bool> EditPinAsync(UserPins userPins)
+        public async Task<bool> EditPinAsync(PinModel userPins)
         {
             return (await _repository.UpdateAsync(userPins) != Constant.SQLError);
         }
 
-        public async Task<bool> AddPinAsync(UserPins userPins)
+        public async Task<bool> AddPinAsync(PinModel userPins)
         {
             userPins.user_id = _Settings.IdUser;
 
@@ -38,17 +38,17 @@ namespace GPSNote.Servcies.PinService
 
         public async Task<bool> DeletePinAsync(int id)
         {
-            return await _repository.DeleteAsync<UserPins>(id) != Constant.SQLError;
+            return await _repository.DeleteAsync<PinModel>(id) != Constant.SQLError;
         }
 
-        public async Task<UserPins> GetPinByIdAsync(int id)
+        public async Task<PinModel> GetPinByIdAsync(int id)
         {
-            return await _repository.GetByIdAsync<UserPins>(id);
+            return await _repository.GetByIdAsync<PinModel>(id);
         }
 
-        public async Task<IEnumerable<UserPins>> GetUserPinsAsync()
+        public async Task<IEnumerable<PinModel>> GetUserPinsAsync()
         {
-            IEnumerable<UserPins> userPins = await _repository.QueryAsync<UserPins>($"SELECT * FROM {nameof(UserPins)} " +
+            IEnumerable<PinModel> userPins = await _repository.QueryAsync<PinModel>($"SELECT * FROM {nameof(PinModel)} " +
                 $"WHERE user_id='{_Settings.IdUser}'");
        
             return userPins;

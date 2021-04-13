@@ -36,9 +36,9 @@ namespace GPSNote.Extensions
 
 
 
-        public static UserPins ToUserPin(this PinViewModel pinViewModel)
+        public static PinModel ToUserPin(this PinViewModel pinViewModel)
         {
-            var result = new UserPins();
+            var result = new PinModel();
 
             result.id = pinViewModel.Id;
             result.user_id = pinViewModel.UserId;
@@ -51,7 +51,7 @@ namespace GPSNote.Extensions
             return result;
         }
 
-        public static PinViewModel ToPinViewModel(this UserPins pin)
+        public static PinViewModel ToPinViewModel(this PinModel pin)
         {
             var result = new PinViewModel();
 
@@ -69,7 +69,7 @@ namespace GPSNote.Extensions
 
 
 
-        public static Pin ToPin(this UserPins userPin)
+        public static Pin ToPin(this PinModel userPin)
         {
             var result = new Pin();
 
@@ -80,9 +80,9 @@ namespace GPSNote.Extensions
             return result;
         }
 
-        public static UserPins ToUserPin(this Pin pin)
+        public static PinModel ToUserPin(this Pin pin)
         {
-            var result = new UserPins();
+            var result = new PinModel();
             result.Label = pin.Label;
             result.IsEnabled = pin.IsVisible;
             result.Latitude = pin.Position.Latitude;
@@ -105,7 +105,7 @@ namespace GPSNote.Extensions
             return result;
         }
 
-        public static ObservableCollection<PinViewModel> ToOpsOfPinView(this IEnumerable<UserPins> obsPin)
+        public static ObservableCollection<PinViewModel> ToOpsOfPinView(this IEnumerable<PinModel> obsPin)
         {
             var result = new ObservableCollection<PinViewModel>();
 
@@ -117,7 +117,7 @@ namespace GPSNote.Extensions
             return result;
         }
 
-        public static List<Pin> ToPinList(this IEnumerable<UserPins> obsPin)
+        public static List<Pin> ToPinList(this IEnumerable<PinModel> obsPin)
         {
             var result = new List<Pin>();
 

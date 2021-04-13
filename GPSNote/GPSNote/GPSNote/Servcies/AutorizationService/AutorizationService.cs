@@ -36,21 +36,6 @@ namespace GPSNote.Servcies.AutorizationService
             _settingsManager.IdUser = Constant.NonAuthorized;
         }
 
-        public async Task<bool> AuthorizeAsync(string email, string password)
-        {
-            bool result = false;
-
-            var user = await _repository.FindWithQueryAsync<User>($"SELECT * FROM {nameof(User)} WHERE Email='{email}' AND Password='{password}'");
-
-            if (user != null)
-            {
-                _settingsManager.IdUser = user.id;
-                result = true;
-            }
-
-            return result;
-        }
-
         #endregion
 
     }

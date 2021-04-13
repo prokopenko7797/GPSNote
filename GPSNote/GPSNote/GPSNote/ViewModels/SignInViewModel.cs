@@ -1,4 +1,5 @@
-﻿using GPSNote.Servcies.AutorizationService;
+﻿using GPSNote.Servcies.Authentication;
+using GPSNote.Servcies.AutorizationService;
 using GPSNote.Servcies.LocalizationService;
 using GPSNote.Views;
 using Prism.Commands;
@@ -16,14 +17,14 @@ namespace GPSNote.ViewModels
     public class SignInViewModel : ViewModelBase
     {
         private readonly IPageDialogService _pageDialogService;
-        private readonly IAuthorizationService _authorization;
+        private readonly IAuthenticationService _AuthenticationService;
 
         public SignInViewModel(INavigationService navigationService, ILocalizationService localizationService,
-            IPageDialogService pageDialogService, IAuthorizationService authorization)
+            IPageDialogService pageDialogService, IAuthenticationService authentication)
             : base(navigationService, localizationService)
         {
             _pageDialogService = pageDialogService;
-            _authorization = authorization;
+            _AuthenticationService = authentication;
         }
 
         #region -----Public Properties-----
@@ -71,7 +72,7 @@ namespace GPSNote.ViewModels
 
         private async void ExecuteNavigateMainViewCommand()
         {
-            if (await _authorization.AuthorizeAsync(Email, Password))
+            if (await _AuthenticationService.SignInAsync(Email, Password))
             {
                 await NavigationService.NavigateAsync($"/{nameof(TabbedPage1)}");
             }

@@ -1,8 +1,7 @@
+using GPSNote.Servcies.Authentication;
 using GPSNote.Servcies.AutorizationService;
-using GPSNote.Servcies.LastPositionService;
 using GPSNote.Servcies.LocalizationService;
 using GPSNote.Servcies.PinService;
-using GPSNote.Servcies.RegistrationService;
 using GPSNote.Servcies.Repository;
 using GPSNote.Servcies.Settings;
 using GPSNote.Servcies.ThemeService;
@@ -54,10 +53,9 @@ namespace GPSNote
             containerRegistry.RegisterInstance<ISettingsManager>(Container.Resolve<SettingsManager>());
             containerRegistry.RegisterInstance<IThemeService>(Container.Resolve<ThemeService>());
             containerRegistry.RegisterInstance<IAuthorizationService>(Container.Resolve<AuthorizationService>());
-            containerRegistry.RegisterInstance<IRegistrationService>(Container.Resolve<RegistrationService>());
+            containerRegistry.RegisterInstance<IAuthenticationService>(Container.Resolve<AuthenticationService>());
             containerRegistry.RegisterInstance<ILocalizationService>(Container.Resolve<LocalizationService>()); 
             containerRegistry.RegisterInstance<IPinService>(Container.Resolve<PinService>());
-            containerRegistry.RegisterInstance<ILastPositionService>(Container.Resolve<LastPositionService>());
             
             //Navigation
             containerRegistry.RegisterForNavigation<NavigationPage>();

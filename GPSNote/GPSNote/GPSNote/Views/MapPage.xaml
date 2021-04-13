@@ -41,6 +41,7 @@
                 <prism:EventToCommandBehavior EventName="MapClicked"
                                               Command="{Binding ItemTappedCommand}"
                                               EventArgsParameterPath="Point" />
+                
                 <prism:EventToCommandBehavior EventName="PinClicked"
                                               Command="{Binding PinClickedCommand}"
                                               EventArgsParameterPath="Pin" />
