@@ -67,22 +67,7 @@
                                 <ColumnDefinition Width="0.8*"/>
                             </Grid.ColumnDefinitions>
 
-                            <Image Grid.RowSpan="3" Source="disabled.png"  Aspect="AspectFit" Margin="5" >
-                                <Image.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding Path=BindingContext.ImageCommandTap, 
-                                                                    Source={x:Reference ListView1}}" 
-                                                  CommandParameter="{Binding .}"/>
-                                </Image.GestureRecognizers>
-                            </Image>
 
-
-                            <Image Grid.RowSpan="3" Source="favorite.png"  Aspect="AspectFit" Margin="5" IsVisible="{Binding IsEnabled}">
-                                <Image.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding Path=BindingContext.ImageCommandTap, 
-                                                                    Source={x:Reference ListView1}}" 
-                                                  CommandParameter="{Binding .}"/>
-                                </Image.GestureRecognizers>
-                            </Image>
 
 
 

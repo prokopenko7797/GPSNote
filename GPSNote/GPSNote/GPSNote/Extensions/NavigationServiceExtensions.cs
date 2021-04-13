@@ -8,7 +8,7 @@ using Xamarin.Forms;
 
 namespace GPSNote.Extensions
 {
-    public static class NavigationExtensions
+    public static class NavigationServiceExtensions
     {
         public static async Task<INavigationResult> SelectTabAsync(this INavigationService navigationService, string name, INavigationParameters parameters = null)
         {
@@ -16,9 +16,8 @@ namespace GPSNote.Extensions
             {
                 var currentPage = ((IPageAware)navigationService).Page;
                 var canNavigate = await PageUtilities.CanNavigateAsync(currentPage, parameters);
-
                 if (!canNavigate)
-                    throw new Exception($"IConfirmNavigation for { currentPage} returned false");
+                    throw new Exception($"IConfirmNavigation for { currentPage} returned false"); 
                 TabbedPage tabbedPage = null;
                 if (currentPage is TabbedPage)
                 {
@@ -73,4 +72,3 @@ namespace GPSNote.Extensions
         }
     }
 }
-
