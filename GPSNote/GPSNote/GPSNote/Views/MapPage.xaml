@@ -36,7 +36,10 @@
         </SearchBar>
 
 
-        <custommap:CustomMap Grid.Row="1"   PinsSelect ="{Binding PinList}" MoveTo="{Binding MoveTo}">
+        <custommap:CustomMap Grid.Row="1"   
+                             PinsSelect ="{Binding PinList}" 
+                             MoveTo="{Binding MoveTo}"
+                             SelectedPin="{Binding SelectedPin}">
             <custommap:CustomMap.Behaviors>
                 <prism:EventToCommandBehavior EventName="MapClicked"
                                               Command="{Binding ItemTappedCommand}"

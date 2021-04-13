@@ -111,6 +111,13 @@ namespace GPSNote.ViewModels
             set { SetProperty(ref _SelectedItem, value); }
         }
 
+        private Pin _SelectedPin;
+        public Pin SelectedPin
+        {
+            get { return _SelectedPin; }
+            set { SetProperty(ref _SelectedPin, value); }
+        }
+
         MapSpan _MoveTo;
         public MapSpan MoveTo
         {
@@ -226,8 +233,12 @@ namespace GPSNote.ViewModels
         {
             Pin SelectedPin = (Pin)sender;
 
-            int i = PinList.IndexOf(SelectedPin);
+            DisplayInfoByIndex(PinList.IndexOf(SelectedPin));
+        }
 
+
+        private void DisplayInfoByIndex(int i) 
+        {
             IsPinTapped = true;
             PinLabel = _ControlObs[i].Label;
             PinDescription = _ControlObs[i].Description;
@@ -289,7 +300,10 @@ namespace GPSNote.ViewModels
                 MoveTo = new MapSpan(new Position(SelectedItem.Latitude, SelectedItem.Longitude), 1, 1).WithZoom(10);
                 IsListViewVisible = false;
                 IsSelected = SelectedItem != null;
-                
+                SelectedPin = PinList[_ControlObs.IndexOf(SelectedItem)];
+
+                DisplayInfoByIndex(_ControlObs.IndexOf(SelectedItem));
+
             }
         }
 
