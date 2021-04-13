@@ -14,6 +14,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using Xamarin.Forms.GoogleMaps;
+using System.Threading.Tasks;
+using OpenWeatherMap;
 
 namespace GPSNote.ViewModels
 {
@@ -182,7 +184,7 @@ namespace GPSNote.ViewModels
         }
 
 
-        protected override void OnPropertyChanged(PropertyChangedEventArgs args)
+        protected override async void OnPropertyChanged(PropertyChangedEventArgs args)
         {
             base.OnPropertyChanged(args);
             if (args.PropertyName == nameof(Latitude) || args.PropertyName == nameof(Longitude))
@@ -199,6 +201,12 @@ namespace GPSNote.ViewModels
                 list.Add(pin);
                 PinList = list;
 
+                var client = new OpenWeatherMapClient("9600b0e0a8807fdc09ff9b5e467e5d71");
+                var currentWeather = await client.CurrentWeather.GetByCoordinates(new Coordinates() { Latitude = Latitude, Longitude = Longitude }, MetricSystem.Metric, OpenWeatherMapLanguage.RU);
+
+                Description = currentWeather.Temperature.Value.ToString();
+                //currentWeather.Humidity.
+                CurrentWeatherResponse
             }
         }
     }
