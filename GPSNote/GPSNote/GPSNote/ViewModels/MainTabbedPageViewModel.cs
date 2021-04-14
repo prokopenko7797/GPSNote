@@ -8,9 +8,9 @@ using System.Linq;
 
 namespace GPSNote.ViewModels
 {
-    public class TabbedPage1ViewModel : ViewModelBase
+    public class MainTabbedPageViewModel : ViewModelBase
     {
-        public TabbedPage1ViewModel(INavigationService navigationService, ILocalizationService localizationService) : base(navigationService, localizationService)
+        public MainTabbedPageViewModel(INavigationService navigationService, ILocalizationService localizationService) : base(navigationService, localizationService)
         {
 
         }

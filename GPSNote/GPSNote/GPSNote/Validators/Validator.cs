@@ -46,7 +46,6 @@ namespace GPSNote.Validators
             try
             {
                 MailAddress m = new MailAddress(emailaddress);
-
                 result = true;
             }
             catch (FormatException)

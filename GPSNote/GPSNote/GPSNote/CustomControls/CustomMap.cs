@@ -5,7 +5,7 @@ using System.Text;
 using Xamarin.Forms;
 using Xamarin.Forms.GoogleMaps;
 
-namespace GPSNote.CustomControls.CustomMap
+namespace GPSNote.CustomControls
 {
     class CustomMap : Map
     {
@@ -32,9 +32,6 @@ namespace GPSNote.CustomControls.CustomMap
             get { return (List<Pin>)GetValue(PinsSelectProperty); }
             set { SetValue(PinsSelectProperty, value); }
         }
-
-
-
 
         public static readonly BindableProperty MoveToProperty = BindableProperty.Create(
             propertyName: nameof(MoveTo),

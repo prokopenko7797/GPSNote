@@ -82,7 +82,6 @@ namespace GPSNote.ViewModels
         public DelegateCommand<object> AddEditButtonClicked =>
             _AddEditButtonClicked ?? (_AddEditButtonClicked = new DelegateCommand<object>(OnNavigateAddEditPinCommand));
 
-
         private DelegateCommand<object> _EditCommandTap;
         public DelegateCommand<object> EditCommandTap => 
             _EditCommandTap ?? (_EditCommandTap = new DelegateCommand<object>(OnEditCommand));
@@ -99,12 +98,25 @@ namespace GPSNote.ViewModels
         public DelegateCommand<object> OnTextChangedCommand =>
             _OnTextChangedCommand ?? (_OnTextChangedCommand = new DelegateCommand<object>(OnSearchCommand));
 
+        private DelegateCommand<object> _ItemTappedCommand;
+        public DelegateCommand<object> ItemTappedCommand =>
+            _ItemTappedCommand ?? (_ItemTappedCommand = new DelegateCommand<object>(OnItemTappedAsyncCommand));
 
         #endregion
 
 
 
         #region -- Private helpers --
+
+        private async void OnItemTappedAsyncCommand(object sender)
+        {
+            var parameters = new NavigationParameters
+                {
+                    { nameof(SelectedItem), SelectedItem }
+                };
+
+            await NavigationService.SelectTabAsync($"{nameof(MapPage)}", parameters);
+        }
 
 
         private void OnSearchCommand(object sender)
@@ -123,8 +135,6 @@ namespace GPSNote.ViewModels
                                                                                   (pin.Longitude.ToString()).Contains(low)));
             }
         }
-
- 
 
         private async void OnDeleteCommand(object sender)
         {
@@ -145,7 +155,6 @@ namespace GPSNote.ViewModels
             }
         }
 
-
         private async void OnEditCommand(object sender)
         {
             PinViewModel pins = sender as PinViewModel;
@@ -158,7 +167,6 @@ namespace GPSNote.ViewModels
             await NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(AddEditPin)}", parametrs);
         }
 
-
         private async void OnChangeVisibilityComand(object sender)
         {
             PinViewModel pin = sender as PinViewModel;
@@ -169,13 +177,12 @@ namespace GPSNote.ViewModels
             PinObs[i] = pin;
             _ControlObs[j] = pin;
 
-            await _pinService.EditPinAsync(pin.ToUserPin());           
+            await _pinService.EditPinAsync(pin.ToPinModel());           
         }
 
         private async void OnNavigateAddEditPinCommand(object sender)
         {
             await NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(AddEditPin)}");
-
         }
 
         private async void OnSettingsCommand(object sender)
@@ -226,20 +233,6 @@ namespace GPSNote.ViewModels
             base.OnNavigatedFrom(parameters);
 
             parameters.Add(nameof(PinViewModel), _ControlObs);
-        }
-
-        protected async override void OnPropertyChanged(PropertyChangedEventArgs args)
-        {
-            base.OnPropertyChanged(args);
-            if (args.PropertyName == nameof(SelectedItem)) 
-            {
-                var parameters = new NavigationParameters
-                {
-                    { nameof(SelectedItem), SelectedItem }
-                };
-
-               await NavigationService.SelectTabAsync($"{nameof(MapPage)}", parameters);
-            }
         }
 
         #endregion

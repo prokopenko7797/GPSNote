@@ -1,4 +1,4 @@
-﻿using GPSNote.CustomControls.CustomMap;
+﻿using GPSNote.CustomControls;
 using GPSNote.Models;
 using GPSNote.Servcies.LocalizationService;
 using GPSNote.Servcies.PinService;
@@ -19,6 +19,7 @@ using GPSNote.Extensions;
 using System.Threading.Tasks;
 using System.ComponentModel;
 using GPSNote.Views;
+using OpenWeatherMap;
 
 namespace GPSNote.ViewModels
 {
@@ -28,6 +29,8 @@ namespace GPSNote.ViewModels
         private readonly IPinService _pinService;
 
         private ObservableCollection<PinViewModel> _ControlObs;
+        private OpenWeatherMapClient _Client = new OpenWeatherMapClient("9600b0e0a8807fdc09ff9b5e467e5d71");
+
 
         public MapPageViewModel(INavigationService navigationService, ILocalizationService localizationService,
             IPageDialogService pageDialogService, IPinService pinService)
@@ -35,6 +38,7 @@ namespace GPSNote.ViewModels
         {
             _pageDialogService = pageDialogService;
             _pinService = pinService;
+
 
         }
 
@@ -172,9 +176,70 @@ namespace GPSNote.ViewModels
             _MoveToCommand ?? (_MoveToCommand = new DelegateCommand<object>(OnMoveToCommand));
 
 
+        string _Temperature;
+        public string Temperature
+        {
+            get { return _Temperature; }
+            set { SetProperty(ref _Temperature, value); }
+        }
+
+        string _Humidity;
+        public string Humidity
+        {
+            get { return _Humidity; }
+            set { SetProperty(ref _Humidity, value); }
+        }
+
+        string _Pressure;
+        public string Pressure
+        {
+            get { return _Pressure; }
+            set { SetProperty(ref _Pressure, value); }
+        }
+
+        string _Wind;
+        public string Wind
+        {
+            get { return _Wind; }
+            set { SetProperty(ref _Wind, value); }
+        }
+
+
+        string _Clouds;
+        public string Clouds
+        {
+            get { return _Clouds; }
+            set { SetProperty(ref _Clouds, value); }
+        }
+
+
+        string _Precipitation;
+        public string Precipitation
+        {
+            get { return _Precipitation; }
+            set { SetProperty(ref _Precipitation, value); }
+        }
+
+        string _Weather;
+        public string Weather
+        {
+            get { return _Weather; }
+            set { SetProperty(ref _Weather, value); }
+        }
+
+        string _LastUpdate;
+        public string LastUpdate
+        {
+            get { return _LastUpdate; }
+            set { SetProperty(ref _LastUpdate, value); }
+        }
+
+
         #endregion
 
         #region --Private helpers--
+
+
 
         private void OnItemTappedCommand(object p)
         {
@@ -237,13 +302,27 @@ namespace GPSNote.ViewModels
         }
 
 
-        private void DisplayInfoByIndex(int i) 
+        private async void DisplayInfoByIndex(int i) 
         {
             IsPinTapped = true;
             PinLabel = _ControlObs[i].Label;
             PinDescription = _ControlObs[i].Description;
             PinLatitude = _ControlObs[i].Latitude;
             PinLongitude = _ControlObs[i].Longitude;
+
+
+            CurrentWeatherResponse currentWeather = await _Client.CurrentWeather.GetByCoordinates(new Coordinates() { Latitude = _ControlObs[i].Latitude, Longitude = _ControlObs[i].Longitude },
+                MetricSystem.Metric, OpenWeatherMapLanguage.RU);
+            
+
+            Temperature = currentWeather.Temperature.Value.ToString() + currentWeather.Temperature.Unit;
+            Humidity = currentWeather.Humidity.Value.ToString();
+            Pressure = currentWeather.Pressure.Value.ToString() + currentWeather.Pressure.Unit; 
+            Wind = currentWeather.Wind.Speed.Value.ToString() + currentWeather.Wind.Speed.Name + currentWeather.Wind.Speed.Value.ToString() + currentWeather.Wind.Direction.Value.ToString() + currentWeather.Wind.Direction.Value.ToString();
+            Clouds = currentWeather.Clouds.Value.ToString() + currentWeather.Clouds.Name;
+            Precipitation = currentWeather.Precipitation.Value.ToString() + currentWeather.Precipitation.Unit + currentWeather.Precipitation.Mode;
+            Weather = currentWeather.Weather.Value.ToString();
+            LastUpdate = currentWeather.LastUpdate.Value.ToString();
         }
 
         #endregion

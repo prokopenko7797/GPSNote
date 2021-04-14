@@ -8,7 +8,7 @@ namespace GPSNote.Servcies.Authentication
     public interface IAuthenticationService
     {
         Task<bool> SignUpAsync(string name, string email, string password);
-        Task<bool> SignInAsync(string email, string password);
 
+        Task<bool> SignInAsync(string email, string password);
     }
 }

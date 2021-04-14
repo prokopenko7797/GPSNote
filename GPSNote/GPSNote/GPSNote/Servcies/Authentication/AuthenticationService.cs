@@ -41,22 +41,22 @@ namespace GPSNote.Servcies.Authentication
 
         public async Task<bool> SignUpAsync(string name, string email, string password)
         {
-            bool result = true;
+            bool result = false;
 
             User registredUser = await _repository.FindWithQueryAsync<User>($"SELECT * FROM {nameof(User)} WHERE Email='{email}'");
 
-            if (registredUser != null)
+            if (registredUser == null)
             {
-                result = false;
+                await _repository.InsertAsync(new User { Name = name, Email = email, Password = password });
             }
             else
             {
-                await _repository.InsertAsync(new User { Name = name, Email = email, Password = password });
+                result = false;
             }
 
             return result;
         }
 
-#endregion
+        #endregion
     }
 }

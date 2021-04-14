@@ -13,9 +13,13 @@ namespace GPSNote.Servcies.Repository
         Task<T> FindWithQueryAsync<T>(string query) where T : IEntityModel, new();
 
         Task<IEnumerable<T>> QueryAsync<T>(string query) where T : IEntityModel, new();
+
         Task<T> GetByIdAsync<T>(int id) where T : IEntityModel, new();
+
         Task<int> DeleteAsync<T>(int id) where T : IEntityModel, new();
+
         Task<int> InsertAsync<T>(T item) where T : IEntityModel, new();
+
         Task<int> UpdateAsync<T>(T item) where T : IEntityModel, new();
     }
 }

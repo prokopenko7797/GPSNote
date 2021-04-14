@@ -61,7 +61,6 @@ namespace GPSNote.ViewModels
             (_NavigateSignUpCommand = new DelegateCommand(ExecuteNavigateSignUpCommand));
 
         #endregion 
-
         #region -- Private helpers --
 
         private async void ExecuteNavigateSignUpCommand()
@@ -74,7 +73,7 @@ namespace GPSNote.ViewModels
         {
             if (await _AuthenticationService.SignInAsync(Email, Password))
             {
-                await NavigationService.NavigateAsync($"/{nameof(TabbedPage1)}");
+                await NavigationService.NavigateAsync($"/{nameof(MainTabbedPage)}");
             }
             else
             {
@@ -84,8 +83,6 @@ namespace GPSNote.ViewModels
         }
 
         #endregion
-
-
         #region --Overrides--
 
         public override void OnNavigatedTo(INavigationParameters parameters)

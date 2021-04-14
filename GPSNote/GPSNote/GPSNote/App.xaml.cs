@@ -42,7 +42,7 @@ namespace GPSNote
             }
             else
             {
-                await NavigationService.NavigateAsync($"/{nameof(TabbedPage1)}");
+                await NavigationService.NavigateAsync($"/{nameof(MainTabbedPage)}");
             }
         }
 
@@ -65,7 +65,7 @@ namespace GPSNote
             containerRegistry.RegisterForNavigation<MapPage, MapPageViewModel>();
             containerRegistry.RegisterForNavigation<PinList, PinListViewModel>();
             containerRegistry.RegisterForNavigation<AddEditPin, AddEditPinViewModel>();
-            containerRegistry.RegisterForNavigation<TabbedPage1, TabbedPage1ViewModel>();
+            containerRegistry.RegisterForNavigation<MainTabbedPage, MainTabbedPageViewModel>();
         }
     }
 }

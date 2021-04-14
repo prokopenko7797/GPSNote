@@ -31,7 +31,6 @@ namespace GPSNote.Servcies.LocalizationService
 
         #region -- ILocalizationService implementation --
 
-
         public string this[string key]
         {
             get
@@ -40,19 +39,16 @@ namespace GPSNote.Servcies.LocalizationService
             }
         }
 
-
         public void ChangeCulture(string lang)
         {
             MessagingCenter.Send<object, CultureInfo>(this, string.Empty, new CultureInfo(lang));
         }
-
 
         public string Lang 
         {
             get => _settings.Lang; 
             set => _settings.Lang = value;
         }
-
 
         #endregion
 

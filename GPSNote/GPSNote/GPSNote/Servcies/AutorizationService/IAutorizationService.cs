@@ -8,7 +8,9 @@ namespace GPSNote.Servcies.AutorizationService
     public interface IAuthorizationService
     {
         void LogOut();
+
         bool IsAutorized { get; }
+
         int IdUser { get; }
     }
 }

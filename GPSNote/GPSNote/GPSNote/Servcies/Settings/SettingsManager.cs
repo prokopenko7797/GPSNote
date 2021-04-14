@@ -11,7 +11,6 @@ namespace GPSNote.Servcies.Settings
 
         #region -- ISettingsManager implementation --
 
-
         public string Lang
         {
             get => Preferences.Get(nameof(Lang), Constant.DefaultLanguage);

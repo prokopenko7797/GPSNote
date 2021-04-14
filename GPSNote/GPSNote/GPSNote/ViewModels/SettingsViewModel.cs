@@ -68,7 +68,6 @@ namespace GPSNote.ViewModels
         private async void OnSaveToolBar()
         {
             _ThemeService.Theme = (int)_appTheme;
-
             Resources.Lang = SelectedLang;
 
             await NavigationService.GoBackAsync();
@@ -88,8 +87,8 @@ namespace GPSNote.ViewModels
             {
                 case Constant.ResourcesLangConst.en:
                     IsCheckedEn = true;
-
                     break;
+
                 case Constant.ResourcesLangConst.ru:
                     IsCheckedRu = true;
                     break;
@@ -135,8 +134,6 @@ namespace GPSNote.ViewModels
                 Resources.Lang = SelectedLang;
             }
         }
-
-
 
         public override void OnNavigatedFrom(INavigationParameters parameters)
         {

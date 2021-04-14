@@ -43,9 +43,6 @@ namespace GPSNote.ViewModels
         }
 
 
-
-
-
         #region -- Public properties --
 
         private string _Title;
@@ -111,7 +108,6 @@ namespace GPSNote.ViewModels
             Latitude = position.Latitude;
             Longitude = position.Longitude;
 
-
             Pin pin = new Pin()
             {
                 Label = Resources["NewPin"],
@@ -122,7 +118,6 @@ namespace GPSNote.ViewModels
             List<Pin> list = new List<Pin>();
             list.Add(pin);
             PinList = list;
-
         }
 
         private async void OnSaveToolBarAsync()
@@ -145,11 +140,11 @@ namespace GPSNote.ViewModels
 
                 if (_pinViewModel.Id == default)
                 {
-                    await _PinService.AddPinAsync(_pinViewModel.ToUserPin()); 
+                    await _PinService.AddPinAsync(_pinViewModel.ToPinModel()); 
                 }
                 else
                 {
-                    await _PinService.EditPinAsync(_pinViewModel.ToUserPin());
+                    await _PinService.EditPinAsync(_pinViewModel.ToPinModel());
                 }
 
                 bool IsUpdated = true;
@@ -184,7 +179,7 @@ namespace GPSNote.ViewModels
         }
 
 
-        protected override async void OnPropertyChanged(PropertyChangedEventArgs args)
+        protected override void OnPropertyChanged(PropertyChangedEventArgs args)
         {
             base.OnPropertyChanged(args);
             if (args.PropertyName == nameof(Latitude) || args.PropertyName == nameof(Longitude))
@@ -200,13 +195,6 @@ namespace GPSNote.ViewModels
                 List<Pin> list = new List<Pin>();
                 list.Add(pin);
                 PinList = list;
-
-                var client = new OpenWeatherMapClient("9600b0e0a8807fdc09ff9b5e467e5d71");
-                var currentWeather = await client.CurrentWeather.GetByCoordinates(new Coordinates() { Latitude = Latitude, Longitude = Longitude }, MetricSystem.Metric, OpenWeatherMapLanguage.RU);
-
-                Description = currentWeather.Temperature.Value.ToString();
-                //currentWeather.Humidity.
-                CurrentWeatherResponse
             }
         }
     }

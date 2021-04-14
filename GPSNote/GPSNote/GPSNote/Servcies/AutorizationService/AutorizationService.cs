@@ -14,7 +14,6 @@ namespace GPSNote.Servcies.AutorizationService
         private readonly IRepository _repository;
         private readonly ISettingsManager _settingsManager;
 
-
         public AuthorizationService(IRepository repository, ISettingsManager settingsManager)
         {
             _repository = repository;

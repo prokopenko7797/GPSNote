@@ -30,8 +30,8 @@
             <SearchBar.Behaviors>
                 <prism:EventToCommandBehavior
                             EventName="TextChanged"
-                            Command="{Binding OnTextChangedCommand}"
-                            CommandParameter="MyParameter"  />
+                            Command="{Binding OnTextChangedCommand}" 
+                            CommandParameter="{Binding .}" />
 
             </SearchBar.Behaviors>
         </SearchBar>
@@ -43,7 +43,13 @@
                   x:Name="ListView1"
                   BackgroundColor="Transparent">
 
-
+            <ListView.Behaviors>
+                <prism:EventToCommandBehavior
+                    EventName="ItemTapped"
+                    Command="{Binding ItemTappedCommand}"
+                    CommandParameter="{Binding .}"/>
+                
+            </ListView.Behaviors>
 
             <ListView.ItemTemplate>
                 <DataTemplate>
@@ -90,9 +96,6 @@
                                          IsVisible="{Binding IsEnabled}">
                                 
                             </ImageButton>
-
-
-
 
                             <Label Grid.Column="1" Grid.Row="0" Text="{Binding Label}" FontAttributes="Bold" />
                             <Label Grid.Column="1" Grid.Row="1" Text="{Binding Latitude}" />

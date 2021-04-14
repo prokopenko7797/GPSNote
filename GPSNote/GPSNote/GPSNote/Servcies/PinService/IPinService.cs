@@ -10,9 +10,13 @@ namespace GPSNote.Servcies.PinService
     public interface IPinService
     {
         Task<bool> DeletePinAsync(int id);
+
         Task<bool> AddPinAsync(PinModel profile);
+
         Task<bool> EditPinAsync(PinModel profile);
+
         Task<PinModel> GetPinByIdAsync(int id);
+
         Task<IEnumerable<PinModel>> GetUserPinsAsync();
     }
 }
