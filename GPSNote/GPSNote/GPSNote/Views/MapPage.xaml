@@ -36,6 +36,7 @@
                              ObsPins ="{Binding ControlObs}" 
                              MoveTo="{Binding MoveTo}"
                              SelectedPin="{Binding SelectedPin}">
+            
             <custommap:CustomMap.Behaviors>
                 <prism:EventToCommandBehavior EventName="MapClicked"
                                               Command="{Binding ItemTappedCommand}"

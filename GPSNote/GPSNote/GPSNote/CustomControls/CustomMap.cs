@@ -10,8 +10,14 @@ using Xamarin.Forms.GoogleMaps;
 
 namespace GPSNote.CustomControls
 {
-    class CustomMap : Map
+    public class CustomMap : Map
     {
+
+        public CustomMap() 
+        {
+            UiSettings.CompassEnabled = true;
+            UiSettings.MyLocationButtonEnabled = true;
+        }
 
         #region -- ObsPins property --
 

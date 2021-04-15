@@ -1,7 +1,9 @@
 ﻿using GPSNote.Servcies.Authentication;
 using GPSNote.Servcies.AutorizationService;
 using GPSNote.Servcies.LocalizationService;
+using GPSNote.Servcies.Permission;
 using GPSNote.Views;
+using Plugin.Permissions;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Navigation;
@@ -18,13 +20,15 @@ namespace GPSNote.ViewModels
     {
         private readonly IPageDialogService _pageDialogService;
         private readonly IAuthenticationService _AuthenticationService;
+        private readonly IPermissionService _permissionService;
 
         public SignInViewModel(INavigationService navigationService, ILocalizationService localizationService,
-            IPageDialogService pageDialogService, IAuthenticationService authentication)
+            IPageDialogService pageDialogService, IAuthenticationService authentication, IPermissionService permissionService)
             : base(navigationService, localizationService)
         {
             _pageDialogService = pageDialogService;
             _AuthenticationService = authentication;
+            _permissionService = permissionService;
         }
 
         #region -----Public Properties-----
@@ -121,6 +125,13 @@ namespace GPSNote.ViewModels
                 }                
             }
         }
+
+
+        public override void Initialize(INavigationParameters parameters)
+        {
+            base.Initialize(parameters);
+        }
+
 
         #endregion
 
