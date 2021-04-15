@@ -7,10 +7,10 @@
             prism:ViewModelLocator.AutowireViewModel="True"
             x:Class="GPSNote.Views.MainTabbedPage">
 
-
     <TabbedPage.Behaviors>
         <behaviors:TabbedPageNavigationBehavior />
     </TabbedPage.Behaviors>
+    
     <TabbedPage.Children>
         <local:MapPage />
         <local:PinList />

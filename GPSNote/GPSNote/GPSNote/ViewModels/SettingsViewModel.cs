@@ -67,7 +67,7 @@ namespace GPSNote.ViewModels
 
         private async void OnSaveToolBar()
         {
-            _ThemeService.Theme = (int)_appTheme;
+            _appTheme = _ThemeService.GetCurrentTheme();
             Resources.Lang = SelectedLang;
 
             await NavigationService.GoBackAsync();
@@ -94,9 +94,9 @@ namespace GPSNote.ViewModels
                     break;
             }
 
-            _appTheme = (OSAppTheme)_ThemeService.Theme;
+            _appTheme = _ThemeService.GetCurrentTheme();
 
-            if (_ThemeService.Theme == (int)OSAppTheme.Unspecified)
+            if (_appTheme == OSAppTheme.Light)
             {
                 IsChecked = false;
             }
@@ -115,17 +115,14 @@ namespace GPSNote.ViewModels
             {
                 if (IsChecked == true)
                 {
-                    _appTheme = OSAppTheme.Dark;
-                    Application.Current.UserAppTheme = OSAppTheme.Dark;
+                    _ThemeService.SetTheme(OSAppTheme.Dark);
 
                 }
                 else
                 {
-                    _appTheme = OSAppTheme.Unspecified;
-                    Application.Current.UserAppTheme = OSAppTheme.Unspecified;
+                    _ThemeService.SetTheme(OSAppTheme.Light);
                 }
 
-                _ThemeService.Theme = (int)_appTheme;
             }
 
             if (args.PropertyName == nameof(SelectedLang))
@@ -139,7 +136,7 @@ namespace GPSNote.ViewModels
         {
             base.OnNavigatedFrom(parameters);
 
-            Application.Current.UserAppTheme = (OSAppTheme)_ThemeService.Theme;
+            _ThemeService.SetTheme(_appTheme);
             Resources.ChangeCulture(Resources.Lang);
         }
 

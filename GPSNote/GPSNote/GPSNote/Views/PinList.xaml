@@ -8,12 +8,7 @@
              Title="{Binding Resources[PinListTitle]}">
 
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="0.1*" />
-            <RowDefinition Height="0.9*" />
-        </Grid.RowDefinitions>
-
+    <Grid Grid.RowDefinitions ="0.1*, 0.9*">
 
         <Label Text="{Binding Resources[NoPins]}" 
                HorizontalOptions="Center"
@@ -67,12 +62,7 @@
                                           CommandParameter="{Binding .}"/>
                         </ViewCell.ContextActions>
 
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="0.2*"/>
-                                <ColumnDefinition Width="0.8*"/>
-                            </Grid.ColumnDefinitions>
-
+                        <Grid Grid.ColumnDefinitions ="0.2*, 0.8*">
 
                             <ImageButton Grid.RowSpan="3" 
                                          Source="disabled.png" 

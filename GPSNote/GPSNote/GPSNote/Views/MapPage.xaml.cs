@@ -9,9 +9,5 @@ namespace GPSNote.Views
             InitializeComponent();
         }
 
-        private void MoveCameraBehavior_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-
-        }
     }
 }

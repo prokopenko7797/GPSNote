@@ -24,24 +24,24 @@ namespace GPSNote.Servcies.PinService
 
         #region -- IPinService implementation --
 
-        public async Task<bool> EditPinAsync(PinModel userPins)
+        public async Task<bool> EditPinModelAsync(PinModel userPins)
         {
             return (await _repository.UpdateAsync(userPins) != Constant.SQLError);
         }
 
-        public async Task<bool> AddPinAsync(PinModel userPins)
+        public async Task<bool> AddPinModelAsync(PinModel userPins)
         {
             userPins.user_id = _Settings.IdUser;
 
             return await _repository.InsertAsync(userPins) != Constant.SQLError;
         }
 
-        public async Task<bool> DeletePinAsync(int id)
+        public async Task<bool> DeletePinModelAsync(int id)
         {
             return await _repository.DeleteAsync<PinModel>(id) != Constant.SQLError;
         }
 
-        public async Task<PinModel> GetPinByIdAsync(int id)
+        public async Task<PinModel> GetPinModelByIdAsync(int id)
         {
             return await _repository.GetByIdAsync<PinModel>(id);
         }

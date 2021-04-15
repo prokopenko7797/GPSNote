@@ -32,6 +32,7 @@ namespace GPSNote.Servcies.Authentication
             if (user != null)
             {
                 _settingsManager.IdUser = user.id;
+                
                 result = true;
             }
 
@@ -48,6 +49,7 @@ namespace GPSNote.Servcies.Authentication
             if (registredUser == null)
             {
                 await _repository.InsertAsync(new User { Name = name, Email = email, Password = password });
+                result = true;
             }
             else
             {

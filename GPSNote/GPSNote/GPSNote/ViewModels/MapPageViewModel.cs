@@ -28,7 +28,6 @@ namespace GPSNote.ViewModels
         private readonly IPageDialogService _pageDialogService;
         private readonly IPinService _pinService;
 
-        private ObservableCollection<PinViewModel> _ControlObs;
         private OpenWeatherMapClient _Client = new OpenWeatherMapClient("9600b0e0a8807fdc09ff9b5e467e5d71");
 
 
@@ -91,14 +90,12 @@ namespace GPSNote.ViewModels
         }
 
 
+        private ObservableCollection<PinViewModel> _ControlObs;
 
-
-        private List<Pin> _pins = new List<Pin>();
-
-        public List<Pin> PinList
+        public ObservableCollection<PinViewModel> ControlObs
         {
-            get { return _pins; }
-            set { SetProperty(ref _pins, value); }
+            get { return _ControlObs; }
+            set { SetProperty(ref _ControlObs, value); }
         }
 
         private ObservableCollection<PinViewModel> _pinList;
@@ -109,18 +106,12 @@ namespace GPSNote.ViewModels
         }
 
         private PinViewModel _SelectedItem;
-        public PinViewModel SelectedItem
+        public PinViewModel SelectedListItem
         {
             get { return _SelectedItem; }
             set { SetProperty(ref _SelectedItem, value); }
         }
 
-        private Pin _SelectedPin;
-        public Pin SelectedPin
-        {
-            get { return _SelectedPin; }
-            set { SetProperty(ref _SelectedPin, value); }
-        }
 
         MapSpan _MoveTo;
         public MapSpan MoveTo
@@ -249,7 +240,7 @@ namespace GPSNote.ViewModels
 
         private void OnMoveToCommand(object position)
         {
-            Position newPosition = new Position(SelectedItem.Latitude, SelectedItem.Longitude);
+            Position newPosition = new Position(SelectedListItem.Latitude, SelectedListItem.Longitude);
             Random zoom = new Random();
 
             MoveTo = new MapSpan(newPosition, 3, 3).WithZoom(10 + zoom.NextDouble());
@@ -261,13 +252,13 @@ namespace GPSNote.ViewModels
         {
             if (string.IsNullOrWhiteSpace(SearchBarText))
             {
-                PinObs = _ControlObs;
+                PinObs = ControlObs;
             }
             else
             {
                 string low = SearchBarText.ToLower();
 
-                PinObs = new ObservableCollection<PinViewModel>(_ControlObs.Where(pin => (pin.Label.ToLower()).Contains(low) ||
+                PinObs = new ObservableCollection<PinViewModel>(ControlObs.Where(pin => (pin.Label.ToLower()).Contains(low) ||
                                                                                   (pin.Description.ToLower()).Contains(low) ||
                                                                                   (pin.Latitude.ToString()).Contains(low) ||
                                                                                   (pin.Longitude.ToString()).Contains(low)));
@@ -298,29 +289,43 @@ namespace GPSNote.ViewModels
         {
             Pin SelectedPin = (Pin)sender;
 
-            DisplayInfoByIndex(PinList.IndexOf(SelectedPin));
+            DisplayInfoPinViewModel(ControlObs.Where(pinView => pinView.Label.Contains(SelectedPin.Label)).First());
         }
 
 
-        private async void DisplayInfoByIndex(int i) 
+        private async void DisplayInfoPinViewModel(PinViewModel pinView) 
         {
             IsPinTapped = true;
-            PinLabel = _ControlObs[i].Label;
-            PinDescription = _ControlObs[i].Description;
-            PinLatitude = _ControlObs[i].Latitude;
-            PinLongitude = _ControlObs[i].Longitude;
+            PinLabel = pinView.Label;
+            PinDescription = pinView.Description;
+            PinLatitude = pinView.Latitude;
+            PinLongitude = pinView.Longitude;
 
 
-            CurrentWeatherResponse currentWeather = await _Client.CurrentWeather.GetByCoordinates(new Coordinates() { Latitude = _ControlObs[i].Latitude, Longitude = _ControlObs[i].Longitude },
+            CurrentWeatherResponse currentWeather = await _Client.CurrentWeather.GetByCoordinates(new Coordinates() { Latitude = pinView.Latitude, Longitude = pinView.Longitude },
                 MetricSystem.Metric, OpenWeatherMapLanguage.RU);
             
 
-            Temperature = currentWeather.Temperature.Value.ToString() + currentWeather.Temperature.Unit;
+            Temperature = currentWeather.Temperature.Value.ToString() + 
+                          currentWeather.Temperature.Unit;
+
             Humidity = currentWeather.Humidity.Value.ToString();
-            Pressure = currentWeather.Pressure.Value.ToString() + currentWeather.Pressure.Unit; 
-            Wind = currentWeather.Wind.Speed.Value.ToString() + currentWeather.Wind.Speed.Name + currentWeather.Wind.Speed.Value.ToString() + currentWeather.Wind.Direction.Value.ToString() + currentWeather.Wind.Direction.Value.ToString();
-            Clouds = currentWeather.Clouds.Value.ToString() + currentWeather.Clouds.Name;
-            Precipitation = currentWeather.Precipitation.Value.ToString() + currentWeather.Precipitation.Unit + currentWeather.Precipitation.Mode;
+            Pressure = currentWeather.Pressure.Value.ToString() + 
+                       currentWeather.Pressure.Unit; 
+
+            Wind = currentWeather.Wind.Speed.Value.ToString() + 
+                   currentWeather.Wind.Speed.Name + 
+                   currentWeather.Wind.Speed.Value.ToString() + 
+                   currentWeather.Wind.Direction.Value.ToString() + 
+                   currentWeather.Wind.Direction.Value.ToString();
+
+            Clouds = currentWeather.Clouds.Value.ToString() + 
+                     currentWeather.Clouds.Name;
+
+            Precipitation = currentWeather.Precipitation.Value.ToString() + 
+                            currentWeather.Precipitation.Unit + 
+                            currentWeather.Precipitation.Mode;
+
             Weather = currentWeather.Weather.Value.ToString();
             LastUpdate = currentWeather.LastUpdate.Value.ToString();
         }
@@ -334,8 +339,7 @@ namespace GPSNote.ViewModels
             base.Initialize(parameters);
 
             PinObs = new ObservableCollection<PinViewModel>((await _pinService.GetUserPinsAsync()).ToOpsOfPinView());
-            _ControlObs = PinObs;
-            PinList = PinObs.ToListOfPin();
+            ControlObs = PinObs;
         }
 
 
@@ -345,14 +349,13 @@ namespace GPSNote.ViewModels
             if (parameters.TryGetValue<ObservableCollection<PinViewModel>>(nameof(PinViewModel), out var newPinsValue))
             {
                 PinObs = newPinsValue;
-                _ControlObs = newPinsValue;
+                ControlObs = newPinsValue;
 
-                PinList = newPinsValue.ToListOfPin(); ;
             }
 
-            if (parameters.TryGetValue<PinViewModel>(nameof(SelectedItem), out var newSelectedItem))
+            if (parameters.TryGetValue<PinViewModel>(nameof(SelectedListItem), out var newSelectedItem))
             {
-                SelectedItem = newSelectedItem;
+                SelectedListItem = newSelectedItem;
             }
 
             bool IsUpdated = false;
@@ -361,9 +364,8 @@ namespace GPSNote.ViewModels
             {
                 if (newUpdate)
                 {
-                    PinList = (await _pinService.GetUserPinsAsync()).ToPinList();
                     PinObs = new ObservableCollection<PinViewModel>((await _pinService.GetUserPinsAsync()).ToOpsOfPinView());
-                    _ControlObs = PinObs;
+                    ControlObs = PinObs;
                 }
             }
 
@@ -374,14 +376,13 @@ namespace GPSNote.ViewModels
         {
             base.OnPropertyChanged(args);
 
-            if (args.PropertyName == nameof(SelectedItem) )
+            if (args.PropertyName == nameof(SelectedListItem) )
             {
-                MoveTo = new MapSpan(new Position(SelectedItem.Latitude, SelectedItem.Longitude), 1, 1).WithZoom(10);
+                MoveTo = new MapSpan(new Position(SelectedListItem.Latitude, SelectedListItem.Longitude), 1, 1).WithZoom(10);
                 IsListViewVisible = false;
-                IsSelected = SelectedItem != null;
-                SelectedPin = PinList[_ControlObs.IndexOf(SelectedItem)];
+                IsSelected = SelectedListItem != null;
 
-                DisplayInfoByIndex(_ControlObs.IndexOf(SelectedItem));
+                DisplayInfoPinViewModel(ControlObs.Where(pinView => pinView.Label.Contains(SelectedListItem.Label)).First());
 
             }
         }

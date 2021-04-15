@@ -17,16 +17,11 @@
                      />
     </ContentPage.ToolbarItems>
 
-    <Grid Padding="30,10,30,10" HorizontalOptions="FillAndExpand"  VerticalOptions="StartAndExpand" >
-        <Grid.RowDefinitions>
-            <RowDefinition Height="0.1*" />
-            <RowDefinition Height="0.2*" />
-            <RowDefinition Height="0.1*" />
-            <RowDefinition Height="0.1*" />
-            <RowDefinition Height="0.5*" />
-        </Grid.RowDefinitions>
-
-
+    <Grid Grid.RowDefinitions="0.1*, 0.2*, 0.1*, 0.1*, 0.5*"
+          Padding="30,10,30,10" 
+          HorizontalOptions="FillAndExpand"  
+          VerticalOptions="StartAndExpand" >
+        
         <Entry Text="{Binding Name}" 
                Placeholder = "{Binding Resources[Name]}" 
                Grid.Row="0"/>
@@ -44,7 +39,8 @@
         
 
 
-        <custommap:CustomMap  Grid.Row="4"  PinsSelect ="{Binding PinList}">
+        <custommap:CustomMap  Grid.Row="4"  
+                              ObsPins ="{Binding ObsPins}">
             <custommap:CustomMap.Behaviors>
                 <prism:EventToCommandBehavior EventName="MapClicked"
                                               Command="{Binding ItemTappedCommand}"

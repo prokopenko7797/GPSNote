@@ -15,7 +15,7 @@ namespace GPSNote.Models
         [Column(nameof(user_id))]
         public int user_id { get; set; }
 
-        [Column(nameof(Latitude))]
+        [Column(nameof(Latitude)), Unique]
         public double Latitude { get; set; }
 
         [Column(nameof(Longitude))]

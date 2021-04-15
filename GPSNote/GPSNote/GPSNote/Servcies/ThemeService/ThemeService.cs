@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Xamarin.Forms;
 
 namespace GPSNote.Servcies.ThemeService
 {
@@ -12,10 +13,17 @@ namespace GPSNote.Servcies.ThemeService
         {
             _settingsManager = settingsManager;
         }
-        public int Theme 
+
+
+        public OSAppTheme GetCurrentTheme()
         {
-            get => _settingsManager.Theme; 
-            set => _settingsManager.Theme = value; 
+            return (OSAppTheme)_settingsManager.Theme;
+        }
+
+        public void SetTheme(OSAppTheme theme)
+        {
+            _settingsManager.Theme = (int)theme;
+            Application.Current.UserAppTheme = theme;
         }
     }
 }

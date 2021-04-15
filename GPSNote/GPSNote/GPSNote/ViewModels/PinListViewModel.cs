@@ -148,7 +148,7 @@ namespace GPSNote.ViewModels
             });
             if (result)
             {
-                await _pinService.DeletePinAsync(userPinsV.Id);
+                await _pinService.DeletePinModelAsync(userPinsV.Id);
                 PinObs.Remove(userPinsV);
                 _ControlObs.Remove(userPinsV);
                 if (PinObs.Count() == 0) IsVisible = true;
@@ -177,7 +177,7 @@ namespace GPSNote.ViewModels
             PinObs[i] = pin;
             _ControlObs[j] = pin;
 
-            await _pinService.EditPinAsync(pin.ToPinModel());           
+            await _pinService.EditPinModelAsync(pin.ToPinModel());           
         }
 
         private async void OnNavigateAddEditPinCommand(object sender)

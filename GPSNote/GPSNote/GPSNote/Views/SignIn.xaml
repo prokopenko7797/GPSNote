@@ -20,13 +20,11 @@
         </StackLayout>
 
 
-
-
         <Button Text="{Binding Resources[SignInButton]}" BackgroundColor="DarkOrange"  Command="{Binding NavigateMainListButtonTapCommand}"></Button>
 
 
         <StackLayout Padding="0,15,0,0">
-
+            
             <Label HorizontalOptions="Center" VerticalOptions="CenterAndExpand">
                 <Label.FormattedText>
                     <FormattedString>

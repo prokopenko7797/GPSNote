@@ -34,7 +34,7 @@ namespace GPSNote
         {
             InitializeComponent();
 
-            Application.Current.UserAppTheme = (OSAppTheme)ThemeService.Theme;
+            ThemeService.SetTheme(ThemeService.GetCurrentTheme());
 
             if (AuthorizationService.IsAutorized)
             {

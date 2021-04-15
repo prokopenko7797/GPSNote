@@ -16,6 +16,7 @@ using System.Linq;
 using Xamarin.Forms.GoogleMaps;
 using System.Threading.Tasks;
 using OpenWeatherMap;
+using System.Collections.ObjectModel;
 
 namespace GPSNote.ViewModels
 {
@@ -39,7 +40,7 @@ namespace GPSNote.ViewModels
             _PinService = pinService;
             _authorizationService = authorizationService;
             _PageDialogService = pageDialogService;
-            PinList = new List<Pin>();
+            ObsPins = new ObservableCollection<PinViewModel>();
         }
 
 
@@ -80,11 +81,11 @@ namespace GPSNote.ViewModels
             set { SetProperty(ref _Longitude, value); }
         }
 
-        private List<Pin> _pins;
-        public List<Pin> PinList
+        private ObservableCollection<PinViewModel> _obsPins;
+        public ObservableCollection<PinViewModel> ObsPins
         {
-            get { return _pins; }
-            set { SetProperty(ref _pins, value); }
+            get { return _obsPins; }
+            set { SetProperty(ref _obsPins, value); }
         }
 
         private DelegateCommand _SaveToolBarCommand;
@@ -107,17 +108,20 @@ namespace GPSNote.ViewModels
 
             Latitude = position.Latitude;
             Longitude = position.Longitude;
+        }
 
-            Pin pin = new Pin()
+
+        private void PinUpdate() 
+        {
+            PinViewModel pinViewModel = new PinViewModel()
             {
                 Label = Resources["NewPin"],
-                Position = position
-
+                Latitude = Latitude,
+                Longitude = Longitude
             };
 
-            List<Pin> list = new List<Pin>();
-            list.Add(pin);
-            PinList = list;
+            ObsPins.Clear();
+            ObsPins.Add(pinViewModel);
         }
 
         private async void OnSaveToolBarAsync()
@@ -140,11 +144,11 @@ namespace GPSNote.ViewModels
 
                 if (_pinViewModel.Id == default)
                 {
-                    await _PinService.AddPinAsync(_pinViewModel.ToPinModel()); 
+                    await _PinService.AddPinModelAsync(_pinViewModel.ToPinModel()); 
                 }
                 else
                 {
-                    await _PinService.EditPinAsync(_pinViewModel.ToPinModel());
+                    await _PinService.EditPinModelAsync(_pinViewModel.ToPinModel());
                 }
 
                 bool IsUpdated = true;
@@ -184,17 +188,7 @@ namespace GPSNote.ViewModels
             base.OnPropertyChanged(args);
             if (args.PropertyName == nameof(Latitude) || args.PropertyName == nameof(Longitude))
             {
-                Position position = new Position(Latitude, Longitude); 
-                
-                Pin pin = new Pin()
-                {
-                    Label = Resources["NewPin"],
-                    Position = position
-                };
-
-                List<Pin> list = new List<Pin>();
-                list.Add(pin);
-                PinList = list;
+                PinUpdate();
             }
         }
     }

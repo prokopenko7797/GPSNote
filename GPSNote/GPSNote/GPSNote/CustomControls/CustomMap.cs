@@ -1,5 +1,8 @@
-﻿using System;
+﻿using GPSNote.ViewModels.ExtendedViewModels;
+using GPSNote.Extensions;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Text;
 using Xamarin.Forms;
@@ -10,28 +13,34 @@ namespace GPSNote.CustomControls
     class CustomMap : Map
     {
 
-        public static readonly BindableProperty PinsSelectProperty = BindableProperty.Create(
-            propertyName: nameof(PinsSelect),
-            returnType: typeof(List<Pin>),
+        #region -- ObsPins property --
+
+        public static readonly BindableProperty ObsPinsProperty = BindableProperty.Create(
+            propertyName: nameof(ObsPins),
+            returnType: typeof(ObservableCollection<PinViewModel>),
             declaringType: typeof(CustomMap),
             defaultValue: default,
-            propertyChanged: PinsSelectPropertyChanged);
+            propertyChanged: ObsPinsPropertyChanged);
 
-        private static void PinsSelectPropertyChanged(BindableObject bindable, object oldValue, object newValue)
+        private static void ObsPinsPropertyChanged(BindableObject bindable, object oldValue, object newValue)
         {
             var control = (CustomMap)bindable;
             control.Pins.Clear();
-            foreach (Pin pin in (List<Pin>)newValue)
+            foreach (PinViewModel pin in (ObservableCollection<PinViewModel>)newValue)
             {
-                control.Pins.Add(pin);
+                control.Pins.Add(pin.ToPin());
             }
         }
 
-        public List<Pin> PinsSelect
+        public ObservableCollection<PinViewModel> ObsPins
         {
-            get { return (List<Pin>)GetValue(PinsSelectProperty); }
-            set { SetValue(PinsSelectProperty, value); }
+            get { return (ObservableCollection<PinViewModel>)GetValue(ObsPinsProperty); }
+            set { SetValue(ObsPinsProperty, value); }
         }
+
+        #endregion
+
+        #region -- MoveTo property --
 
         public static readonly BindableProperty MoveToProperty = BindableProperty.Create(
             propertyName: nameof(MoveTo),
@@ -53,5 +62,6 @@ namespace GPSNote.CustomControls
             set { SetValue(MoveToProperty, value); }
         }
 
+        #endregion
     }
 }

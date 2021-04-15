@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net.Mail;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -48,8 +49,10 @@ namespace GPSNote.Validators
                 MailAddress m = new MailAddress(emailaddress);
                 result = true;
             }
-            catch (FormatException)
+            catch (Exception ex)
             {
+
+                Debug.WriteLine(ex.Message);
                 result = false;
             }
 
