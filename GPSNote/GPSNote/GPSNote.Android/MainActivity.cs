@@ -20,10 +20,7 @@ namespace GPSNote.Droid
               DataHost = "gpsnote.page.link",
               DataPathPrefix = "/pin",
               AutoVerify = true)]
-    public class RecipeActivity : Activity
-    {
-        // Code for the activity omitted
-    }
+
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         protected override void OnCreate(Bundle savedInstanceState)

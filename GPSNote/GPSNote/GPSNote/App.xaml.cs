@@ -10,6 +10,7 @@ using GPSNote.ViewModels;
 using GPSNote.Views;
 using Prism;
 using Prism.Ioc;
+using System;
 using Xamarin.Essentials.Implementation;
 using Xamarin.Essentials.Interfaces;
 using Xamarin.Forms;
@@ -68,6 +69,23 @@ namespace GPSNote
             containerRegistry.RegisterForNavigation<PinList, PinListViewModel>();
             containerRegistry.RegisterForNavigation<AddEditPin, AddEditPinViewModel>();
             containerRegistry.RegisterForNavigation<MainTabbedPage, MainTabbedPageViewModel>();
+        }
+
+        protected override async void OnAppLinkRequestReceived(Uri uri)
+        {
+        
+            if (uri.Host.EndsWith("gpsnote.page.link", StringComparison.OrdinalIgnoreCase))
+            {
+                if (uri.Segments != null && uri.Segments.Length == 3)
+                {
+                    var action = uri.Segments[1].Replace("/", "");
+                    if (action == "pin")
+                    {
+                        await NavigationService.NavigateAsync($"/{nameof(AddEditPin)}");
+                    }
+                }
+            }
+
         }
     }
 }
