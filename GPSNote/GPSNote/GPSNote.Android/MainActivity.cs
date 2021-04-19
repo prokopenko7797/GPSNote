@@ -8,6 +8,7 @@ using Prism;
 using Prism.Ioc;
 using Firebase;
 using Xamarin.Forms.Platform.Android.AppLinks;
+using Android.Content;
 
 namespace GPSNote.Droid
 {

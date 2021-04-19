@@ -14,6 +14,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "885914471547-c3bflu8vcmol3cs40os1va2b0es6o6sa.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.companyname.gpsnote",
+            "certificate_hash": "73ae1449ffa5961efb314e0082d93685b50e01df"
+          }
+        },
+        {
+          "client_id": "885914471547-sje22kd79ut7holcbg9u48so2emljos1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.companyname.gpsnote",
+            "certificate_hash": "86b06ed62d59b474ee9e179cdabe480392ca3e95"
+          }
+        },
+        {
           "client_id": "885914471547-hsid8jvh58aaicjqulg32opnjfigf64l.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,6 +45,13 @@
             {
               "client_id": "885914471547-hsid8jvh58aaicjqulg32opnjfigf64l.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "885914471547-tsuea38oqkf0g98dmbnnbdmji0l07eid.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.company.gpsnote"
+              }
             }
           ]
         }
