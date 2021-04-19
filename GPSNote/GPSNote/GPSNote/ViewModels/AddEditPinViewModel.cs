@@ -106,8 +106,11 @@ namespace GPSNote.ViewModels
         {
             Position position = (Position)sender;
 
+
             Latitude = position.Latitude;
             Longitude = position.Longitude;
+            
+
         }
 
 
@@ -117,11 +120,14 @@ namespace GPSNote.ViewModels
             {
                 Label = Resources["NewPin"],
                 Latitude = Latitude,
-                Longitude = Longitude
+                Longitude = Longitude,
+                IsEnabled = true
             };
 
-            ObsPins.Clear();
-            ObsPins.Add(pinViewModel);
+            ObservableCollection<PinViewModel> newPins = new ObservableCollection<PinViewModel>();
+            newPins.Add(pinViewModel);
+
+            ObsPins = newPins;
         }
 
         private async void OnSaveToolBarAsync()

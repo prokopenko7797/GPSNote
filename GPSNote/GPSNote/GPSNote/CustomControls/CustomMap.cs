@@ -16,6 +16,7 @@ namespace GPSNote.CustomControls
         public CustomMap() 
         {
             UiSettings.CompassEnabled = true;
+            MyLocationEnabled = true;
             UiSettings.MyLocationButtonEnabled = true;
         }
 

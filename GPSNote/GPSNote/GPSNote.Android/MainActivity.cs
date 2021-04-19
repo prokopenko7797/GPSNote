@@ -6,11 +6,23 @@ using Android.Runtime;
 using Plugin.Permissions;
 using Prism;
 using Prism.Ioc;
+using Firebase;
+using Xamarin.Forms.Platform.Android.AppLinks;
 
 namespace GPSNote.Droid
 {
     [Activity(Theme = "@style/MainTheme",
               ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize)]
+    [IntentFilter(new[] { Intent.ActionView },
+              Categories = new[] { Intent.CategoryBrowsable, Intent.CategoryDefault },
+              DataScheme = "https",
+              DataHost = "gpsnote.page.link",
+              DataPathPrefix = "/pin",
+              AutoVerify = true)]
+    public class RecipeActivity : Activity
+    {
+        // Code for the activity omitted
+    }
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         protected override void OnCreate(Bundle savedInstanceState)
@@ -21,8 +33,11 @@ namespace GPSNote.Droid
             base.OnCreate(savedInstanceState);
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
-
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
+
+            FirebaseApp.InitializeApp(this);
+            AndroidAppLinks.Init(this);
+
             UserDialogs.Init(this);
             Xamarin.FormsGoogleMaps.Init(this, savedInstanceState);
             LoadApplication(new App(new AndroidInitializer()));
