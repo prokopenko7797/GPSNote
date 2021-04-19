@@ -138,33 +138,30 @@ namespace GPSNote.ViewModels
                 return;
             }
 
-            if (_pinViewModel.Label != Name || _pinViewModel.Latitude != Latitude
-                    || _pinViewModel.Longitude != Longitude || _pinViewModel.Description != Description)
+            _pinViewModel.Label = Name;
+            _pinViewModel.Description = Description;
+            _pinViewModel.Latitude = Latitude;
+            _pinViewModel.Longitude = Longitude;
+            _pinViewModel.UserId = _authorizationService.IdUser;
+            _pinViewModel.IsEnabled = true;
+
+            if (_pinViewModel.Id == default)
             {
-                _pinViewModel.Label = Name;
-                _pinViewModel.Description = Description;
-                _pinViewModel.Latitude = Latitude;
-                _pinViewModel.Longitude = Longitude;
-                _pinViewModel.UserId = _authorizationService.IdUser;
-                _pinViewModel.IsEnabled = true;
+                await _PinService.AddPinModelAsync(_pinViewModel.ToPinModel());
+            }
+            else
+            {
+                await _PinService.EditPinModelAsync(_pinViewModel.ToPinModel());
+            }
 
-                if (_pinViewModel.Id == default)
-                {
-                    await _PinService.AddPinModelAsync(_pinViewModel.ToPinModel()); 
-                }
-                else
-                {
-                    await _PinService.EditPinModelAsync(_pinViewModel.ToPinModel());
-                }
+            bool IsUpdated = true;
 
-                bool IsUpdated = true;
-
-                var parametrs = new NavigationParameters
+            var parametrs = new NavigationParameters
                 {
                     { nameof(IsUpdated), IsUpdated }
                 };
-                await NavigationService.GoBackAsync(parametrs);
-            }
+            await NavigationService.GoBackAsync(parametrs);
+
         }
 
         #endregion
@@ -184,7 +181,10 @@ namespace GPSNote.ViewModels
 
                 Title = Resources["EditPinTitle"];
             }
-            else Title = Resources["AddPinTitle"];
+            else 
+            { 
+                Title = Resources["AddPinTitle"]; 
+            }
 
         }
 

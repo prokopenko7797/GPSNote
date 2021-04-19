@@ -20,6 +20,7 @@ using System.Threading.Tasks;
 using System.ComponentModel;
 using GPSNote.Views;
 using OpenWeatherMap;
+using GPSNote.Servcies.Weather;
 
 namespace GPSNote.ViewModels
 {
@@ -27,18 +28,16 @@ namespace GPSNote.ViewModels
     {
         private readonly IPageDialogService _pageDialogService;
         private readonly IPinService _pinService;
-
-        private OpenWeatherMapClient _Client = new OpenWeatherMapClient("9600b0e0a8807fdc09ff9b5e467e5d71");
+        private readonly IWeatherService _weatherService;
 
 
         public MapPageViewModel(INavigationService navigationService, ILocalizationService localizationService,
-            IPageDialogService pageDialogService, IPinService pinService)
+            IPageDialogService pageDialogService, IPinService pinService, IWeatherService weatherService)
             : base(navigationService, localizationService)
         {
             _pageDialogService = pageDialogService;
             _pinService = pinService;
-
-
+            _weatherService = weatherService;
         }
 
         #region -- Public properties --
@@ -302,10 +301,9 @@ namespace GPSNote.ViewModels
             PinLongitude = pinView.Longitude;
 
 
-            CurrentWeatherResponse currentWeather = await _Client.CurrentWeather.GetByCoordinates(new Coordinates() { Latitude = pinView.Latitude, Longitude = pinView.Longitude },
-                MetricSystem.Metric, OpenWeatherMapLanguage.RU);
-            
-
+            CurrentWeatherResponse currentWeather = await _weatherService.GetCurrentWeatherAsync(pinView.Latitude, 
+                                                                                                 pinView.Longitude);
+ 
             Temperature = currentWeather.Temperature.Value.ToString() + 
                           currentWeather.Temperature.Unit;
 
@@ -368,8 +366,6 @@ namespace GPSNote.ViewModels
                     ControlObs = PinObs;
                 }
             }
-
-
         }
 
         protected override void OnPropertyChanged(PropertyChangedEventArgs args)

@@ -10,8 +10,6 @@ namespace GPSNote.Servcies.Permission
 {
     public class PermissionService : IPermissionService
     {
-
-
 		public async Task<PermissionStatus> CheckPermissions(BasePermission permission)
 		{
 			var permissionStatus = await permission.CheckPermissionStatusAsync();

@@ -3,17 +3,22 @@ using GPSNote.Servcies.AutorizationService;
 using GPSNote.Servcies.LocalizationService;
 using GPSNote.Servcies.Permission;
 using GPSNote.Servcies.PinService;
+using GPSNote.Servcies.PinShare;
 using GPSNote.Servcies.Repository;
 using GPSNote.Servcies.Settings;
 using GPSNote.Servcies.ThemeService;
 using GPSNote.ViewModels;
+using GPSNote.ViewModels.ExtendedViewModels;
 using GPSNote.Views;
+using GPSNote.Extensions;
 using Prism;
 using Prism.Ioc;
+using Prism.Navigation;
 using System;
 using Xamarin.Essentials.Implementation;
 using Xamarin.Essentials.Interfaces;
 using Xamarin.Forms;
+using GPSNote.Servcies.Weather;
 
 namespace GPSNote
 {
@@ -59,6 +64,8 @@ namespace GPSNote
             containerRegistry.RegisterInstance<ILocalizationService>(Container.Resolve<LocalizationService>()); 
             containerRegistry.RegisterInstance<IPinService>(Container.Resolve<PinService>());
             containerRegistry.RegisterInstance<IPermissionService>(Container.Resolve<PermissionService>());
+            containerRegistry.RegisterInstance<IPinShareService>(Container.Resolve<PinShareService>());
+            containerRegistry.RegisterInstance<IWeatherService>(Container.Resolve<WeatherService>());
 
             //Navigation
             containerRegistry.RegisterForNavigation<NavigationPage>();
@@ -73,19 +80,24 @@ namespace GPSNote
 
         protected override async void OnAppLinkRequestReceived(Uri uri)
         {
-        
-            if (uri.Host.EndsWith("gpsnote.page.link", StringComparison.OrdinalIgnoreCase))
+
+            if (uri.Host.Equals("gpsnote.page.link", StringComparison.OrdinalIgnoreCase))
             {
-                if (uri.Segments != null && uri.Segments.Length == 3)
+                if (uri.Segments != null && uri.Segments.Length == 2)
                 {
-                    var action = uri.Segments[1].Replace("/", "");
-                    if (action == "pin")
+                    if (uri.Segments[1] == "pin")
                     {
-                        await NavigationService.NavigateAsync($"/{nameof(AddEditPin)}");
+
+                        var parametrs = new NavigationParameters
+                        {
+                            { nameof(PinViewModel), uri.ToPinViewModel() }
+                        };
+                        await NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(AddEditPin)}", parametrs);
                     }
                 }
             }
 
+            base.OnAppLinkRequestReceived(uri);
         }
     }
 }

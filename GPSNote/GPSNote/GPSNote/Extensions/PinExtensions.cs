@@ -112,5 +112,20 @@ namespace GPSNote.Extensions
             return result;
         }
 
+        public static PinViewModel ToPinViewModel(this Uri uri)
+        {
+            var parts = uri.Query.Split('&');
+
+            PinViewModel pin = new PinViewModel()
+            {
+                Label = parts[0].Replace("?", string.Empty),
+                Description = parts[1],
+                Latitude = Convert.ToDouble(parts[2]),
+                Longitude = Convert.ToDouble(parts[3])
+            };
+
+            return pin;
+        }
+
     }
 }
