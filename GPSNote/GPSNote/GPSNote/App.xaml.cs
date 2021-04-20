@@ -86,11 +86,15 @@ namespace GPSNote
                 {
                     if (uri.Segments[1] == Constant.Action)
                     {
-                        var parametrs = new NavigationParameters
+                        if (AuthorizationService.IsAuthorized)
                         {
-                            { nameof(PinViewModel), uri.ToPinViewModel() }
-                        };
-                        await NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(AddEditPin)}", parametrs);
+                            var parametrs = new NavigationParameters
+                            {
+                                { nameof(PinViewModel), uri.ToPinViewModel() }
+                            };
+                            await NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(AddEditPin)}", parametrs);
+                        }
+                       
                     }
                 }
             }
