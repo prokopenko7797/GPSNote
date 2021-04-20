@@ -45,7 +45,7 @@ namespace GPSNote
 
             if (AuthorizationService.IsAuthorized)
             {
-                await NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(SignIn)}");
+                await NavigationService.NavigateAsync($"/{nameof(MainPage)}");
             }
             else
             {
@@ -76,6 +76,7 @@ namespace GPSNote
             containerRegistry.RegisterForNavigation<PinList, PinListViewModel>();
             containerRegistry.RegisterForNavigation<AddEditPin, AddEditPinViewModel>();
             containerRegistry.RegisterForNavigation<MainTabbedPage>();
+            containerRegistry.RegisterForNavigation<MainPage, MainPageViewModel>();
         }
 
         protected override async void OnAppLinkRequestReceived(Uri uri)

@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="http://prismlibrary.com"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="GPSNote.Views.MainPage">
+    
+    <Grid>
+        
+        <Image Source="pic_enter_page.png"></Image>
+
+        <Button Text="Log in" Command="{Binding LogInCommand}"></Button>
+
+        <Button Text="Create account" Command="{Binding CreateAccountCommand}"></Button>
+        
+    </Grid>
+    
+</ContentPage>
