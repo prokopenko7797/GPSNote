@@ -8,11 +8,11 @@ namespace GPSNote.Models
 {
     public class PinModel : IEntityModel
     {
-        [PrimaryKey, AutoIncrement, Column(nameof(id))]
-        public int id { get; set; }
+        [PrimaryKey, AutoIncrement, Column(nameof(Id))]
+        public int Id { get; set; }
 
-        [Column(nameof(user_id))]
-        public int user_id { get; set; }
+        [Column(nameof(UserId))]
+        public int UserId { get; set; }
 
         [Column(nameof(Label)), Unique]
         public string Label { get; set; }

@@ -85,11 +85,11 @@ namespace GPSNote.ViewModels
 
             switch (Resources.Lang)
             {
-                case Constant.ResourcesLangConst.en:
+                case Constant.ResourcesLangConst.En:
                     IsCheckedEn = true;
                     break;
 
-                case Constant.ResourcesLangConst.ru:
+                case Constant.ResourcesLangConst.Ru:
                     IsCheckedRu = true;
                     break;
             }

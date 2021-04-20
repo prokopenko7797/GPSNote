@@ -10,11 +10,11 @@ namespace GPSNote.Servcies.Authentication
 {
     public class AuthenticationService : IAuthenticationService
     {
-        private readonly IRepository _repository;
+        private readonly IRepositoryService _repository;
         private readonly ISettingsManager _settingsManager;
 
 
-        public AuthenticationService(IRepository repository, ISettingsManager settingsManager)
+        public AuthenticationService(IRepositoryService repository, ISettingsManager settingsManager)
         {
             _repository = repository;
             _settingsManager = settingsManager;
@@ -31,7 +31,7 @@ namespace GPSNote.Servcies.Authentication
 
             if (user != null)
             {
-                _settingsManager.IdUser = user.id;
+                _settingsManager.UserId = user.Id;
                 
                 result = true;
             }

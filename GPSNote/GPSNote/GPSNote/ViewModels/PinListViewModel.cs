@@ -198,7 +198,7 @@ namespace GPSNote.ViewModels
 
         private async void UpdateCollectionAsync()
         {
-            PinObs = new ObservableCollection<PinViewModel>((await _pinService.GetUserPinsAsync()).ToOpsOfPinView());
+            PinObs = new ObservableCollection<PinViewModel>((await _pinService.GetUserPinsAsync()).ToPinViewObservableCollection());
             _ControlObs = PinObs;
             IsVisible = PinObs.Count() == 0;
         }

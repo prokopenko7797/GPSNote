@@ -20,7 +20,7 @@ namespace GPSNote.CustomControls
             UiSettings.MyLocationButtonEnabled = true;
         }
 
-        #region -- ObsPins property --
+        #region -- Public properties --
 
         public static readonly BindableProperty ObsPinsProperty = BindableProperty.Create(
             propertyName: nameof(ObsPins),
@@ -45,9 +45,6 @@ namespace GPSNote.CustomControls
             set { SetValue(ObsPinsProperty, value); }
         }
 
-        #endregion
-
-        #region -- MoveTo property --
 
         public static readonly BindableProperty MoveToProperty = BindableProperty.Create(
             propertyName: nameof(MoveTo),
@@ -68,7 +65,6 @@ namespace GPSNote.CustomControls
             get { return (MapSpan)GetValue(MoveToProperty); }
             set { SetValue(MoveToProperty, value); }
         }
-
         #endregion
     }
 }

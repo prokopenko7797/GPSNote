@@ -11,10 +11,10 @@ namespace GPSNote.Servcies.PinService
 {
     public class PinService : IPinService
     {
-        private readonly IRepository _repository;
+        private readonly IRepositoryService _repository;
         private readonly ISettingsManager _Settings;
 
-        public PinService(IRepository repository, 
+        public PinService(IRepositoryService repository, 
                           ISettingsManager settingsManager)
         {
             _repository = repository;
@@ -31,7 +31,7 @@ namespace GPSNote.Servcies.PinService
 
         public async Task<bool> AddPinModelAsync(PinModel userPins)
         {
-            userPins.user_id = _Settings.IdUser;
+            userPins.UserId = _Settings.UserId;
 
             return await _repository.InsertAsync(userPins) != Constant.SQLError;
         }
@@ -49,7 +49,7 @@ namespace GPSNote.Servcies.PinService
         public async Task<IEnumerable<PinModel>> GetUserPinsAsync()
         {
             IEnumerable<PinModel> userPins = await _repository.QueryAsync<PinModel>($"SELECT * FROM {nameof(PinModel)} " +
-                $"WHERE user_id='{_Settings.IdUser}'");
+                $"WHERE UserId='{_Settings.UserId}'");
        
             return userPins;
         }

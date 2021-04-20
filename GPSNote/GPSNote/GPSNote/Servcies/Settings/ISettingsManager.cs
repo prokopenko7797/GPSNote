@@ -11,7 +11,7 @@ namespace GPSNote.Servcies.Settings
 
         int Theme { get; set; }
 
-        int IdUser { get; set; }
+        int UserId { get; set; }
 
         double Latitude { get; set; }
 

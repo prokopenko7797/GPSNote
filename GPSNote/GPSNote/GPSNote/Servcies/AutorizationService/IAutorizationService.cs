@@ -9,7 +9,7 @@ namespace GPSNote.Servcies.AutorizationService
     {
         void LogOut();
 
-        bool IsAutorized { get; }
+        bool IsAuthorized { get; }
 
         int IdUser { get; }
     }

@@ -1,4 +1,5 @@
-﻿using GPSNote.Servcies.LocalizationService;
+﻿using GPSNote.Models;
+using GPSNote.Servcies.LocalizationService;
 using GPSNote.ViewModels.ExtendedViewModels;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ namespace GPSNote.Servcies.PinShare
 {
     public class PinShareService : IPinShareService
     {
-        ILocalizationService _localizationService;
+        private readonly ILocalizationService _localizationService;
 
         public PinShareService(ILocalizationService localizationService)
         {
@@ -18,15 +19,15 @@ namespace GPSNote.Servcies.PinShare
 
         #region -- IPinShare implementation --
 
-        public async void PinShareAsync(PinViewModel pinViewModel)
+        public async void SharePinAsync(PinModel pinModel)
         {
             string text = $"https://gpsnote.page.link/pin" +
-                $"?{pinViewModel.Label}&{pinViewModel.Description}${pinViewModel.Latitude}&{pinViewModel.Longitude}";
+                $"?{pinModel.Label}&{pinModel.Description}${pinModel.Latitude}&{pinModel.Longitude}";
 
             await Share.RequestAsync(new ShareTextRequest
             {
                 Title = _localizationService["SharingTitle"],
-                Text = pinViewModel.Label,
+                Text = pinModel.Label,
                 Uri = text
             });
         }

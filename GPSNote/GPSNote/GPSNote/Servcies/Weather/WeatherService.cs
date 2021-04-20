@@ -8,7 +8,12 @@ namespace GPSNote.Servcies.Weather
 {
     public class WeatherService : IWeatherService
     {
-        private OpenWeatherMapClient _Client = new OpenWeatherMapClient("9600b0e0a8807fdc09ff9b5e467e5d71");
+        private readonly OpenWeatherMapClient _Client;
+
+        public WeatherService() 
+        {
+            _Client = new OpenWeatherMapClient(Constant.WeatherAPIKey);
+        }
 
         #region -- IWeatherService implementation --
 

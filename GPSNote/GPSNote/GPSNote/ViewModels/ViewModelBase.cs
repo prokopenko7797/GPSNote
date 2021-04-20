@@ -24,10 +24,16 @@ namespace GPSNote.ViewModels
             Resources = localizationService;
         }
 
+        #region -- IInitialize implementation --
+
         public virtual void Initialize(INavigationParameters parameters)
         {
 
         }
+
+        #endregion
+
+        #region -- INavigatedAware implementation --
 
         public virtual void OnNavigatedFrom(INavigationParameters parameters)
         {
@@ -39,11 +45,16 @@ namespace GPSNote.ViewModels
 
         }
 
+        #endregion
+
+        #region -- IDestructible --
+
         public virtual void Destroy()
         {
 
         }
 
+        #endregion
 
     }
 }

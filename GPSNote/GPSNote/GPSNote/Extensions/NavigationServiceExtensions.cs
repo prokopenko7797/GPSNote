@@ -12,6 +12,8 @@ namespace GPSNote.Extensions
     {
         public static async Task<INavigationResult> SelectTabAsync(this INavigationService navigationService, string name, INavigationParameters parameters = null)
         {
+            NavigationResult result = new NavigationResult();
+
             try
             {
                 var currentPage = ((IPageAware)navigationService).Page;
@@ -74,9 +76,15 @@ namespace GPSNote.Extensions
             }
             catch (Exception ex)
             {
-                return new NavigationResult { Exception = ex };
+                result = new NavigationResult { Exception = ex };
             }
-            return new NavigationResult { Success = true };
+
+            if (result.Exception == null) 
+            {
+                result.Success = true;
+            }
+
+            return result; 
         }
     }
 }

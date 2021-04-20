@@ -11,10 +11,10 @@ namespace GPSNote.Servcies.AutorizationService
 {
     public class AuthorizationService : IAuthorizationService
     {
-        private readonly IRepository _repository;
+        private readonly IRepositoryService _repository;
         private readonly ISettingsManager _settingsManager;
 
-        public AuthorizationService(IRepository repository, ISettingsManager settingsManager)
+        public AuthorizationService(IRepositoryService repository, ISettingsManager settingsManager)
         {
             _repository = repository;
             _settingsManager = settingsManager;
@@ -23,16 +23,16 @@ namespace GPSNote.Servcies.AutorizationService
 
         #region -- IAuthorizationService implementation --
 
-        public bool IsAutorized 
+        public bool IsAuthorized 
         {
-            get { return _settingsManager.IdUser == Constant.NonAuthorized; }
+            get { return _settingsManager.UserId == Constant.NonAuthorized; }
         }
 
-        public int IdUser { get => _settingsManager.IdUser; }
+        public int IdUser { get => _settingsManager.UserId; }
 
         public void LogOut()
         {
-            _settingsManager.IdUser = Constant.NonAuthorized;
+            _settingsManager.UserId = Constant.NonAuthorized;
         }
 
         #endregion

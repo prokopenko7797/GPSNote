@@ -153,14 +153,17 @@ namespace GPSNote.ViewModels
         {
             if (await LogPassCheckAsync(Name, Email, Password, ConfirmPassword))
             {
-                if (await _AuthenticationService.SignUpAsync(Name, Email, Password ))
+                if (await _AuthenticationService.SignUpAsync(Name, Email, Password))
                 {
                     var p = new NavigationParameters { { Constant.Email, Email } };
 
                     await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(SignIn)}", p);
 
                 }
-                else await _pageDialogService.DisplayAlertAsync(Resources["Error"], Resources["EmailExist"], Resources["Ok"]);
+                else
+                {
+                    await _pageDialogService.DisplayAlertAsync(Resources["Error"], Resources["EmailExist"], Resources["Ok"]);
+                }
             }
         }
 

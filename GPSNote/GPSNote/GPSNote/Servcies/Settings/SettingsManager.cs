@@ -23,10 +23,10 @@ namespace GPSNote.Servcies.Settings
             set => Preferences.Set(nameof(Theme), value);
         }
 
-        public int IdUser
+        public int UserId
         {
-            get => Preferences.Get(nameof(IdUser), Constant.NonAuthorized);
-            set => Preferences.Set(nameof(IdUser), value);
+            get => Preferences.Get(nameof(UserId), Constant.NonAuthorized);
+            set => Preferences.Set(nameof(UserId), value);
         }
 
         public double Latitude

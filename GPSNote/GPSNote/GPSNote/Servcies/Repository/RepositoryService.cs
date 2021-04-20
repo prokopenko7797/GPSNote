@@ -8,16 +8,16 @@ using System.Threading.Tasks;
 
 namespace GPSNote.Servcies.Repository
 {
-    public class Repository : IRepository
+    public class RepositoryService : IRepositoryService
     {
 
         private readonly SQLiteAsyncConnection _database;
 
-        public Repository()
+        public RepositoryService()
         {
             _database = new SQLiteAsyncConnection(
                 Path.Combine(Environment.GetFolderPath(
-                    Environment.SpecialFolder.LocalApplicationData), Constant.DB_Name));
+                    Environment.SpecialFolder.LocalApplicationData), Constant.DbName));
         }
 
         #region -- IRepository implementation --

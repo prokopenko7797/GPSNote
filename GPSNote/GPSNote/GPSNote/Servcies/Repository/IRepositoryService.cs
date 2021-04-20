@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GPSNote.Servcies.Repository
 {
-    public interface IRepository
+    public interface IRepositoryService
     {
         Task<IEnumerable<T>> GetAllAsync<T>() where T : IEntityModel, new();
 

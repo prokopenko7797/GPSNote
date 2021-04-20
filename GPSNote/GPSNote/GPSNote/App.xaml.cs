@@ -43,7 +43,7 @@ namespace GPSNote
 
             ThemeService.SetTheme(ThemeService.GetCurrentTheme());
 
-            if (AuthorizationService.IsAutorized)
+            if (AuthorizationService.IsAuthorized)
             {
                 await NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(SignIn)}");
             }
@@ -56,7 +56,7 @@ namespace GPSNote
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             //Services
-            containerRegistry.RegisterInstance<IRepository>(Container.Resolve<Repository>());
+            containerRegistry.RegisterInstance<IRepositoryService>(Container.Resolve<RepositoryService>());
             containerRegistry.RegisterInstance<ISettingsManager>(Container.Resolve<SettingsManager>());
             containerRegistry.RegisterInstance<IThemeService>(Container.Resolve<ThemeService>());
             containerRegistry.RegisterInstance<IAuthorizationService>(Container.Resolve<AuthorizationService>());
@@ -75,19 +75,17 @@ namespace GPSNote
             containerRegistry.RegisterForNavigation<MapPage, MapPageViewModel>();
             containerRegistry.RegisterForNavigation<PinList, PinListViewModel>();
             containerRegistry.RegisterForNavigation<AddEditPin, AddEditPinViewModel>();
-            containerRegistry.RegisterForNavigation<MainTabbedPage, MainTabbedPageViewModel>();
+            containerRegistry.RegisterForNavigation<MainTabbedPage>();
         }
 
         protected override async void OnAppLinkRequestReceived(Uri uri)
         {
-
-            if (uri.Host.Equals("gpsnote.page.link", StringComparison.OrdinalIgnoreCase))
+            if (uri.Host.Equals(Constant.Host, StringComparison.OrdinalIgnoreCase))
             {
                 if (uri.Segments != null && uri.Segments.Length == 2)
                 {
-                    if (uri.Segments[1] == "pin")
+                    if (uri.Segments[1] == Constant.Action)
                     {
-
                         var parametrs = new NavigationParameters
                         {
                             { nameof(PinViewModel), uri.ToPinViewModel() }
@@ -96,7 +94,6 @@ namespace GPSNote
                     }
                 }
             }
-
             base.OnAppLinkRequestReceived(uri);
         }
     }

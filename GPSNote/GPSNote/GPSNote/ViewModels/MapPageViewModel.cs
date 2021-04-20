@@ -112,7 +112,7 @@ namespace GPSNote.ViewModels
         }
 
 
-        MapSpan _MoveTo;
+        private MapSpan _MoveTo;
         public MapSpan MoveTo
         {
             get { return _MoveTo; }
@@ -336,7 +336,7 @@ namespace GPSNote.ViewModels
         {
             base.Initialize(parameters);
 
-            PinObs = new ObservableCollection<PinViewModel>((await _pinService.GetUserPinsAsync()).ToOpsOfPinView());
+            PinObs = new ObservableCollection<PinViewModel>((await _pinService.GetUserPinsAsync()).ToPinViewObservableCollection());
             ControlObs = PinObs;
         }
 
@@ -362,7 +362,7 @@ namespace GPSNote.ViewModels
             {
                 if (newUpdate)
                 {
-                    PinObs = new ObservableCollection<PinViewModel>((await _pinService.GetUserPinsAsync()).ToOpsOfPinView());
+                    PinObs = new ObservableCollection<PinViewModel>((await _pinService.GetUserPinsAsync()).ToPinViewObservableCollection());
                     ControlObs = PinObs;
                 }
             }

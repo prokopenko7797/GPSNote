@@ -8,8 +8,8 @@ namespace GPSNote.Models
     [Table(nameof(User))]
     public class User : IEntityModel
     {
-        [PrimaryKey, AutoIncrement, Column(nameof(id))]
-        public int id { get; set; }
+        [PrimaryKey, AutoIncrement, Column(nameof(Id))]
+        public int Id { get; set; }
 
         [Column(nameof(Name))]
         public string Name { get; set; }

@@ -12,71 +12,69 @@ namespace GPSNote.Extensions
     {
         public static Pin ToPin(this PinViewModel pinViewModel)
         {
-            var result = new Pin();
-
-            result.Label = pinViewModel.Label;
-            result.IsVisible = pinViewModel.IsEnabled;
-            result.Position = new Position(pinViewModel.Latitude, pinViewModel.Longitude);
-
+            var result = new Pin()
+            {
+                Label = pinViewModel.Label,
+                IsVisible = pinViewModel.IsEnabled,
+                Position = new Position(pinViewModel.Latitude, pinViewModel.Longitude)
+            };
             return result;
         }
 
         public static PinViewModel ToPinViewModel(this Pin pin)
         {
-            var result = new PinViewModel();
-
-            result.Label = pin.Label;
-            result.IsEnabled = pin.IsVisible;
-            result.Latitude = pin.Position.Latitude;
-            result.Longitude = pin.Position.Longitude;
-
-            
+            var result = new PinViewModel()
+            {
+                Label = pin.Label,
+                IsEnabled = pin.IsVisible,
+                Latitude = pin.Position.Latitude,
+                Longitude = pin.Position.Longitude,
+            };
             return result;
         }
 
         public static PinModel ToPinModel(this PinViewModel pinViewModel)
         {
-            var result = new PinModel();
-
-            result.id = pinViewModel.Id;
-            result.user_id = pinViewModel.UserId;
-            result.Label = pinViewModel.Label;
-            result.IsEnabled = pinViewModel.IsEnabled;
-            result.Latitude = pinViewModel.Latitude;
-            result.Longitude = pinViewModel.Longitude;
-            result.Description = pinViewModel.Description;
-
+            var result = new PinModel()
+            {
+                Id = pinViewModel.Id,
+                UserId = pinViewModel.UserId,
+                Label = pinViewModel.Label,
+                IsEnabled = pinViewModel.IsEnabled,
+                Latitude = pinViewModel.Latitude,
+                Longitude = pinViewModel.Longitude,
+                Description = pinViewModel.Description,
+            };
             return result;
         }
 
         public static PinViewModel ToPinViewModel(this PinModel pin)
         {
-            var result = new PinViewModel();
-
-            result.Id = pin.id;
-            result.UserId = pin.user_id;
-            result.Label = pin.Label;
-            result.IsEnabled = pin.IsEnabled;
-            result.Latitude = pin.Latitude;
-            result.Longitude = pin.Longitude;
-            result.Description = pin.Description;
-
-
+            var result = new PinViewModel()
+            {
+                Id = pin.Id,
+                UserId = pin.UserId,
+                Label = pin.Label,
+                IsEnabled = pin.IsEnabled,
+                Latitude = pin.Latitude,
+                Longitude = pin.Longitude,
+                Description = pin.Description
+            };
             return result;
         }
 
         public static Pin ToPin(this PinModel userPin)
         {
-            var result = new Pin();
-
-            result.Label = userPin.Label;
-            result.IsVisible = userPin.IsEnabled;
-            result.Position = new Position(userPin.Latitude, userPin.Longitude);
-
+            var result = new Pin()
+            {
+                Label = userPin.Label,
+                IsVisible = userPin.IsEnabled,
+                Position = new Position(userPin.Latitude, userPin.Longitude)
+            };
             return result;
         }
 
-        public static List<Pin> ToListOfPin(this ObservableCollection<PinViewModel> obsPin) 
+        public static List<Pin> ToPinList(this ObservableCollection<PinViewModel> obsPin) 
         {
             var result = new List<Pin>();
 
@@ -84,11 +82,10 @@ namespace GPSNote.Extensions
             {
                result.Add(item.ToPin());
             }
-
             return result;
         }
 
-        public static ObservableCollection<PinViewModel> ToOpsOfPinView(this IEnumerable<PinModel> obsPin)
+        public static ObservableCollection<PinViewModel> ToPinViewObservableCollection(this IEnumerable<PinModel> obsPin)
         {
             var result = new ObservableCollection<PinViewModel>();
 
@@ -96,19 +93,6 @@ namespace GPSNote.Extensions
             {
                 result.Add(item.ToPinViewModel());
             }
-
-            return result;
-        }
-
-        public static List<Pin> ToPinList(this IEnumerable<PinModel> obsPin)
-        {
-            var result = new List<Pin>();
-
-            foreach (var item in obsPin)
-            {
-                result.Add(item.ToPin());
-            }
-
             return result;
         }
 
@@ -123,9 +107,7 @@ namespace GPSNote.Extensions
                 Latitude = Convert.ToDouble(parts[2]),
                 Longitude = Convert.ToDouble(parts[3])
             };
-
             return pin;
         }
-
     }
 }

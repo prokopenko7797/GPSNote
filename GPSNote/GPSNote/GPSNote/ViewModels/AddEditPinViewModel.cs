@@ -99,6 +99,38 @@ namespace GPSNote.ViewModels
 
         #endregion
 
+        #region --Overrides--
+
+        public override void OnNavigatedTo(INavigationParameters parameters)
+        {
+            if (parameters.GetValue<PinViewModel>(nameof(PinViewModel)) != null)
+            {
+                _pinViewModel = parameters.GetValue<PinViewModel>(nameof(PinViewModel));
+                Name = _pinViewModel.Label;
+                Description = _pinViewModel.Description;
+                Latitude = _pinViewModel.Latitude;
+                Longitude = _pinViewModel.Longitude;
+
+                Title = Resources["EditPinTitle"];
+            }
+            else
+            {
+                Title = Resources["AddPinTitle"];
+            }
+
+        }
+
+
+        protected override void OnPropertyChanged(PropertyChangedEventArgs args)
+        {
+            base.OnPropertyChanged(args);
+            if (args.PropertyName == nameof(Latitude) || args.PropertyName == nameof(Longitude))
+            {
+                PinUpdate();
+            }
+        }
+
+        #endregion
 
         #region ---Private Helpers---
 
@@ -165,39 +197,5 @@ namespace GPSNote.ViewModels
         }
 
         #endregion
-
-
-        #region --Overrides--
-
-        public override void OnNavigatedTo(INavigationParameters parameters)
-        {
-            if (parameters.GetValue<PinViewModel>(nameof(PinViewModel)) != null)
-            {
-                _pinViewModel = parameters.GetValue<PinViewModel>(nameof(PinViewModel));
-                Name = _pinViewModel.Label;
-                Description = _pinViewModel.Description;
-                Latitude = _pinViewModel.Latitude;
-                Longitude = _pinViewModel.Longitude;
-
-                Title = Resources["EditPinTitle"];
-            }
-            else 
-            { 
-                Title = Resources["AddPinTitle"]; 
-            }
-
-        }
-
-
-        protected override void OnPropertyChanged(PropertyChangedEventArgs args)
-        {
-            base.OnPropertyChanged(args);
-            if (args.PropertyName == nameof(Latitude) || args.PropertyName == nameof(Longitude))
-            {
-                PinUpdate();
-            }
-        }
     }
-
-    #endregion
 }

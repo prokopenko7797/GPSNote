@@ -130,7 +130,7 @@ namespace GPSNote.ViewModels
         public override void Initialize(INavigationParameters parameters)
         {
             base.Initialize(parameters);
-            _permissionService.CheckPermissions(new LocationPermission());
+            _permissionService.CheckPermissionsAsync(new LocationPermission());
         }
 
 
