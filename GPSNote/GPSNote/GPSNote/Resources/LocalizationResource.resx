@@ -240,6 +240,9 @@
   <data name="SettingsTitle" xml:space="preserve">
     <value>Settings</value>
   </data>
+  <data name="SharingTitle" xml:space="preserve">
+    <value>Share Pin to:</value>
+  </data>
   <data name="SignInButton" xml:space="preserve">
     <value>Sign IN</value>
   </data>
