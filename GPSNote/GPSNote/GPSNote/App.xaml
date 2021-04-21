@@ -6,7 +6,30 @@
   <Application.Resources>
 
         <Color x:Key="TransparentColor">Transparent</Color>
+        <!-- Light colors -->
+        <Color x:Key="Light/Primary">#596EFB</Color>
+        <Color x:Key="Light/Disacled">#C7CDF5</Color>
+        <Color x:Key="Light/HoverdeFocused">#273BC6</Color>
+        <Color x:Key="Light/Pressed">#192680</Color>
+        <Color x:Key="Light/Variant">#F1F3FD</Color>
 
+        <!-- Dark colors -->
+        <Color x:Key="Dark/Primary">#7485FB</Color>
+        <Color x:Key="Dark/Disacled">#3D4475</Color>
+        <Color x:Key="Dark/HoverdeFocused">#5F73FA</Color>
+        <Color x:Key="Dark/Pressed">#3953FE</Color>
+        <Color x:Key="Dark/Variant">#33374E</Color>
+
+        <!-- Text & Background -->
+        <Color x:Key="System/White">#FEFEFD</Color>
+        <Color x:Key="System/LightGray">#D7DDE8</Color>
+        <Color x:Key="System/Gray">#858E9E</Color>
+        <Color x:Key="System/DarkGray">#3D4E61</Color>
+        <Color x:Key="System/Black">#1E242B</Color>
+
+
+
+        <!--Old Theme______________________________________________________________________________________-->
         <!-- Light colors -->
         <Color x:Key="LightPageBackgroundColor">#ffffff</Color>
         <Color x:Key="LightNavigationBarColor">#1790fb</Color>
@@ -69,6 +92,8 @@
             <Setter Property="BarTextColor"
                     Value="{AppThemeBinding Light={StaticResource LightSecondaryColor}, Dark={StaticResource DarkSecondaryColor}}" />
         </Style>
+        <!--Old Theme______________________________________________________________________________________-->
+
 
     </Application.Resources>
 </prism:PrismApplication>
