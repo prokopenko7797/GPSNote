@@ -27,7 +27,17 @@
         <Color x:Key="System/DarkGray">#3D4E61</Color>
         <Color x:Key="System/Black">#1E242B</Color>
 
+      
 
+        <Style x:Key="blueButtonStyle"
+            TargetType="Button">
+            <Setter Property="BackgroundColor"
+                    Value="{AppThemeBinding Light={StaticResource Light/Primary}, Dark={StaticResource Dark/Primary}}" />
+            <Setter Property="TextColor"
+                    Value="{StaticResource System/White}" />
+        </Style>
+
+      
 
         <!--Old Theme______________________________________________________________________________________-->
         <!-- Light colors -->

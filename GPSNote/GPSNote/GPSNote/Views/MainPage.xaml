@@ -27,8 +27,7 @@
         
         <Button Grid.Row="1" 
                 Text="Log in" 
-                BackgroundColor="#596EFB"
-                TextColor="#FFFF"
+                Style="{StaticResource blueButtonStyle}"
                 Command="{Binding LogInCommand}"></Button>
 
         <Button Grid.Row="2" 
