@@ -5,7 +5,7 @@
              x:Class="GPSNote.App">
   <Application.Resources>
 
-        <Color x:Key="TransparentColor">Transparent</Color>
+        <Color x:Key="TransparentColor">#00ffffff</Color>
         <!-- Light colors -->
         <Color x:Key="Light/Primary">#596EFB</Color>
         <Color x:Key="Light/Disacled">#C7CDF5</Color>
@@ -16,7 +16,7 @@
         <!-- Dark colors -->
         <Color x:Key="Dark/Primary">#7485FB</Color>
         <Color x:Key="Dark/Disacled">#3D4475</Color>
-        <Color x:Key="Dark/HoverdeFocused">#5F73FA</Color>
+        <Color x:Key="Dark/HoveredFocused">#5F73FA</Color>
         <Color x:Key="Dark/Pressed">#3953FE</Color>
         <Color x:Key="Dark/Variant">#33374E</Color>
 
