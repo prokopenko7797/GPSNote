@@ -37,73 +37,40 @@
                     Value="{StaticResource System/White}" />
         </Style>
 
-      
-
-        <!--Old Theme______________________________________________________________________________________-->
-        <!-- Light colors -->
-        <Color x:Key="LightPageBackgroundColor">#ffffff</Color>
-        <Color x:Key="LightNavigationBarColor">#1790fb</Color>
-        <Color x:Key="LightPrimaryColor">#FFF5F5F5</Color>
-        <Color x:Key="LightSecondaryColor">#ffffff</Color>
-        <Color x:Key="LightPrimaryTextColor">#000000</Color>
-        <Color x:Key="LightSecondaryTextColor">#acacac</Color>
-        <Color x:Key="LightTertiaryTextColor">#808080</Color>
-
-        <!-- Dark colors -->
-        <Color x:Key="DarkPageBackgroundColor">#808080</Color>
-        <Color x:Key="DarkNavigationBarColor">#000000</Color>
-        <Color x:Key="DarkPrimaryColor">#008080</Color>
-        <Color x:Key="DarkSecondaryColor">#ffffff</Color>
-        <Color x:Key="DarkPrimaryTextColor">#ffffff</Color>
-        <Color x:Key="DarkSecondaryTextColor">#c3c3c3</Color>
-        <Color x:Key="DarkTertiaryTextColor">#acacac</Color>
-
         <Style TargetType="NavigationPage">
             <Setter Property="BarBackgroundColor"
-                    Value="{AppThemeBinding Light={StaticResource LightNavigationBarColor}, Dark={StaticResource DarkNavigationBarColor}}" />
+                    Value="{AppThemeBinding Light={StaticResource System/White}, Dark={StaticResource System/Black}}" />
             <Setter Property="BarTextColor"
-                    Value="{AppThemeBinding Light={StaticResource LightSecondaryColor}, Dark={StaticResource DarkSecondaryColor}}" />
-        </Style>
-
-
-        <Style TargetType="Label">
-            <Setter Property="TextColor"
-                    Value="{AppThemeBinding Light={StaticResource LightPrimaryTextColor}, Dark={StaticResource DarkPrimaryTextColor}}" />
-        </Style>
-
-
-        <Style TargetType="RadioButton">
-            <Setter Property="TextColor"
-                    Value="{AppThemeBinding Light={StaticResource LightPrimaryTextColor}, Dark={StaticResource DarkPrimaryTextColor}}" />
+                    Value="{AppThemeBinding Light={StaticResource System/Black}, Dark={StaticResource System/White}}" />
         </Style>
 
 
         <Style TargetType="Entry">
             <Setter Property="TextColor"
-                    Value="{AppThemeBinding Light={StaticResource LightPrimaryTextColor}, Dark={StaticResource DarkPrimaryTextColor}}" />
+                    Value="{AppThemeBinding Light={StaticResource System/Black}, Dark={StaticResource System/White}}" />
             <Setter Property="PlaceholderColor"
-                    Value="{AppThemeBinding Light={StaticResource LightTertiaryTextColor}, Dark={StaticResource DarkTertiaryTextColor}}" />
+                    Value="{StaticResource System/Gray}" />
+        </Style>
+
+        <Style TargetType="Label">
+            <Setter Property="TextColor"
+                    Value="{AppThemeBinding Light={StaticResource System/Black}, Dark={StaticResource System/White}}" />
+        </Style>
+
+        <Style TargetType="RadioButton">
+            <Setter Property="TextColor"
+                    Value="{AppThemeBinding Light={StaticResource System/Black}, Dark={StaticResource System/White}}" />
         </Style>
 
 
         <Style TargetType="Editor">
             <Setter Property="TextColor"
-                    Value="{AppThemeBinding Light={StaticResource LightPrimaryTextColor}, Dark={StaticResource DarkPrimaryTextColor}}" />
+                    Value="{AppThemeBinding Light={StaticResource System/Black}, Dark={StaticResource System/White}}" />
             <Setter Property="PlaceholderColor"
-                    Value="{AppThemeBinding Light={StaticResource LightTertiaryTextColor}, Dark={StaticResource DarkTertiaryTextColor}}" />
+                    Value="{StaticResource System/Gray}" />
             <Setter Property="BackgroundColor"
-                    Value="{AppThemeBinding Light={StaticResource LightSecondaryTextColor}, Dark={StaticResource DarkSecondaryTextColor}}" />
+                    Value="{AppThemeBinding Light={StaticResource System/White}, Dark={StaticResource System/Black}}" />
         </Style>
-
-
-        <Style TargetType="TabbedPage">
-            <Setter Property="BarBackgroundColor"
-                    Value="{AppThemeBinding Light={StaticResource LightNavigationBarColor}, Dark={StaticResource DarkNavigationBarColor}}" />
-            <Setter Property="BarTextColor"
-                    Value="{AppThemeBinding Light={StaticResource LightSecondaryColor}, Dark={StaticResource DarkSecondaryColor}}" />
-        </Style>
-        <!--Old Theme______________________________________________________________________________________-->
-
 
     </Application.Resources>
 </prism:PrismApplication>

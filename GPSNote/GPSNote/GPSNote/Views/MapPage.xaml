@@ -6,7 +6,7 @@
              x:Class="GPSNote.Views.MapPage"
              xmlns:maps="clr-namespace:Xamarin.Forms.GoogleMaps;assembly=Xamarin.Forms.GoogleMaps" 
              xmlns:custommap="clr-namespace:GPSNote.CustomControls"
-             BackgroundColor="{AppThemeBinding Light={StaticResource LightPageBackgroundColor}, Dark={StaticResource DarkPageBackgroundColor}}"
+             BackgroundColor="{AppThemeBinding Light={StaticResource System/White}, Dark={StaticResource System/Black}}"
              Title="{Binding Resources[MapTitle]}">
 
     <Grid Grid.RowDefinitions ="0.1*, 0.9*">
@@ -84,7 +84,7 @@
 
         <Grid Grid.Row="1"
               Grid.RowDefinitions ="*, *, *, *, *, *, *, *"
-              BackgroundColor="{AppThemeBinding Light={StaticResource LightPageBackgroundColor}, Dark={StaticResource DarkPageBackgroundColor}}"
+              BackgroundColor="{AppThemeBinding Light={StaticResource System/Black}, Dark={StaticResource System/White}}"
               VerticalOptions="Center"
               HorizontalOptions="Start">
 
@@ -101,7 +101,7 @@
         
 
         <Grid Grid.Row="1" 
-              BackgroundColor="{AppThemeBinding Light={StaticResource LightPageBackgroundColor}, Dark={StaticResource DarkPageBackgroundColor}}"
+              BackgroundColor="{AppThemeBinding Light={StaticResource System/Black}, Dark={StaticResource System/White}}"
               IsVisible="{Binding IsPinTapped}"         
               VerticalOptions="End"
               HorizontalOptions="Center"

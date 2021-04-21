@@ -5,45 +5,66 @@
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="GPSNote.Views.SignIn"
              Title="{Binding Resources[SignInTitle]}"
-             BackgroundColor="{AppThemeBinding Light={StaticResource LightPageBackgroundColor}, Dark={StaticResource DarkPageBackgroundColor}}">
+             BackgroundColor="{AppThemeBinding Light={StaticResource System/White}, Dark={StaticResource System/Black}}">
 
 
 
 
-    <StackLayout Padding="30,0,30,0" HorizontalOptions="FillAndExpand"  VerticalOptions="CenterAndExpand" >
+    <StackLayout Padding="16,16,16,16" HorizontalOptions="FillAndExpand"  VerticalOptions="CenterAndExpand" >
 
         <StackLayout Padding="0,0,0,150">
 
-            <Entry Placeholder = "{Binding Resources[Email]}"  Text="{Binding Email}" MaxLength="16" />
-            <Entry Placeholder = "{Binding Resources[Password]}" IsPassword ="True"  Text="{Binding Password}" MaxLength="16"/>
-
-        </StackLayout>
-
-
-        <Button Text="{Binding Resources[SignInButton]}" BackgroundColor="DarkOrange"  Command="{Binding NavigateMainListButtonTapCommand}"></Button>
-
-
-        <StackLayout Padding="0,15,0,0">
+            <Label Text="{Binding Resources[Email]}"/>
             
-            <Label HorizontalOptions="Center" VerticalOptions="CenterAndExpand">
-                <Label.FormattedText>
-                    <FormattedString>
+            <Entry Placeholder = "{Binding Resources[Email]}"  
+                   Text="{Binding Email}" 
+                   MaxLength="254"
+                   ClearButtonVisibility="WhileEditing"/>
 
-                        <Span Text="{Binding Resources[SignUpButton]}"
-                              TextColor="Blue"
-                              TextDecorations="Underline">
-                            <Span.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding NavigateSignUpButtonTapCommand}"
-                                                      CommandParameter="https://xamarin.com" />
-                            </Span.GestureRecognizers>
-                        </Span>
+            <Label Text="{Binding Resources[Password]}"/>
 
-                    </FormattedString>
-                </Label.FormattedText>
-            </Label>
+            <Entry Placeholder = "{Binding Resources[Password]}" 
+                   IsPassword ="True"  
+                   
+                   Text="{Binding Password}" 
+                   MaxLength="16"/>
 
         </StackLayout>
 
+
+        <Button Text="{Binding Resources[SignInButton]}" 
+                Style="{StaticResource blueButtonStyle}"
+                Command="{Binding NavigateMainListButtonTapCommand}"/>
+
+        <Label Grid.Column="1" 
+                   Text="or" 
+                   TextColor="{StaticResource System/LightGray}"
+                   HorizontalOptions="Center"/>
+
+        <Grid Grid.ColumnDefinitions="0.3*,0.3*,0.3*">
+
+            <ImageButton Source="ic_google.png" 
+                         Grid.Column="0"
+                         BackgroundColor="{StaticResource TransparentColor}"
+                         BorderWidth="1"
+                         BorderColor="{StaticResource System/LightGray}"
+                         IsEnabled="False"/>
+
+            <ImageButton Source="ic_facebook.png"
+                         Grid.Column="1"
+                         BackgroundColor="{StaticResource TransparentColor}"
+                         BorderWidth="1"
+                         BorderColor="{StaticResource System/LightGray}"
+                         IsEnabled="False"/>
+
+            <ImageButton Source="ic_apple.png" 
+                         Grid.Column="2"
+                         BackgroundColor="{StaticResource TransparentColor}"
+                         BorderWidth="1"
+                         BorderColor="{StaticResource System/LightGray}"
+                         IsEnabled="False"/>
+
+        </Grid>
 
 
     </StackLayout>

@@ -4,7 +4,7 @@
              xmlns:prism="http://prismlibrary.com"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="GPSNote.Views.PinList"
-             BackgroundColor="{AppThemeBinding Light={StaticResource LightPageBackgroundColor}, Dark={StaticResource DarkPageBackgroundColor}}"
+             BackgroundColor="{AppThemeBinding Light={StaticResource System/White}, Dark={StaticResource System/Black}}"
              Title="{Binding Resources[PinListTitle]}">
 
 
@@ -65,7 +65,7 @@
                         <Grid Grid.ColumnDefinitions ="0.2*, 0.8*">
 
                             <ImageButton Grid.RowSpan="3" 
-                                         Source="disabled.png" 
+                                         Source="ic_like_gray.png" 
                                          Aspect="AspectFit" 
                                          Margin="5"
                                          BackgroundColor="Transparent"
@@ -76,7 +76,7 @@
                             </ImageButton>
 
                             <ImageButton Grid.RowSpan="3" 
-                                         Source="favorite.png"  
+                                         Source="ic_like_blue.png"  
                                          Aspect="AspectFit" 
                                          Margin="5" 
                                          BackgroundColor="Transparent"
@@ -100,17 +100,16 @@
 
 
         <Button Grid.Row="1" 
-            BackgroundColor="{AppThemeBinding Light={StaticResource LightNavigationBarColor}, Dark={StaticResource DarkNavigationBarColor}}"
-            BorderColor="{AppThemeBinding Light={StaticResource DarkPageBackgroundColor}, Dark={StaticResource LightPageBackgroundColor}}"
+            BackgroundColor="{AppThemeBinding Light={StaticResource Light/Primary}, Dark={StaticResource Dark/Primary}}"
             CornerRadius="50"
-            BorderWidth="7"
             WidthRequest="100" 
             HeightRequest="100"            
             VerticalOptions="End"
             HorizontalOptions="End"
             Margin="0,0,20,20"
             Command="{Binding AddEditButtonClicked}"           
-            ImageSource="ic_add.png"/>
+            ImageSource="ic_plus.png"/>
+        
     </Grid>
 
 

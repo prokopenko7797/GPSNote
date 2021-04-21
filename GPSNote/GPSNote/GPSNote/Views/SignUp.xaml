@@ -5,7 +5,7 @@
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="GPSNote.Views.SignUp" 
              Title="{Binding Resources[SignUpTitle]}"
-             BackgroundColor="{AppThemeBinding Light={StaticResource LightPageBackgroundColor}, Dark={StaticResource DarkPageBackgroundColor}}">
+             BackgroundColor="{AppThemeBinding Light={StaticResource System/White}, Dark={StaticResource System/Black}}">
 
     <StackLayout Padding="30,0,30,0" HorizontalOptions="FillAndExpand"  VerticalOptions="CenterAndExpand" >
 
@@ -25,6 +25,7 @@
                    Text="{Binding ConfirmPassword}" 
                    MaxLength="16" />
         </StackLayout>
+        
         <Button Text="{Binding Resources[SignInButton]}" BackgroundColor="DarkOrange" Command="{Binding AddUserButtonTapCommand}"></Button>
 
 

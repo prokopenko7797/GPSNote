@@ -3,9 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="http://prismlibrary.com"
              prism:ViewModelLocator.AutowireViewModel="True"
-             x:Class="GPSNote.Views.MainPage">
+             x:Class="GPSNote.Views.MainPage"
+             BackgroundColor="{AppThemeBinding Light={StaticResource System/White}, Dark={StaticResource System/Black}}">
 
-    <Grid Grid.RowDefinitions="0.8*, 0.1*, 0.1*"
+    <Grid Grid.RowDefinitions="0.8*, 0.2*"
           Padding="16,16,16,16">
         
         <Grid Grid.Row="0"
@@ -24,20 +25,26 @@
                    CharacterSpacing="1"/>
 
         </Grid>
-        
-        <Button Grid.Row="1" 
-                Text="Log in" 
-                Style="{StaticResource blueButtonStyle}"
-                Command="{Binding LogInCommand}"></Button>
 
-        <Button Grid.Row="2" 
-                Text="Create account" 
-                BackgroundColor="#FFFF"
-                Command="{Binding CreateAccountCommand}"
-                BorderColor="#596EFB"
-                BorderWidth="2"
-                TextColor="#596EFB"></Button>
-        
+        <StackLayout Grid.Row="1">
+            <Button Grid.Row="1" 
+                    Text="Log in" 
+                    Style="{StaticResource blueButtonStyle}"
+                    Command="{Binding LogInCommand}"
+                    Margin="0,0,0,16"
+                    ></Button>
+
+            <Button Grid.Row="2" 
+                    Text="Create account" 
+                    BackgroundColor="{StaticResource TransparentColor}"
+                    Command="{Binding CreateAccountCommand}"
+                    BorderColor="{AppThemeBinding Light={StaticResource Light/Primary}, Dark={StaticResource Dark/Primary}}"
+                    BorderWidth="2"
+                    TextColor="{AppThemeBinding Light={StaticResource Light/Primary}, Dark={StaticResource Dark/Primary}}">
+                
+            </Button>
+            
+        </StackLayout>
     </Grid>
     
 </ContentPage>
