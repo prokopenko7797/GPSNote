@@ -10,7 +10,7 @@
              Title="{Binding Resources[MapTitle]}">
 
     <Grid Grid.RowDefinitions ="0.1*, 0.9*"
-          Padding="0,16,0,0" >
+          Padding="0,22,0,0" >
 
         <SearchBar Grid.Row="0" 
                    Placeholder="{Binding Resources[Search]}"

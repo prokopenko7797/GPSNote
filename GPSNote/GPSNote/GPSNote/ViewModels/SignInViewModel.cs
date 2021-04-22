@@ -18,15 +18,13 @@ namespace GPSNote.ViewModels
 {
     public class SignInViewModel : ViewModelBase
     {
-        private readonly IPageDialogService _pageDialogService;
         private readonly IAuthenticationService _AuthenticationService;
         private readonly IPermissionService _permissionService;
 
         public SignInViewModel(INavigationService navigationService, ILocalizationService localizationService,
-            IPageDialogService pageDialogService, IAuthenticationService authentication, IPermissionService permissionService)
+            IAuthenticationService authentication, IPermissionService permissionService)
             : base(navigationService, localizationService)
         {
-            _pageDialogService = pageDialogService;
             _AuthenticationService = authentication;
             _permissionService = permissionService;
         }
@@ -40,11 +38,25 @@ namespace GPSNote.ViewModels
             set { SetProperty(ref _Email, value); }
         }
 
+        private string _emailerror;
+        public string EmailError
+        {
+            get { return _emailerror; }
+            set { SetProperty(ref _emailerror, value); }
+        }
+
         private string _Password;
         public string Password
         {
             get { return _Password; }
             set { SetProperty(ref _Password, value); }
+        }
+
+        private string _passwordError;
+        public string PasswordError
+        {
+            get { return _passwordError; }
+            set { SetProperty(ref _passwordError, value); }
         }
 
         private bool _IsEnabledButton;
@@ -81,8 +93,11 @@ namespace GPSNote.ViewModels
             }
             else
             {
-                await _pageDialogService.DisplayAlertAsync(
-                        Resources["Error"], Resources["IncorrectLogPas"], Resources["Ok"]);
+                if (await _AuthenticationService.CheckUserExist(Email))
+                {
+                    EmailError = Resources["WrongEmail"];
+                }
+                PasswordError = Resources["WrongPass"];
             }
         }
 

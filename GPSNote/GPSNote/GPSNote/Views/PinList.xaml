@@ -51,16 +51,17 @@
                 <DataTemplate>
                     <ViewCell>
                         <ViewCell.ContextActions>
-                            <MenuItem Text="{Binding Path=BindingContext.Resources[Edit], 
-                                                            Source={x:Reference ListView1}}" 
-                                          Command="{Binding Path=BindingContext.EditCommandTap, 
-                                                            Source={x:Reference ListView1}}" 
-                                          CommandParameter="{Binding .}"/>
-                            <MenuItem Text="{Binding Path=BindingContext.Resources[Delete], 
-                                                            Source={x:Reference ListView1}}" 
-                                          Command="{Binding Path=BindingContext.DeleteCommandTap, 
-                                                            Source={x:Reference ListView1}}" 
-                                          CommandParameter="{Binding .}"/>
+                            <MenuItem IconImageSource="ic_delete.png"
+                                      Command="{Binding Path=BindingContext.DeleteCommandTap, 
+                                                     Source={x:Reference ListView1}}" 
+                                      CommandParameter="{Binding .}"
+                                      IsDestructive="True"/>
+                            
+                            <MenuItem IconImageSource="ic_edit.png"
+                                      Command="{Binding Path=BindingContext.EditCommandTap, 
+                                                        Source={x:Reference ListView1}}" 
+                                      CommandParameter="{Binding .}" />
+                            
                         </ViewCell.ContextActions>
 
                         <Grid Grid.ColumnDefinitions ="0.2*, 0.8*">

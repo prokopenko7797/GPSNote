@@ -14,7 +14,7 @@
           Grid.RowDefinitions ="0.4*, 0.1*, 0.1*, 0.1*, 0.3*" >
 
         <Grid Grid.Column="0" 
-              Grid.RowDefinitions ="0.2*, 0.2*, 0.2*, 0.2*, 0.2*"
+              Grid.RowDefinitions ="0.1*, 0.2*, 0.1*, 0.1*, 0.2*, 0.1*"
               VerticalOptions="CenterAndExpand">
 
             <Label Text="{Binding Resources[Email]}"
@@ -27,10 +27,16 @@
                    MaxLength="254"
                    ClearButtonVisibility="WhileEditing"
                    Grid.Row="1"/>
+            
+            <Label Text="{Binding EmailError}"
+                   Padding="12,0,0,0"
+                   Grid.Row="2"
+                   VerticalOptions="Start"
+                   Style="{StaticResource errorLabelStyle}"/>
 
             <Label Text="{Binding Resources[Password]}"
                    Padding="12,0,0,0"
-                   Grid.Row="2"
+                   Grid.Row="3"
                    VerticalTextAlignment="End"/>
 
             <Entry Placeholder = "{Binding Resources[Password]}" 
@@ -38,7 +44,13 @@
                    ClearButtonVisibility="WhileEditing"
                    Text="{Binding Password}" 
                    MaxLength="16"
-                   Grid.Row="3"/>
+                   Grid.Row="4"/>
+
+            <Label Text="{Binding PasswordError}"
+                   Padding="12,0,0,0"
+                   Grid.Row="5"
+                   VerticalOptions="Start"
+                   Style="{StaticResource errorLabelStyle}"/>
 
         </Grid>
 

@@ -4,6 +4,8 @@
             xmlns:prism="http://prismlibrary.com" 
             xmlns:behaviors="clr-namespace:GPSNote.Behaviors" 
             xmlns:local="clr-namespace:GPSNote.Views"
+            xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+            android:TabbedPage.ToolbarPlacement="Bottom"
             prism:ViewModelLocator.AutowireViewModel="True"
             x:Class="GPSNote.Views.MainTabbedPage">
 
@@ -12,8 +14,8 @@
     </TabbedPage.Behaviors>
     
     <TabbedPage.Children>
-        <local:MapPage />
-        <local:PinList />
+        <local:MapPage  IconImageSource="ic_map.png"/>
+        <local:PinList  IconImageSource="ic_pin.png"/>
     </TabbedPage.Children>
 
 </TabbedPage>

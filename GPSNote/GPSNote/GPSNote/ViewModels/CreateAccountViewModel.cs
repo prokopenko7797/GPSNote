@@ -83,15 +83,14 @@ namespace GPSNote.ViewModels
         {
             bool result = true;
 
-            if (result)
-            {
-                if (!Validator.InRange(password, Constant.MinPasswordLength, Constant.MaxPasswordLength))
-                {
-                    PasswordError = Resources["IncorrectPass"];
 
-                    result = false;
-                }
+            if (!Validator.InRange(password, Constant.MinPasswordLength, Constant.MaxPasswordLength))
+            {
+                PasswordError = Resources["IncorrectPass"];
+
+                result = false;
             }
+
 
             if (result)
             {
@@ -103,15 +102,13 @@ namespace GPSNote.ViewModels
                 }
             }
 
-            if (result)
+            if (!Validator.Match(password, confirmpassword))
             {
-                if (!Validator.Match(password, confirmpassword))
-                {
-                    ConfPassError = Resources["PasMis"];
+                ConfPassError = Resources["PasMis"];
 
-                    result = false;
-                }
+                result = false;
             }
+
 
             return result;
         }

@@ -46,6 +46,19 @@ namespace GPSNote.ViewModels
             set { SetProperty(ref _email, value); }
         }
 
+        private string _errorname;
+        public string NameError
+        {
+            get { return _errorname; }
+            set { SetProperty(ref _errorname, value); }
+        }
+
+        private string _emailerror;
+        public string EmailError
+        {
+            get { return _emailerror; }
+            set { SetProperty(ref _emailerror, value); }
+        }
 
 
         private bool _IsEnabled;
@@ -64,48 +77,40 @@ namespace GPSNote.ViewModels
 
         #region -----Private Helpers-----
 
-        private async Task<bool> LoginCheckAsync(string name, string email)
+        private bool LoginCheck(string name, string email)
         {
             bool result = true;
 
             if (!Validator.InRange(name, Constant.MinNameLength, Constant.MaxLoginLength))
             {
-                await _pageDialogService.DisplayAlertAsync(
-                        Resources["Error"], $"{Resources["LogVal1"]} {Constant.MinNameLength} " +
-                        $"{Resources["LogVal2"]} {Constant.MaxLoginLength} {Resources["LogVal3"]}", Resources["Ok"]);
+                NameError = Resources["InRange"];
 
                 result = false;
             }
 
-            if (result)
+            if (Validator.StartWithNumeral(name))
             {
-                if (Validator.StartWithNumeral(name))
-                {
-                    await _pageDialogService.DisplayAlertAsync(
-                            Resources["Error"], Resources["StartNum"], Resources["Ok"]);
 
-                    result = false;
-                }
+                NameError = Resources["StartNum"];
+                result = false;
             }
 
 
-            if (result)
-            {
-                if (!Validator.IsEmail(email))
-                {
-                    await _pageDialogService.DisplayAlertAsync(
-                            Resources["Error"], Resources["EmailError"], Resources["Ok"]);
 
-                    result = false;
-                }
+            if (!Validator.IsEmail(email))
+            {
+                EmailError = Resources["EmailError"];
+
+                result = false;
             }
+
 
             return result;
         }
 
         private async void ExecuteUserButtonTapCommand()
         {
-            if (await LoginCheckAsync(Name, Email))
+            if (LoginCheck(Name, Email))
             {
                 if (await _AuthenticationService.CheckUserExist(Email))
                 {
@@ -117,7 +122,7 @@ namespace GPSNote.ViewModels
                 }
                 else
                 {
-                    await _pageDialogService.DisplayAlertAsync(Resources["Error"], Resources["EmailExist"], Resources["Ok"]);
+                    EmailError = Resources["EmailExist"];
                 }
             }
         }

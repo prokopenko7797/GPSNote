@@ -162,6 +162,9 @@
   <data name="IncorrectPass" xml:space="preserve">
     <value>Неверный пароль</value>
   </data>
+  <data name="InRange" xml:space="preserve">
+    <value>Не в диапазоне</value>
+  </data>
   <data name="Latitude" xml:space="preserve">
     <value>Широта</value>
   </data>
@@ -272,6 +275,12 @@
   </data>
   <data name="UpLowNum" xml:space="preserve">
     <value>Пароль должен содержать как минимум один символ верхнего и нижнего регистра, а так же цифру.</value>
+  </data>
+  <data name="WrongEmail" xml:space="preserve">
+    <value>Неверный Email</value>
+  </data>
+  <data name="WrongPass" xml:space="preserve">
+    <value>The password is incorrect</value>
   </data>
   <data name="Yes" xml:space="preserve">
     <value>Да</value>
