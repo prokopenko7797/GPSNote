@@ -45,7 +45,7 @@ namespace GPSNote
 
             if (AuthorizationService.IsAuthorized)
             {
-                await NavigationService.NavigateAsync($"/{nameof(MainPage)}");
+                await NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(MainPage)}");
             }
             else
             {

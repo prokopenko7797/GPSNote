@@ -7,7 +7,9 @@
              Title="{Binding Resources[SignUpTitle]}"
              BackgroundColor="{AppThemeBinding Light={StaticResource System/White}, Dark={StaticResource System/Black}}">
 
-    <StackLayout Padding="30,0,30,0" HorizontalOptions="FillAndExpand"  VerticalOptions="CenterAndExpand" >
+    <StackLayout Padding="16,16,16,16"  
+                 HorizontalOptions="FillAndExpand"  
+                 VerticalOptions="CenterAndExpand" >
 
         <StackLayout Padding="0,0,0,150">
 
@@ -26,7 +28,9 @@
                    MaxLength="16" />
         </StackLayout>
         
-        <Button Text="{Binding Resources[SignInButton]}" BackgroundColor="DarkOrange" Command="{Binding AddUserButtonTapCommand}"></Button>
+        <Button Text="{Binding Resources[SignInButton]}" 
+                Style="{StaticResource blueButtonStyle}"
+                Command="{Binding AddUserButtonTapCommand}"></Button>
 
 
     </StackLayout>

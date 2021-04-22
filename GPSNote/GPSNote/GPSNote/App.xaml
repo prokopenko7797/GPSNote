@@ -28,7 +28,7 @@
         <Color x:Key="System/Black">#1E242B</Color>
 
       
-
+        <!-- Named styles -->
         <Style x:Key="blueButtonStyle"
             TargetType="Button">
             <Setter Property="BackgroundColor"
@@ -37,13 +37,13 @@
                     Value="{StaticResource System/White}" />
         </Style>
 
+        <!-- Target styles -->
         <Style TargetType="NavigationPage">
             <Setter Property="BarBackgroundColor"
                     Value="{AppThemeBinding Light={StaticResource System/White}, Dark={StaticResource System/Black}}" />
             <Setter Property="BarTextColor"
                     Value="{AppThemeBinding Light={StaticResource System/Black}, Dark={StaticResource System/White}}" />
         </Style>
-
 
         <Style TargetType="Entry">
             <Setter Property="TextColor"
@@ -61,7 +61,6 @@
             <Setter Property="TextColor"
                     Value="{AppThemeBinding Light={StaticResource System/Black}, Dark={StaticResource System/White}}" />
         </Style>
-
 
         <Style TargetType="Editor">
             <Setter Property="TextColor"

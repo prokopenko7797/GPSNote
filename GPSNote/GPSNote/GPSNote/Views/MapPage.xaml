@@ -9,7 +9,8 @@
              BackgroundColor="{AppThemeBinding Light={StaticResource System/White}, Dark={StaticResource System/Black}}"
              Title="{Binding Resources[MapTitle]}">
 
-    <Grid Grid.RowDefinitions ="0.1*, 0.9*">
+    <Grid Grid.RowDefinitions ="0.1*, 0.9*"
+          Padding="16,16,16,16" >
 
         <SearchBar Grid.Row="0" 
                    Placeholder="{Binding Resources[Search]}"

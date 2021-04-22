@@ -18,7 +18,7 @@
     </ContentPage.ToolbarItems>
 
     <Grid Grid.RowDefinitions="0.1*, 0.2*, 0.1*, 0.1*, 0.5*"
-          Padding="30,10,30,10" 
+          Padding="16,16,16,16" 
           HorizontalOptions="FillAndExpand"  
           VerticalOptions="StartAndExpand" >
         

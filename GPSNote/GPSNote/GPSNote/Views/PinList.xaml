@@ -8,7 +8,8 @@
              Title="{Binding Resources[PinListTitle]}">
 
 
-    <Grid Grid.RowDefinitions ="0.1*, 0.9*">
+    <Grid Grid.RowDefinitions ="0.1*, 0.9*"
+          Padding="16,16,16,16" >
 
         <Label Text="{Binding Resources[NoPins]}" 
                HorizontalOptions="Center"
