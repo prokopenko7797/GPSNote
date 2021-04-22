@@ -77,6 +77,7 @@ namespace GPSNote
             containerRegistry.RegisterForNavigation<AddEditPin, AddEditPinViewModel>();
             containerRegistry.RegisterForNavigation<MainTabbedPage>();
             containerRegistry.RegisterForNavigation<MainPage, MainPageViewModel>();
+            containerRegistry.RegisterForNavigation<CreateAccount, CreateAccountViewModel>();
         }
 
         protected override async void OnAppLinkRequestReceived(Uri uri)

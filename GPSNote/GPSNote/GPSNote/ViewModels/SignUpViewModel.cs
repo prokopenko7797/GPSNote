@@ -46,20 +46,7 @@ namespace GPSNote.ViewModels
             set { SetProperty(ref _email, value); }
         }
 
-        private string _password;
-        public string Password
-        {
-            get { return _password; }
-            set { SetProperty(ref _password, value); }
-        }
 
-
-        private string _confirmpassword;
-        public string ConfirmPassword
-        {
-            get { return _confirmpassword; }
-            set { SetProperty(ref _confirmpassword, value); }
-        }
 
         private bool _IsEnabled;
         public bool IsEnabled
@@ -77,7 +64,7 @@ namespace GPSNote.ViewModels
 
         #region -----Private Helpers-----
 
-        private async Task<bool> LogPassCheckAsync(string name, string email, string password, string confirmpassword)
+        private async Task<bool> LoginCheckAsync(string name, string email)
         {
             bool result = true;
 
@@ -92,18 +79,6 @@ namespace GPSNote.ViewModels
 
             if (result)
             {
-                if (!Validator.InRange(password, Constant.MinPasswordLength, Constant.MaxPasswordLength))
-                {
-                    await _pageDialogService.DisplayAlertAsync(
-                            Resources["Error"], $"{Resources["PasVal1"]} {Constant.MinPasswordLength} " +
-                            $"{Resources["LogVal2"]} {Constant.MaxPasswordLength} {Resources["LogVal3"]}", Resources["Ok"]);
-
-                    result = false;
-                }
-            }
-
-            if (result)
-            {
                 if (Validator.StartWithNumeral(name))
                 {
                     await _pageDialogService.DisplayAlertAsync(
@@ -113,16 +88,6 @@ namespace GPSNote.ViewModels
                 }
             }
 
-            if (result)
-            {
-                if (!Validator.HasUpLowNum(password))
-                {
-                    await _pageDialogService.DisplayAlertAsync(
-                            Resources["Error"], Resources["UpLowNum"], Resources["Ok"]);
-
-                    result = false;
-                }
-            }
 
             if (result)
             {
@@ -135,30 +100,20 @@ namespace GPSNote.ViewModels
                 }
             }
 
-            if (result)
-            {
-                if (!Validator.Match(password, confirmpassword))
-                {
-                    await _pageDialogService.DisplayAlertAsync(
-                            Resources["Error"], Resources["PasMis"], Resources["Ok"]);
-
-                    result = false;
-                }
-            }
-
             return result;
         }
 
         private async void ExecuteUserButtonTapCommand()
         {
-            if (await LogPassCheckAsync(Name, Email, Password, ConfirmPassword))
+            if (await LoginCheckAsync(Name, Email))
             {
-                if (await _AuthenticationService.SignUpAsync(Name, Email, Password))
+                if (await _AuthenticationService.CheckUserExist(Email))
                 {
-                    var p = new NavigationParameters { { Constant.Email, Email } };
+                    var p = new NavigationParameters();
+                    p.Add(nameof(Name), Name);
+                    p.Add(nameof(Email), Email);
 
-                    await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(SignIn)}", p);
-
+                    await NavigationService.NavigateAsync(nameof(CreateAccount), p);
                 }
                 else
                 {
@@ -174,23 +129,23 @@ namespace GPSNote.ViewModels
         protected override void OnPropertyChanged(PropertyChangedEventArgs args)
         {
             base.OnPropertyChanged(args);
-            if (args.PropertyName == nameof(Name) || args.PropertyName == nameof(Email) || args.PropertyName == nameof(Password) || args.PropertyName == nameof(ConfirmPassword))
+            if (args.PropertyName == nameof(Name) || args.PropertyName == nameof(Email))
             {
                 bool result = false;
 
-                if (Name == null || Email == null || Password == null || ConfirmPassword == null)
+                if (Name == null || Email == null)
                 {
                     result = true;
                 }
 
                 if (result)
                 {
-                    if (Name != "" && Email != "" && Password != "" && ConfirmPassword != "")
+                    if (Name != string.Empty && Email != string.Empty)
                     {
                         IsEnabled = true;
                     }
 
-                    else if (Name == "" || Email == "" || Password == "" || ConfirmPassword == "")
+                    else if (Name == string.Empty || Email == string.Empty)
                     {
                         IsEnabled = false;
                     }

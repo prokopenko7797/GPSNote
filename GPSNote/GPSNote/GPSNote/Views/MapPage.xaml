@@ -10,7 +10,7 @@
              Title="{Binding Resources[MapTitle]}">
 
     <Grid Grid.RowDefinitions ="0.1*, 0.9*"
-          Padding="16,16,16,16" >
+          Padding="0,16,0,0" >
 
         <SearchBar Grid.Row="0" 
                    Placeholder="{Binding Resources[Search]}"
@@ -85,7 +85,7 @@
 
         <Grid Grid.Row="1"
               Grid.RowDefinitions ="*, *, *, *, *, *, *, *"
-              BackgroundColor="{AppThemeBinding Light={StaticResource System/Black}, Dark={StaticResource System/White}}"
+              BackgroundColor="{AppThemeBinding Light={StaticResource System/White}, Dark={StaticResource System/Black}}"
               VerticalOptions="Center"
               HorizontalOptions="Start">
 
@@ -102,7 +102,7 @@
         
 
         <Grid Grid.Row="1" 
-              BackgroundColor="{AppThemeBinding Light={StaticResource System/Black}, Dark={StaticResource System/White}}"
+              BackgroundColor="{AppThemeBinding Light={StaticResource System/White}, Dark={StaticResource System/Black}}"
               IsVisible="{Binding IsPinTapped}"         
               VerticalOptions="End"
               HorizontalOptions="Center"

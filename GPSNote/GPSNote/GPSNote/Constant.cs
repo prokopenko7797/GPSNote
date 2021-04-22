@@ -17,6 +17,7 @@ namespace GPSNote
         public const string DefaultLanguage = ResourcesLangConst.En;
         public const int DefaultTheme = (int)OSAppTheme.Unspecified;
         public const string Email = nameof(Email);
+        public const string Name = nameof(Name);
         public const string ImageFavorite = "favorite.png";
         public const string Host = "gpsnote.page.link";
         public const string Action = "pin";

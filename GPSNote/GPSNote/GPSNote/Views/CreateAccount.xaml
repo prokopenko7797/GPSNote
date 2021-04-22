@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="http://prismlibrary.com"
              prism:ViewModelLocator.AutowireViewModel="True"
-             x:Class="GPSNote.Views.SignUp" 
+             x:Class="GPSNote.Views.CreateAccount" 
              Title="{Binding Resources[SignUpTitle]}"
              BackgroundColor="{AppThemeBinding Light={StaticResource System/White}, Dark={StaticResource System/Black}}">
 
@@ -11,37 +11,48 @@
           Grid.RowDefinitions ="0.4*, 0.1*, 0.1*, 0.1*, 0.3*" >
 
         <Grid Grid.Column="0" 
-              Grid.RowDefinitions ="0.2*, 0.2*, 0.2*, 0.2*, 0.2*"
+              Grid.RowDefinitions ="0.1*, 0.2*, 0.1*, 0.1*, 0.2*, 0.1*"
               VerticalOptions="CenterAndExpand">
 
-            <Label Text="{Binding Resources[Name]}"
+            <Label Text="{Binding Resources[Password]}"
                    Padding="12,0,0,0"
                    Grid.Row="0"
                    VerticalOptions="End"/>
 
-            <Entry Placeholder = "{Binding Resources[Name]}" 
-                   Text="{Binding Name}" 
+            <Entry Placeholder = "{Binding Resources[Password]}" 
+                   IsPassword ="True" Text="{Binding Password}" 
                    MaxLength="16"
                    ClearButtonVisibility="WhileEditing"
                    Grid.Row="1"/>
 
-            <Label Text="{Binding Resources[Email]}"
+            <Label Text="{Binding PasswordError}"
                    Padding="12,0,0,0"
                    Grid.Row="2"
+                   VerticalOptions="Start"
+                   Style="{StaticResource errorLabelStyle}"/>
+
+            <Label Text="{Binding Resources[ConfPas]}"
+                   Padding="12,0,0,0"
+                   Grid.Row="3"
                    VerticalTextAlignment="End"/>
 
-            <Entry Placeholder = "{Binding Resources[Email]}" 
-                   Text="{Binding Email}" 
-                   MaxLength="254"
-                   Grid.Row="3"/>
+            <Entry Placeholder = "{Binding Resources[ConfPas]}" 
+                   IsPassword ="True" 
+                   Text="{Binding ConfirmPassword}" 
+                   MaxLength="16" 
+                   Grid.Row="4"/>
 
-            
+            <Label Text="{Binding ConfPassError}"
+                   Padding="12,0,0,0"
+                   Grid.Row="5"
+                   VerticalOptions="Start"
+                   Style="{StaticResource errorLabelStyle}"/>
 
         </Grid>
 
 
         <Button Grid.Row="1" 
-                Text="{Binding Resources[Next]}" 
+                Text="{Binding Resources[SignUpButton]}" 
                 Style="{StaticResource blueButtonStyle}"
                 Command="{Binding AddUserButtonTapCommand}"></Button>
 
@@ -83,5 +94,5 @@
         </Grid>
 
     </Grid>
-
+    
 </ContentPage>

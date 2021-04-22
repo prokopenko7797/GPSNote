@@ -142,10 +142,10 @@
     <value>Edit PIn</value>
   </data>
   <data name="Email" xml:space="preserve">
-    <value>E-mail</value>
+    <value>Email</value>
   </data>
   <data name="EmailError" xml:space="preserve">
-    <value>Wrong E-mail.</value>
+    <value>Wrong Email.</value>
   </data>
   <data name="EmailExist" xml:space="preserve">
     <value>E-mail already exist.</value>
@@ -157,7 +157,10 @@
     <value>Focus to selected</value>
   </data>
   <data name="IncorrectEmailPas" xml:space="preserve">
-    <value>Incorrect E-mail or password.</value>
+    <value>Incorrect Email or password.</value>
+  </data>
+  <data name="IncorrectPass" xml:space="preserve">
+    <value>Incorrect password</value>
   </data>
   <data name="Latitude" xml:space="preserve">
     <value>Latitude</value>
@@ -194,6 +197,9 @@
   </data>
   <data name="NewPin" xml:space="preserve">
     <value>New pin</value>
+  </data>
+  <data name="Next" xml:space="preserve">
+    <value>Next</value>
   </data>
   <data name="NickName" xml:space="preserve">
     <value>NickName</value>

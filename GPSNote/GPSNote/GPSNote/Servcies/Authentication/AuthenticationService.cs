@@ -44,9 +44,7 @@ namespace GPSNote.Servcies.Authentication
         {
             bool result = false;
 
-            User registredUser = await _repository.FindWithQueryAsync<User>($"SELECT * FROM {nameof(User)} WHERE Email='{email}'");
-
-            if (registredUser == null)
+            if (await CheckUserExist(email))
             {
                 await _repository.InsertAsync(new User { Name = name, Email = email, Password = password });
                 result = true;
@@ -57,6 +55,14 @@ namespace GPSNote.Servcies.Authentication
             }
 
             return result;
+        }
+
+
+        public async Task<bool> CheckUserExist(string email)
+        {
+            User registredUser = await _repository.FindWithQueryAsync<User>($"SELECT * FROM {nameof(User)} WHERE Email='{email}'");
+
+            return registredUser == null;
         }
 
         #endregion
