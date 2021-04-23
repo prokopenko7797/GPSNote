@@ -85,7 +85,7 @@
                     BorderColor="{StaticResource System/LightGray}"
                     IsEnabled="False"/>
 
-            <Button ImageSource="ic_apple.png" 
+            <Button ImageSource="{AppThemeBinding Light=ic_apple.png, Dark=ic_apple_dark.png}" 
                     Grid.Column="2"
                     BackgroundColor="{StaticResource TransparentColor}"
                     BorderWidth="1"

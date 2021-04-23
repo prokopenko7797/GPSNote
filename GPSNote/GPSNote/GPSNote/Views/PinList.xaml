@@ -102,16 +102,16 @@
 
 
         <Button Grid.Row="1" 
-            BackgroundColor="{AppThemeBinding Light={StaticResource Light/Primary}, Dark={StaticResource Dark/Primary}}"
+            BackgroundColor="{StaticResource Light/Primary}"
             CornerRadius="50"
-            WidthRequest="100" 
-            HeightRequest="100"            
+            WidthRequest="60" 
+            HeightRequest="60"            
             VerticalOptions="End"
             HorizontalOptions="End"
-            Margin="0,0,20,20"
+            Margin="0,0,16,16"
             Command="{Binding AddEditButtonClicked}"           
             ImageSource="ic_plus.png"/>
-        
+
     </Grid>
 
 
