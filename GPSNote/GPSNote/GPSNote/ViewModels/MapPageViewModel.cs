@@ -244,6 +244,61 @@ namespace GPSNote.ViewModels
 
         #endregion
 
+        #region --Overrides--
+
+        public override async void Initialize(INavigationParameters parameters)
+        {
+            base.Initialize(parameters);
+
+            PinObs = new ObservableCollection<PinViewModel>((await _pinService.GetUserPinsAsync()).ToPinViewObservableCollection());
+            ControlObs = PinObs;
+        }
+
+
+        public override async void OnNavigatedTo(INavigationParameters parameters)
+        {
+            base.OnNavigatedTo(parameters);
+            if (parameters.TryGetValue<ObservableCollection<PinViewModel>>(nameof(PinViewModel), out var newPinsValue))
+            {
+                PinObs = newPinsValue;
+                ControlObs = newPinsValue;
+
+            }
+
+            if (parameters.TryGetValue<PinViewModel>(nameof(SelectedListItem), out var newSelectedItem))
+            {
+                SelectedListItem = newSelectedItem;
+            }
+
+            bool IsUpdated = false;
+
+            if (parameters.TryGetValue<bool>(nameof(IsUpdated), out var newUpdate))
+            {
+                if (newUpdate)
+                {
+                    PinObs = new ObservableCollection<PinViewModel>((await _pinService.GetUserPinsAsync()).ToPinViewObservableCollection());
+                    ControlObs = PinObs;
+                }
+            }
+        }
+
+        protected override void OnPropertyChanged(PropertyChangedEventArgs args)
+        {
+            base.OnPropertyChanged(args);
+
+            if (args.PropertyName == nameof(SelectedListItem) )
+            {
+                MoveTo = new MapSpan(new Position(SelectedListItem.Latitude, SelectedListItem.Longitude), 1, 1).WithZoom(10);
+                IsListViewVisible = false;
+                IsSelected = SelectedListItem != null;
+
+                DisplayInfoPinViewModel(ControlObs.Where(pinView => pinView.Label.Contains(SelectedListItem.Label)).First());
+
+            }
+        }
+
+        #endregion
+
         #region --Private helpers--
 
         private void OnSharePinCommand(object sender)
@@ -297,7 +352,7 @@ namespace GPSNote.ViewModels
             ChangeHeight();
         }
 
-        private void ChangeHeight() 
+        private void ChangeHeight()
         {
             if (PinObs.Count() < 4)
             {
@@ -325,7 +380,7 @@ namespace GPSNote.ViewModels
         }
 
 
-        private async void DisplayInfoPinViewModel(PinViewModel pinView) 
+        private async void DisplayInfoPinViewModel(PinViewModel pinView)
         {
             IsPinTapped = true;
             PinLabel = pinView.Label;
@@ -333,15 +388,15 @@ namespace GPSNote.ViewModels
             PinLatLong = $"{pinView.Latitude}, {pinView.Longitude}";
 
 
-            CurrentWeatherResponse currentWeather = await _weatherService.GetCurrentWeatherAsync(pinView.Latitude, 
+            CurrentWeatherResponse currentWeather = await _weatherService.GetCurrentWeatherAsync(pinView.Latitude,
                                                                                                  pinView.Longitude);
- 
+
             Temperature = currentWeather.Temperature.Value.ToString() + " " +
                           currentWeather.Temperature.Unit;
 
             Humidity = currentWeather.Humidity.Value.ToString();
             Pressure = currentWeather.Pressure.Value.ToString() + " " +
-                       currentWeather.Pressure.Unit; 
+                       currentWeather.Pressure.Unit;
 
             Wind = currentWeather.Wind.Speed.Value.ToString() + " " +
                    currentWeather.Wind.Speed.Name + " " +
@@ -358,61 +413,6 @@ namespace GPSNote.ViewModels
 
             Weather = currentWeather.Weather.Value.ToString();
             LastUpdate = currentWeather.LastUpdate.Value.ToString();
-        }
-
-        #endregion
-
-        #region --Overrides--
-
-        public override async void Initialize(INavigationParameters parameters)
-        {
-            base.Initialize(parameters);
-
-            PinObs = new ObservableCollection<PinViewModel>((await _pinService.GetUserPinsAsync()).ToPinViewObservableCollection());
-            ControlObs = PinObs;
-        }
-
-
-        public override async void OnNavigatedTo(INavigationParameters parameters)
-        {
-            base.OnNavigatedTo(parameters);
-            if (parameters.TryGetValue<ObservableCollection<PinViewModel>>(nameof(PinViewModel), out var newPinsValue))
-            {
-                PinObs = newPinsValue;
-                ControlObs = newPinsValue;
-
-            }
-
-            if (parameters.TryGetValue<PinViewModel>(nameof(SelectedListItem), out var newSelectedItem))
-            {
-                SelectedListItem = newSelectedItem;
-            }
-
-            bool IsUpdated = false;
-
-            if (parameters.TryGetValue<bool>(nameof(IsUpdated), out var newUpdate))
-            {
-                if (newUpdate)
-                {
-                    PinObs = new ObservableCollection<PinViewModel>((await _pinService.GetUserPinsAsync()).ToPinViewObservableCollection());
-                    ControlObs = PinObs;
-                }
-            }
-        }
-
-        protected override void OnPropertyChanged(PropertyChangedEventArgs args)
-        {
-            base.OnPropertyChanged(args);
-
-            if (args.PropertyName == nameof(SelectedListItem) )
-            {
-                MoveTo = new MapSpan(new Position(SelectedListItem.Latitude, SelectedListItem.Longitude), 1, 1).WithZoom(10);
-                IsListViewVisible = false;
-                IsSelected = SelectedListItem != null;
-
-                DisplayInfoPinViewModel(ControlObs.Where(pinView => pinView.Label.Contains(SelectedListItem.Label)).First());
-
-            }
         }
 
         #endregion

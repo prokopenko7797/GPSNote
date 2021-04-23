@@ -10,7 +10,7 @@ namespace GPSNote.Validators
     public static class Validator
     {
 
-        public static bool Match(string str, string con)
+        public static bool CheckMatch(string str, string con)
         {
             return str.Equals(con);
         }
@@ -24,7 +24,7 @@ namespace GPSNote.Validators
             return hasNumber.IsMatch(str) && hasUpperCase.IsMatch(str) && hasLowerCase.IsMatch(str);
         }
 
-        public static bool InRange(string str, int min, int max)
+        public static bool CheckInRange(string str, int min, int max)
         {
             //var inRange = new Regex($@"^(.{{{min}}}|.{{{max}}})$");
 
@@ -32,7 +32,7 @@ namespace GPSNote.Validators
             return str.Length >= min && str.Length <= max;
         }
 
-        public static bool StartWithNumeral(string str)
+        public static bool CheckStartWithNumeral(string str)
         {
             var hasNumber = new Regex(@"^[0-9]");
 

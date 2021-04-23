@@ -63,18 +63,6 @@ namespace GPSNote.ViewModels
 
         #endregion
 
-        #region -- Private helpers --
-
-        private async void OnSaveToolBar()
-        {
-            _appTheme = _ThemeService.GetCurrentTheme();
-            Resources.Lang = SelectedLang;
-
-            await NavigationService.GoBackAsync();
-        }
-
-        #endregion
-
         #region --Overrides--
 
         public override void Initialize(INavigationParameters parameters)
@@ -138,6 +126,18 @@ namespace GPSNote.ViewModels
 
             _ThemeService.SetTheme(_appTheme);
             Resources.ChangeCulture(Resources.Lang);
+        }
+
+        #endregion
+
+        #region -- Private helpers --
+
+        private async void OnSaveToolBar()
+        {
+            _appTheme = _ThemeService.GetCurrentTheme();
+            Resources.Lang = SelectedLang;
+
+            await NavigationService.GoBackAsync();
         }
 
         #endregion

@@ -77,31 +77,7 @@ namespace GPSNote.ViewModels
             (_NavigateSignUpCommand = new DelegateCommand(ExecuteNavigateSignUpCommand));
 
         #endregion 
-        #region -- Private helpers --
 
-        private async void ExecuteNavigateSignUpCommand()
-        {
-            await NavigationService.NavigateAsync(nameof(SignUp));
-
-        }
-
-        private async void ExecuteNavigateMainViewCommand()
-        {
-            if (await _AuthenticationService.SignInAsync(Email, Password))
-            {
-                await NavigationService.NavigateAsync($"/{nameof(MainTabbedPage)}");
-            }
-            else
-            {
-                if (await _AuthenticationService.CheckUserExist(Email))
-                {
-                    EmailError = Resources["WrongEmail"];
-                }
-                PasswordError = Resources["WrongPass"];
-            }
-        }
-
-        #endregion
         #region --Overrides--
 
         public override void OnNavigatedTo(INavigationParameters parameters)
@@ -148,6 +124,32 @@ namespace GPSNote.ViewModels
             _permissionService.CheckPermissionsAsync(new LocationPermission());
         }
 
+
+        #endregion
+
+        #region -- Private helpers --
+
+        private async void ExecuteNavigateSignUpCommand()
+        {
+            await NavigationService.NavigateAsync(nameof(SignUp));
+
+        }
+
+        private async void ExecuteNavigateMainViewCommand()
+        {
+            if (await _AuthenticationService.SignInAsync(Email, Password))
+            {
+                await NavigationService.NavigateAsync($"/{nameof(MainTabbedPage)}");
+            }
+            else
+            {
+                if (await _AuthenticationService.CheckUserExist(Email))
+                {
+                    EmailError = Resources["WrongEmail"];
+                }
+                PasswordError = Resources["WrongPass"];
+            }
+        }
 
         #endregion
 

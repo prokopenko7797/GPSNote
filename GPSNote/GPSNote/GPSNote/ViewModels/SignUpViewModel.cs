@@ -75,20 +75,50 @@ namespace GPSNote.ViewModels
 
         #endregion
 
+        #region -----Overrides-----
+        protected override void OnPropertyChanged(PropertyChangedEventArgs args)
+        {
+            base.OnPropertyChanged(args);
+            if (args.PropertyName == nameof(Name) || args.PropertyName == nameof(Email))
+            {
+                bool result = false;
+
+                if (Name == null || Email == null)
+                {
+                    result = true;
+                }
+
+                if (result)
+                {
+                    if (Name != string.Empty && Email != string.Empty)
+                    {
+                        IsEnabled = true;
+                    }
+
+                    else if (Name == string.Empty || Email == string.Empty)
+                    {
+                        IsEnabled = false;
+                    }
+                }     
+            }
+        }
+
+        #endregion
+
         #region -----Private Helpers-----
 
         private bool LoginCheck(string name, string email)
         {
             bool result = true;
 
-            if (!Validator.InRange(name, Constant.MinNameLength, Constant.MaxLoginLength))
+            if (!Validator.CheckInRange(name, Constant.MinNameLength, Constant.MaxLoginLength))
             {
                 NameError = Resources["InRange"];
 
                 result = false;
             }
 
-            if (Validator.StartWithNumeral(name))
+            if (Validator.CheckStartWithNumeral(name))
             {
 
                 NameError = Resources["StartNum"];
@@ -128,37 +158,5 @@ namespace GPSNote.ViewModels
         }
 
         #endregion
-
-
-        #region -----Overrides-----
-        protected override void OnPropertyChanged(PropertyChangedEventArgs args)
-        {
-            base.OnPropertyChanged(args);
-            if (args.PropertyName == nameof(Name) || args.PropertyName == nameof(Email))
-            {
-                bool result = false;
-
-                if (Name == null || Email == null)
-                {
-                    result = true;
-                }
-
-                if (result)
-                {
-                    if (Name != string.Empty && Email != string.Empty)
-                    {
-                        IsEnabled = true;
-                    }
-
-                    else if (Name == string.Empty || Email == string.Empty)
-                    {
-                        IsEnabled = false;
-                    }
-                }     
-            }
-        }
-
-        #endregion
-
     }
 }

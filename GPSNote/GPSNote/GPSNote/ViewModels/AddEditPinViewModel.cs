@@ -126,7 +126,7 @@ namespace GPSNote.ViewModels
             base.OnPropertyChanged(args);
             if (args.PropertyName == nameof(Latitude) || args.PropertyName == nameof(Longitude))
             {
-                PinUpdate();
+                UpdatePin();
             }
         }
 
@@ -146,7 +146,7 @@ namespace GPSNote.ViewModels
         }
 
 
-        private void PinUpdate() 
+        private void UpdatePin() 
         {
             PinViewModel pinViewModel = new PinViewModel()
             {

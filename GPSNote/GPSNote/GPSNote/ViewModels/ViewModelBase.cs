@@ -47,7 +47,7 @@ namespace GPSNote.ViewModels
 
         #endregion
 
-        #region -- IDestructible --
+        #region -- IDestructible implementation --
 
         public virtual void Destroy()
         {

@@ -104,107 +104,6 @@ namespace GPSNote.ViewModels
 
         #endregion
 
-
-
-        #region -- Private helpers --
-
-        private async void OnItemTappedAsyncCommand(object sender)
-        {
-            var parameters = new NavigationParameters
-                {
-                    { nameof(SelectedItem), SelectedItem }
-                };
-
-            await NavigationService.SelectTabAsync($"{nameof(MapPage)}", parameters);
-        }
-
-
-        private void OnSearchCommand(object sender)
-        {
-            if (string.IsNullOrWhiteSpace(SearchBarText))
-            {
-                PinObs = _ControlObs;
-            }
-            else
-            {
-                string low = SearchBarText.ToLower();
-
-                PinObs = new ObservableCollection<PinViewModel>(_ControlObs.Where(pin =>(pin.Label.ToLower()).Contains(low) ||
-                                                                                  (pin.Description.ToLower()).Contains(low) ||
-                                                                                  (pin.Latitude.ToString()).Contains(low) ||
-                                                                                  (pin.Longitude.ToString()).Contains(low)));
-            }
-        }
-
-        private async void OnDeleteCommand(object sender)
-        {
-            if (!(sender is PinViewModel userPinsV)) return;
-
-            var result = await UserDialogs.Instance.ConfirmAsync(new ConfirmConfig
-            {
-                Message = Resources["Delete?"],
-                OkText = Resources["Yes"],
-                CancelText = Resources["No"]
-            });
-            if (result)
-            {
-                await _pinService.DeletePinModelAsync(userPinsV.Id);
-                PinObs.Remove(userPinsV);
-                _ControlObs.Remove(userPinsV);
-                if (PinObs.Count() == 0) IsVisible = true;
-            }
-        }
-
-        private async void OnEditCommand(object sender)
-        {
-            PinViewModel pins = sender as PinViewModel;
-            
-            var parametrs = new NavigationParameters
-            {
-                { nameof(PinViewModel), pins }
-            };
-            
-            await NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(AddEditPin)}", parametrs);
-        }
-
-        private async void OnChangeVisibilityComand(object sender)
-        {
-            PinViewModel pin = sender as PinViewModel;
-
-            int i = PinObs.IndexOf(pin);
-            int j = _ControlObs.IndexOf(pin);
-            pin.IsEnabled = !pin.IsEnabled;
-            PinObs[i] = pin;
-            _ControlObs[j] = pin;
-
-            await _pinService.EditPinModelAsync(pin.ToPinModel());           
-        }
-
-        private async void OnNavigateAddEditPinCommand(object sender)
-        {
-            await NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(AddEditPin)}");
-        }
-
-        private async void OnSettingsCommand(object sender)
-        {
-            await NavigationService.NavigateAsync(nameof(Settings));
-        }
-
-        private async void OnLogOutToolBarCommand(object sender)
-        {
-            _authorizationService.LogOut();
-            await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(SignIn)}");
-        }
-
-        private async void UpdateCollectionAsync()
-        {
-            PinObs = new ObservableCollection<PinViewModel>((await _pinService.GetUserPinsAsync()).ToPinViewObservableCollection());
-            _ControlObs = PinObs;
-            IsVisible = PinObs.Count() == 0;
-        }
-
-        #endregion
-
         #region --Overrides--
 
         public override void OnNavigatedTo(INavigationParameters parameters)
@@ -233,6 +132,105 @@ namespace GPSNote.ViewModels
             base.OnNavigatedFrom(parameters);
 
             parameters.Add(nameof(PinViewModel), _ControlObs);
+        }
+
+        #endregion
+
+        #region -- Private helpers --
+
+        private async void OnItemTappedAsyncCommand(object sender)
+        {
+            var parameters = new NavigationParameters
+                {
+                    { nameof(SelectedItem), SelectedItem }
+                };
+
+            await NavigationService.SelectTabAsync($"{nameof(MapPage)}", parameters);
+        }
+
+
+        private void OnSearchCommand(object sender)
+        {
+            if (string.IsNullOrWhiteSpace(SearchBarText))
+            {
+                PinObs = _ControlObs;
+            }
+            else
+            {
+                string low = SearchBarText.ToLower();
+
+                PinObs = new ObservableCollection<PinViewModel>(_ControlObs.Where(pin => (pin.Label.ToLower()).Contains(low) ||
+                                                                                  (pin.Description.ToLower()).Contains(low) ||
+                                                                                  (pin.Latitude.ToString()).Contains(low) ||
+                                                                                  (pin.Longitude.ToString()).Contains(low)));
+            }
+        }
+
+        private async void OnDeleteCommand(object sender)
+        {
+            if (!(sender is PinViewModel userPinsV)) return;
+
+            var result = await UserDialogs.Instance.ConfirmAsync(new ConfirmConfig
+            {
+                Message = Resources["Delete?"],
+                OkText = Resources["Yes"],
+                CancelText = Resources["No"]
+            });
+            if (result)
+            {
+                await _pinService.DeletePinModelAsync(userPinsV.Id);
+                PinObs.Remove(userPinsV);
+                _ControlObs.Remove(userPinsV);
+                if (PinObs.Count() == 0) IsVisible = true;
+            }
+        }
+
+        private async void OnEditCommand(object sender)
+        {
+            PinViewModel pins = sender as PinViewModel;
+
+            var parametrs = new NavigationParameters
+            {
+                { nameof(PinViewModel), pins }
+            };
+
+            await NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(AddEditPin)}", parametrs);
+        }
+
+        private async void OnChangeVisibilityComand(object sender)
+        {
+            PinViewModel pin = sender as PinViewModel;
+
+            int i = PinObs.IndexOf(pin);
+            int j = _ControlObs.IndexOf(pin);
+            pin.IsEnabled = !pin.IsEnabled;
+            PinObs[i] = pin;
+            _ControlObs[j] = pin;
+
+            await _pinService.EditPinModelAsync(pin.ToPinModel());
+        }
+
+        private async void OnNavigateAddEditPinCommand(object sender)
+        {
+            await NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(AddEditPin)}");
+        }
+
+        private async void OnSettingsCommand(object sender)
+        {
+            await NavigationService.NavigateAsync(nameof(Settings));
+        }
+
+        private async void OnLogOutToolBarCommand(object sender)
+        {
+            _authorizationService.LogOut();
+            await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(SignIn)}");
+        }
+
+        private async void UpdateCollectionAsync()
+        {
+            PinObs = new ObservableCollection<PinViewModel>((await _pinService.GetUserPinsAsync()).ToPinViewObservableCollection());
+            _ControlObs = PinObs;
+            IsVisible = PinObs.Count() == 0;
         }
 
         #endregion

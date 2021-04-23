@@ -32,6 +32,7 @@ namespace GPSNote.ViewModels
             (_CreateAccountCommand = new DelegateCommand(OnCreateAccountCommand));
 
         #endregion 
+
         #region -- Private helpers --
 
         private async void OnCreateAccountCommand()

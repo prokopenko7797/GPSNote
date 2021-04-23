@@ -77,62 +77,6 @@ namespace GPSNote.ViewModels
 
         #endregion
 
-        #region -----Private Helpers-----
-
-        private bool PassCheck(string password, string confirmpassword)
-        {
-            bool result = true;
-
-
-            if (!Validator.InRange(password, Constant.MinPasswordLength, Constant.MaxPasswordLength))
-            {
-                PasswordError = Resources["IncorrectPass"];
-
-                result = false;
-            }
-
-
-            if (result)
-            {
-                if (!Validator.HasUpLowNum(password))
-                {
-                    PasswordError = Resources["IncorrectPass"];
-
-                    result = false;
-                }
-            }
-
-            if (!Validator.Match(password, confirmpassword))
-            {
-                ConfPassError = Resources["PasMis"];
-
-                result = false;
-            }
-
-
-            return result;
-        }
-
-        private async void ExecuteUserButtonTapCommand()
-        {
-            if (PassCheck(Password, ConfirmPassword))
-            {
-                if (await _AuthenticationService.SignUpAsync(_name, _email, Password))
-                {
-                    var p = new NavigationParameters { { Constant.Email, _email } };
-
-                    await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(SignIn)}", p);
-
-                }
-                else
-                {
-                    PasswordError = Resources["EmailExist"];
-                }
-            }
-        }
-
-        #endregion
-
 
         #region -----Overrides-----
         protected override void OnPropertyChanged(PropertyChangedEventArgs args)
@@ -172,6 +116,62 @@ namespace GPSNote.ViewModels
             if (parameters.TryGetValue<string>(Constant.Name, out string name))
             {
                 _name = name;
+            }
+        }
+
+        #endregion
+
+        #region -----Private Helpers-----
+
+        private bool CheckPass(string password, string confirmpassword)
+        {
+            bool result = true;
+
+
+            if (!Validator.CheckInRange(password, Constant.MinPasswordLength, Constant.MaxPasswordLength))
+            {
+                PasswordError = Resources["IncorrectPass"];
+
+                result = false;
+            }
+
+
+            if (result)
+            {
+                if (!Validator.HasUpLowNum(password))
+                {
+                    PasswordError = Resources["IncorrectPass"];
+
+                    result = false;
+                }
+            }
+
+            if (!Validator.CheckMatch(password, confirmpassword))
+            {
+                ConfPassError = Resources["PasMis"];
+
+                result = false;
+            }
+
+
+            return result;
+        }
+
+        private async void ExecuteUserButtonTapCommand()
+        {
+            if (CheckPass(Password, ConfirmPassword))
+            {
+                if (await _AuthenticationService.SignUpAsync(_name, _email, Password))
+                {
+                    var p = new NavigationParameters { { Constant.Email, _email } };
+
+                    await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(SignIn)}", p);
+
+                }
+                else
+                {
+                    PasswordError = Resources["EmailExist"];
+                }
             }
         }
 
