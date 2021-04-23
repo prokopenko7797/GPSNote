@@ -89,9 +89,10 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
+                        <Grid>
 
-                        <Label Text="{Binding Label}" FontAttributes="Bold" />
-
+                            <Label Grid.Row="0" Text="{Binding Label}" FontAttributes="Bold" />
+                        </Grid>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>

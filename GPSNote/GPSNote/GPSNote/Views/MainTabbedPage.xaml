@@ -7,7 +7,10 @@
             xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
             android:TabbedPage.ToolbarPlacement="Bottom"
             prism:ViewModelLocator.AutowireViewModel="True"
-            x:Class="GPSNote.Views.MainTabbedPage">
+            x:Class="GPSNote.Views.MainTabbedPage"
+            BarBackgroundColor="{AppThemeBinding Light={StaticResource System/White}, Dark={StaticResource System/Black}}"
+            SelectedTabColor="{AppThemeBinding Light={StaticResource Light/Primary}, Dark={StaticResource Dark/Primary}}"
+            UnselectedTabColor="{AppThemeBinding Light={StaticResource Light/Disacled}, Dark={StaticResource Dark/Disacled}}">
 
     <TabbedPage.Behaviors>
         <behaviors:TabbedPageNavigationBehavior />

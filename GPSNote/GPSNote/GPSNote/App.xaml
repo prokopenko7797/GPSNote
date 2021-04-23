@@ -95,5 +95,6 @@
                     Value="{AppThemeBinding Light={StaticResource System/White}, Dark={StaticResource System/Black}}" />
         </Style>
 
+
     </Application.Resources>
 </prism:PrismApplication>

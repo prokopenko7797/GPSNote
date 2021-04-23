@@ -169,31 +169,32 @@ namespace GPSNote.ViewModels
                 await _PageDialogService.DisplayAlertAsync( Resources["NameEmpty"], Resources["Error"], Resources["Ok"]);
                 return;
             }
-
-            _pinViewModel.Label = Name;
-            _pinViewModel.Description = Description;
-            _pinViewModel.Latitude = Latitude;
-            _pinViewModel.Longitude = Longitude;
-            _pinViewModel.UserId = _authorizationService.IdUser;
-            _pinViewModel.IsEnabled = true;
-
-            if (_pinViewModel.Id == default)
-            {
-                await _PinService.AddPinModelAsync(_pinViewModel.ToPinModel());
-            }
             else
             {
-                await _PinService.EditPinModelAsync(_pinViewModel.ToPinModel());
-            }
+                _pinViewModel.Label = Name;
+                _pinViewModel.Description = Description;
+                _pinViewModel.Latitude = Latitude;
+                _pinViewModel.Longitude = Longitude;
+                _pinViewModel.UserId = _authorizationService.IdUser;
+                _pinViewModel.IsEnabled = true;
 
-            bool IsUpdated = true;
+                if (_pinViewModel.Id == default)
+                {
+                    await _PinService.AddPinModelAsync(_pinViewModel.ToPinModel());
+                }
+                else
+                {
+                    await _PinService.EditPinModelAsync(_pinViewModel.ToPinModel());
+                }
 
-            var parametrs = new NavigationParameters
+                bool IsUpdated = true;
+
+                var parametrs = new NavigationParameters
                 {
                     { nameof(IsUpdated), IsUpdated }
                 };
-            await NavigationService.GoBackAsync(parametrs);
-
+                await NavigationService.GoBackAsync(parametrs);
+            }
         }
 
         #endregion

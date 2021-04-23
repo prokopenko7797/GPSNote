@@ -181,7 +181,7 @@ namespace GPSNote.ViewModels
         public DelegateCommand<object> SharePinCommand =>
             _SharePinCommand ?? (_SharePinCommand = new DelegateCommand<object>(OnSharePinCommand));
 
-        
+
 
         string _Temperature;
         public string Temperature
@@ -286,7 +286,7 @@ namespace GPSNote.ViewModels
         {
             base.OnPropertyChanged(args);
 
-            if (args.PropertyName == nameof(SelectedListItem) )
+            if (args.PropertyName == nameof(SelectedListItem))
             {
                 MoveTo = new MapSpan(new Position(SelectedListItem.Latitude, SelectedListItem.Longitude), 1, 1).WithZoom(10);
                 IsListViewVisible = false;
