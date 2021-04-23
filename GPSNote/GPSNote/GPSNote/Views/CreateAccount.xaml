@@ -63,7 +63,7 @@
                    TextColor="{StaticResource System/LightGray}"
                    HorizontalOptions="Center"
                    VerticalOptions="Center"
-                   BackgroundColor="White"/>
+                   BackgroundColor="{AppThemeBinding Light={StaticResource System/White}, Dark={StaticResource System/Black}}"/>
         </Grid>
 
         <Grid Grid.Row="3" 

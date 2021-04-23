@@ -21,6 +21,9 @@ using System.ComponentModel;
 using GPSNote.Views;
 using OpenWeatherMap;
 using GPSNote.Servcies.Weather;
+using GPSNote.Servcies.Authentication;
+using GPSNote.Servcies.AutorizationService;
+using GPSNote.Servcies.PinShare;
 
 namespace GPSNote.ViewModels
 {
@@ -29,15 +32,19 @@ namespace GPSNote.ViewModels
         private readonly IPageDialogService _pageDialogService;
         private readonly IPinService _pinService;
         private readonly IWeatherService _weatherService;
-
+        private readonly IAuthorizationService _authorizationService;
+        private readonly IPinShareService _pinShareService;
 
         public MapPageViewModel(INavigationService navigationService, ILocalizationService localizationService,
-            IPageDialogService pageDialogService, IPinService pinService, IWeatherService weatherService)
+            IPageDialogService pageDialogService, IPinService pinService, IWeatherService weatherService,
+            IAuthorizationService authorizationService, IPinShareService pinShareService)
             : base(navigationService, localizationService)
         {
             _pageDialogService = pageDialogService;
             _pinService = pinService;
             _weatherService = weatherService;
+            _authorizationService = authorizationService;
+            _pinShareService = pinShareService;
         }
 
         #region -- Public properties --
@@ -59,19 +66,14 @@ namespace GPSNote.ViewModels
         }
 
 
-        private double _PinLatitude;
-        public double PinLatitude
+        private string _PinLatLong;
+        public string PinLatLong
         {
-            get { return _PinLatitude; }
-            set { SetProperty(ref _PinLatitude, value); }
+            get { return _PinLatLong; }
+            set { SetProperty(ref _PinLatLong, value); }
         }
 
-        private double _PinLongitude;
-        public double PinLongitude
-        {
-            get { return _PinLongitude; }
-            set { SetProperty(ref _PinLongitude, value); }
-        }
+
 
         private string _PinLabel;
         public string PinLabel
@@ -166,6 +168,21 @@ namespace GPSNote.ViewModels
             _MoveToCommand ?? (_MoveToCommand = new DelegateCommand<object>(OnMoveToCommand));
 
 
+        private DelegateCommand<object> _SettingsNavigation;
+        public DelegateCommand<object> SettingsNavigation =>
+            _SettingsNavigation ?? (_SettingsNavigation = new DelegateCommand<object>(OnSettingsNavigation));
+
+        private DelegateCommand<object> _LogOutCommand;
+        public DelegateCommand<object> LogOutCommand =>
+            _LogOutCommand ?? (_LogOutCommand = new DelegateCommand<object>(OnLogOutCommand));
+
+
+        private DelegateCommand<object> _SharePinCommand;
+        public DelegateCommand<object> SharePinCommand =>
+            _SharePinCommand ?? (_SharePinCommand = new DelegateCommand<object>(OnSharePinCommand));
+
+        
+
         string _Temperature;
         public string Temperature
         {
@@ -229,7 +246,22 @@ namespace GPSNote.ViewModels
 
         #region --Private helpers--
 
+        private void OnSharePinCommand(object sender)
+        {
+            var pin = ControlObs.Where(pinView => pinView.Label.Contains(PinLabel)).First();
+            _pinShareService.SharePinAsync(pin.ToPinModel());
+        }
 
+        private async void OnSettingsNavigation(object sender)
+        {
+            await NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(Settings)}");
+        }
+
+        private async void OnLogOutCommand(object sender)
+        {
+            _authorizationService.LogOut();
+            await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(MainPage)}");
+        }
 
         private void OnItemTappedCommand(object p)
         {
@@ -288,6 +320,7 @@ namespace GPSNote.ViewModels
         {
             Pin SelectedPin = (Pin)sender;
 
+
             DisplayInfoPinViewModel(ControlObs.Where(pinView => pinView.Label.Contains(SelectedPin.Label)).First());
         }
 
@@ -297,31 +330,30 @@ namespace GPSNote.ViewModels
             IsPinTapped = true;
             PinLabel = pinView.Label;
             PinDescription = pinView.Description;
-            PinLatitude = pinView.Latitude;
-            PinLongitude = pinView.Longitude;
+            PinLatLong = $"{pinView.Latitude}, {pinView.Longitude}";
 
 
             CurrentWeatherResponse currentWeather = await _weatherService.GetCurrentWeatherAsync(pinView.Latitude, 
                                                                                                  pinView.Longitude);
  
-            Temperature = currentWeather.Temperature.Value.ToString() + 
+            Temperature = currentWeather.Temperature.Value.ToString() + " " +
                           currentWeather.Temperature.Unit;
 
             Humidity = currentWeather.Humidity.Value.ToString();
-            Pressure = currentWeather.Pressure.Value.ToString() + 
+            Pressure = currentWeather.Pressure.Value.ToString() + " " +
                        currentWeather.Pressure.Unit; 
 
-            Wind = currentWeather.Wind.Speed.Value.ToString() + 
-                   currentWeather.Wind.Speed.Name + 
-                   currentWeather.Wind.Speed.Value.ToString() + 
-                   currentWeather.Wind.Direction.Value.ToString() + 
+            Wind = currentWeather.Wind.Speed.Value.ToString() + " " +
+                   currentWeather.Wind.Speed.Name + " " +
+                   currentWeather.Wind.Speed.Value.ToString() + " " +
+                   currentWeather.Wind.Direction.Value.ToString() + " " +
                    currentWeather.Wind.Direction.Value.ToString();
 
-            Clouds = currentWeather.Clouds.Value.ToString() + 
+            Clouds = currentWeather.Clouds.Value.ToString() + " " +
                      currentWeather.Clouds.Name;
 
-            Precipitation = currentWeather.Precipitation.Value.ToString() + 
-                            currentWeather.Precipitation.Unit + 
+            Precipitation = currentWeather.Precipitation.Value.ToString() + " " +
+                            currentWeather.Precipitation.Unit + " " +
                             currentWeather.Precipitation.Mode;
 
             Weather = currentWeather.Weather.Value.ToString();

@@ -9,29 +9,44 @@
              BackgroundColor="{AppThemeBinding Light={StaticResource System/White}, Dark={StaticResource System/Black}}"
              Title="{Binding Resources[MapTitle]}">
 
-    <Grid Grid.RowDefinitions ="0.1*, 0.9*"
-          Padding="0,22,0,0" >
+    <Grid Grid.RowDefinitions ="0.1*, 0.9*">
 
-        <SearchBar Grid.Row="0" 
-                   Placeholder="{Binding Resources[Search]}"
-                   BackgroundColor="AliceBlue"
-                   TextColor="Black"
-                   PlaceholderColor="Gray"
-                   Text="{Binding SearchBarText}" >
+        <Grid Grid.Row="0" 
+              Padding="16,16,16,8"
+              Grid.ColumnDefinitions="0.1*,0.8*,0.1*">
 
-            <SearchBar.Behaviors>
-                <prism:EventToCommandBehavior
-                            EventName="TextChanged"
-                            Command="{Binding TextChangedCommand}"
-                            CommandParameter="{Binding .}"  />
-                <prism:EventToCommandBehavior 
-                            EventName="Focused"
-                            Command="{Binding FocusedCommand}"
-                            CommandParameter="{Binding .}"/>
+            <Button Grid.Column="0"
+                         ImageSource="ic_settings.png"
+                         Command="{Binding SettingsNavigation}"
+                         BackgroundColor="{StaticResource TransparentColor}">
+            </Button>
 
-            </SearchBar.Behaviors>
-        </SearchBar>
+            <SearchBar Grid.Column="1" 
+                       Placeholder="{Binding Resources[Search]}"
+                       BackgroundColor="AliceBlue"
+                       TextColor="Black"
+                       PlaceholderColor="Gray"
+                       Text="{Binding SearchBarText}" >
+                <SearchBar.Behaviors>
+                    <prism:EventToCommandBehavior
+                                EventName="TextChanged"
+                                Command="{Binding TextChangedCommand}"
+                                CommandParameter="{Binding .}"  />
+                    <prism:EventToCommandBehavior 
+                                EventName="Focused"
+                                Command="{Binding FocusedCommand}"
+                                CommandParameter="{Binding .}"/>
 
+                </SearchBar.Behaviors>
+            </SearchBar>
+
+            <Button Grid.Column="2"
+                         ImageSource="ic_exid.png"
+                         Command="{Binding LogOutCommand}"
+                         BackgroundColor="{StaticResource TransparentColor}">
+            </Button>
+
+        </Grid>
 
         <custommap:CustomMap Grid.Row="1"   
                              ObsPins ="{Binding ControlObs}" 
@@ -105,27 +120,33 @@
               BackgroundColor="{AppThemeBinding Light={StaticResource System/White}, Dark={StaticResource System/Black}}"
               IsVisible="{Binding IsPinTapped}"         
               VerticalOptions="End"
-              HorizontalOptions="Center"
-              Margin="0,0,0,20">
+              HorizontalOptions="Fill"
+              Padding="16,16,16,16">
             
-            <Label Text= "{Binding PinLabel}"
-                   VerticalOptions="CenterAndExpand"
-                   Grid.Row="0"/>
+            <Grid Grid.Row="0">
             
-            <Label Text= "{Binding PinDescription}"
-                   VerticalOptions="CenterAndExpand"
-                   Grid.Row="1"/>
-            
-            <Grid Grid.Row="2">
+                <Label Text= "{Binding PinLabel}"
+                       FontAttributes="Bold"
+                       Grid.Column="0"/>
+
+                <Button Grid.Column="1"
+                        ImageSource="ic_share.png"
+                        BackgroundColor="{StaticResource TransparentColor}"
+                        HorizontalOptions="End"
+                        VerticalOptions="Start"
+                        Command="{Binding SharePinCommand}">
                 
-                <Label Text= "{Binding PinLatitude}"
-                       VerticalOptions="Center"
-                       Grid.Column="0" />
-                
-                <Label Text= "{Binding PinLongitude}"
-                       VerticalOptions="Center"
-                       Grid.Column="1"/>
+                </Button>
             </Grid>
+
+            
+            <Label Text= "{Binding PinLatLong}" 
+                       Grid.Row="1"/>
+
+            <Label Text= "{Binding PinDescription}"
+                   Grid.Row="2"/>
+            
+
         </Grid>
     </Grid>
 
