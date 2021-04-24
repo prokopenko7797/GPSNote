@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:prism="http://prismlibrary.com"
+             xmlns:prism="http://prismlibrary.com" xmlns:customcontrols="clr-namespace:GPSNote.CustomControls"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="GPSNote.Views.SignIn"
              Title="{Binding Resources[SignInTitle]}"
@@ -22,11 +22,12 @@
                    Grid.Row="0"
                    VerticalOptions="End"/>
 
-            <Entry Placeholder = "{Binding Resources[Email]}"  
-                   Text="{Binding Email}" 
-                   MaxLength="254"
-                   ClearButtonVisibility="WhileEditing"
-                   Grid.Row="1"/>
+            <customcontrols:FramedEntry TextEntry="{Binding Email}"
+                                        PlaceholderText="{Binding Resources[Email]}"
+                                        Grid.Row="1"
+                                        EntryBorderColor="{Binding EntryBorderColor}"/>
+            
+
             
             <Label Text="{Binding EmailError}"
                    Padding="12,0,0,0"

@@ -22,7 +22,7 @@ namespace GPSNote.Servcies.PinShare
         public async void SharePinAsync(PinModel pinModel)
         {
             string text = $"https://gpsnote.page.link/pin" +
-                $"?{pinModel.Label}&{pinModel.Description}${pinModel.Latitude}&{pinModel.Longitude}";
+                $"?{pinModel.Label}&{pinModel.Description}&{pinModel.Latitude}&{pinModel.Longitude}";
 
             await Share.RequestAsync(new ShareTextRequest
             {

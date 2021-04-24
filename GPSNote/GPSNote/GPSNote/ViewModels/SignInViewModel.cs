@@ -38,6 +38,13 @@ namespace GPSNote.ViewModels
             set { SetProperty(ref _Email, value); }
         }
 
+        private string _EntryBorderColor;
+        public string EntryBorderColor
+        {
+            get { return _EntryBorderColor; }
+            set { SetProperty(ref _EntryBorderColor, value); }
+        }
+
         private string _emailerror;
         public string EmailError
         {
@@ -59,17 +66,12 @@ namespace GPSNote.ViewModels
             set { SetProperty(ref _passwordError, value); }
         }
 
-        private bool _IsEnabledButton;
-        public bool IsEnabledButton
-        {
-            get { return _IsEnabledButton; }
-            set { SetProperty(ref _IsEnabledButton, value); }
-        }
+
 
         private DelegateCommand _NavigateMainListCommand;
         public DelegateCommand NavigateMainListButtonTapCommand =>
             _NavigateMainListCommand ??
-            (_NavigateMainListCommand = new DelegateCommand(ExecuteNavigateMainViewCommand).ObservesCanExecute(() => IsEnabledButton));
+            (_NavigateMainListCommand = new DelegateCommand(ExecuteNavigateMainViewCommand));
 
         private DelegateCommand _NavigateSignUpCommand;
         public DelegateCommand NavigateSignUpButtonTapCommand =>
@@ -90,32 +92,7 @@ namespace GPSNote.ViewModels
 
         }
 
-        protected override void OnPropertyChanged(PropertyChangedEventArgs args)
-        {
-            base.OnPropertyChanged(args);
-            if (args.PropertyName == nameof(Email) || args.PropertyName == nameof(Password))
-            {
-                bool result = false;
 
-                if (Email != null || Password != null)
-                {
-                    result = true;
-                }
-
-                if (result)
-                {
-                    if (Email != default && Password != default)
-                    {
-                        IsEnabledButton = true;
-                    }
-
-                    else if (Email != default || Password == default)
-                    {
-                        IsEnabledButton = false;
-                    }
-                }                
-            }
-        }
 
 
         public override void Initialize(INavigationParameters parameters)

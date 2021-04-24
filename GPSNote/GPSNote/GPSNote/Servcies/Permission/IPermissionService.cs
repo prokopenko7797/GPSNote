@@ -10,5 +10,8 @@ namespace GPSNote.Servcies.Permission
     public interface IPermissionService
     {
         Task<PermissionStatus> CheckPermissionsAsync(BasePermission permission);
-	}
+
+        Task<PermissionStatus> RequestPermissionAsync(BasePermission permission);
+
+    }
 }
