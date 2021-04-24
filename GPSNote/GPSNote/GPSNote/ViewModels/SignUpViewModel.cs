@@ -142,7 +142,7 @@ namespace GPSNote.ViewModels
         {
             if (LoginCheck(Name, Email))
             {
-                if (await _AuthenticationService.CheckUserExist(Email))
+                if (await _AuthenticationService.CheckUserExistAsync(Email))
                 {
                     var p = new NavigationParameters();
                     p.Add(nameof(Name), Name);

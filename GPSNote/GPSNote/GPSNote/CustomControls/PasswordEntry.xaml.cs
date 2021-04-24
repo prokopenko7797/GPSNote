@@ -9,12 +9,11 @@ using Xamarin.Forms.Xaml;
 
 namespace GPSNote.CustomControls
 {
-    public partial class FramedEntry : ContentView
+    public partial class PasswordEntry : ContentView
     {
-        public FramedEntry()
+        public PasswordEntry()
         {
             InitializeComponent();
-
         }
 
         #region -- Public properties --
@@ -22,7 +21,7 @@ namespace GPSNote.CustomControls
         public static readonly BindableProperty TextEntryProperty =
             BindableProperty.Create(nameof(TextEntry),
                                     typeof(string),
-                                    typeof(FramedEntry),
+                                    typeof(PasswordEntry),
                                     defaultValue: string.Empty,
                                     defaultBindingMode: BindingMode.TwoWay,
                                     propertyChanged: TextEntryPropertyChanged);
@@ -38,7 +37,7 @@ namespace GPSNote.CustomControls
         public static readonly BindableProperty EntryBorderColorProperty =
                                     BindableProperty.Create(nameof(EntryBorderColor),
                                     typeof(Color),
-                                    typeof(FramedEntry),
+                                    typeof(PasswordEntry),
                                     defaultValue: Color.FromHex("#1E242B"),
                                     defaultBindingMode: BindingMode.TwoWay,
                                     propertyChanged: EntryBorderColorChanged);
@@ -53,7 +52,7 @@ namespace GPSNote.CustomControls
         public static readonly BindableProperty PlaceholderTextProperty =
             BindableProperty.Create(nameof(PlaceholderText),
                                     typeof(string),
-                                    typeof(FramedEntry),
+                                    typeof(PasswordEntry),
                                     defaultValue: default,
                                     propertyChanged: PlaceholderTextPropertyChanged);
 
@@ -69,9 +68,10 @@ namespace GPSNote.CustomControls
 
         #region -- Private helpers --
 
+        
         private static void EntryBorderColorChanged(BindableObject bindable, object oldValue, object newValue)
         {
-            FramedEntry customEntry = bindable as FramedEntry;
+            PasswordEntry customEntry = bindable as PasswordEntry;
             if (customEntry != null)
             {
                 customEntry.frame.BorderColor = (Color)newValue;
@@ -80,7 +80,7 @@ namespace GPSNote.CustomControls
 
         private static void TextEntryPropertyChanged(BindableObject bindable, object oldValue, object newValue)
         {
-            FramedEntry customEntry = bindable as FramedEntry;
+            PasswordEntry customEntry = bindable as PasswordEntry;
 
             customEntry.entry.Text = (string)newValue;
         }
@@ -88,7 +88,7 @@ namespace GPSNote.CustomControls
 
         private static void PlaceholderTextPropertyChanged(BindableObject bindable, object oldValue, object newValue)
         {
-            FramedEntry customEntry = bindable as FramedEntry;
+            PasswordEntry customEntry = bindable as PasswordEntry;
 
             if (customEntry != null)
             {
@@ -96,27 +96,32 @@ namespace GPSNote.CustomControls
             }
         }
 
-        private void OnUnfocused(object sender, FocusEventArgs e)
-        {
-            clearButton.IsVisible = false;
-        }
+
 
         private void OnFocused(object sender, EventArgs e)
         {
             if (entry.Text != string.Empty)
             {
-                clearButton.IsVisible = true;
+                eyeButton.IsVisible = true;
             }
             else
             {
-                clearButton.IsVisible = false;
+                eyeButton.IsVisible = false;
             }
         }
 
 
-        private void ClearButtonClicked(object sender, EventArgs e)
+        private void EyeButtonClicked(object sender, EventArgs e)
         {
-            entry.Text = string.Empty;
+            entry.IsPassword = !entry.IsPassword;
+            if (entry.IsPassword)
+            {
+                eyeButton.ImageSource = "ic_eye_off.png";
+            }
+            else
+            {
+                eyeButton.ImageSource = "ic_eye.png";
+            }
         }
 
         #endregion

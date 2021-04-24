@@ -2,6 +2,7 @@
 using GPSNote.Servcies.AutorizationService;
 using GPSNote.Servcies.LocalizationService;
 using GPSNote.Servcies.Permission;
+using GPSNote.Validators;
 using GPSNote.Views;
 using Plugin.Permissions;
 using Prism.Commands;
@@ -38,12 +39,21 @@ namespace GPSNote.ViewModels
             set { SetProperty(ref _Email, value); }
         }
 
-        private string _EntryBorderColor;
-        public string EntryBorderColor
+        private Color _EntryBorderColor;
+        public Color EmailBorderColor
         {
             get { return _EntryBorderColor; }
             set { SetProperty(ref _EntryBorderColor, value); }
         }
+
+        private Color _PasswordBorderColor;
+        public Color PasswordBorderColor
+        {
+            get { return _PasswordBorderColor; }
+            set { SetProperty(ref _PasswordBorderColor, value); }
+        }
+
+        
 
         private string _emailerror;
         public string EmailError
@@ -114,18 +124,45 @@ namespace GPSNote.ViewModels
 
         private async void ExecuteNavigateMainViewCommand()
         {
-            if (await _AuthenticationService.SignInAsync(Email, Password))
-            {
-                await NavigationService.NavigateAsync($"/{nameof(MainTabbedPage)}");
-            }
-            else
-            {
-                if (await _AuthenticationService.CheckUserExist(Email))
+            //if (Validator.IsEmail(Email))// && Validator.IsPassword(Password)
+            //{
+                if (await _AuthenticationService.SignInAsync(Email, Password))
                 {
-                    EmailError = Resources["WrongEmail"];
+                    await NavigationService.NavigateAsync($"/{nameof(MainTabbedPage)}");
                 }
-                PasswordError = Resources["WrongPass"];
-            }
+                else
+                {
+                    if (!await _AuthenticationService.CheckUserExistAsync(Email))
+                    {
+                        EmailError = Resources["WrongEmail"];
+                        if (Application.Current.UserAppTheme == OSAppTheme.Light)
+                        {
+                            EmailBorderColor = (Color)App.Current.Resources["Light/Error"];
+                        }
+                        else
+                        {
+                            EmailBorderColor = (Color)App.Current.Resources["Dark/Error"];
+                        }
+                    }
+                    else
+                    {
+                        EmailError = string.Empty;
+                        EmailBorderColor = (Color)App.Current.Resources["System/Gray"];
+                    }
+
+                    if (Application.Current.UserAppTheme == OSAppTheme.Light)
+                    {
+                        PasswordBorderColor = (Color)App.Current.Resources["Light/Error"];
+                    }
+                    else
+                    {
+                        PasswordBorderColor = (Color)App.Current.Resources["Dark/Error"];
+                    }
+
+                    PasswordError = Resources["WrongPass"];
+                }
+            //}
+           
         }
 
         #endregion

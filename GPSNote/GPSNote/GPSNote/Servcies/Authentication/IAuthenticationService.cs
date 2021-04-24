@@ -11,6 +11,6 @@ namespace GPSNote.Servcies.Authentication
 
         Task<bool> SignInAsync(string email, string password);
 
-        Task<bool> CheckUserExist(string email);
+        Task<bool> CheckUserExistAsync(string email);
     }
 }
