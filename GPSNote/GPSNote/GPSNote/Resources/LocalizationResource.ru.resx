@@ -123,6 +123,9 @@
   <data name="ConfPas" xml:space="preserve">
     <value>Подтвердите пароль</value>
   </data>
+  <data name="Coordinates" xml:space="preserve">
+    <value>Координаты</value>
+  </data>
   <data name="DarkTheme" xml:space="preserve">
     <value>Темная тема:</value>
   </data>
@@ -209,6 +212,9 @@
   </data>
   <data name="NickNameEmpty" xml:space="preserve">
     <value>Ник не должен быть пуст</value>
+  </data>
+  <data name="NickNameError" xml:space="preserve">
+    <value>Неверное имя</value>
   </data>
   <data name="No" xml:space="preserve">
     <value>Нет</value>

@@ -6,7 +6,7 @@
     <StackLayout>
 
         <Frame x:Name="frame"
-               CornerRadius="4"
+               CornerRadius="2"
                BorderColor="{StaticResource System/Gray}"
                BackgroundColor="{StaticResource TransparentColor}"
                HorizontalOptions="FillAndExpand"

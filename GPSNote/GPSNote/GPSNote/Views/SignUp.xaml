@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:prism="http://prismlibrary.com"
+             xmlns:prism="http://prismlibrary.com" xmlns:customcontrols="clr-namespace:GPSNote.CustomControls"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="GPSNote.Views.SignUp" 
              Title="{Binding Resources[SignUpTitle]}"
              BackgroundColor="{AppThemeBinding Light={StaticResource System/White}, Dark={StaticResource System/Black}}">
 
-    <Grid Padding="16,16,16,16" 
+    <Grid Padding="16,0,16,16" 
           Grid.RowDefinitions ="0.4*, 0.1*, 0.1*, 0.1*, 0.3*" >
 
         <Grid Grid.Column="0" 
@@ -19,11 +19,12 @@
                    Grid.Row="0"
                    VerticalOptions="End"/>
 
-            <Entry Placeholder = "{Binding Resources[Name]}" 
-                   Text="{Binding Name}" 
-                   MaxLength="16"
-                   ClearButtonVisibility="WhileEditing"
-                   Grid.Row="1"/>
+            
+            <customcontrols:FramedEntry TextEntry="{Binding Name}"
+                                        PlaceholderText="{Binding Resources[Name]}"
+                                        Grid.Row="1"
+                                        EntryBorderColor="{Binding NameBorderColor}"/>
+
 
             <Label Text="{Binding NameError}"
                    Padding="12,0,0,0"
@@ -36,11 +37,13 @@
                    Grid.Row="3"
                    VerticalTextAlignment="End"/>
 
-            <Entry Placeholder = "{Binding Resources[Email]}" 
-                   Text="{Binding Email}" 
-                   MaxLength="254"
-                   Grid.Row="4"/>
 
+            <customcontrols:FramedEntry TextEntry="{Binding Email}"
+                                        PlaceholderText="{Binding Resources[Email]}"
+                                        Grid.Row="4"
+                                        EntryBorderColor="{Binding EmailBorderColor}"/>
+            
+            
             <Label Text="{Binding EmailError}"
                    Padding="12,0,0,0"
                    Grid.Row="5"

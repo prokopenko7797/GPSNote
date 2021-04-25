@@ -39,7 +39,7 @@ namespace GPSNote.CustomControls
                                     BindableProperty.Create(nameof(EntryBorderColor),
                                     typeof(Color),
                                     typeof(FramedEntry),
-                                    defaultValue: Color.FromHex("#1E242B"),
+                                    defaultValue: Color.FromHex("#858E9E"),
                                     defaultBindingMode: BindingMode.TwoWay,
                                     propertyChanged: EntryBorderColorChanged);
 

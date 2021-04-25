@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:prism="http://prismlibrary.com"
+             xmlns:prism="http://prismlibrary.com" xmlns:customcontrols="clr-namespace:GPSNote.CustomControls"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="GPSNote.Views.CreateAccount" 
              Title="{Binding Resources[SignUpTitle]}"
              BackgroundColor="{AppThemeBinding Light={StaticResource System/White}, Dark={StaticResource System/Black}}">
 
-    <Grid Padding="16,16,16,16" 
+    <Grid Padding="16,0,16,16" 
           Grid.RowDefinitions ="0.4*, 0.1*, 0.1*, 0.1*, 0.3*" >
 
         <Grid Grid.Column="0" 
@@ -19,11 +19,12 @@
                    Grid.Row="0"
                    VerticalOptions="End"/>
 
-            <Entry Placeholder = "{Binding Resources[Password]}" 
-                   IsPassword ="True" Text="{Binding Password}" 
-                   MaxLength="16"
-                   ClearButtonVisibility="WhileEditing"
-                   Grid.Row="1"/>
+
+            <customcontrols:PasswordEntry PlaceholderText = "{Binding Resources[Password]}" 
+                                          TextEntry="{Binding Password}" 
+                                          Grid.Row="1"
+                                          EntryBorderColor="{Binding PasswordBorderColor}"/>
+
 
             <Label Text="{Binding PasswordError}"
                    Padding="12,0,0,0"
@@ -36,12 +37,13 @@
                    Grid.Row="3"
                    VerticalTextAlignment="End"/>
 
-            <Entry Placeholder = "{Binding Resources[ConfPas]}" 
-                   IsPassword ="True" 
-                   Text="{Binding ConfirmPassword}" 
-                   MaxLength="16" 
-                   Grid.Row="4"/>
 
+            <customcontrols:PasswordEntry PlaceholderText = "{Binding Resources[ConfPas]}" 
+                                          TextEntry="{Binding ConfirmPassword}" 
+                                          Grid.Row="4"
+                                          EntryBorderColor="{Binding ConfPasBorderColor}"/>
+            
+            
             <Label Text="{Binding ConfPassError}"
                    Padding="12,0,0,0"
                    Grid.Row="5"
@@ -58,7 +60,9 @@
 
 
         <Grid Grid.Row="2">
-            <BoxView  Color="{StaticResource System/LightGray}" HeightRequest="1" VerticalOptions="Center"/>
+            <BoxView  Color="{StaticResource System/LightGray}" 
+                      HeightRequest="1" 
+                      VerticalOptions="Center"/>
             <Label Text=" or " 
                    TextColor="{StaticResource System/LightGray}"
                    HorizontalOptions="Center"

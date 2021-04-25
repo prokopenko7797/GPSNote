@@ -9,7 +9,7 @@
 
 
     <Grid Grid.RowDefinitions ="0.1*, 0.9*"
-          Padding="16,16,16,16" >
+          Padding="16,0,16,16" >
 
         <Label Text="{Binding Resources[NoPins]}" 
                HorizontalOptions="Center"
@@ -32,12 +32,14 @@
             </SearchBar.Behaviors>
         </SearchBar>
 
-        <ListView Grid.Row="1" ItemsSource="{Binding PinObs}" 
+        <ListView Grid.Row="1" 
+                  ItemsSource="{Binding PinObs}" 
                   RowHeight="100" 
                   Margin="10"
                   SelectedItem="{Binding SelectedItem}"
                   x:Name="ListView1"
-                  BackgroundColor="Transparent">
+                  BackgroundColor="Transparent"
+                  SeparatorVisibility="None">
 
             <ListView.Behaviors>
                 <prism:EventToCommandBehavior

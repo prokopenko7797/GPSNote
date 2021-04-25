@@ -61,49 +61,29 @@ namespace GPSNote.ViewModels
         }
 
 
-        private bool _IsEnabled;
-        public bool IsEnabled
+
+        private Color _EntryBorderColor;
+        public Color EmailBorderColor
         {
-            get { return _IsEnabled; }
-            set { SetProperty(ref _IsEnabled, value); }
+            get { return _EntryBorderColor; }
+            set { SetProperty(ref _EntryBorderColor, value); }
+        }
+
+        private Color _NameBorderColor;
+        public Color NameBorderColor
+        {
+            get { return _NameBorderColor; }
+            set { SetProperty(ref _NameBorderColor, value); }
         }
 
         private DelegateCommand _AddUserButtonTapCommand;
         public DelegateCommand AddUserButtonTapCommand =>
             _AddUserButtonTapCommand ?? (_AddUserButtonTapCommand =
-            new DelegateCommand(ExecuteUserButtonTapCommand)).ObservesCanExecute(() => IsEnabled);
+            new DelegateCommand(ExecuteUserButtonTapCommand));
 
         #endregion
 
-        #region -----Overrides-----
-        protected override void OnPropertyChanged(PropertyChangedEventArgs args)
-        {
-            base.OnPropertyChanged(args);
-            if (args.PropertyName == nameof(Name) || args.PropertyName == nameof(Email))
-            {
-                bool result = false;
 
-                if (Name == null || Email == null)
-                {
-                    result = true;
-                }
-
-                if (result)
-                {
-                    if (Name != string.Empty && Email != string.Empty)
-                    {
-                        IsEnabled = true;
-                    }
-
-                    else if (Name == string.Empty || Email == string.Empty)
-                    {
-                        IsEnabled = false;
-                    }
-                }     
-            }
-        }
-
-        #endregion
 
         #region -----Private Helpers-----
 
@@ -142,6 +122,26 @@ namespace GPSNote.ViewModels
         {
             if (LoginCheck(Name, Email))
             {
+
+                if (!Validator.CheckInRange(Name, Constant.MinNameLength, Constant.MinNameLength))
+                {
+                    if (Application.Current.UserAppTheme == OSAppTheme.Light)
+                    {
+                        NameBorderColor = (Color)App.Current.Resources["Light/Error"];
+                    }
+                    else
+                    {
+                        NameBorderColor = (Color)App.Current.Resources["Dark/Error"];
+                    }
+
+                    NameError = Resources["NickNameError"];
+                }
+                else
+                {
+                    NameError = string.Empty;
+                    NameBorderColor = (Color)App.Current.Resources["System/Black"];
+                }
+
                 if (!await _AuthenticationService.CheckUserExistAsync(Email))
                 {
                     var p = new NavigationParameters();
@@ -152,6 +152,15 @@ namespace GPSNote.ViewModels
                 }
                 else
                 {
+                    if (Application.Current.UserAppTheme == OSAppTheme.Light)
+                    {
+                        EmailBorderColor = (Color)App.Current.Resources["Light/Error"];
+                    }
+                    else
+                    {
+                        EmailBorderColor = (Color)App.Current.Resources["Dark/Error"];
+                    }
+
                     EmailError = Resources["EmailExist"];
                 }
             }

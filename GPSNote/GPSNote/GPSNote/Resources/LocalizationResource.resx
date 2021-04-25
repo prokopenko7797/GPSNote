@@ -123,6 +123,9 @@
   <data name="ConfPas" xml:space="preserve">
     <value>Confirm Password</value>
   </data>
+  <data name="Coordinates" xml:space="preserve">
+    <value>Coordinates</value>
+  </data>
   <data name="DarkTheme" xml:space="preserve">
     <value>Dark theme:</value>
   </data>
@@ -209,6 +212,9 @@
   </data>
   <data name="NickNameEmpty" xml:space="preserve">
     <value>NickName is empty</value>
+  </data>
+  <data name="NickNameError" xml:space="preserve">
+    <value>Incorrect name</value>
   </data>
   <data name="No" xml:space="preserve">
     <value>No</value>

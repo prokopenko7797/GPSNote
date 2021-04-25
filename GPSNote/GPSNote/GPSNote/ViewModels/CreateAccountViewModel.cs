@@ -70,6 +70,23 @@ namespace GPSNote.ViewModels
             set { SetProperty(ref _IsEnabled, value); }
         }
 
+
+        private Color _EntryBorderColor;
+        public Color ConfPasBorderColor
+        {
+            get { return _EntryBorderColor; }
+            set { SetProperty(ref _EntryBorderColor, value); }
+        }
+
+        private Color _PasswordBorderColor;
+        public Color PasswordBorderColor
+        {
+            get { return _PasswordBorderColor; }
+            set { SetProperty(ref _PasswordBorderColor, value); }
+        }
+
+
+
         private DelegateCommand _AddUserButtonTapCommand;
         public DelegateCommand AddUserButtonTapCommand =>
             _AddUserButtonTapCommand ?? (_AddUserButtonTapCommand =
@@ -128,27 +145,36 @@ namespace GPSNote.ViewModels
             bool result = true;
 
 
-            if (!Validator.CheckInRange(password, Constant.MinPasswordLength, Constant.MaxPasswordLength))
+            if (!Validator.CheckInRange(password, Constant.MinPasswordLength, Constant.MaxPasswordLength) 
+                || !Validator.HasUpLowNum(password))
             {
                 PasswordError = Resources["IncorrectPass"];
+
+                if (Application.Current.UserAppTheme == OSAppTheme.Light)
+                {
+                    PasswordBorderColor = (Color)App.Current.Resources["Light/Error"];
+                }
+                else
+                {
+                    PasswordBorderColor = (Color)App.Current.Resources["Dark/Error"];
+                }
 
                 result = false;
             }
 
 
-            if (result)
-            {
-                if (!Validator.HasUpLowNum(password))
-                {
-                    PasswordError = Resources["IncorrectPass"];
-
-                    result = false;
-                }
-            }
-
             if (!Validator.CheckMatch(password, confirmpassword))
             {
                 ConfPassError = Resources["PasMis"];
+
+                if (Application.Current.UserAppTheme == OSAppTheme.Light)
+                {
+                    ConfPasBorderColor = (Color)App.Current.Resources["Light/Error"];
+                }
+                else
+                {
+                    ConfPasBorderColor = (Color)App.Current.Resources["Dark/Error"];
+                }
 
                 result = false;
             }

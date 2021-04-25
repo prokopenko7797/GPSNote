@@ -74,11 +74,11 @@ namespace GPSNote.ViewModels
             set { SetProperty(ref _Latitude, value); }
         }
 
-        private double _Longitude;
-        public double Longitude
+        private double _Longtitude;
+        public double Longtitude
         {
-            get { return _Longitude; }
-            set { SetProperty(ref _Longitude, value); }
+            get { return _Longtitude; }
+            set { SetProperty(ref _Longtitude, value); }
         }
 
         private ObservableCollection<PinViewModel> _obsPins;
@@ -109,7 +109,7 @@ namespace GPSNote.ViewModels
                 Name = _pinViewModel.Label;
                 Description = _pinViewModel.Description;
                 Latitude = _pinViewModel.Latitude;
-                Longitude = _pinViewModel.Longitude;
+                Longtitude = _pinViewModel.Longitude;
 
                 Title = Resources["EditPinTitle"];
             }
@@ -124,7 +124,7 @@ namespace GPSNote.ViewModels
         protected override void OnPropertyChanged(PropertyChangedEventArgs args)
         {
             base.OnPropertyChanged(args);
-            if (args.PropertyName == nameof(Latitude) || args.PropertyName == nameof(Longitude))
+            if (args.PropertyName == nameof(Latitude) || args.PropertyName == nameof(Longtitude))
             {
                 UpdatePin();
             }
@@ -140,7 +140,7 @@ namespace GPSNote.ViewModels
 
 
             Latitude = position.Latitude;
-            Longitude = position.Longitude;
+            Longtitude = position.Longitude;
             
 
         }
@@ -152,7 +152,7 @@ namespace GPSNote.ViewModels
             {
                 Label = Resources["NewPin"],
                 Latitude = Latitude,
-                Longitude = Longitude,
+                Longitude = Longtitude,
                 IsEnabled = true
             };
 
@@ -174,7 +174,7 @@ namespace GPSNote.ViewModels
                 _pinViewModel.Label = Name;
                 _pinViewModel.Description = Description;
                 _pinViewModel.Latitude = Latitude;
-                _pinViewModel.Longitude = Longitude;
+                _pinViewModel.Longitude = Longtitude;
                 _pinViewModel.UserId = _authorizationService.IdUser;
                 _pinViewModel.IsEnabled = true;
 

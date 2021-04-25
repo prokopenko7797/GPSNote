@@ -17,29 +17,54 @@
                      />
     </ContentPage.ToolbarItems>
 
-    <Grid Grid.RowDefinitions="0.1*, 0.2*, 0.1*, 0.1*, 0.5*"
-          Padding="16,16,16,16" 
+    <Grid Grid.RowDefinitions="0.6*, 0.4*"
           HorizontalOptions="FillAndExpand"  
           VerticalOptions="StartAndExpand" >
+
+        <Grid Grid.Row="0"
+              Padding="16,0,16,16"
+              HorizontalOptions="FillAndExpand"  
+              VerticalOptions="StartAndExpand">
+
+            <Label Text="{Binding Resources[Name]}"
+                   Padding="12,0,0,0"
+                   Grid.Row="0"
+                   VerticalOptions="End"/>
+
+            <custommap:FramedEntry TextEntry="{Binding Name}"
+                                        PlaceholderText="{Binding Resources[Name]}"
+                                        Grid.Row="1"/>
+
+            <Label Text="{Binding Resources[Description]}"
+                   Padding="12,0,0,0"
+                   Grid.Row="2"
+                   VerticalOptions="End"/>
+
+            <custommap:FramedEntry TextEntry="{Binding Description}"
+                                        PlaceholderText="{Binding Resources[Description]}"
+                                        Grid.Row="3"/>
+
+            <Label Text="{Binding Resources[Coordinates]}"
+                   Padding="12,0,0,0"
+                   Grid.Row="4"
+                   VerticalOptions="End"/>
+
+
+            <Grid Grid.Row="5" >
+
+                <custommap:FramedEntry TextEntry="{Binding Latitude}"
+                                   PlaceholderText="{Binding Resources[Latitude]}"
+                                   Grid.Column="0"/>
+
+                <custommap:FramedEntry TextEntry="{Binding Longtitude}"
+                                       PlaceholderText="{Binding Resources[Longtitude]}"
+                                       Grid.Column="1"/>
+
+            </Grid>
+
+        </Grid>
         
-        <Entry Text="{Binding Name}" 
-               Placeholder = "{Binding Resources[Name]}" 
-               Grid.Row="0"/>
-
-        <Editor Text="{Binding Description}" 
-                Placeholder="{Binding Resources[Description]}" 
-                HeightRequest="120" 
-                Grid.Row="1"/>
-
-        <Label Text="{Binding Latitude}" 
-               Grid.Row="2"/>
-
-        <Label Text="{Binding Longitude}" 
-               Grid.Row="3"/>
-        
-
-
-        <custommap:CustomMap  Grid.Row="4"  
+        <custommap:CustomMap  Grid.Row="1"  
                               ObsPins ="{Binding ObsPins}">
             <custommap:CustomMap.Behaviors>
                 <prism:EventToCommandBehavior EventName="MapClicked"
@@ -47,7 +72,6 @@
                                               EventArgsParameterPath="Point" />
             </custommap:CustomMap.Behaviors>
         </custommap:CustomMap>
-
 
 
     </Grid>

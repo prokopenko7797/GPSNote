@@ -12,7 +12,6 @@
     <Grid Grid.RowDefinitions ="0.1*, 0.9*">
 
         <Grid Grid.Row="0" 
-              Padding="16,16,16,8"
               Grid.ColumnDefinitions="0.1*,0.8*,0.1*">
 
             <Button Grid.Column="0"
@@ -83,15 +82,29 @@
                   x:Name="ListView1"
                   BackgroundColor="White"
                   IsVisible="{Binding IsListViewVisible}"
-                  HeightRequest="{Binding HeightRequest}">
+                  HeightRequest="{Binding HeightRequest}"
+                  SeparatorVisibility="None">
 
 
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <Grid>
-
-                            <Label Grid.Row="0" Text="{Binding Label}" FontAttributes="Bold" />
+                        <Grid ColumnDefinitions="0.1*, 0.9*">
+                            
+                            <Button BackgroundColor="{StaticResource TransparentColor}"
+                                    ImageSource="ic_pin_gray.png"
+                                    Grid.Column="0"/>
+                            
+                            <Grid Grid.Column="1">
+                                
+                                <Label Grid.Row="0" 
+                                       Text="{Binding Label}" 
+                                       FontAttributes="Bold"/>
+                                <Label Grid.Row="1" 
+                                       Text="{Binding Description}"
+                                       TextColor="{AppThemeBinding Light={StaticResource System/DarkGray}, Dark={StaticResource System/LightGray}}"
+                                       LineBreakMode="NoWrap"/>
+                            </Grid>
                         </Grid>
                     </ViewCell>
                 </DataTemplate>

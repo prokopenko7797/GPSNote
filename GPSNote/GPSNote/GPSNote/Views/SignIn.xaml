@@ -10,7 +10,7 @@
 
 
 
-    <Grid Padding="16,16,16,16" 
+    <Grid Padding="16,0,16,16" 
           Grid.RowDefinitions ="0.4*, 0.1*, 0.1*, 0.1*, 0.3*" >
 
         <Grid Grid.Column="0" 

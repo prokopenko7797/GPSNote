@@ -18,7 +18,7 @@
 
     <Grid HorizontalOptions="Center"  
           VerticalOptions="CenterAndExpand"
-          Padding="16,16,16,16" >
+          Padding="16,0,16,16" >
 
         <Grid.RowDefinitions>
             <RowDefinition Height="0.5*" />
