@@ -46,11 +46,11 @@ namespace GPSNote
 
             if (AuthorizationService.IsAuthorized)
             {
-                await NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(MainPage)}");
+                await NavigationService.NavigateAsync(nameof(MainPage));
             }
             else
             {
-                await NavigationService.NavigateAsync($"/{nameof(MainTabbedPage)}");
+                await NavigationService.NavigateAsync(nameof(MainTabbedPage));
             }
         }
 

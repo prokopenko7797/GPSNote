@@ -181,7 +181,11 @@ namespace GPSNote.ViewModels
                 await _pinService.DeletePinModelAsync(userPinsV.Id);
                 PinObs.Remove(userPinsV);
                 _ControlObs.Remove(userPinsV);
-                if (PinObs.Count() == 0) IsVisible = true;
+                
+                if (PinObs.Count() == 0) 
+                { 
+                    IsVisible = true; 
+                }
             }
         }
 

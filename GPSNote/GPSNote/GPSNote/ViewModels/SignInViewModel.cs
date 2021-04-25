@@ -88,6 +88,11 @@ namespace GPSNote.ViewModels
             _NavigateSignUpCommand ??
             (_NavigateSignUpCommand = new DelegateCommand(ExecuteNavigateSignUpCommand));
 
+        private DelegateCommand _BackButtonCommand;
+        public DelegateCommand BackButtonCommand =>
+            _BackButtonCommand ??
+            (_BackButtonCommand = new DelegateCommand(OnBackButtonCommand));
+
         #endregion 
 
         #region --Overrides--
@@ -114,6 +119,12 @@ namespace GPSNote.ViewModels
         #endregion
 
         #region -- Private helpers --
+
+        private async void OnBackButtonCommand()
+        {
+            await NavigationService.GoBackAsync();
+        }
+
 
         private async void ExecuteNavigateSignUpCommand()
         {
@@ -145,7 +156,7 @@ namespace GPSNote.ViewModels
                 else
                 {
                     EmailError = string.Empty;
-                    EmailBorderColor = (Color)App.Current.Resources["System/Black"];
+                    EmailBorderColor = (Color)App.Current.Resources["System/Gray"];
                 }
 
                 if (Application.Current.UserAppTheme == OSAppTheme.Light)

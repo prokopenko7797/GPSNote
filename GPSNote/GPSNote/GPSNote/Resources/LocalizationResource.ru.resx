@@ -126,6 +126,9 @@
   <data name="Coordinates" xml:space="preserve">
     <value>Координаты</value>
   </data>
+  <data name="CreateAccount" xml:space="preserve">
+    <value>Создать аккаунт</value>
+  </data>
   <data name="DarkTheme" xml:space="preserve">
     <value>Темная тема:</value>
   </data>
@@ -171,6 +174,9 @@
   <data name="Latitude" xml:space="preserve">
     <value>Широта</value>
   </data>
+  <data name="Log in" xml:space="preserve">
+    <value>Войти</value>
+  </data>
   <data name="Login" xml:space="preserve">
     <value>Логин</value>
   </data>
@@ -191,6 +197,9 @@
   </data>
   <data name="MainListTitle" xml:space="preserve">
     <value>Главная Страница</value>
+  </data>
+  <data name="MapNotepad" xml:space="preserve">
+    <value>MapNotepad</value>
   </data>
   <data name="MapTitle" xml:space="preserve">
     <value>Карта</value>

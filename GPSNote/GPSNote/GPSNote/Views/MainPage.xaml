@@ -6,7 +6,7 @@
              x:Class="GPSNote.Views.MainPage"
              BackgroundColor="{AppThemeBinding Light={StaticResource System/White}, Dark={StaticResource System/Black}}">
 
-    <Grid Grid.RowDefinitions="0.8*, 0.2*">
+    <Grid Grid.RowDefinitions="0.7*, 0.3*">
         
         <Grid Grid.Row="0"
               Grid.RowDefinitions="0.1*,0.6*,0.2*,0.1*">
@@ -15,7 +15,7 @@
                    Source="pic_enter_page.png"/>
 
             <Label Grid.Row="2"
-                   Text="MapNotepad"
+                   Text="{Binding Resources[MapNotepad]}"
                    FontSize="24"
                    HorizontalOptions="Center"
                    TextColor="#596EFB"
@@ -26,24 +26,23 @@
         </Grid>
 
         <StackLayout Grid.Row="1"
-                     Padding="16"
-                     Spacing="16">
+                     Padding="16">
+            
             <Button Grid.Row="0" 
-                    Text="Log in" 
+                    Text="{Binding Resources[Log in]}" 
                     Style="{StaticResource blueButtonStyle}"
-                    Command="{Binding LogInCommand}"
-                    ></Button>
+                    Command="{Binding LogInCommand}"/>
 
             <Button Grid.Row="1" 
-                    Text="Create account" 
+                    Text="{Binding Resources[CreateAccount]}" 
                     BackgroundColor="{StaticResource TransparentColor}"
                     Command="{Binding CreateAccountCommand}"
                     BorderColor="{AppThemeBinding Light={StaticResource Light/Primary}, Dark={StaticResource Dark/Primary}}"
                     BorderWidth="2"
-                    TextColor="{AppThemeBinding Light={StaticResource Light/Primary}, Dark={StaticResource Dark/Primary}}">
-                
-            </Button>
-            
+                    TextColor="{AppThemeBinding Light={StaticResource Light/Primary}, Dark={StaticResource Dark/Primary}}"/>
+
+
+
         </StackLayout>
     </Grid>
     
