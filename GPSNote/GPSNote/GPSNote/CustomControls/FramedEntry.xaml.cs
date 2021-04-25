@@ -81,8 +81,10 @@ namespace GPSNote.CustomControls
         private static void TextEntryPropertyChanged(BindableObject bindable, object oldValue, object newValue)
         {
             FramedEntry customEntry = bindable as FramedEntry;
-
-            customEntry.entry.Text = (string)newValue;
+            if (customEntry != null)
+            {
+                customEntry.entry.Text = (string)newValue;
+            }
         }
 
 
@@ -101,8 +103,10 @@ namespace GPSNote.CustomControls
             clearButton.IsVisible = false;
         }
 
-        private void OnFocused(object sender, EventArgs e)
+        private void OnTextChanged(object sender, TextChangedEventArgs e)
         {
+            TextEntry = e.NewTextValue;
+
             if (entry.Text != string.Empty)
             {
                 clearButton.IsVisible = true;

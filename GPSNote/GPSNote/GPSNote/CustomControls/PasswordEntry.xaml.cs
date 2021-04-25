@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -81,8 +80,10 @@ namespace GPSNote.CustomControls
         private static void TextEntryPropertyChanged(BindableObject bindable, object oldValue, object newValue)
         {
             PasswordEntry customEntry = bindable as PasswordEntry;
-
-            customEntry.entry.Text = (string)newValue;
+            if (customEntry != null)
+            {
+                customEntry.entry.Text = (string)newValue;
+            }
         }
 
 
@@ -98,8 +99,10 @@ namespace GPSNote.CustomControls
 
 
 
-        private void OnFocused(object sender, EventArgs e)
+        private void OnTextChanged(object sender, TextChangedEventArgs e)
         {
+            TextEntry = e.NewTextValue;
+
             if (entry.Text != string.Empty)
             {
                 eyeButton.IsVisible = true;

@@ -43,6 +43,7 @@ namespace GPSNote
 
             ThemeService.SetTheme(ThemeService.GetCurrentTheme());
 
+
             if (AuthorizationService.IsAuthorized)
             {
                 await NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(MainPage)}");

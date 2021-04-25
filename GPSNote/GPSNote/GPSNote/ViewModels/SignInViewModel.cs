@@ -98,7 +98,6 @@ namespace GPSNote.ViewModels
             {
                 Email = email;
             }
-            Password = string.Empty;
 
         }
 

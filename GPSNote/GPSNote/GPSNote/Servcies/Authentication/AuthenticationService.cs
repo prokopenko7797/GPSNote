@@ -44,7 +44,7 @@ namespace GPSNote.Servcies.Authentication
         {
             bool result = false;
 
-            if (await CheckUserExistAsync(email))
+            if (!await CheckUserExistAsync(email))
             {
                 await _repository.InsertAsync(new User { Name = name, Email = email, Password = password });
                 result = true;

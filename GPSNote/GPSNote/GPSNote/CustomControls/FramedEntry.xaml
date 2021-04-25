@@ -18,7 +18,7 @@
                 <Entry x:Name="entry"
                        Grid.Column="0"
                        HorizontalOptions="FillAndExpand"
-                       TextChanged="OnFocused"
+                       TextChanged="OnTextChanged"
                        Unfocused="OnUnfocused"
                        VerticalOptions="FillAndExpand"
                        >        
