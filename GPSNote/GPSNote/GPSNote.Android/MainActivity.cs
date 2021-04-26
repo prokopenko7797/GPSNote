@@ -9,6 +9,7 @@ using Prism.Ioc;
 using Firebase;
 using Xamarin.Forms.Platform.Android.AppLinks;
 using Android.Content;
+using Prism.Plugin.Popups;
 
 namespace GPSNote.Droid
 {
@@ -36,6 +37,8 @@ namespace GPSNote.Droid
             FirebaseApp.InitializeApp(this);
             AndroidAppLinks.Init(this);
 
+            global::Rg.Plugins.Popup.Popup.Init(this);
+
             UserDialogs.Init(this);
             Xamarin.FormsGoogleMaps.Init(this, savedInstanceState);
             LoadApplication(new App(new AndroidInitializer()));
@@ -49,11 +52,19 @@ namespace GPSNote.Droid
 
     }
 
+    //public override void OnBackPressed()
+    //{
+    //    PopupPlugin.OnBackPressed();
+    //}
+
+
     public class AndroidInitializer : IPlatformInitializer
     {
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
             // Register any platform specific implementations
+
+            //containerRegistry.RegisterPopupNavigationService();
         }
     }
 }

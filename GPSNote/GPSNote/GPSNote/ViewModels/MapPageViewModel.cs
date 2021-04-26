@@ -253,12 +253,18 @@ namespace GPSNote.ViewModels
 
         public override async void Initialize(INavigationParameters parameters)
         {
-
-
-            if (await _permissionService.CheckPermissionsAsync(new LocationPermission()) != PermissionStatus.Granted)
+            PermissionStatus permissionStatus = await _permissionService.CheckPermissionsAsync(new LocationPermission());
+            
+            if ( permissionStatus == PermissionStatus.Denied && Device.RuntimePlatform == Device.iOS)
             {
                 await _permissionService.RequestPermissionAsync(new LocationPermission());
             }
+            else if(permissionStatus != PermissionStatus.Granted)
+            {
+                await _permissionService.RequestPermissionAsync(new LocationPermission());
+            }
+
+
             base.Initialize(parameters);
 
 
@@ -404,6 +410,7 @@ namespace GPSNote.ViewModels
 
             CurrentWeatherResponse currentWeather = await _weatherService.GetCurrentWeatherAsync(pinView.Latitude,
                                                                                                  pinView.Longitude);
+
 
             Temperature = currentWeather.Temperature.Value.ToString() + " " +
                           currentWeather.Temperature.Unit;

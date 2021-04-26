@@ -9,5 +9,7 @@ namespace GPSNote.Servcies.Weather
     public interface IWeatherService
     {
         Task<CurrentWeatherResponse> GetCurrentWeatherAsync(double latitude, double longtitude);
+
+        Task<ForecastResponse> GetForecastWeatherAsync(double latitude, double longtitude);
     }
 }

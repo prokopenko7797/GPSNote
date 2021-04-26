@@ -11,7 +11,8 @@
                BackgroundColor="{StaticResource TransparentColor}"
                HorizontalOptions="FillAndExpand"
                VerticalOptions="FillAndExpand"
-               Padding="0">
+               Padding="0"
+               HasShadow="False">
 
             <Grid ColumnDefinitions="0.9*, 0.1*"
                   VerticalOptions="StartAndExpand">
@@ -21,8 +22,7 @@
                        HorizontalOptions="FillAndExpand"
                        TextChanged="OnTextChanged"
                        Unfocused="OnUnfocused"
-                       VerticalOptions="FillAndExpand"
-                       >        
+                       VerticalOptions="FillAndExpand">        
                 </Entry>
                 
                 <Button  x:Name="clearButton"

@@ -1,6 +1,7 @@
 ﻿using Foundation;
 using Prism;
 using Prism.Ioc;
+using Prism.Plugin.Popups;
 using UIKit;
 
 
@@ -21,6 +22,8 @@ namespace GPSNote.iOS
         //
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
+            Rg.Plugins.Popup.Popup.Init();
+
             global::Xamarin.Forms.Forms.Init();
             Xamarin.FormsGoogleMaps.Init("AIzaSyDEVQrwaoTyouWUiztM4V8dOJGswO4mlIA");
             LoadApplication(new App(new iOSInitializer()));
@@ -34,6 +37,8 @@ namespace GPSNote.iOS
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
             // Register any platform specific implementations
+
+            //containerRegistry.RegisterPopupNavigationService();
         }
     }
 }

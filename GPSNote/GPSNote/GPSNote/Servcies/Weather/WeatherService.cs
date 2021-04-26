@@ -25,6 +25,17 @@ namespace GPSNote.Servcies.Weather
                 OpenWeatherMapLanguage.RU);
         }
 
+
+
+        public async Task<ForecastResponse> GetForecastWeatherAsync(double latitude, double longtitude)
+        {
+            return await _Client.Forecast.GetByCoordinates(
+                new Coordinates() { Latitude = latitude, Longitude = longtitude }, 
+                true,
+                MetricSystem.Metric,
+                OpenWeatherMapLanguage.RU,
+                4);
+        }
         #endregion
     }
 }

@@ -86,7 +86,11 @@
                 Command="{Binding NavigateMainListButtonTapCommand}"/>
 
         <Grid Grid.Row="2">
-            <BoxView  Color="{StaticResource System/LightGray}" HeightRequest="1" VerticalOptions="Center"/>
+            
+            <BoxView  Color="{StaticResource System/LightGray}" 
+                      HeightRequest="1" 
+                      VerticalOptions="Center"/>
+            
             <Label Text=" or " 
                    TextColor="{StaticResource System/LightGray}"
                    HorizontalOptions="Center"

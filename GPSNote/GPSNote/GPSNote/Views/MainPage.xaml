@@ -28,6 +28,7 @@
 
         <StackLayout Grid.Row="1"
                      Padding="16">
+            <Entry Placeholder="sdaasddas"></Entry>
             
             <Button Grid.Row="0" 
                     Text="{Binding Resources[Log in]}" 

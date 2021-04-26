@@ -66,10 +66,10 @@
                                       CommandParameter="{Binding .}" />
                             
                         </ViewCell.ContextActions>
+                        <Grid>
+                            <Grid Grid.ColumnDefinitions ="0.2*, 0.8*">
 
-                        <Grid Grid.ColumnDefinitions ="0.2*, 0.8*">
-
-                            <ImageButton Grid.RowSpan="3" 
+                                <ImageButton Grid.RowSpan="3" 
                                          Source="ic_like_gray.png" 
                                          Aspect="AspectFit" 
                                          Margin="5"
@@ -77,10 +77,10 @@
                                          Command="{Binding Path=BindingContext.ImageCommandTap, 
                                                             Source={x:Reference ListView1}}"
                                          CommandParameter="{Binding .}">
-                                
-                            </ImageButton>
 
-                            <ImageButton Grid.RowSpan="3" 
+                                </ImageButton>
+
+                                <ImageButton Grid.RowSpan="3" 
                                          Source="ic_like_blue.png"  
                                          Aspect="AspectFit" 
                                          Margin="5" 
@@ -89,24 +89,31 @@
                                                             Source={x:Reference ListView1}}"
                                          CommandParameter="{Binding .}"
                                          IsVisible="{Binding IsEnabled}">
-                                
-                            </ImageButton>
 
-                            <Label Grid.Column="1" 
+                                </ImageButton>
+
+                                <Label Grid.Column="1" 
                                    Grid.Row="0" 
                                    Text="{Binding Label}" 
                                    FontAttributes="Bold" 
                                    LineBreakMode="TailTruncation"/>
-                            
-                            <Label Grid.Column="1" 
+
+                                <Label Grid.Column="1" 
                                    Grid.Row="1" 
                                    Text="{Binding Latitude}" 
                                    LineBreakMode="TailTruncation"/>
-                            <Label Grid.Column="1" 
+                                <Label Grid.Column="1" 
                                    Grid.Row="2" 
                                    Text="{Binding Longitude}" 
                                    LineBreakMode="TailTruncation"/>
 
+
+
+                            </Grid>
+                            <BoxView  Color="{StaticResource System/LightGray}" 
+                                      HeightRequest="1" 
+                                      VerticalOptions="End"
+                                      HorizontalOptions="FillAndExpand"/>
                         </Grid>
 
                     </ViewCell>
@@ -114,17 +121,28 @@
             </ListView.ItemTemplate>
         </ListView>
 
+        <Frame Grid.Row="1" 
+               CornerRadius="30"
+               WidthRequest="60" 
+               HeightRequest="60" 
+               HasShadow="True"
+               Margin="0,0,16,16"
+               VerticalOptions="End"
+               HorizontalOptions="End"
+               Padding="0">
+            
+            
+        </Frame>
 
-        <Button Grid.Row="1" 
-            BackgroundColor="{StaticResource Light/Primary}"
-            CornerRadius="50"
-            WidthRequest="60" 
-            HeightRequest="60"            
-            VerticalOptions="End"
-            HorizontalOptions="End"
-            Margin="0,0,16,16"
-            Command="{Binding AddEditButtonClicked}"           
-            ImageSource="ic_plus.png"/>
+        <Button Grid.Row="1" BackgroundColor="{StaticResource Light/Primary}"
+                Command="{Binding AddEditButtonClicked}" 
+                CornerRadius="30"
+                WidthRequest="60" 
+                HeightRequest="60" 
+                Margin="0,0,16,16"
+                VerticalOptions="End"
+                HorizontalOptions="End"
+                ImageSource="ic_plus.png"/>
 
     </Grid>
 

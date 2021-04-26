@@ -10,8 +10,6 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
@@ -37,6 +35,14 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1</string>
 	<key>CFBundleDocumentTypes</key>
+	<string>Some text</string>
+
+	<key>NSLocationUsageDescription</key>
+	<string>This app needs access to location.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>This app needs access to location.</string>
+
+	
 	<array>
 		<dict>
 			<key>CFBundleTypeName</key>
@@ -50,6 +56,10 @@
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>location</string>
+	</array>
+	<key>MKDirectionsApplicationSupportedModes</key>
+	<array>
+		<string>MKDirectionsModeOther</string>
 	</array>
 </dict>
 </plist>

@@ -1,0 +1,30 @@
+﻿using CoreGraphics;
+using Foundation;
+using GPSNote.iOS.Renderers;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Text;
+using UIKit;
+using Xamarin.Forms;
+using Xamarin.Forms.Platform.iOS;
+
+[assembly: ExportRenderer(typeof(Entry), typeof(CustomEntryRenderer))]
+namespace GPSNote.iOS.Renderers
+{
+    class CustomEntryRenderer : EntryRenderer
+    {
+        protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            base.OnElementPropertyChanged(sender, e);
+
+            if (Control != null)
+            {
+                Control.Layer.BorderWidth = 0;
+                Control.Layer.BorderColor = CGColor.CreateSrgb(0,0,0,0);
+                Control.BorderStyle = UITextBorderStyle.None;
+            }
+        }
+    }
+}
