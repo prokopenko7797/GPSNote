@@ -49,7 +49,8 @@
             <customcontrols:FramedEntry TextEntry="{Binding Email}"
                                         PlaceholderText="{Binding Resources[Email]}"
                                         Grid.Row="1"
-                                        EntryBorderColor="{Binding EmailBorderColor}"/>
+                                        EntryBorderColor="{Binding EmailBorderColor}"
+                                        HeightRequest="41"/>
             
 
             
@@ -67,7 +68,8 @@
             <customcontrols:PasswordEntry PlaceholderText = "{Binding Resources[Password]}" 
                                           TextEntry="{Binding Password}" 
                                           Grid.Row="4"
-                                          EntryBorderColor="{Binding PasswordBorderColor}"/>
+                                          EntryBorderColor="{Binding PasswordBorderColor}"
+                                          HeightRequest="41"/>
 
             <Label Text="{Binding PasswordError}"
                    Padding="12,0,0,0"

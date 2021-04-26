@@ -51,7 +51,8 @@
             <customcontrols:FramedEntry TextEntry="{Binding Name}"
                                         PlaceholderText="{Binding Resources[Name]}"
                                         Grid.Row="1"
-                                        EntryBorderColor="{Binding NameBorderColor}"/>
+                                        EntryBorderColor="{Binding NameBorderColor}"
+                                        HeightRequest="41"/>
 
 
             <Label Text="{Binding NameError}"
@@ -69,7 +70,8 @@
             <customcontrols:FramedEntry TextEntry="{Binding Email}"
                                         PlaceholderText="{Binding Resources[Email]}"
                                         Grid.Row="4"
-                                        EntryBorderColor="{Binding EmailBorderColor}"/>
+                                        EntryBorderColor="{Binding EmailBorderColor}"
+                                        HeightRequest="41"/>
             
             
             <Label Text="{Binding EmailError}"

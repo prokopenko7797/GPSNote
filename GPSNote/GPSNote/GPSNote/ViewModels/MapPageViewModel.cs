@@ -323,13 +323,13 @@ namespace GPSNote.ViewModels
 
         private async void OnSettingsNavigation(object sender)
         {
-            await NavigationService.NavigateAsync(nameof(Settings));
+            await NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(Settings)}");
         }
 
         private async void OnLogOutCommand(object sender)
         {
             _authorizationService.LogOut();
-            await NavigationService.NavigateAsync(nameof(MainPage));
+            await NavigationService.NavigateAsync($"/{nameof(MainPage)}");
         }
 
         private void OnItemTappedCommand(object p)

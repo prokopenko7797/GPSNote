@@ -15,7 +15,7 @@ namespace GPSNote
         public const int NonAuthorized = -1;
         public const int SQLError = -1;
         public const string DefaultLanguage = ResourcesLangConst.En;
-        public const int DefaultTheme = (int)OSAppTheme.Unspecified;
+        public const int DefaultTheme = (int)OSAppTheme.Light;
         public const string Email = nameof(Email);
         public const string Name = nameof(Name);
         public const string ImageFavorite = "favorite.png";

@@ -32,7 +32,7 @@ namespace GpsNotepad.Droid
 
             if (Control != null)
             {
-                Control.Background = new ColorDrawable(Android.Graphics.Color.Transparent);
+                Control.Background = null;
             }
         }
     }

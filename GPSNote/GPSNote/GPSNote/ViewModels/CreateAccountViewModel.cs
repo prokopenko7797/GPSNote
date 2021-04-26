@@ -28,6 +28,9 @@ namespace GPSNote.ViewModels
             : base(navigationService, localizationService)
         {
             _AuthenticationService = authenticationService;
+
+            ConfPasBorderColor = (Color)App.Current.Resources["System/Gray"];
+            PasswordBorderColor = (Color)App.Current.Resources["System/Gray"];
         }
 
         #region -----Public Properties-----

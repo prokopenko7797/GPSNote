@@ -28,6 +28,9 @@ namespace GPSNote.ViewModels
         {
             _AuthenticationService = authentication;
             _permissionService = permissionService;
+
+            EmailBorderColor = (Color)App.Current.Resources["System/Gray"];
+            PasswordBorderColor = (Color)App.Current.Resources["System/Gray"];
         }
 
         #region -----Public Properties-----
@@ -83,10 +86,6 @@ namespace GPSNote.ViewModels
             _NavigateMainListCommand ??
             (_NavigateMainListCommand = new DelegateCommand(ExecuteNavigateMainViewCommand));
 
-        private DelegateCommand _NavigateSignUpCommand;
-        public DelegateCommand NavigateSignUpButtonTapCommand =>
-            _NavigateSignUpCommand ??
-            (_NavigateSignUpCommand = new DelegateCommand(ExecuteNavigateSignUpCommand));
 
         private DelegateCommand _BackButtonCommand;
         public DelegateCommand BackButtonCommand =>
@@ -120,24 +119,20 @@ namespace GPSNote.ViewModels
 
         #region -- Private helpers --
 
+
         private async void OnBackButtonCommand()
         {
             await NavigationService.NavigateAsync($"/{nameof(MainPage)}");
         }
 
 
-        private async void ExecuteNavigateSignUpCommand()
-        {
-            await NavigationService.NavigateAsync(nameof(SignUp));
-
-        }
 
         private async void ExecuteNavigateMainViewCommand()
         {
 
             if (await _AuthenticationService.SignInAsync(Email, Password))
             {
-                await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(MainTabbedPage)}");
+                await NavigationService.NavigateAsync($"/{nameof(MainTabbedPage)}");
             }
             else
             {

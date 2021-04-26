@@ -25,9 +25,11 @@ namespace GPSNote.ViewModels
             IAuthenticationService authenticationService)
             : base(navigationService, localizationService)
         {
-
             _pageDialogService = pageDialogService;
             _AuthenticationService = authenticationService;
+
+            EmailBorderColor = (Color)App.Current.Resources["System/Gray"];
+            NameBorderColor = (Color)App.Current.Resources["System/Gray"];
         }
 
         #region -----Public Properties-----

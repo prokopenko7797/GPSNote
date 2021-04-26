@@ -13,7 +13,8 @@
                VerticalOptions="FillAndExpand"
                Padding="0">
 
-            <Grid ColumnDefinitions="0.9*, 0.1*">
+            <Grid ColumnDefinitions="0.9*, 0.1*"
+                  VerticalOptions="StartAndExpand">
 
                 <Entry x:Name="entry"
                        Grid.Column="0"
