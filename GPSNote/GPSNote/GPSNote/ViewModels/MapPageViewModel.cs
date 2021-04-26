@@ -24,6 +24,9 @@ using GPSNote.Servcies.Weather;
 using GPSNote.Servcies.Authentication;
 using GPSNote.Servcies.AutorizationService;
 using GPSNote.Servcies.PinShare;
+using GPSNote.Servcies.Permission;
+using Plugin.Permissions;
+using Plugin.Permissions.Abstractions;
 
 namespace GPSNote.ViewModels
 {
@@ -34,10 +37,11 @@ namespace GPSNote.ViewModels
         private readonly IWeatherService _weatherService;
         private readonly IAuthorizationService _authorizationService;
         private readonly IPinShareService _pinShareService;
+        private readonly IPermissionService _permissionService;
 
         public MapPageViewModel(INavigationService navigationService, ILocalizationService localizationService,
             IPageDialogService pageDialogService, IPinService pinService, IWeatherService weatherService,
-            IAuthorizationService authorizationService, IPinShareService pinShareService)
+            IAuthorizationService authorizationService, IPinShareService pinShareService, IPermissionService permissionService)
             : base(navigationService, localizationService)
         {
             _pageDialogService = pageDialogService;
@@ -45,6 +49,7 @@ namespace GPSNote.ViewModels
             _weatherService = weatherService;
             _authorizationService = authorizationService;
             _pinShareService = pinShareService;
+            _permissionService = permissionService;
         }
 
         #region -- Public properties --
@@ -248,10 +253,19 @@ namespace GPSNote.ViewModels
 
         public override async void Initialize(INavigationParameters parameters)
         {
+
+
+            if (await _permissionService.CheckPermissionsAsync(new LocationPermission()) != PermissionStatus.Granted)
+            {
+                await _permissionService.RequestPermissionAsync(new LocationPermission());
+            }
             base.Initialize(parameters);
+
 
             PinObs = new ObservableCollection<PinViewModel>((await _pinService.GetUserPinsAsync()).ToPinViewObservableCollection());
             ControlObs = PinObs;
+
+
         }
 
 
@@ -309,13 +323,13 @@ namespace GPSNote.ViewModels
 
         private async void OnSettingsNavigation(object sender)
         {
-            await NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(Settings)}");
+            await NavigationService.NavigateAsync(nameof(Settings));
         }
 
         private async void OnLogOutCommand(object sender)
         {
             _authorizationService.LogOut();
-            await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(MainPage)}");
+            await NavigationService.NavigateAsync(nameof(MainPage));
         }
 
         private void OnItemTappedCommand(object p)

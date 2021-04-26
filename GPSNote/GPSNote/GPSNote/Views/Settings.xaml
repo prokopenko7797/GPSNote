@@ -5,15 +5,40 @@
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="GPSNote.Views.Settings"
              BackgroundColor="{AppThemeBinding Light={StaticResource System/White}, Dark={StaticResource System/Black}}"
-             Title="{Binding Resources[SettingsTitle]}">
+             Title="{Binding Resources[SettingsTitle]}"
+             NavigationPage.HasBackButton="False">
 
-    <ContentPage.ToolbarItems>
-        <ToolbarItem IconImageSource="ic_save.png"
-                     Order="Primary"
-                     Priority="0" 
-                     Command="{Binding SaveToolBarCommand}"
-                     />
-    </ContentPage.ToolbarItems>
+
+
+    <NavigationPage.TitleView>
+
+        <Grid ColumnDefinitions="0.1*, 0.8*, 0.1*">
+
+            <Button ImageSource="ic_left_blue.png"
+                    Grid.Column="0"
+                    BackgroundColor="{StaticResource TransparentColor}"
+                    Command="{Binding BackButtonCommand}"
+                    HorizontalOptions="Start"
+                    VerticalOptions="Center"/>
+
+            <Label Grid.Column="1"
+                   Text="{Binding Resources[SettingsTitle]}" 
+                   FontSize="Large"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"/>
+
+
+            <Button ImageSource="ic_save.png"
+                    Grid.Column="2"
+                    BackgroundColor="{StaticResource TransparentColor}"
+                    Command="{Binding SaveToolBarCommand}"
+                    HorizontalOptions="End"
+                    VerticalOptions="Center"/>
+
+        </Grid>
+
+    </NavigationPage.TitleView>
 
 
     <Grid HorizontalOptions="Center"  

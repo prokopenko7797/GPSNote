@@ -92,6 +92,12 @@ namespace GPSNote.ViewModels
             _AddUserButtonTapCommand ?? (_AddUserButtonTapCommand =
             new DelegateCommand(ExecuteUserButtonTapCommand)).ObservesCanExecute(() => IsEnabled);
 
+
+        private DelegateCommand _BackButtonCommand;
+        public DelegateCommand BackButtonCommand =>
+            _BackButtonCommand ??
+            (_BackButtonCommand = new DelegateCommand(OnBackButtonCommand));
+
         #endregion
 
 
@@ -139,6 +145,12 @@ namespace GPSNote.ViewModels
         #endregion
 
         #region -----Private Helpers-----
+
+
+        private async void OnBackButtonCommand()
+        {
+            await NavigationService.GoBackAsync();
+        }
 
         private bool CheckPass(string password, string confirmpassword)
         {

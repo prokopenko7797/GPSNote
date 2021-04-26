@@ -198,7 +198,7 @@ namespace GPSNote.ViewModels
                 { nameof(PinViewModel), pins }
             };
 
-            await NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(AddEditPin)}", parametrs);
+            await NavigationService.NavigateAsync(nameof(AddEditPin), parametrs);
         }
 
         private async void OnChangeVisibilityComand(object sender)
@@ -216,7 +216,7 @@ namespace GPSNote.ViewModels
 
         private async void OnNavigateAddEditPinCommand(object sender)
         {
-            await NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(AddEditPin)}");
+            await NavigationService.NavigateAsync(nameof(AddEditPin));
         }
 
         private async void OnSettingsCommand(object sender)

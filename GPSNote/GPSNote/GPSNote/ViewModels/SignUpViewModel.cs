@@ -81,11 +81,24 @@ namespace GPSNote.ViewModels
             _AddUserButtonTapCommand ?? (_AddUserButtonTapCommand =
             new DelegateCommand(ExecuteUserButtonTapCommand));
 
+        private DelegateCommand _BackButtonCommand;
+        public DelegateCommand BackButtonCommand =>
+            _BackButtonCommand ??
+            (_BackButtonCommand = new DelegateCommand(OnBackButtonCommand));
+
         #endregion
 
 
 
         #region -----Private Helpers-----
+
+
+
+        private async void OnBackButtonCommand()
+        {
+            await NavigationService.GoBackAsync();
+        }
+
 
         private bool LoginCheck(string name, string email)
         {

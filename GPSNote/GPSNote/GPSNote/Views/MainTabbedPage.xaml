@@ -10,7 +10,8 @@
             x:Class="GPSNote.Views.MainTabbedPage"
             BarBackgroundColor="{AppThemeBinding Light={StaticResource System/White}, Dark={StaticResource System/Black}}"
             SelectedTabColor="{AppThemeBinding Light={StaticResource Light/Primary}, Dark={StaticResource Dark/Primary}}"
-            UnselectedTabColor="{AppThemeBinding Light={StaticResource Light/Disacled}, Dark={StaticResource Dark/Disacled}}">
+            UnselectedTabColor="{AppThemeBinding Light={StaticResource Light/Disacled}, Dark={StaticResource Dark/Disacled}}"
+            NavigationPage.HasBackButton="False">
 
     <TabbedPage.Behaviors>
         <behaviors:TabbedPageNavigationBehavior />

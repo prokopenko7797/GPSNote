@@ -61,9 +61,17 @@ namespace GPSNote.ViewModels
            _SaveToolBarCommand ??
            (_SaveToolBarCommand = new DelegateCommand(OnSaveToolBar));
 
+        private DelegateCommand _BackButtonCommand;
+        public DelegateCommand BackButtonCommand =>
+            _BackButtonCommand ??
+            (_BackButtonCommand = new DelegateCommand(OnBackButtonCommand));
+
         #endregion
 
         #region --Overrides--
+
+
+
 
         public override void Initialize(INavigationParameters parameters)
         {
@@ -131,6 +139,11 @@ namespace GPSNote.ViewModels
         #endregion
 
         #region -- Private helpers --
+
+        private async void OnBackButtonCommand()
+        {
+            await NavigationService.GoBackAsync();
+        }
 
         private async void OnSaveToolBar()
         {

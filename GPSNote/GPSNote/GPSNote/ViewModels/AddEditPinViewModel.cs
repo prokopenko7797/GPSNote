@@ -97,6 +97,11 @@ namespace GPSNote.ViewModels
         public DelegateCommand<object> ItemTappedCommand => 
             _ItemTappedCommand ?? (_ItemTappedCommand = new DelegateCommand<object>(OnItemTappedCommand));
 
+        private DelegateCommand _BackButtonCommand;
+        public DelegateCommand BackButtonCommand =>
+            _BackButtonCommand ??
+            (_BackButtonCommand = new DelegateCommand(OnBackButtonCommand));
+
         #endregion
 
         #region --Overrides--
@@ -133,6 +138,12 @@ namespace GPSNote.ViewModels
         #endregion
 
         #region ---Private Helpers---
+
+        private async void OnBackButtonCommand()
+        {
+            await NavigationService.GoBackAsync();
+        }
+
 
         private void OnItemTappedCommand(object sender)
         {
