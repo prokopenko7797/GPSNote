@@ -44,7 +44,6 @@
                     TextColor="{AppThemeBinding Light={StaticResource Light/Primary}, Dark={StaticResource Dark/Primary}}"/>
 
 
-
         </StackLayout>
     </Grid>
     

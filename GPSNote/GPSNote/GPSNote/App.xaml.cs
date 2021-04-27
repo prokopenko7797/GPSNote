@@ -106,9 +106,14 @@ namespace GPSNote
                     {
                         if (AuthorizationService.IsAuthorized)
                         {
+                            PinViewModel pinView = uri.ToPinViewModel();
+
+                            pinView.Label.Replace("*", " ");
+                            pinView.Description.Replace("*", " ");
+
                             var parametrs = new NavigationParameters
                             {
-                                { nameof(PinViewModel), uri.ToPinViewModel() }
+                                { nameof(PinViewModel),  pinView}
                             };
                             await NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(AddEditPin)}", parametrs);
                         }

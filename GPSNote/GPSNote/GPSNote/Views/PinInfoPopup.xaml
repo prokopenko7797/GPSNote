@@ -19,37 +19,42 @@
 
     <popup:PopupPage.Content>
 
-        <StackLayout BackgroundColor="{AppThemeBinding Light={StaticResource System/White}, Dark={StaticResource System/Black}}"        
-                 VerticalOptions="End"
-                 HorizontalOptions="Fill"
-                 Padding="16,16,16,16">
+        <Frame BackgroundColor="{AppThemeBinding Light={StaticResource System/White}, Dark={StaticResource System/Black}}"        
+               VerticalOptions="End"
+               HorizontalOptions="Fill"
+               Padding="16,16,16,16"
+               CornerRadius="4"
+               HasShadow="False">
+
+            <StackLayout >
+
+                <Grid>
+                    <Label Text= "{Binding PinLabel}"
+                           FontAttributes="Bold"
+                           Grid.Column="0"/>
+
+                    <Button Grid.Column="1"
+                            ImageSource="ic_share.png"
+                            BackgroundColor="{StaticResource TransparentColor}"
+                            HorizontalOptions="End"
+                            VerticalOptions="Start"
+                            Command="{Binding SharePinCommand}">
+
+                    </Button>
+                </Grid>
 
 
-            <Grid Grid.Row="0">
-
-                <Label Text= "{Binding PinLabel}"
-                       FontAttributes="Bold"
-                       Grid.Column="0"/>
-
-                <Button Grid.Column="1"
-                        ImageSource="ic_share.png"
-                        BackgroundColor="{StaticResource TransparentColor}"
-                        HorizontalOptions="End"
-                        VerticalOptions="Start"
-                        Command="{Binding SharePinCommand}">
-
-                </Button>
-            </Grid>
-
-
-            <Label Text= "{Binding PinLatLong}" 
+                <Label Text= "{Binding PinLatLong}" 
                        Grid.Row="1"/>
 
-            <Label Text= "{Binding PinDescription}"
-                   Grid.Row="2"/>
+                <Label Text= "{Binding PinDescription}"
+                       Grid.Row="2"/>
+                
+                
 
 
-        </StackLayout>
+            </StackLayout>
+        </Frame>
 
     </popup:PopupPage.Content>
 

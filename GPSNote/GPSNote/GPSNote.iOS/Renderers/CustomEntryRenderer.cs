@@ -22,7 +22,6 @@ namespace GPSNote.iOS.Renderers
             if (Control != null)
             {
                 Control.Layer.BorderWidth = 0;
-                Control.Layer.BorderColor = CGColor.CreateSrgb(0,0,0,0);
                 Control.BorderStyle = UITextBorderStyle.None;
             }
         }
