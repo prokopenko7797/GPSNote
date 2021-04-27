@@ -249,7 +249,7 @@ namespace GPSNote.ViewModels
 
         private async void OnSettingsNavigation(object sender)
         {
-            await NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(Settings)}");
+            await NavigationService.NavigateAsync(nameof(Settings));
         }
 
         private async void OnLogOutCommand(object sender)

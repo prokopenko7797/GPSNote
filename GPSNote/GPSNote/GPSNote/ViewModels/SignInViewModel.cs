@@ -29,8 +29,8 @@ namespace GPSNote.ViewModels
             _AuthenticationService = authentication;
             _permissionService = permissionService;
 
-            EmailBorderColor = (Color)App.Current.Resources["System/Gray"];
-            PasswordBorderColor = (Color)App.Current.Resources["System/Gray"];
+            EmailBorderColor = (Color)App.Current.Resources["System/LightGray"];
+            PasswordBorderColor = (Color)App.Current.Resources["System/LightGray"];
         }
 
         #region -----Public Properties-----

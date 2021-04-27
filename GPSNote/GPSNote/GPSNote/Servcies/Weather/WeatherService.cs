@@ -31,10 +31,10 @@ namespace GPSNote.Servcies.Weather
         {
             return await _Client.Forecast.GetByCoordinates(
                 new Coordinates() { Latitude = latitude, Longitude = longtitude }, 
-                true,
+                false,
                 MetricSystem.Metric,
-                OpenWeatherMapLanguage.RU,
-                4);
+                OpenWeatherMapLanguage.EN,
+                null);
         }
         #endregion
     }

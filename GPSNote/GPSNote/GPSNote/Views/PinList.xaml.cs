@@ -2,7 +2,7 @@
 
 namespace GPSNote.Views
 {
-    public partial class PinList : ContentPage
+    public partial class PinList : BaseContentPage
     {
         public PinList()
         {

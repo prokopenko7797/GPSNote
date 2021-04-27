@@ -2,7 +2,7 @@
 
 namespace GPSNote.Views
 {
-    public partial class CreateAccount : ContentPage
+    public partial class CreateAccount : BaseContentPage
     {
         public CreateAccount()
         {

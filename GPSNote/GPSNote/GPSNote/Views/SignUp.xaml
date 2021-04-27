@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+<views:BaseContentPage xmlns:views="clr-namespace:GPSNote.Views" 
+                       xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="http://prismlibrary.com" xmlns:customcontrols="clr-namespace:GPSNote.CustomControls"
              prism:ViewModelLocator.AutowireViewModel="True"
@@ -51,8 +52,7 @@
             <customcontrols:FramedEntry TextEntry="{Binding Name}"
                                         PlaceholderText="{Binding Resources[Name]}"
                                         Grid.Row="1"
-                                        EntryBorderColor="{Binding NameBorderColor}"
-                                        HeightRequest="41"/>
+                                        EntryBorderColor="{Binding NameBorderColor}"/>
 
 
             <Label Text="{Binding NameError}"
@@ -70,8 +70,7 @@
             <customcontrols:FramedEntry TextEntry="{Binding Email}"
                                         PlaceholderText="{Binding Resources[Email]}"
                                         Grid.Row="4"
-                                        EntryBorderColor="{Binding EmailBorderColor}"
-                                        HeightRequest="41"/>
+                                        EntryBorderColor="{Binding EmailBorderColor}"/>
             
             
             <Label Text="{Binding EmailError}"
@@ -129,4 +128,4 @@
 
     </Grid>
 
-</ContentPage>
+</views:BaseContentPage>

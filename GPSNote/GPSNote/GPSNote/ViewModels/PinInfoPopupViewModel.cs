@@ -128,7 +128,7 @@ namespace GPSNote.ViewModels
 
         #region --Overrides--
 
-        public override void OnNavigatedTo(INavigationParameters parameters)
+        public override async void OnNavigatedTo(INavigationParameters parameters)
         {
             base.OnNavigatedTo(parameters);
 
@@ -140,6 +140,12 @@ namespace GPSNote.ViewModels
                 PinLabel = pinViewModel.Label;
                 PinLatLong = $"{pinViewModel.Latitude} {pinViewModel.Longitude}";
                 PinDescription = pinViewModel.Description;
+
+                ForecastResponse forecastData = await _weatherService.GetForecastWeatherAsync(newPinViewModel.Latitude,
+                                                                                                     newPinViewModel.Longitude);
+
+                CurrentWeatherResponse currentWeather = await _weatherService.GetCurrentWeatherAsync(newPinViewModel.Latitude,
+                                                                                                     newPinViewModel.Longitude);
             }
 
 
@@ -163,40 +169,7 @@ namespace GPSNote.ViewModels
         }
 
 
-        private async void DisplayInfoPinViewModel(PinViewModel pinView)
-        {
-            PinLabel = pinView.Label;
-            PinDescription = pinView.Description;
-            PinLatLong = $"{pinView.Latitude}, {pinView.Longitude}";
 
-
-            CurrentWeatherResponse currentWeather = await _weatherService.GetCurrentWeatherAsync(pinView.Latitude,
-                                                                                                 pinView.Longitude);
-
-
-            Temperature = currentWeather.Temperature.Value.ToString() + " " +
-                          currentWeather.Temperature.Unit;
-
-            Humidity = currentWeather.Humidity.Value.ToString();
-            Pressure = currentWeather.Pressure.Value.ToString() + " " +
-                       currentWeather.Pressure.Unit;
-
-            Wind = currentWeather.Wind.Speed.Value.ToString() + " " +
-                   currentWeather.Wind.Speed.Name + " " +
-                   currentWeather.Wind.Speed.Value.ToString() + " " +
-                   currentWeather.Wind.Direction.Value.ToString() + " " +
-                   currentWeather.Wind.Direction.Value.ToString();
-
-            Clouds = currentWeather.Clouds.Value.ToString() + " " +
-                     currentWeather.Clouds.Name;
-
-            Precipitation = currentWeather.Precipitation.Value.ToString() + " " +
-                            currentWeather.Precipitation.Unit + " " +
-                            currentWeather.Precipitation.Mode;
-
-            Weather = currentWeather.Weather.Value.ToString();
-            LastUpdate = currentWeather.LastUpdate.Value.ToString();
-        }
 
         #endregion
 

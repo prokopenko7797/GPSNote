@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+<views:BaseContentPage xmlns:views="clr-namespace:GPSNote.Views" 
+                       xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="http://prismlibrary.com"
              prism:ViewModelLocator.AutowireViewModel="True"
@@ -7,44 +8,53 @@
              BackgroundColor="{AppThemeBinding Light={StaticResource System/White}, Dark={StaticResource System/Black}}"
              NavigationPage.HasBackButton="False">
 
-    <Grid Grid.RowDefinitions="0.7*, 0.3*">
-        
-        <Grid Grid.Row="0"
-              Grid.RowDefinitions="0.1*,0.6*,0.2*,0.1*">
+    <Grid RowDefinitions="0.7*, 0.3*">
 
-            <Image Grid.Row="1" 
-                   Source="pic_enter_page.png"/>
+        <Grid RowDefinitions="0.7*, 0.3*"
+              RowSpacing="20"
+              Padding="20">
 
-            <Label Grid.Row="2"
-                   Text="{Binding Resources[MapNotepad]}"
-                   FontSize="24"
-                   HorizontalOptions="Center"
-                   TextColor="#596EFB"
-                   FontAttributes="Bold"
-                   LineHeight="150"
-                   CharacterSpacing="1"/>
+            <Image Source="pic_enter_page.png"
+                   VerticalOptions="EndAndExpand"
+                   HorizontalOptions="Fill"
+                   ScaleX="1.2"
+                   ScaleY="1.2"/>
 
+            <Label Grid.Row="1"
+               Text="{Binding Resources[MapNotepad]}"
+               FontSize="27"
+               HorizontalOptions="Center"
+               VerticalOptions="Start"
+               FontAttributes="Bold"
+               CharacterSpacing="1"
+               TextColor="{StaticResource Light/Primary}"/>
+
+            
         </Grid>
 
         <StackLayout Grid.Row="1"
-                     Padding="16">
-            <Entry Placeholder="sdaasddas"></Entry>
-            
-            <Button Grid.Row="0" 
-                    Text="{Binding Resources[Log in]}" 
+                     VerticalOptions="End"
+                     Padding="20"
+                     Spacing="20">
+
+            <Button Text="{Binding Resources[Log in]}" 
+                    Font="17"
+                    CharacterSpacing="1"
                     Style="{StaticResource blueButtonStyle}"
                     Command="{Binding LogInCommand}"/>
 
-            <Button Grid.Row="1" 
-                    Text="{Binding Resources[CreateAccount]}" 
+            <Button Text="{Binding Resources[CreateAccount]}" 
                     BackgroundColor="{StaticResource TransparentColor}"
                     Command="{Binding CreateAccountCommand}"
                     BorderColor="{AppThemeBinding Light={StaticResource Light/Primary}, Dark={StaticResource Dark/Primary}}"
                     BorderWidth="2"
-                    TextColor="{AppThemeBinding Light={StaticResource Light/Primary}, Dark={StaticResource Dark/Primary}}"/>
-
+                    TextColor="{AppThemeBinding Light={StaticResource Light/Primary}, Dark={StaticResource Dark/Primary}}"
+                    Font="17"
+                    CharacterSpacing="1"/>
 
         </StackLayout>
     </Grid>
+
+
     
-</ContentPage>
+</views:BaseContentPage>

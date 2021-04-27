@@ -2,7 +2,7 @@
 
 namespace GPSNote.Views
 {
-    public partial class MainPage : ContentPage
+    public partial class MainPage : BaseContentPage
     {
         public MainPage()
         {

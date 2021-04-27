@@ -29,8 +29,8 @@ namespace GPSNote.ViewModels
         {
             _AuthenticationService = authenticationService;
 
-            ConfPasBorderColor = (Color)App.Current.Resources["System/Gray"];
-            PasswordBorderColor = (Color)App.Current.Resources["System/Gray"];
+            ConfPasBorderColor = (Color)App.Current.Resources["System/LightGray"];
+            PasswordBorderColor = (Color)App.Current.Resources["System/LightGray"];
         }
 
         #region -----Public Properties-----

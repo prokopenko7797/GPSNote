@@ -28,8 +28,8 @@ namespace GPSNote.ViewModels
             _pageDialogService = pageDialogService;
             _AuthenticationService = authenticationService;
 
-            EmailBorderColor = (Color)App.Current.Resources["System/Gray"];
-            NameBorderColor = (Color)App.Current.Resources["System/Gray"];
+            EmailBorderColor = (Color)App.Current.Resources["System/LightGray"];
+            NameBorderColor = (Color)App.Current.Resources["System/LightGray"];
         }
 
         #region -----Public Properties-----

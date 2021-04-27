@@ -1,18 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:prism="http://prismlibrary.com" 
-             xmlns:custommap="clr-namespace:GPSNote.CustomControls"
-             prism:ViewModelLocator.AutowireViewModel="True"
-             x:Class="GPSNote.Views.AddEditPin"
-             Title="{Binding Title}"
-             BackgroundColor="{AppThemeBinding Light={StaticResource System/White}, Dark={StaticResource System/Black}}"
-             NavigationPage.HasBackButton="False">
+<views:BaseContentPage  xmlns:views="clr-namespace:GPSNote.Views" 
+                        xmlns="http://xamarin.com/schemas/2014/forms"
+                        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                        xmlns:prism="http://prismlibrary.com" 
+                        xmlns:custommap="clr-namespace:GPSNote.CustomControls"
+                        prism:ViewModelLocator.AutowireViewModel="True"
+                        x:Class="GPSNote.Views.AddEditPin"
+                        Title="{Binding Title}"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource System/White}, Dark={StaticResource System/Black}}"
+                        NavigationPage.HasBackButton="False">
 
 
-    <NavigationPage.TitleView>
-
-        <Grid ColumnDefinitions="0.1*, 0.8*, 0.1*">
+    <Grid RowDefinitions="0.1*, 0.9*">
+        <Grid Grid.Row="0"
+              ColumnDefinitions="0.1*, 0.8*, 0.1*">
 
             <Button ImageSource="ic_left_blue.png"
                     Grid.Column="0"
@@ -38,66 +39,65 @@
 
         </Grid>
 
-    </NavigationPage.TitleView>
 
-
-
-    <Grid Grid.RowDefinitions="0.6*, 0.4*"
-          HorizontalOptions="FillAndExpand"  
-          VerticalOptions="StartAndExpand" >
-
-        <Grid Grid.Row="0"
-              Padding="16,0,16,16"
+        <Grid Grid.Row="1"
+              Grid.RowDefinitions="0.5*, 0.5*"
               HorizontalOptions="FillAndExpand"  
-              VerticalOptions="StartAndExpand">
+              VerticalOptions="StartAndExpand" >
 
-            <Label Text="{Binding Resources[Name]}"
-                   Padding="12,0,0,0"
-                   Grid.Row="0"
-                   VerticalOptions="End"/>
+            <Grid Grid.Row="0"
+                  Padding="16,0,16,16"
+                  HorizontalOptions="FillAndExpand"  
+                  VerticalOptions="StartAndExpand">
 
-            <custommap:FramedEntry TextEntry="{Binding Name}"
+                <Label Text="{Binding Resources[Name]}"  
+                       Padding="12,0,0,0"
+                       Grid.Row="0"
+                       VerticalOptions="End"/>
+
+                <custommap:FramedEntry TextEntry="{Binding Name}"
                                         PlaceholderText="{Binding Resources[Name]}"
                                         Grid.Row="1"/>
 
-            <Label Text="{Binding Resources[Description]}"
+                <Label Text="{Binding Resources[Description]}"
                    Padding="12,0,0,0"
                    Grid.Row="2"
                    VerticalOptions="End"/>
 
-            <custommap:FramedEntry TextEntry="{Binding Description}"
+                <custommap:FramedEntry TextEntry="{Binding Description}"
                                         PlaceholderText="{Binding Resources[Description]}"
                                         Grid.Row="3"/>
 
-            <Label Text="{Binding Resources[Coordinates]}"
+                <Label Text="{Binding Resources[Coordinates]}"
                    Padding="12,0,0,0"
                    Grid.Row="4"
                    VerticalOptions="End"/>
 
 
-            <Grid Grid.Row="5" >
+                <Grid Grid.Row="5" >
 
-                <custommap:FramedEntry TextEntry="{Binding Latitude}"
+                    <custommap:FramedEntry TextEntry="{Binding Latitude}"
                                    PlaceholderText="{Binding Resources[Latitude]}"
                                    Grid.Column="0"/>
 
-                <custommap:FramedEntry TextEntry="{Binding Longtitude}"
+                    <custommap:FramedEntry TextEntry="{Binding Longtitude}"
                                        PlaceholderText="{Binding Resources[Longtitude]}"
                                        Grid.Column="1"/>
 
+                </Grid>
+
             </Grid>
 
-        </Grid>
-        
-        <custommap:CustomMap  Grid.Row="1"  
+            <custommap:CustomMap  Grid.Row="1"  
                               ObsPins ="{Binding ObsPins}">
-            <custommap:CustomMap.Behaviors>
-                <prism:EventToCommandBehavior EventName="MapClicked"
+                <custommap:CustomMap.Behaviors>
+                    <prism:EventToCommandBehavior EventName="MapClicked"
                                               Command="{Binding ItemTappedCommand}"
                                               EventArgsParameterPath="Point" />
-            </custommap:CustomMap.Behaviors>
-        </custommap:CustomMap>
+                </custommap:CustomMap.Behaviors>
+            </custommap:CustomMap>
 
 
+        </Grid>
     </Grid>
-</ContentPage>
+</views:BaseContentPage>
