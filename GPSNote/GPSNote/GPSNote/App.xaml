@@ -45,6 +45,7 @@
                     Value="{AppThemeBinding Light={StaticResource Light/Primary}, Dark={StaticResource Dark/Primary}}" />
             <Setter Property="TextColor"
                     Value="{StaticResource System/White}" />
+ 
         </Style>
 
         <Style x:Key="errorLabelStyle"
@@ -67,22 +68,39 @@
                     Value="{AppThemeBinding Light={StaticResource System/Black}, Dark={StaticResource System/White}}" />
             <Setter Property="PlaceholderColor"
                     Value="{StaticResource System/Gray}" />
+            <Setter Property="FontFamily"
+                    Value="Montserrat-Regular" />
         </Style>
 
         <Style TargetType="Label">
             <Setter Property="TextColor"
                     Value="{AppThemeBinding Light={StaticResource System/Black}, Dark={StaticResource System/White}}" />
+            <Setter Property="FontFamily"
+                    Value="Montserrat-Regular" />
+            <Setter Property="FontFamily"
+                    Value="Montserrat-Regular" />
         </Style>
 
         <Style TargetType="RadioButton">
             <Setter Property="TextColor"
                     Value="{AppThemeBinding Light={StaticResource System/Black}, Dark={StaticResource System/White}}" />
+            
         </Style>
 
         <Style TargetType="Button">
             <Setter Property="TextTransform"
-                    Value="None" />
+                    Value="None" /> 
+            <Setter Property="FontFamily"
+                    Value="Montserrat-SemiBold" />
+            <Setter Property="CornerRadius"
+                    Value="1" />
+            <Setter Property="Font"
+                    Value="17"/>
+            <Setter Property="CharacterSpacing"
+                    Value="1"/>
 
+            
+            
         </Style>
 
 
@@ -93,6 +111,8 @@
                     Value="{StaticResource System/Gray}" />
             <Setter Property="BackgroundColor"
                     Value="{AppThemeBinding Light={StaticResource System/White}, Dark={StaticResource System/Black}}" />
+            <Setter Property="FontFamily"
+                    Value="Montserrat-Regular" />
         </Style>
 
 

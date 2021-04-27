@@ -23,7 +23,7 @@
             <Label Grid.Column="1"
                    Text="{Binding Resources[SettingsTitle]}" 
                    FontSize="Large"
-                   FontAttributes="Bold"
+                   FontFamily="Montserrat-SemiBold"
                    HorizontalOptions="Center"
                    VerticalOptions="Center"/>
 

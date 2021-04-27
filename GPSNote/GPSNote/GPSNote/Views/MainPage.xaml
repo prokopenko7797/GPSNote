@@ -20,10 +20,10 @@
 
             <Label Grid.Row="1"
                Text="{Binding Resources[MapNotepad]}"
-               FontSize="27"
+               FontSize="22"
                HorizontalOptions="Center"
                VerticalOptions="Start"
-               FontAttributes="Bold"
+               FontFamily="Montserrat-Bold"
                CharacterSpacing="1"
                TextColor="{StaticResource Light/Primary}"/>
 
@@ -38,21 +38,22 @@
             <Button Text="{Binding Resources[Log in]}" 
                     Font="17"
                     CharacterSpacing="1"
+                    FontFamily="Montserrat-SemiBold"
                     Style="{StaticResource blueButtonStyle}"
-                    Command="{Binding LogInCommand}"/>
+                    Command="{Binding LogInCommand}"
+                    />
 
             <Button Text="{Binding Resources[CreateAccount]}" 
                     BackgroundColor="{StaticResource TransparentColor}"
                     Command="{Binding CreateAccountCommand}"
                     BorderColor="{AppThemeBinding Light={StaticResource Light/Primary}, Dark={StaticResource Dark/Primary}}"
-                    BorderWidth="2"
+                    BorderWidth="1"
                     TextColor="{AppThemeBinding Light={StaticResource Light/Primary}, Dark={StaticResource Dark/Primary}}"
                     Font="17"
+                    FontFamily="Montserrat-SemiBold"
                     CharacterSpacing="1"/>
 
         </StackLayout>
     </Grid>
 
-
-    
 </views:BaseContentPage>
