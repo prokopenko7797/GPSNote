@@ -6,12 +6,13 @@
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="GPSNote.Views.SignUp" 
              Title="{Binding Resources[SignUpTitle]}"
-             BackgroundColor="{AppThemeBinding Light={StaticResource System/White}, Dark={StaticResource System/Black}}"
-             NavigationPage.HasBackButton="False">
+             BackgroundColor="{AppThemeBinding Light={StaticResource System/White}, Dark={StaticResource System/Black}}">
 
-    <NavigationPage.TitleView>
 
-        <Grid ColumnDefinitions="0.1*, 0.8*, 0.1*">
+
+    <Grid RowDefinitions="0.1*, 0.9*">
+
+        <Grid Grid.Row="0" ColumnDefinitions="0.1*, 0.8*, 0.1*">
 
             <Button ImageSource="ic_left_blue.png"
                     Grid.Column="0"
@@ -22,7 +23,7 @@
                     />
 
             <Label Grid.Column="1"
-                   Text="{Binding Resources[SignUpTitle]}" 
+                   Text="{Binding Resources[SignInTitle]}" 
                    FontSize="Large"
                    FontAttributes="Bold"
                    HorizontalOptions="Center"
@@ -32,100 +33,100 @@
 
         </Grid>
 
-    </NavigationPage.TitleView>
+
+        <Grid Grid.Row="1" 
+              Padding="16,0,16,16" 
+              Grid.RowDefinitions ="0.4*, 0.1*, 0.1*, 0.1*, 0.3*" >
+
+            <Grid Grid.Column="0" 
+                  Grid.RowDefinitions ="0.1*, 0.2*, 0.1*, 0.1*, 0.2*, 0.1*"
+                  VerticalOptions="CenterAndExpand">
+
+                <Label Text="{Binding Resources[Name]}"
+                       Padding="12,0,0,0"
+                       Grid.Row="0"
+                       VerticalOptions="End"/>
+
+                <customcontrols:FramedEntry TextEntry="{Binding Name}"
+                                            PlaceholderText="{Binding Resources[Name]}"
+                                            Grid.Row="1"
+                                            EntryBorderColor="{Binding NameBorderColor}"/>
 
 
 
-    <Grid Padding="16,0,16,16" 
-          Grid.RowDefinitions ="0.4*, 0.1*, 0.1*, 0.1*, 0.3*" >
+                <Label Text="{Binding NameError}"
+                       Padding="12,0,0,0"
+                       Grid.Row="2"
+                       VerticalOptions="Start"
+                       Style="{StaticResource errorLabelStyle}"/>
 
-        <Grid Grid.Column="0" 
-              Grid.RowDefinitions ="0.1*, 0.2*, 0.1*, 0.1*, 0.2*, 0.1*"
-              VerticalOptions="CenterAndExpand">
+                <Label Text="{Binding Resources[Email]}"
+                       Padding="12,0,0,0"
+                       Grid.Row="3"
+                       VerticalTextAlignment="End"/>
 
-            <Label Text="{Binding Resources[Name]}"
-                   Padding="12,0,0,0"
-                   Grid.Row="0"
-                   VerticalOptions="End"/>
+                <customcontrols:FramedEntry PlaceholderText = "{Binding Resources[Email]}" 
+                                            TextEntry="{Binding Email}" 
+                                            Grid.Row="4"
+                                            EntryBorderColor="{Binding EmailBorderColor}"/>
 
-            
-            <customcontrols:FramedEntry TextEntry="{Binding Name}"
-                                        PlaceholderText="{Binding Resources[Name]}"
-                                        Grid.Row="1"
-                                        EntryBorderColor="{Binding NameBorderColor}"/>
+                <Label Text="{Binding EmailError}"
+                       Padding="12,0,0,0"
+                       Grid.Row="5"
+                       VerticalOptions="Start"
+                       Style="{StaticResource errorLabelStyle}"/>
 
-
-            <Label Text="{Binding NameError}"
-                   Padding="12,0,0,0"
-                   Grid.Row="2"
-                   VerticalOptions="Start"
-                   Style="{StaticResource errorLabelStyle}"/>
-
-            <Label Text="{Binding Resources[Email]}"
-                   Padding="12,0,0,0"
-                   Grid.Row="3"
-                   VerticalTextAlignment="End"/>
+            </Grid>
 
 
-            <customcontrols:FramedEntry TextEntry="{Binding Email}"
-                                        PlaceholderText="{Binding Resources[Email]}"
-                                        Grid.Row="4"
-                                        EntryBorderColor="{Binding EmailBorderColor}"/>
-            
-            
-            <Label Text="{Binding EmailError}"
-                   Padding="12,0,0,0"
-                   Grid.Row="5"
-                   VerticalOptions="Start"
-                   Style="{StaticResource errorLabelStyle}"/>
+            <Button Grid.Row="1" 
+                    Text="{Binding Resources[Next]}" 
+                    Style="{StaticResource blueButtonStyle}"
+                    Command="{Binding AddUserButtonTapCommand}"/>
 
+            <Grid Grid.Row="2">
+
+                <BoxView  Color="{StaticResource System/LightGray}" 
+                          HeightRequest="1" 
+                          VerticalOptions="Center"/>
+
+                <Label Text=" or " 
+                       TextColor="{StaticResource System/LightGray}"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"
+                       BackgroundColor="{AppThemeBinding Light={StaticResource System/White}, Dark={StaticResource System/Black}}"/>
+            </Grid>
+
+            <Grid Grid.Row="3" 
+                  Grid.ColumnDefinitions="0.3*,0.3*,0.3*">
+
+                <Button ImageSource="ic_google.png" 
+                        Grid.Column="0"
+                        BackgroundColor="{StaticResource TransparentColor}"
+                        BorderWidth="1"
+                        BorderColor="{StaticResource System/LightGray}"
+                        IsEnabled="False"
+                        HeightRequest="24" />
+
+                <Button ImageSource="ic_facebook.png"
+                        Grid.Column="1"
+                        BackgroundColor="{StaticResource TransparentColor}"
+                        BorderWidth="1"
+                        BorderColor="{StaticResource System/LightGray}"
+                        IsEnabled="False"/>
+
+                <Button ImageSource="{AppThemeBinding Light=ic_apple.png, Dark=ic_apple_dark.png}" 
+                        Grid.Column="2"
+                        BackgroundColor="{StaticResource TransparentColor}"
+                        BorderWidth="1"
+                        BorderColor="{StaticResource System/LightGray}"
+                        IsEnabled="False" />
+
+            </Grid>
 
 
         </Grid>
-
-
-        <Button Grid.Row="1" 
-                Text="{Binding Resources[Next]}" 
-                Style="{StaticResource blueButtonStyle}"
-                Command="{Binding AddUserButtonTapCommand}"></Button>
-
-
-        <Grid Grid.Row="2">
-            <BoxView  Color="{StaticResource System/LightGray}" HeightRequest="1" VerticalOptions="Center"/>
-            <Label Text=" or " 
-                   TextColor="{StaticResource System/LightGray}"
-                   HorizontalOptions="Center"
-                   VerticalOptions="Center"
-                   BackgroundColor="{AppThemeBinding Light={StaticResource System/White}, Dark={StaticResource System/Black}}"/>
-        </Grid>
-
-        <Grid Grid.Row="3" 
-              Grid.ColumnDefinitions="0.3*,0.3*,0.3*">
-
-            <Button ImageSource="ic_google.png" 
-                    Grid.Column="0"
-                    BackgroundColor="{StaticResource TransparentColor}"
-                    BorderWidth="1"
-                    BorderColor="{StaticResource System/LightGray}"
-                    IsEnabled="False"
-                    HeightRequest="24" />
-
-            <Button ImageSource="ic_facebook.png"
-                    Grid.Column="1"
-                    BackgroundColor="{StaticResource TransparentColor}"
-                    BorderWidth="1"
-                    BorderColor="{StaticResource System/LightGray}"
-                    IsEnabled="False"/>
-
-            <Button ImageSource="{AppThemeBinding Light=ic_apple.png, Dark=ic_apple_dark.png}" 
-                    Grid.Column="2"
-                    BackgroundColor="{StaticResource TransparentColor}"
-                    BorderWidth="1"
-                    BorderColor="{StaticResource System/LightGray}"
-                    IsEnabled="False" />
-
-        </Grid>
-
     </Grid>
 
+  
 </views:BaseContentPage>

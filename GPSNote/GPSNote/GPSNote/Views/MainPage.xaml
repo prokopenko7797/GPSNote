@@ -5,8 +5,7 @@
              xmlns:prism="http://prismlibrary.com"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="GPSNote.Views.MainPage"
-             BackgroundColor="{AppThemeBinding Light={StaticResource System/White}, Dark={StaticResource System/Black}}"
-             NavigationPage.HasBackButton="False">
+             BackgroundColor="{AppThemeBinding Light={StaticResource System/White}, Dark={StaticResource System/Black}}">
 
     <Grid RowDefinitions="0.7*, 0.3*">
 
@@ -17,8 +16,7 @@
             <Image Source="pic_enter_page.png"
                    VerticalOptions="EndAndExpand"
                    HorizontalOptions="Fill"
-                   ScaleX="1.2"
-                   ScaleY="1.2"/>
+                   Scale="1.2"/>
 
             <Label Grid.Row="1"
                Text="{Binding Resources[MapNotepad]}"

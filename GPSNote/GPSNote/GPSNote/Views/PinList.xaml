@@ -5,8 +5,7 @@
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="GPSNote.Views.PinList"
              BackgroundColor="{AppThemeBinding Light={StaticResource System/White}, Dark={StaticResource System/Black}}"
-             Title="{Binding Resources[PinListTitle]}"
-             NavigationPage.HasBackButton="False">
+             Title="{Binding Resources[PinListTitle]}">
 
 
     <Grid Grid.RowDefinitions ="0.1*, 0.9*"

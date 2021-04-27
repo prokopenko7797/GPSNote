@@ -14,7 +14,7 @@ using Prism.Plugin.Popups;
 namespace GPSNote.Droid
 {
     [Activity(Theme = "@style/MainTheme",
-              ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize)]
+              ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize, ScreenOrientation=ScreenOrientation.Portrait)]
     [IntentFilter(new[] { Intent.ActionView },
               Categories = new[] { Intent.CategoryBrowsable, Intent.CategoryDefault },
               DataScheme = "https",

@@ -108,7 +108,7 @@ namespace GPSNote
                             {
                                 { nameof(PinViewModel),  pinView}
                             };
-                            await NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(AddEditPin)}", parametrs);
+                            await NavigationService.NavigateAsync(nameof(AddEditPin), parametrs);
                         }
                        
                     }

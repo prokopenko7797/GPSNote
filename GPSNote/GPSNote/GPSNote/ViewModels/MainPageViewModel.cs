@@ -37,13 +37,13 @@ namespace GPSNote.ViewModels
 
         private async void OnCreateAccountCommand()
         {
-            await NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(SignUp)}");
+            await NavigationService.NavigateAsync(nameof(SignUp));
 
         }
 
         private async void OnLogInCommand()
         {
-            await NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(SignIn)}");
+            await NavigationService.NavigateAsync(nameof(SignIn));
         }
 
         #endregion

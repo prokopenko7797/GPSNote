@@ -206,7 +206,7 @@ namespace GPSNote.ViewModels
                 {
                     var p = new NavigationParameters { { Constant.Email, _email } };
 
-                    await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(SignIn)}", p);
+                    await NavigationService.NavigateAsync($"/{nameof(SignIn)}", p);
 
                 }
                 else
