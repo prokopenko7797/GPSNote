@@ -19,6 +19,8 @@ using Xamarin.Essentials.Implementation;
 using Xamarin.Essentials.Interfaces;
 using Xamarin.Forms;
 using GPSNote.Servcies.Weather;
+using System.Threading.Tasks;
+using Prism.Plugin.Popups;
 
 namespace GPSNote
 {
@@ -31,6 +33,8 @@ namespace GPSNote
         private IAuthorizationService _AuthorizationService;
         private IAuthorizationService AuthorizationService =>
             _AuthorizationService ?? (_AuthorizationService = Container.Resolve<IAuthorizationService>());
+
+        private TaskCompletionSource<bool> taskCompletionSource = new TaskCompletionSource<bool>();
 
         public App(IPlatformInitializer initializer)
             : base(initializer)
@@ -52,6 +56,8 @@ namespace GPSNote
             {
                 await NavigationService.NavigateAsync(nameof(MainTabbedPage));
             }
+
+            taskCompletionSource.SetResult(true);
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
@@ -79,10 +85,19 @@ namespace GPSNote
             containerRegistry.RegisterForNavigation<MainTabbedPage>();
             containerRegistry.RegisterForNavigation<MainPage, MainPageViewModel>();
             containerRegistry.RegisterForNavigation<CreateAccount, CreateAccountViewModel>();
+            containerRegistry.RegisterForNavigation<PinInfoPopup, PinInfoPopupViewModel>();
+
+
+            containerRegistry.RegisterPopupNavigationService();
+            containerRegistry.RegisterPopupDialogService();
         }
 
         protected override async void OnAppLinkRequestReceived(Uri uri)
         {
+            Task<bool> t1 = taskCompletionSource.Task;
+
+            await t1;
+
             if (uri.Host.Equals(Constant.Host, StringComparison.OrdinalIgnoreCase))
             {
                 if (uri.Segments != null && uri.Segments.Length == 2)

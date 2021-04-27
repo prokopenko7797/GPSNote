@@ -9,19 +9,14 @@ using Prism.Mvvm;
 using Prism.Navigation;
 using Prism.Services;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.GoogleMaps;
 using GPSNote.Extensions;
-using System.Threading.Tasks;
 using System.ComponentModel;
 using GPSNote.Views;
-using OpenWeatherMap;
 using GPSNote.Servcies.Weather;
-using GPSNote.Servcies.Authentication;
 using GPSNote.Servcies.AutorizationService;
 using GPSNote.Servcies.PinShare;
 using GPSNote.Servcies.Permission;
@@ -34,9 +29,7 @@ namespace GPSNote.ViewModels
     {
         private readonly IPageDialogService _pageDialogService;
         private readonly IPinService _pinService;
-        private readonly IWeatherService _weatherService;
         private readonly IAuthorizationService _authorizationService;
-        private readonly IPinShareService _pinShareService;
         private readonly IPermissionService _permissionService;
 
         public MapPageViewModel(INavigationService navigationService, ILocalizationService localizationService,
@@ -46,9 +39,7 @@ namespace GPSNote.ViewModels
         {
             _pageDialogService = pageDialogService;
             _pinService = pinService;
-            _weatherService = weatherService;
             _authorizationService = authorizationService;
-            _pinShareService = pinShareService;
             _permissionService = permissionService;
         }
 
@@ -181,72 +172,6 @@ namespace GPSNote.ViewModels
         public DelegateCommand<object> LogOutCommand =>
             _LogOutCommand ?? (_LogOutCommand = new DelegateCommand<object>(OnLogOutCommand));
 
-
-        private DelegateCommand<object> _SharePinCommand;
-        public DelegateCommand<object> SharePinCommand =>
-            _SharePinCommand ?? (_SharePinCommand = new DelegateCommand<object>(OnSharePinCommand));
-
-
-
-        string _Temperature;
-        public string Temperature
-        {
-            get { return _Temperature; }
-            set { SetProperty(ref _Temperature, value); }
-        }
-
-        string _Humidity;
-        public string Humidity
-        {
-            get { return _Humidity; }
-            set { SetProperty(ref _Humidity, value); }
-        }
-
-        string _Pressure;
-        public string Pressure
-        {
-            get { return _Pressure; }
-            set { SetProperty(ref _Pressure, value); }
-        }
-
-        string _Wind;
-        public string Wind
-        {
-            get { return _Wind; }
-            set { SetProperty(ref _Wind, value); }
-        }
-
-
-        string _Clouds;
-        public string Clouds
-        {
-            get { return _Clouds; }
-            set { SetProperty(ref _Clouds, value); }
-        }
-
-
-        string _Precipitation;
-        public string Precipitation
-        {
-            get { return _Precipitation; }
-            set { SetProperty(ref _Precipitation, value); }
-        }
-
-        string _Weather;
-        public string Weather
-        {
-            get { return _Weather; }
-            set { SetProperty(ref _Weather, value); }
-        }
-
-        string _LastUpdate;
-        public string LastUpdate
-        {
-            get { return _LastUpdate; }
-            set { SetProperty(ref _LastUpdate, value); }
-        }
-
-
         #endregion
 
         #region --Overrides--
@@ -321,11 +246,6 @@ namespace GPSNote.ViewModels
 
         #region --Private helpers--
 
-        private void OnSharePinCommand(object sender)
-        {
-            var pin = ControlObs.Where(pinView => pinView.Label.Contains(PinLabel)).First();
-            _pinShareService.SharePinAsync(pin.ToPinModel());
-        }
 
         private async void OnSettingsNavigation(object sender)
         {
@@ -403,37 +323,15 @@ namespace GPSNote.ViewModels
         private async void DisplayInfoPinViewModel(PinViewModel pinView)
         {
             IsPinTapped = true;
-            PinLabel = pinView.Label;
-            PinDescription = pinView.Description;
-            PinLatLong = $"{pinView.Latitude}, {pinView.Longitude}";
+
+            NavigationParameters parameter = new NavigationParameters
+                {
+                    {nameof(PinViewModel), pinView }
+                };
+
+            await NavigationService.NavigateAsync(nameof(PinInfoPopup), parameter);
 
 
-            CurrentWeatherResponse currentWeather = await _weatherService.GetCurrentWeatherAsync(pinView.Latitude,
-                                                                                                 pinView.Longitude);
-
-
-            Temperature = currentWeather.Temperature.Value.ToString() + " " +
-                          currentWeather.Temperature.Unit;
-
-            Humidity = currentWeather.Humidity.Value.ToString();
-            Pressure = currentWeather.Pressure.Value.ToString() + " " +
-                       currentWeather.Pressure.Unit;
-
-            Wind = currentWeather.Wind.Speed.Value.ToString() + " " +
-                   currentWeather.Wind.Speed.Name + " " +
-                   currentWeather.Wind.Speed.Value.ToString() + " " +
-                   currentWeather.Wind.Direction.Value.ToString() + " " +
-                   currentWeather.Wind.Direction.Value.ToString();
-
-            Clouds = currentWeather.Clouds.Value.ToString() + " " +
-                     currentWeather.Clouds.Name;
-
-            Precipitation = currentWeather.Precipitation.Value.ToString() + " " +
-                            currentWeather.Precipitation.Unit + " " +
-                            currentWeather.Precipitation.Mode;
-
-            Weather = currentWeather.Weather.Value.ToString();
-            LastUpdate = currentWeather.LastUpdate.Value.ToString();
         }
 
         #endregion

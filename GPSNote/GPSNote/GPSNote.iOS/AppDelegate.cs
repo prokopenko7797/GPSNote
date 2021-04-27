@@ -38,7 +38,7 @@ namespace GPSNote.iOS
         {
             // Register any platform specific implementations
 
-            //containerRegistry.RegisterPopupNavigationService();
+            containerRegistry.RegisterPopupNavigationService();
         }
     }
 }

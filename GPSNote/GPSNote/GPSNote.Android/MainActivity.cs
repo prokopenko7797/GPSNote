@@ -37,7 +37,7 @@ namespace GPSNote.Droid
             FirebaseApp.InitializeApp(this);
             AndroidAppLinks.Init(this);
 
-            global::Rg.Plugins.Popup.Popup.Init(this);
+            Rg.Plugins.Popup.Popup.Init(this);
 
             UserDialogs.Init(this);
             Xamarin.FormsGoogleMaps.Init(this, savedInstanceState);
@@ -64,7 +64,7 @@ namespace GPSNote.Droid
         {
             // Register any platform specific implementations
 
-            //containerRegistry.RegisterPopupNavigationService();
+            containerRegistry.RegisterPopupNavigationService();
         }
     }
 }

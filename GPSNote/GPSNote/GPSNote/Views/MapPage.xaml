@@ -124,58 +124,7 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-
-
-        <Grid Grid.Row="1"
-              Grid.RowDefinitions ="*, *, *, *, *, *, *, *"
-              BackgroundColor="{AppThemeBinding Light={StaticResource System/White}, Dark={StaticResource System/Black}}"
-              VerticalOptions="Center"
-              HorizontalOptions="Start">
-
-            <Label Grid.Row="0" Text="{Binding Temperature}"/>
-            <Label Grid.Row="1" Text="{Binding Humidity}"/>
-            <Label Grid.Row="2" Text="{Binding Pressure}"/>
-            <Label Grid.Row="3" Text="{Binding Wind}"/>
-            <Label Grid.Row="4" Text="{Binding Clouds}"/>
-            <Label Grid.Row="5" Text="{Binding Precipitation}"/>
-            <Label Grid.Row="6" Text="{Binding Weather}"/>
-            <Label Grid.Row="7" Text="{Binding LastUpdate}"/>
-
-        </Grid>
-        
-
-        <Grid Grid.Row="1" 
-              BackgroundColor="{AppThemeBinding Light={StaticResource System/White}, Dark={StaticResource System/Black}}"
-              IsVisible="{Binding IsPinTapped}"         
-              VerticalOptions="End"
-              HorizontalOptions="Fill"
-              Padding="16,16,16,16">
-            
-            <Grid Grid.Row="0">
-            
-                <Label Text= "{Binding PinLabel}"
-                       FontAttributes="Bold"
-                       Grid.Column="0"/>
-
-                <Button Grid.Column="1"
-                        ImageSource="ic_share.png"
-                        BackgroundColor="{StaticResource TransparentColor}"
-                        HorizontalOptions="End"
-                        VerticalOptions="Start"
-                        Command="{Binding SharePinCommand}">
-                
-                </Button>
-            </Grid>
-
-            
-            <Label Text= "{Binding PinLatLong}" 
-                       Grid.Row="1"/>
-
-            <Label Text= "{Binding PinDescription}"
-                   Grid.Row="2"/>
-            
-
-        </Grid>
+       
     </Grid>
 
 </ContentPage>
