@@ -7,7 +7,8 @@
                        prism:ViewModelLocator.AutowireViewModel="True"
                        x:Class="GPSNote.Views.SignIn"
                        Title="{Binding Resources[SignInTitle]}"
-                       BackgroundColor="{AppThemeBinding Light={StaticResource System/White}, Dark={StaticResource System/Black}}">
+                       BackgroundColor="{AppThemeBinding Light={StaticResource System/White}, Dark={StaticResource System/Black}}"
+                       NavigationPage.HasNavigationBar="False">
   
 
     <Grid RowDefinitions="0.1*, 0.9*">

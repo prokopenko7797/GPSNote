@@ -8,7 +8,8 @@
                        xmlns:custommap="clr-namespace:GPSNote.CustomControls"
                        xmlns:customcontrols="clr-namespace:GPSNote.CustomControls"
                        BackgroundColor="{AppThemeBinding Light={StaticResource System/White}, Dark={StaticResource System/Black}}"
-                       Title="{Binding Resources[MapTitle]}">
+                       Title="{Binding Resources[MapTitle]}"
+                       NavigationPage.HasNavigationBar="False">
 
     
     <Grid Grid.RowDefinitions ="0.1*, 0.9*">
@@ -81,7 +82,7 @@
                   VerticalOptions="Start"
                   SelectedItem="{Binding SelectedListItem}"
                   x:Name="ListView1"
-                  BackgroundColor="White"
+                  BackgroundColor="{StaticResource TransparentColor}"
                   IsVisible="{Binding IsListViewVisible}"
                   HeightRequest="{Binding HeightRequest}"
                   SeparatorVisibility="None">

@@ -152,7 +152,7 @@ namespace GPSNote.ViewModels
 
         private async void OnBackButtonCommand()
         {
-            await NavigationService.NavigateAsync($"/{nameof(MainPage)}");
+            await NavigationService.GoBackAsync();
         }
 
 
@@ -162,7 +162,7 @@ namespace GPSNote.ViewModels
 
             if (await _AuthenticationService.SignInAsync(Email, Password))
             {
-                await NavigationService.NavigateAsync($"/{nameof(MainTabbedPage)}");
+                await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(MainTabbedPage)}");
             }
             else
             {

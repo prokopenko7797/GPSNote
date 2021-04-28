@@ -6,7 +6,8 @@
                   xmlns:prism="http://prismlibrary.com" 
                   BackgroundClickedCommand="{Binding PopupCloseCommand}"
                   BackgroundColor="Transparent"
-                  x:Class="GPSNote.Views.PinInfoPopup">
+                  x:Class="GPSNote.Views.PinInfoPopup"
+                  NavigationPage.HasNavigationBar="False">
 
     <popup:PopupPage.Animation>
 

@@ -336,7 +336,7 @@ namespace GPSNote.ViewModels
                     {nameof(PinViewModel), pinView }
                 };
 
-            await NavigationService.NavigateAsync(nameof(PinInfoPopup), parameter);
+            await NavigationService.NavigateAsync(nameof(PinInfoPopup), parameter, true, true);
 
 
         }

@@ -48,11 +48,11 @@ namespace GPSNote
 
             if (AuthorizationService.IsAuthorized)
             {
-                await NavigationService.NavigateAsync(nameof(MainPage));
+                await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(MainPage)}");
             }
             else
             {
-                await NavigationService.NavigateAsync(nameof(MainTabbedPage));
+                await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(MainTabbedPage)}");
             }
         }
 
@@ -108,7 +108,7 @@ namespace GPSNote
                             {
                                 { nameof(PinViewModel),  pinView}
                             };
-                            await NavigationService.NavigateAsync(nameof(AddEditPin), parametrs);
+                            await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(MainTabbedPage)}/{nameof(AddEditPin)}");
                         }
                        
                     }
