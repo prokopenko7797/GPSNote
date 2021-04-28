@@ -66,6 +66,14 @@ namespace GPSNote.ViewModels
             set { SetProperty(ref _confirmpassword, value); }
         }
 
+        private bool _IsEnabled;
+        public bool IsEnabled
+        {
+            get { return _IsEnabled; }
+            set { SetProperty(ref _IsEnabled, value); }
+        }
+
+
         private Color _EntryBorderColor;
         public Color ConfPasBorderColor
         {
@@ -85,7 +93,7 @@ namespace GPSNote.ViewModels
         private DelegateCommand _AddUserButtonTapCommand;
         public DelegateCommand AddUserButtonTapCommand =>
             _AddUserButtonTapCommand ?? (_AddUserButtonTapCommand =
-            new DelegateCommand(ExecuteUserButtonTapCommand));
+            new DelegateCommand(ExecuteUserButtonTapCommand)).ObservesCanExecute(() => IsEnabled);
 
 
         private DelegateCommand _BackButtonCommand;
@@ -97,7 +105,32 @@ namespace GPSNote.ViewModels
 
 
         #region -----Overrides-----
+        protected override void OnPropertyChanged(PropertyChangedEventArgs args)
+        {
+            base.OnPropertyChanged(args);
+            if (args.PropertyName == nameof(Password) || args.PropertyName == nameof(ConfirmPassword))
+            {
+                bool result = false;
 
+                if (Password == null || ConfirmPassword == null)
+                {
+                    result = true;
+                }
+
+                if (result)
+                {
+                    if (Password != string.Empty && ConfirmPassword != string.Empty)
+                    {
+                        IsEnabled = true;
+                    }
+
+                    else if (Password == string.Empty || ConfirmPassword == string.Empty)
+                    {
+                        IsEnabled = false;
+                    }
+                }
+            }
+        }
 
         public override void OnNavigatedTo(INavigationParameters parameters)
         {
@@ -176,10 +209,7 @@ namespace GPSNote.ViewModels
                     await NavigationService.NavigateAsync($"/{nameof(SignIn)}", p);
 
                 }
-                else
-                {
-                    PasswordError = Resources["EmailExist"];
-                }
+
             }
         }
 

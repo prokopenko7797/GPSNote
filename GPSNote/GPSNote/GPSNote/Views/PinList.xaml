@@ -11,11 +11,6 @@
     <Grid Grid.RowDefinitions ="0.1*, 0.9*"
           Padding="16,0,16,16" >
 
-        <Label Text="{Binding Resources[NoPins]}" 
-               HorizontalOptions="Center"
-               VerticalOptions="Center"
-               IsVisible="{Binding IsVisible}"></Label>
-
         <SearchBar Grid.Row="0" 
                    Placeholder="Search"
 
@@ -29,6 +24,12 @@
 
             </SearchBar.Behaviors>
         </SearchBar>
+
+        <Label Text="{Binding Resources[NoPins]}" 
+               Grid.Row="1"
+               HorizontalOptions="Center"
+               VerticalOptions="Center"
+               IsVisible="{Binding IsVisible}"/>
 
         <ListView Grid.Row="1" 
                   ItemsSource="{Binding PinObs}" 

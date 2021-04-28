@@ -1,50 +1,41 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<views:BaseContentPage xmlns:views="clr-namespace:GPSNote.Views"  xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:prism="http://prismlibrary.com"
-             prism:ViewModelLocator.AutowireViewModel="True"
-             x:Class="GPSNote.Views.MapPage"
-             xmlns:maps="clr-namespace:Xamarin.Forms.GoogleMaps;assembly=Xamarin.Forms.GoogleMaps" 
-             xmlns:custommap="clr-namespace:GPSNote.CustomControls"
-             BackgroundColor="{AppThemeBinding Light={StaticResource System/White}, Dark={StaticResource System/Black}}"
-             Title="{Binding Resources[MapTitle]}">
+<views:BaseContentPage xmlns:views="clr-namespace:GPSNote.Views"  
+                       xmlns="http://xamarin.com/schemas/2014/forms"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                       xmlns:prism="http://prismlibrary.com"
+                       prism:ViewModelLocator.AutowireViewModel="True"
+                       x:Class="GPSNote.Views.MapPage"
+                       xmlns:custommap="clr-namespace:GPSNote.CustomControls"
+                       xmlns:customcontrols="clr-namespace:GPSNote.CustomControls"
+                       BackgroundColor="{AppThemeBinding Light={StaticResource System/White}, Dark={StaticResource System/Black}}"
+                       Title="{Binding Resources[MapTitle]}">
 
     
     <Grid Grid.RowDefinitions ="0.1*, 0.9*">
 
         <Grid Grid.Row="0" 
-              Grid.ColumnDefinitions="0.15*,0.7*,0.15*"
-              VerticalOptions="End">
+              Grid.ColumnDefinitions="0.1*,0.8*,0.1*"
+              VerticalOptions="End"
+              Padding="16,0,16,0">
 
             <Button Grid.Column="0"
-                         ImageSource="ic_settings.png"
-                         Command="{Binding SettingsNavigation}"
-                         BackgroundColor="{StaticResource TransparentColor}">
+                    ImageSource="ic_settings.png"
+                    Command="{Binding SettingsNavigation}"
+                    BackgroundColor="{StaticResource TransparentColor}"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center">
             </Button>
-            <Frame Grid.Column="1"
-                   Padding="0"
-                   CornerRadius="4"
-                   HasShadow="False">
-                
-                <SearchBar Placeholder="{Binding Resources[Search]}"
-                           BackgroundColor="AliceBlue"
-                           TextColor="Black"
-                           PlaceholderColor="Gray"
-                           Text="{Binding SearchBarText}"
-                           >
-                    <SearchBar.Behaviors>
-                        <prism:EventToCommandBehavior
-                                    EventName="TextChanged"
-                                    Command="{Binding TextChangedCommand}"
-                                    CommandParameter="{Binding .}"  />
-                        <prism:EventToCommandBehavior 
-                                    EventName="Focused"
-                                    Command="{Binding FocusedCommand}"
-                                    CommandParameter="{Binding .}"/>
 
-                    </SearchBar.Behaviors>
-                </SearchBar>
-            </Frame>
+
+                <customcontrols:SearchEntry TextEntry="{Binding SearchBarText}"
+                                            PlaceholderText="{Binding Resources[Search]}"
+                                            EntryBorderColor="{StaticResource TransparentColor}"
+                                            IsEntryFocused="{Binding IsListViewVisible}"
+                                            Grid.Column="1"
+                                            Grid.ColumnSpan="2"
+                                            HorizontalOptions="Center"/>
+
+
 
             <Button Grid.Column="2"
                          ImageSource="ic_exid.png"
@@ -53,6 +44,17 @@
             </Button>
 
         </Grid>
+
+
+        <Button Grid.Row="1" 
+                Text="{Binding Resources[FocusToSelected]}" 
+                Command="{Binding MoveToCommand}" 
+                HorizontalOptions="Center" 
+                VerticalOptions="Start"
+                IsVisible="{Binding IsSelected}">
+
+        </Button>
+
 
         <custommap:CustomMap Grid.Row="1"   
                              ObsPins ="{Binding ControlObs}" 
@@ -70,14 +72,6 @@
             </custommap:CustomMap.Behaviors>
         </custommap:CustomMap>
 
-        <Button Grid.Row="1" 
-                Text="{Binding Resources[FocusToSelected]}" 
-                Command="{Binding MoveToCommand}" 
-                HorizontalOptions="Center" 
-                VerticalOptions="Start"
-                IsVisible="{Binding IsSelected}">
-            
-        </Button>
 
 
         <ListView Grid.Row="1" 

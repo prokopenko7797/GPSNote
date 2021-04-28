@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
-             x:Class="GPSNote.CustomControls.FramedEntry">
+             x:Class="GPSNote.CustomControls.SearchEntry">
     <StackLayout>
 
         <Frame x:Name="frame"
-               CornerRadius="2"
-               BorderColor="{StaticResource System/LightGray}"
-               BackgroundColor="{StaticResource TransparentColor}"
-               Padding="8,0,8,0"
+               CornerRadius="4"
+               BorderColor="{StaticResource TransparentColor}"
+               BackgroundColor="{AppThemeBinding Light={StaticResource Light/Variant}, Dark={StaticResource Dark/Variant}}"
+               Padding="15,0,0,0"
                HasShadow="False">
 
             <Grid ColumnDefinitions="0.9*, 0.1*"
@@ -16,13 +16,13 @@
 
                 <Entry x:Name="entry"
                        Grid.Column="0"
-                       HeightRequest="45"
+                       FontSize="Small"
                        TextChanged="OnTextChanged"
                        Unfocused="OnUnfocused"
                        Focused="OnFocused"
-                       VerticalOptions="FillAndExpand">        
+                       VerticalOptions="FillAndExpand">
                 </Entry>
-                
+
                 <ImageButton  x:Name="clearButton"
                               Grid.Column="1"
                               VerticalOptions="Center"
@@ -30,12 +30,12 @@
                               BackgroundColor="{StaticResource TransparentColor}"
                               Clicked="ClearButtonClicked"
                               IsVisible="False"/>
-                
+
             </Grid>
 
         </Frame>
 
-        
-        
+
+
     </StackLayout>
 </ContentView>

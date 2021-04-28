@@ -53,6 +53,8 @@ namespace GPSNote.ViewModels
             set { SetProperty(ref _IsPinTapped, value); }
         }
 
+
+
         private bool _IsSelected;
 
         public bool IsSelected
@@ -139,14 +141,7 @@ namespace GPSNote.ViewModels
             set { SetProperty(ref _HeightRequest, value); }
         }
 
-        private DelegateCommand<object> _TextChangedCommand;
-        public DelegateCommand<object> TextChangedCommand =>
-            _TextChangedCommand ?? (_TextChangedCommand = new DelegateCommand<object>(OnTextChangedCommand));
 
-
-        private DelegateCommand<object> _FocusedCommand;
-        public DelegateCommand<object> FocusedCommand =>
-            _FocusedCommand ?? (_FocusedCommand = new DelegateCommand<object>(OnFocusedCommand));
 
 
         private DelegateCommand<object> _PinClickedCommand;
@@ -240,6 +235,18 @@ namespace GPSNote.ViewModels
                 DisplayInfoPinViewModel(ControlObs.Where(pinView => pinView.Label.Contains(SelectedListItem.Label)).First());
 
             }
+
+            if (args.PropertyName == nameof(IsListViewVisible))
+            {
+                ChangeHeight();
+            }
+
+            if (args.PropertyName == nameof(SearchBarText))
+            {
+
+                OnTextChangedCommand();
+            }
+
         }
 
         #endregion
@@ -274,7 +281,7 @@ namespace GPSNote.ViewModels
 
 
 
-        private void OnTextChangedCommand(object sender)
+        private void OnTextChangedCommand()
         {
             if (string.IsNullOrWhiteSpace(SearchBarText))
             {

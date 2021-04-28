@@ -56,7 +56,12 @@ namespace GPSNote.ViewModels
             set { SetProperty(ref _PasswordBorderColor, value); }
         }
 
-        
+        private bool _IsEnabled;
+        public bool IsEnabled
+        {
+            get { return _IsEnabled; }
+            set { SetProperty(ref _IsEnabled, value); }
+        }
 
         private string _emailerror;
         public string EmailError
@@ -84,7 +89,7 @@ namespace GPSNote.ViewModels
         private DelegateCommand _NavigateMainListCommand;
         public DelegateCommand NavigateMainListButtonTapCommand =>
             _NavigateMainListCommand ??
-            (_NavigateMainListCommand = new DelegateCommand(ExecuteNavigateMainViewCommand));
+            (_NavigateMainListCommand = new DelegateCommand(ExecuteNavigateMainViewCommand).ObservesCanExecute(() => IsEnabled));
 
 
         private DelegateCommand _BackButtonCommand;
@@ -105,7 +110,32 @@ namespace GPSNote.ViewModels
 
         }
 
+        protected override void OnPropertyChanged(PropertyChangedEventArgs args)
+        {
+            base.OnPropertyChanged(args);
+            if (args.PropertyName == nameof(Password) || args.PropertyName == nameof(Email))
+            {
+                bool result = false;
 
+                if (Password == null || Email == null)
+                {
+                    result = true;
+                }
+
+                if (result)
+                {
+                    if (Password != string.Empty && Email != string.Empty)
+                    {
+                        IsEnabled = true;
+                    }
+
+                    else if (Password == string.Empty || Email == string.Empty)
+                    {
+                        IsEnabled = false;
+                    }
+                }
+            }
+        }
 
 
         public override void Initialize(INavigationParameters parameters)

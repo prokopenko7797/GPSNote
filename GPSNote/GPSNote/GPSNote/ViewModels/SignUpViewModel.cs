@@ -62,7 +62,12 @@ namespace GPSNote.ViewModels
             set { SetProperty(ref _emailerror, value); }
         }
 
-
+        private bool _IsEnabled;
+        public bool IsEnabled
+        {
+            get { return _IsEnabled; }
+            set { SetProperty(ref _IsEnabled, value); }
+        }
 
         private Color _EntryBorderColor;
         public Color EmailBorderColor
@@ -81,7 +86,7 @@ namespace GPSNote.ViewModels
         private DelegateCommand _AddUserButtonTapCommand;
         public DelegateCommand AddUserButtonTapCommand =>
             _AddUserButtonTapCommand ?? (_AddUserButtonTapCommand =
-            new DelegateCommand(ExecuteUserButtonTapCommand));
+            new DelegateCommand(ExecuteUserButtonTapCommand).ObservesCanExecute(() => IsEnabled));
 
         private DelegateCommand _BackButtonCommand;
         public DelegateCommand BackButtonCommand =>
@@ -90,10 +95,39 @@ namespace GPSNote.ViewModels
 
         #endregion
 
+        #region -- Overrides --
+
+        protected override void OnPropertyChanged(PropertyChangedEventArgs args)
+        {
+            base.OnPropertyChanged(args);
+            if (args.PropertyName == nameof(Name) || args.PropertyName == nameof(Email))
+            {
+                bool result = false;
+
+                if (Name == null || Email == null)
+                {
+                    result = true;
+                }
+
+                if (result)
+                {
+                    if (Name != string.Empty && Email != string.Empty)
+                    {
+                        IsEnabled = true;
+                    }
+
+                    else if (Name == string.Empty || Email == string.Empty)
+                    {
+                        IsEnabled = false;
+                    }
+                }
+            }
+        }
+
+        #endregion
 
 
         #region -----Private Helpers-----
-
 
 
         private async void OnBackButtonCommand()
@@ -138,7 +172,7 @@ namespace GPSNote.ViewModels
             if (LoginCheck(Name, Email))
             {
 
-                if (!Validator.CheckInRange(Name, Constant.MinNameLength, Constant.MinNameLength))
+                if (!Validator.CheckInRange(Name, Constant.MinNameLength, Constant.MaxLoginLength))
                 {
                     if (Application.Current.UserAppTheme == OSAppTheme.Light)
                     {
@@ -155,36 +189,39 @@ namespace GPSNote.ViewModels
                 {
                     NameError = string.Empty;
                     NameBorderColor = (Color)App.Current.Resources["System/Gray"];
-                }
 
-                if (!await _AuthenticationService.CheckUserExistAsync(Email))
-                {
-
-                    NameError = string.Empty;
-                    NameBorderColor = (Color)App.Current.Resources["System/Gray"];
-                    EmailError = string.Empty;
-                    EmailBorderColor = (Color)App.Current.Resources["System/Gray"];
-
-                    var p = new NavigationParameters();
-                    p.Add(nameof(Name), Name);
-                    p.Add(nameof(Email), Email);
-
-
-                    await NavigationService.NavigateAsync(nameof(CreateAccount), p);
-                }
-                else
-                {
-                    if (Application.Current.UserAppTheme == OSAppTheme.Light)
+                    if (!await _AuthenticationService.CheckUserExistAsync(Email))
                     {
-                        EmailBorderColor = (Color)App.Current.Resources["Light/Error"];
+
+                        NameError = string.Empty;
+                        NameBorderColor = (Color)App.Current.Resources["System/Gray"];
+                        EmailError = string.Empty;
+                        EmailBorderColor = (Color)App.Current.Resources["System/Gray"];
+
+                        var p = new NavigationParameters();
+                        p.Add(nameof(Name), Name);
+                        p.Add(nameof(Email), Email);
+
+
+                        await NavigationService.NavigateAsync(nameof(CreateAccount), p);
                     }
                     else
                     {
-                        EmailBorderColor = (Color)App.Current.Resources["Dark/Error"];
+                        if (Application.Current.UserAppTheme == OSAppTheme.Light)
+                        {
+                            EmailBorderColor = (Color)App.Current.Resources["Light/Error"];
+                        }
+                        else
+                        {
+                            EmailBorderColor = (Color)App.Current.Resources["Dark/Error"];
+                        }
+
+                        EmailError = Resources["EmailExist"];
                     }
 
-                    EmailError = Resources["EmailExist"];
                 }
+
+                
             }
         }
 

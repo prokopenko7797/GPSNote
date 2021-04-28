@@ -8,12 +8,12 @@ using Xamarin.Forms.Xaml;
 
 namespace GPSNote.CustomControls
 {
-    public partial class FramedEntry : ContentView
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class SearchEntry : ContentView
     {
-        public FramedEntry()
+        public SearchEntry()
         {
             InitializeComponent();
-
         }
 
         #region -- Public properties --
@@ -21,7 +21,7 @@ namespace GPSNote.CustomControls
         public static readonly BindableProperty TextEntryProperty =
             BindableProperty.Create(nameof(TextEntry),
                                     typeof(string),
-                                    typeof(FramedEntry),
+                                    typeof(SearchEntry),
                                     defaultValue: string.Empty,
                                     defaultBindingMode: BindingMode.TwoWay,
                                     propertyChanged: TextEntryPropertyChanged);
@@ -34,13 +34,13 @@ namespace GPSNote.CustomControls
         }
 
 
-         public static readonly BindableProperty IsEntryFocusedProperty =
-            BindableProperty.Create(nameof(IsEntryFocused),
-                                    typeof(bool),
-                                    typeof(FramedEntry),
-                                    defaultValue: false,
-                                    defaultBindingMode: BindingMode.TwoWay,
-                                    propertyChanged: IsEntryFocusedPropertyChanged);
+        public static readonly BindableProperty IsEntryFocusedProperty =
+           BindableProperty.Create(nameof(IsEntryFocused),
+                                   typeof(bool),
+                                   typeof(SearchEntry),
+                                   defaultValue: false,
+                                   defaultBindingMode: BindingMode.TwoWay,
+                                   propertyChanged: IsEntryFocusedPropertyChanged);
 
 
         public bool IsEntryFocused
@@ -54,7 +54,7 @@ namespace GPSNote.CustomControls
         public static readonly BindableProperty EntryBorderColorProperty =
                                     BindableProperty.Create(nameof(EntryBorderColor),
                                     typeof(Color),
-                                    typeof(FramedEntry),
+                                    typeof(SearchEntry),
                                     defaultValue: Color.FromHex("#858E9E"),
                                     defaultBindingMode: BindingMode.TwoWay,
                                     propertyChanged: EntryBorderColorChanged);
@@ -69,7 +69,7 @@ namespace GPSNote.CustomControls
         public static readonly BindableProperty PlaceholderTextProperty =
             BindableProperty.Create(nameof(PlaceholderText),
                                     typeof(string),
-                                    typeof(FramedEntry),
+                                    typeof(SearchEntry),
                                     defaultValue: default,
                                     propertyChanged: PlaceholderTextPropertyChanged);
 
@@ -84,7 +84,7 @@ namespace GPSNote.CustomControls
         public static readonly BindableProperty EntryBackGroundColorProperty =
                             BindableProperty.Create(nameof(EntryBackGroundBorderColor),
                             typeof(Color),
-                            typeof(FramedEntry),
+                            typeof(SearchEntry),
                             defaultValue: Color.FromHex("#00ffffff"),
                             defaultBindingMode: BindingMode.TwoWay,
                             propertyChanged: EntryBackGroundColorChanged);
@@ -104,7 +104,7 @@ namespace GPSNote.CustomControls
 
         private static void EntryBackGroundColorChanged(BindableObject bindable, object oldValue, object newValue)
         {
-            FramedEntry customEntry = bindable as FramedEntry;
+            SearchEntry customEntry = bindable as SearchEntry;
             if (customEntry != null)
             {
                 customEntry.frame.BackgroundColor = (Color)newValue;
@@ -114,7 +114,7 @@ namespace GPSNote.CustomControls
 
         private static void EntryBorderColorChanged(BindableObject bindable, object oldValue, object newValue)
         {
-            FramedEntry customEntry = bindable as FramedEntry;
+            SearchEntry customEntry = bindable as SearchEntry;
             if (customEntry != null)
             {
                 customEntry.frame.BorderColor = (Color)newValue;
@@ -123,18 +123,18 @@ namespace GPSNote.CustomControls
 
         private static void TextEntryPropertyChanged(BindableObject bindable, object oldValue, object newValue)
         {
-            FramedEntry customEntry = bindable as FramedEntry;
+            SearchEntry customEntry = bindable as SearchEntry;
             if (customEntry != null)
             {
                 customEntry.entry.Text = (string)newValue;
             }
         }
 
-        
+
 
         private static void IsEntryFocusedPropertyChanged(BindableObject bindable, object oldValue, object newValue)
         {
-            FramedEntry customEntry = bindable as FramedEntry;
+            SearchEntry customEntry = bindable as SearchEntry;
             if (customEntry != null)
             {
 
@@ -143,7 +143,7 @@ namespace GPSNote.CustomControls
 
         private static void PlaceholderTextPropertyChanged(BindableObject bindable, object oldValue, object newValue)
         {
-            FramedEntry customEntry = bindable as FramedEntry;
+            SearchEntry customEntry = bindable as SearchEntry;
 
             if (customEntry != null)
             {
@@ -157,7 +157,7 @@ namespace GPSNote.CustomControls
             IsEntryFocused = false;
         }
 
-        
+
 
         private void OnFocused(object sender, FocusEventArgs e)
         {
@@ -175,7 +175,6 @@ namespace GPSNote.CustomControls
             }
             else
             {
-                frame.BorderColor = ((Color)App.Current.Resources["System/LightGray"]);
                 clearButton.IsVisible = false;
             }
         }
