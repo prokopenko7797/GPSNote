@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
-             xmlns:prism="http://prismlibrary.com"
              x:Class="GPSNote.CustomControls.FramedEntry">
     <StackLayout>
 
@@ -9,30 +8,27 @@
                CornerRadius="2"
                BorderColor="{StaticResource System/LightGray}"
                BackgroundColor="{StaticResource TransparentColor}"
-               HorizontalOptions="FillAndExpand"
-               VerticalOptions="FillAndExpand"
                Padding="8,0,8,0"
                HasShadow="False">
 
             <Grid ColumnDefinitions="0.9*, 0.1*"
-                  Padding="0"
-                  VerticalOptions="StartAndExpand">
+                  Padding="0">
 
                 <Entry x:Name="entry"
                        Grid.Column="0"
-                       HorizontalOptions="FillAndExpand"
+                       HeightRequest="45"
                        TextChanged="OnTextChanged"
                        Unfocused="OnUnfocused"
                        VerticalOptions="FillAndExpand">        
                 </Entry>
                 
-                <Button  x:Name="clearButton"
-                         Grid.Column="1"
-                         VerticalOptions="Center"
-                         ImageSource="ic_clear.png"
-                         BackgroundColor="{StaticResource TransparentColor}"
-                         Clicked="ClearButtonClicked"
-                         IsVisible="False"/>
+                <ImageButton  x:Name="clearButton"
+                              Grid.Column="1"
+                              VerticalOptions="Center"
+                              Source="ic_clear.png"
+                              BackgroundColor="{StaticResource TransparentColor}"
+                              Clicked="ClearButtonClicked"
+                              IsVisible="False"/>
                 
             </Grid>
 

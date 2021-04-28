@@ -13,7 +13,7 @@
     <Grid Grid.RowDefinitions ="0.1*, 0.9*">
 
         <Grid Grid.Row="0" 
-              Grid.ColumnDefinitions="0.1*,0.8*,0.1*"
+              Grid.ColumnDefinitions="0.15*,0.7*,0.15*"
               VerticalOptions="End">
 
             <Button Grid.Column="0"
@@ -21,25 +21,30 @@
                          Command="{Binding SettingsNavigation}"
                          BackgroundColor="{StaticResource TransparentColor}">
             </Button>
+            <Frame Grid.Column="1"
+                   Padding="0"
+                   CornerRadius="4"
+                   HasShadow="False">
+                
+                <SearchBar Placeholder="{Binding Resources[Search]}"
+                           BackgroundColor="AliceBlue"
+                           TextColor="Black"
+                           PlaceholderColor="Gray"
+                           Text="{Binding SearchBarText}"
+                           >
+                    <SearchBar.Behaviors>
+                        <prism:EventToCommandBehavior
+                                    EventName="TextChanged"
+                                    Command="{Binding TextChangedCommand}"
+                                    CommandParameter="{Binding .}"  />
+                        <prism:EventToCommandBehavior 
+                                    EventName="Focused"
+                                    Command="{Binding FocusedCommand}"
+                                    CommandParameter="{Binding .}"/>
 
-            <SearchBar Grid.Column="1" 
-                       Placeholder="{Binding Resources[Search]}"
-                       BackgroundColor="AliceBlue"
-                       TextColor="Black"
-                       PlaceholderColor="Gray"
-                       Text="{Binding SearchBarText}">
-                <SearchBar.Behaviors>
-                    <prism:EventToCommandBehavior
-                                EventName="TextChanged"
-                                Command="{Binding TextChangedCommand}"
-                                CommandParameter="{Binding .}"  />
-                    <prism:EventToCommandBehavior 
-                                EventName="Focused"
-                                Command="{Binding FocusedCommand}"
-                                CommandParameter="{Binding .}"/>
-
-                </SearchBar.Behaviors>
-            </SearchBar>
+                    </SearchBar.Behaviors>
+                </SearchBar>
+            </Frame>
 
             <Button Grid.Column="2"
                          ImageSource="ic_exid.png"

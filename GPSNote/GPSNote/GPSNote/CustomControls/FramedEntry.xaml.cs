@@ -64,10 +64,37 @@ namespace GPSNote.CustomControls
             set => SetValue(PlaceholderTextProperty, value);
         }
 
+
+        public static readonly BindableProperty EntryBackGroundColorProperty =
+                            BindableProperty.Create(nameof(EntryBackGroundBorderColor),
+                            typeof(Color),
+                            typeof(FramedEntry),
+                            defaultValue: Color.FromHex("#00ffffff"),
+                            defaultBindingMode: BindingMode.TwoWay,
+                            propertyChanged: EntryBackGroundColorChanged);
+
+
+        public string EntryBackGroundBorderColor
+        {
+            get => (string)GetValue(EntryBorderColorProperty);
+            set => SetValue(EntryBorderColorProperty, value);
+        }
+
         #endregion
 
 
         #region -- Private helpers --
+
+
+        private static void EntryBackGroundColorChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            FramedEntry customEntry = bindable as FramedEntry;
+            if (customEntry != null)
+            {
+                customEntry.frame.BackgroundColor = (Color)newValue;
+            }
+        }
+
 
         private static void EntryBorderColorChanged(BindableObject bindable, object oldValue, object newValue)
         {
@@ -113,6 +140,7 @@ namespace GPSNote.CustomControls
             }
             else
             {
+                frame.BorderColor = ((Color)App.Current.Resources["System/LightGray"]);
                 clearButton.IsVisible = false;
             }
         }

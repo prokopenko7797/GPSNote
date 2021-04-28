@@ -37,7 +37,7 @@ namespace GPSNote.CustomControls
                                     BindableProperty.Create(nameof(EntryBorderColor),
                                     typeof(Color),
                                     typeof(PasswordEntry),
-                                    defaultValue: Color.FromHex("#858E9E"),
+                                    defaultValue: (Color)App.Current.Resources["System/LightGray"],
                                     defaultBindingMode: BindingMode.TwoWay,
                                     propertyChanged: EntryBorderColorChanged);
 
@@ -110,6 +110,7 @@ namespace GPSNote.CustomControls
             else
             {
                 eyeButton.IsVisible = false;
+                frame.BorderColor = ((Color)App.Current.Resources["System/LightGray"]);
             }
         }
 
@@ -119,11 +120,11 @@ namespace GPSNote.CustomControls
             entry.IsPassword = !entry.IsPassword;
             if (entry.IsPassword)
             {
-                eyeButton.ImageSource = "ic_eye.png";
+                eyeButton.Source = "ic_eye.png";
             }
             else
             {
-                eyeButton.ImageSource = "ic_eye_off.png";
+                eyeButton.Source = "ic_eye_off.png";
             }
         }
 

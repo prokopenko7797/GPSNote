@@ -18,9 +18,7 @@
 
         <SearchBar Grid.Row="0" 
                    Placeholder="Search"
-                   BackgroundColor="AliceBlue"
-                   TextColor="Black"
-                   PlaceholderColor="Gray"
+
                    Text="{Binding SearchBarText}">
             
             <SearchBar.Behaviors>
@@ -66,24 +64,22 @@
                             
                         </ViewCell.ContextActions>
                         <Grid>
-                            <Grid Grid.ColumnDefinitions ="0.2*, 0.8*">
+                            <Grid ColumnDefinitions ="0.2*, 0.8*"
+                                  RowDefinitions="*,*">
 
-                                <ImageButton Grid.RowSpan="3" 
+                                <ImageButton Grid.RowSpan="2" 
                                          Source="ic_like_gray.png" 
-                                         Aspect="AspectFit" 
                                          Margin="5"
-                                         BackgroundColor="Transparent"
-                                         Command="{Binding Path=BindingContext.ImageCommandTap, 
-                                                            Source={x:Reference ListView1}}"
-                                         CommandParameter="{Binding .}">
+                                         CornerRadius="6"
+                                         BackgroundColor="{AppThemeBinding Light={StaticResource Light/Variant}, Dark={StaticResource Dark/Variant}}"
+                                         Command="{Binding Path=BindingContext.ImageCommandTap, Source={x:Reference ListView1}}"
+                                         CommandParameter="{Binding .}" />
 
-                                </ImageButton>
-
-                                <ImageButton Grid.RowSpan="3" 
+                                <ImageButton Grid.RowSpan="2" 
                                          Source="ic_like_blue.png"  
-                                         Aspect="AspectFit" 
                                          Margin="5" 
-                                         BackgroundColor="Transparent"
+                                         CornerRadius="6"
+                                         BackgroundColor="{StaticResource TransparentColor}"
                                          Command="{Binding Path=BindingContext.ImageCommandTap, 
                                                             Source={x:Reference ListView1}}"
                                          CommandParameter="{Binding .}"
@@ -92,21 +88,25 @@
                                 </ImageButton>
 
                                 <Label Grid.Column="1" 
-                                   Grid.Row="0" 
-                                   Text="{Binding Label}" 
-                                   FontAttributes="Bold" 
-                                   LineBreakMode="TailTruncation"/>
+                                       Grid.Row="0" 
+                                       Text="{Binding Label}" 
+                                       VerticalOptions="Center"
+                                       FontFamily="Montserrat-SemiBold"
+                                       LineBreakMode="TailTruncation"/>
+                                
+                                <StackLayout Orientation="Horizontal" 
+                                             Grid.Column="1" 
+                                             Grid.Row="1" >
 
-                                <Label Grid.Column="1" 
-                                   Grid.Row="1" 
-                                   Text="{Binding Latitude}" 
-                                   LineBreakMode="TailTruncation"/>
-                                <Label Grid.Column="1" 
-                                   Grid.Row="2" 
-                                   Text="{Binding Longitude}" 
-                                   LineBreakMode="TailTruncation"/>
+                                    <Label Text="{Binding Latitude}" 
+                                           LineBreakMode="NoWrap"/>
+                                    
+                                    <Label Text=","  />
 
+                                    <Label Text="{Binding Longitude}" 
+                                           LineBreakMode="NoWrap"/>
 
+                                </StackLayout>
 
                             </Grid>
                             <BoxView  Color="{StaticResource System/LightGray}" 
@@ -115,6 +115,8 @@
                                       HorizontalOptions="FillAndExpand"/>
                         </Grid>
 
+                        
+                        
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
