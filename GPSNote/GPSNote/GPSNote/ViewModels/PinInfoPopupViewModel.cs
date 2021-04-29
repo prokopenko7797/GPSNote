@@ -1,4 +1,5 @@
-﻿using GPSNote.Extensions;
+﻿using Awesomio.Weather.NET.Models.OneCall;
+using GPSNote.Extensions;
 using GPSNote.Servcies.LocalizationService;
 using GPSNote.Servcies.PinShare;
 using GPSNote.Servcies.Weather;
@@ -141,11 +142,10 @@ namespace GPSNote.ViewModels
                 PinLatLong = $"{pinViewModel.Latitude} {pinViewModel.Longitude}";
                 PinDescription = pinViewModel.Description;
 
-                ForecastResponse forecastData = await _weatherService.GetForecastWeatherAsync(newPinViewModel.Latitude,
+
+                OneCallModel oneCallModel = await _weatherService.GetOneCallForecast(newPinViewModel.Latitude,
                                                                                                      newPinViewModel.Longitude);
 
-                CurrentWeatherResponse currentWeather = await _weatherService.GetCurrentWeatherAsync(newPinViewModel.Latitude,
-                                                                                                     newPinViewModel.Longitude);
             }
 
 

@@ -1,4 +1,5 @@
-﻿using OpenWeatherMap;
+﻿using Awesomio.Weather.NET.Models.OneCall;
+using OpenWeatherMap;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,8 +9,7 @@ namespace GPSNote.Servcies.Weather
 {
     public interface IWeatherService
     {
-        Task<CurrentWeatherResponse> GetCurrentWeatherAsync(double latitude, double longtitude);
 
-        Task<ForecastResponse> GetForecastWeatherAsync(double latitude, double longtitude);
+        Task<OneCallModel> GetOneCallForecast(double latitude, double longtitude);
     }
 }

@@ -48,6 +48,7 @@
 
   <ItemGroup>
     <PackageReference Include="Acr.UserDialogs" Version="7.1.0.483" />
+    <PackageReference Include="Awesomio.Weather" Version="1.0.8" />
     <PackageReference Include="OpenWeatherMap" Version="1.1.0" />
     <PackageReference Include="Plugin.Permissions" Version="6.0.1" />
     <PackageReference Include="Prism.Plugin.Popups" Version="7.2.0.1046" />
