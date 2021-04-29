@@ -11,9 +11,6 @@ namespace GPSNote.Servcies.Weather
 {
     public class WeatherService : IWeatherService
     {
-        private readonly OpenWeatherMapClient _Client;
-
-
         private readonly WeatherClient _client;
 
         public WeatherService() 

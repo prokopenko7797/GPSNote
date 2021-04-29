@@ -91,27 +91,25 @@ namespace GPSNote
 
         protected override async void OnAppLinkRequestReceived(Uri uri)
         {
-            if (uri.Host.Equals(Constant.Host, StringComparison.OrdinalIgnoreCase))
+            if (AuthorizationService.IsAuthorized)
             {
-                if (uri.Segments != null && uri.Segments.Length == 2)
+                if (uri.Host.Equals(Constant.Host, StringComparison.OrdinalIgnoreCase))
                 {
                     if (uri.Segments[1] == Constant.Action)
                     {
-                        if (AuthorizationService.IsAuthorized)
-                        {
-                            PinViewModel pinView = uri.ToPinViewModel();
 
-                            pinView.Label.Replace("*", " ");
-                            pinView.Description.Replace("*", " ");
+                        PinViewModel pinView = uri.ToPinViewModel();
 
-                            var parametrs = new NavigationParameters
+                        pinView.Label.Replace("*", " ");
+                        pinView.Description.Replace("*", " ");
+
+                        var parametrs = new NavigationParameters
                             {
                                 { nameof(PinViewModel),  pinView}
                             };
-                            await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(MainTabbedPage)}/{nameof(AddEditPin)}");
-                        }
-                       
+                        await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(MainTabbedPage)}/{nameof(AddEditPin)}");
                     }
+
                 }
             }
             base.OnAppLinkRequestReceived(uri);

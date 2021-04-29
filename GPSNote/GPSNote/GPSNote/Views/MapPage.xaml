@@ -82,7 +82,7 @@
                   VerticalOptions="Start"
                   SelectedItem="{Binding SelectedListItem}"
                   x:Name="ListView1"
-                  BackgroundColor="{StaticResource TransparentColor}"
+                  BackgroundColor="{AppThemeBinding Light={StaticResource System/White}, Dark={StaticResource System/Black}}"
                   IsVisible="{Binding IsListViewVisible}"
                   HeightRequest="{Binding HeightRequest}"
                   SeparatorVisibility="None">

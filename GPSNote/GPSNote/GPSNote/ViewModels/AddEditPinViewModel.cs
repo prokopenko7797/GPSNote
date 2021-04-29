@@ -41,6 +41,8 @@ namespace GPSNote.ViewModels
             _authorizationService = authorizationService;
             _PageDialogService = pageDialogService;
             ObsPins = new ObservableCollection<PinViewModel>();
+
+            Title = Resources["AddPinTitle"];
         }
 
 
@@ -118,10 +120,7 @@ namespace GPSNote.ViewModels
 
                 Title = Resources["EditPinTitle"];
             }
-            else
-            {
-                Title = Resources["AddPinTitle"];
-            }
+
 
         }
 

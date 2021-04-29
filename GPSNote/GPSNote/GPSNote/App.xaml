@@ -77,8 +77,6 @@
                     Value="{AppThemeBinding Light={StaticResource System/Black}, Dark={StaticResource System/White}}" />
             <Setter Property="FontFamily"
                     Value="Montserrat-Regular" />
-            <Setter Property="FontFamily"
-                    Value="Montserrat-Regular" />
         </Style>
 
         <Style TargetType="RadioButton">

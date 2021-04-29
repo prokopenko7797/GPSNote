@@ -11,6 +11,7 @@ using Prism.Navigation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Xamarin.Forms;
 
 namespace GPSNote.ViewModels
 {
@@ -66,64 +67,78 @@ namespace GPSNote.ViewModels
             _PopupCloseCommand ?? (_PopupCloseCommand = new DelegateCommand(OnPopupCloseAsync));
 
 
-        string _Temperature;
-        public string Temperature
+        private string _Day0;
+        public string Day0
         {
-            get { return _Temperature; }
-            set { SetProperty(ref _Temperature, value); }
+            get { return _Day0; }
+            set { SetProperty(ref _Day0, value); }
         }
-
-        string _Humidity;
-        public string Humidity
+        private string _Day1;
+        public string Day1
         {
-            get { return _Humidity; }
-            set { SetProperty(ref _Humidity, value); }
+            get { return _Day1; }
+            set { SetProperty(ref _Day1, value); }
         }
-
-        string _Pressure;
-        public string Pressure
+        private string _Day2;
+        public string Day2
         {
-            get { return _Pressure; }
-            set { SetProperty(ref _Pressure, value); }
+            get { return _Day2; }
+            set { SetProperty(ref _Day2, value); }
         }
-
-        string _Wind;
-        public string Wind
+        private string _Day3;
+        public string Day3
         {
-            get { return _Wind; }
-            set { SetProperty(ref _Wind, value); }
+            get { return _Day3; }
+            set { SetProperty(ref _Day3, value); }
         }
-
-
-        string _Clouds;
-        public string Clouds
+        private string _MaxMinTemp0;
+        public string MaxMinTemp0
         {
-            get { return _Clouds; }
-            set { SetProperty(ref _Clouds, value); }
+            get { return _MaxMinTemp0; }
+            set { SetProperty(ref _MaxMinTemp0, value); }
         }
-
-
-        string _Precipitation;
-        public string Precipitation
+        private string _MaxMinTemp1;
+        public string MaxMinTemp1
         {
-            get { return _Precipitation; }
-            set { SetProperty(ref _Precipitation, value); }
+            get { return _MaxMinTemp1; }
+            set { SetProperty(ref _MaxMinTemp1, value); }
         }
-
-        string _Weather;
-        public string Weather
+        private string _MaxMinTemp2;
+        public string MaxMinTemp2
         {
-            get { return _Weather; }
-            set { SetProperty(ref _Weather, value); }
+            get { return _MaxMinTemp2; }
+            set { SetProperty(ref _MaxMinTemp2, value); }
         }
-
-        string _LastUpdate;
-        public string LastUpdate
+        private string _MaxMinTemp3;
+        public string MaxMinTemp3
         {
-            get { return _LastUpdate; }
-            set { SetProperty(ref _LastUpdate, value); }
+            get { return _MaxMinTemp3; }
+            set { SetProperty(ref _MaxMinTemp3, value); }
         }
-
+        private ImageSource _WeatherIcon0;
+        public ImageSource WeatherIcon0
+        {
+            get { return _WeatherIcon0; }
+            set { SetProperty(ref _WeatherIcon0, value); }
+        }
+        private ImageSource _WeatherIcon1;
+        public ImageSource WeatherIcon1
+        {
+            get { return _WeatherIcon1; }
+            set { SetProperty(ref _WeatherIcon1, value); }
+        }
+        private ImageSource _WeatherIcon2;
+        public ImageSource WeatherIcon2
+        {
+            get { return _WeatherIcon2; }
+            set { SetProperty(ref _WeatherIcon2, value); }
+        }
+        private ImageSource _WeatherIcon3;
+        public ImageSource WeatherIcon3
+        {
+            get { return _WeatherIcon3; }
+            set { SetProperty(ref _WeatherIcon3, value); }
+        }
 
         #endregion
 
@@ -139,12 +154,36 @@ namespace GPSNote.ViewModels
                 pinViewModel = newPinViewModel;
 
                 PinLabel = pinViewModel.Label;
-                PinLatLong = $"{pinViewModel.Latitude} {pinViewModel.Longitude}";
+                PinLatLong = $"{pinViewModel.Latitude}, {pinViewModel.Longitude}";
                 PinDescription = pinViewModel.Description;
 
 
-                OneCallModel oneCallModel = await _weatherService.GetOneCallForecast(newPinViewModel.Latitude,
-                                                                                                     newPinViewModel.Longitude);
+                OneCallModel oneCallModel = await _weatherService.GetOneCallForecast(newPinViewModel.Latitude, newPinViewModel.Longitude);
+
+                MaxMinTemp0 = $"{(int)oneCallModel.Daily[0].Temp.Max} ° {(int)oneCallModel.Daily[0].Temp.Min} °";
+                MaxMinTemp1 = $"{(int)oneCallModel.Daily[1].Temp.Max} ° {(int)oneCallModel.Daily[1].Temp.Min} °";
+                MaxMinTemp2 = $"{(int)oneCallModel.Daily[2].Temp.Max} ° {(int)oneCallModel.Daily[2].Temp.Min} °";
+                MaxMinTemp3 = $"{(int)oneCallModel.Daily[3].Temp.Max} ° {(int)oneCallModel.Daily[3].Temp.Min} °";
+
+                WeatherIcon0 = $"http://openweathermap.org/img/wn/{oneCallModel.Daily[0].Weather[0].Icon}@2x.png";
+                WeatherIcon1 = $"http://openweathermap.org/img/wn/{oneCallModel.Daily[1].Weather[0].Icon}@2x.png";
+                WeatherIcon2 = $"http://openweathermap.org/img/wn/{oneCallModel.Daily[2].Weather[0].Icon}@2x.png";
+                WeatherIcon3 = $"http://openweathermap.org/img/wn/{oneCallModel.Daily[3].Weather[0].Icon}@2x.png";
+
+                List<string> ld = new List<string>();
+
+                for (int i = 0; i < 4; i++)
+                {
+                    DateTime dt = UnixTimeStampToDateTime(oneCallModel.TimezoneOffset + oneCallModel.Daily[i].Dt);
+
+                    DayOfWeek d = dt.DayOfWeek;
+                    ld.Add(d.ToString().Substring(0, 3));
+                }
+
+                Day0 = ld[0];
+                Day1 = ld[1];
+                Day2 = ld[2];
+                Day3 = ld[3];
 
             }
 
@@ -156,6 +195,17 @@ namespace GPSNote.ViewModels
         #endregion
 
         #region --Private helpers--
+
+
+
+
+        private DateTime UnixTimeStampToDateTime(long unixTimeStamp)
+        {
+            DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Local);
+            dtDateTime = dtDateTime.AddSeconds(unixTimeStamp).ToLocalTime();
+            return dtDateTime;
+        }
+
 
         private void OnSharePinCommand(object sender)
         {

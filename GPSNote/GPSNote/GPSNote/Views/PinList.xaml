@@ -39,7 +39,8 @@
                   SelectedItem="{Binding SelectedItem}"
                   x:Name="ListView1"
                   BackgroundColor="Transparent"
-                  SeparatorVisibility="None">
+                  SeparatorVisibility="None"
+                  >
 
             <ListView.Behaviors>
                 <prism:EventToCommandBehavior
