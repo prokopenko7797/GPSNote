@@ -94,9 +94,6 @@ namespace GPSNote.ViewModels
         public DelegateCommand<object> ImageCommandTap => 
             _ImageCommandTap ?? (_ImageCommandTap = new DelegateCommand<object>(OnChangeVisibilityComand));
 
-        private DelegateCommand<object> _OnTextChangedCommand;
-        public DelegateCommand<object> OnTextChangedCommand =>
-            _OnTextChangedCommand ?? (_OnTextChangedCommand = new DelegateCommand<object>(OnSearchCommand));
 
         private DelegateCommand<object> _ItemTappedCommand;
         public DelegateCommand<object> ItemTappedCommand =>
@@ -134,6 +131,21 @@ namespace GPSNote.ViewModels
             parameters.Add(nameof(PinViewModel), _ControlObs);
         }
 
+
+        protected override void OnPropertyChanged(PropertyChangedEventArgs args)
+        {
+            base.OnPropertyChanged(args);
+
+
+
+            if (args.PropertyName == nameof(SearchBarText))
+            {
+
+                OnSearchCommand();
+            }
+
+        }
+
         #endregion
 
         #region -- Private helpers --
@@ -149,7 +161,7 @@ namespace GPSNote.ViewModels
         }
 
 
-        private void OnSearchCommand(object sender)
+        private void OnSearchCommand()
         {
             if (string.IsNullOrWhiteSpace(SearchBarText))
             {

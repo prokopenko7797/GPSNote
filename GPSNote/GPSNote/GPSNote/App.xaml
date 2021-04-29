@@ -99,6 +99,7 @@
 
             
             
+            
         </Style>
 
 
@@ -113,6 +114,12 @@
                     Value="Montserrat-Regular" />
         </Style>
 
+
+        <Style TargetType="ImageButton">
+            <Setter Property="BackgroundColor"
+                    Value="{StaticResource TransparentColor}" />
+
+        </Style>
 
 
 

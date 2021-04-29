@@ -70,6 +70,8 @@ namespace GPSNote
             containerRegistry.RegisterInstance<IPinShareService>(Container.Resolve<PinShareService>());
             containerRegistry.RegisterInstance<IWeatherService>(Container.Resolve<WeatherService>());
 
+
+
             //Navigation
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<SignIn, SignInViewModel>();
@@ -82,8 +84,10 @@ namespace GPSNote
             containerRegistry.RegisterForNavigation<MainPage, MainPageViewModel>();
             containerRegistry.RegisterForNavigation<CreateAccount, CreateAccountViewModel>();
             containerRegistry.RegisterForNavigation<PinInfoPopup, PinInfoPopupViewModel>();
+            containerRegistry.RegisterForNavigation<LangSettings, LangSettingsViewModel>();
 
 
+            //Specyfic
             containerRegistry.RegisterPopupNavigationService();
             containerRegistry.RegisterPopupDialogService();
 

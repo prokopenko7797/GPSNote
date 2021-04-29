@@ -1,30 +1,50 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<views:BaseContentPage xmlns:views="clr-namespace:GPSNote.Views"  xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:prism="http://prismlibrary.com"
-             prism:ViewModelLocator.AutowireViewModel="True"
-             x:Class="GPSNote.Views.PinList"
-             BackgroundColor="{AppThemeBinding Light={StaticResource System/White}, Dark={StaticResource System/Black}}"
-             Title="{Binding Resources[PinListTitle]}"
+<views:BaseContentPage xmlns:views="clr-namespace:GPSNote.Views"  
+                       xmlns="http://xamarin.com/schemas/2014/forms"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                       xmlns:prism="http://prismlibrary.com" xmlns:customcontrols="clr-namespace:GPSNote.CustomControls"
+                       prism:ViewModelLocator.AutowireViewModel="True"
+                       x:Class="GPSNote.Views.PinList"
+                       BackgroundColor="{AppThemeBinding Light={StaticResource System/White}, Dark={StaticResource System/Black}}"
+                       Title="{Binding Resources[PinListTitle]}"
                        NavigationPage.HasNavigationBar="False">
 
 
     <Grid Grid.RowDefinitions ="0.1*, 0.9*"
           Padding="16,0,16,16" >
 
-        <SearchBar Grid.Row="0" 
-                   Placeholder="Search"
+        <Grid Grid.Row="0" 
+              Grid.ColumnDefinitions="0.1*,0.8*,0.1*"
+              VerticalOptions="End"
+              Padding="16,0,16,0">
 
-                   Text="{Binding SearchBarText}">
-            
-            <SearchBar.Behaviors>
-                <prism:EventToCommandBehavior
-                            EventName="TextChanged"
-                            Command="{Binding OnTextChangedCommand}" 
-                            CommandParameter="{Binding .}" />
+            <Button Grid.Column="0"
+                    ImageSource="ic_settings.png"
+                    Command="{Binding SettingsNavigation}"
+                    BackgroundColor="{StaticResource TransparentColor}"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center">
+            </Button>
 
-            </SearchBar.Behaviors>
-        </SearchBar>
+
+            <customcontrols:SearchEntry TextEntry="{Binding SearchBarText}"
+                                        PlaceholderText="{Binding Resources[Search]}"
+                                        EntryBorderColor="{StaticResource TransparentColor}"
+                                        Grid.Column="1"
+                                        Grid.ColumnSpan="2"
+                                        HorizontalOptions="Center"/>
+
+
+
+            <Button Grid.Column="2"
+                         ImageSource="ic_exid.png"
+                         Command="{Binding LogOutCommand}"
+                         BackgroundColor="{StaticResource TransparentColor}">
+            </Button>
+
+        </Grid>
+
+
 
         <Label Text="{Binding Resources[NoPins]}" 
                Grid.Row="1"

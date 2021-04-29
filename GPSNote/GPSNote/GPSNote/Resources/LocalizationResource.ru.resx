@@ -171,6 +171,9 @@
   <data name="InRange" xml:space="preserve">
     <value>Не в диапазоне</value>
   </data>
+  <data name="LangTitle" xml:space="preserve">
+    <value>Язык</value>
+  </data>
   <data name="Latitude" xml:space="preserve">
     <value>Широта</value>
   </data>

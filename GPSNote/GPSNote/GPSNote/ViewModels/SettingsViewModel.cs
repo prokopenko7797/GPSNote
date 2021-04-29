@@ -1,6 +1,7 @@
 ﻿using GPSNote.Servcies.LocalizationService;
 using GPSNote.Servcies.Settings;
 using GPSNote.Servcies.ThemeService;
+using GPSNote.Views;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Navigation;
@@ -26,13 +27,6 @@ namespace GPSNote.ViewModels
 
         #region -- Public properties --
 
-        private string _SelectedLang;
-        
-        public string SelectedLang
-        {
-            get { return _SelectedLang; }
-            set { SetProperty(ref _SelectedLang, value); }
-        }
 
         private bool _IsChecked;
 
@@ -42,29 +36,18 @@ namespace GPSNote.ViewModels
             set { SetProperty(ref _IsChecked, value); }
         }
 
-        private bool _IsCheckedEn;
-        public bool IsCheckedEn
-        {
-            get { return _IsCheckedEn; }
-            set { SetProperty(ref _IsCheckedEn, value); }
-        }
-
-        private bool _IsCheckedRu;
-        public bool IsCheckedRu
-        {
-            get { return _IsCheckedRu; }
-            set { SetProperty(ref _IsCheckedRu, value); }
-        }
-
-        private DelegateCommand _SaveToolBarCommand;
-        public DelegateCommand SaveToolBarCommand =>
-           _SaveToolBarCommand ??
-           (_SaveToolBarCommand = new DelegateCommand(OnSaveToolBar));
+       
 
         private DelegateCommand _BackButtonCommand;
         public DelegateCommand BackButtonCommand =>
             _BackButtonCommand ??
             (_BackButtonCommand = new DelegateCommand(OnBackButtonCommand));
+
+
+        private DelegateCommand _ToLangSettings;
+        public DelegateCommand ToLangSettings =>
+            _ToLangSettings ??
+            (_ToLangSettings = new DelegateCommand(OnToLangSettingsCommand));
 
         #endregion
 
@@ -76,19 +59,6 @@ namespace GPSNote.ViewModels
         public override void Initialize(INavigationParameters parameters)
         {
             base.Initialize(parameters);
-
-            SelectedLang = Resources.Lang;
-
-            switch (Resources.Lang)
-            {
-                case Constant.ResourcesLangConst.En:
-                    IsCheckedEn = true;
-                    break;
-
-                case Constant.ResourcesLangConst.Ru:
-                    IsCheckedRu = true;
-                    break;
-            }
 
             _appTheme = _ThemeService.GetCurrentTheme();
 
@@ -120,38 +90,26 @@ namespace GPSNote.ViewModels
                 }
 
             }
-
-            if (args.PropertyName == nameof(SelectedLang))
-            {
-                Resources.ChangeCulture(SelectedLang);
-                Resources.Lang = SelectedLang;
-            }
         }
 
-        public override void OnNavigatedFrom(INavigationParameters parameters)
-        {
-            base.OnNavigatedFrom(parameters);
-
-            _ThemeService.SetTheme(_appTheme);
-            Resources.ChangeCulture(Resources.Lang);
-        }
 
         #endregion
 
         #region -- Private helpers --
+
+
+        
+        private async void OnToLangSettingsCommand()
+        {
+            await NavigationService.NavigateAsync(nameof(LangSettings));
+        }
+
 
         private async void OnBackButtonCommand()
         {
             await NavigationService.GoBackAsync();
         }
 
-        private async void OnSaveToolBar()
-        {
-            _appTheme = _ThemeService.GetCurrentTheme();
-            Resources.Lang = SelectedLang;
-
-            await NavigationService.GoBackAsync();
-        }
 
         #endregion
 
