@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <views:BaseContentPage xmlns:views="clr-namespace:GPSNote.Views"  xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:prism="http://prismlibrary.com"
-             prism:ViewModelLocator.AutowireViewModel="True"
-             x:Class="GPSNote.Views.Settings"
-             BackgroundColor="{AppThemeBinding Light={StaticResource System/White}, Dark={StaticResource System/Black}}"
-             Title="{Binding Resources[SettingsTitle]}"
-             NavigationPage.HasNavigationBar="False">
+                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                       xmlns:prism="http://prismlibrary.com"
+                       prism:ViewModelLocator.AutowireViewModel="True"
+                       x:Class="GPSNote.Views.Settings"
+                       BackgroundColor="{AppThemeBinding Light={StaticResource System/White}, Dark={StaticResource System/Black}}"
+                       Title="{Binding Resources[SettingsTitle]}"
+                       NavigationPage.HasNavigationBar="False">
 
 
     <Grid RowDefinitions="0.1*,0.9*"
@@ -42,7 +42,7 @@
 
 
         <StackLayout Grid.Row="1"
-                 BackgroundColor="{StaticResource TransparentColor}">
+                     BackgroundColor="{StaticResource TransparentColor}">
 
 
             <Grid ColumnDefinitions="0.8*, 0.2*"
@@ -59,7 +59,6 @@
                         VerticalOptions="CenterAndExpand"
                         HorizontalOptions="CenterAndExpand" />
 
-
             </Grid>
 
             <BoxView Color="{AppThemeBinding Light={StaticResource Light/Variant}, Dark={StaticResource Dark/Variant}}" 
@@ -71,16 +70,16 @@
                   Margin="16, 16, 16, 16">
 
                 <Label Grid.Column="0"
-                   Text="{Binding Resources[SelectLang]}"
-                   FontSize="Medium"
-                   VerticalOptions="Center"
-                   HorizontalOptions="StartAndExpand"/>
+                       Text="{Binding Resources[SelectLang]}"
+                       FontSize="Medium"
+                       VerticalOptions="Center"
+                       HorizontalOptions="StartAndExpand"/>
 
-                <ImageButton  Grid.Column="1"
-                              Source="ic_left_gray.png"
-                              VerticalOptions="CenterAndExpand"
-                              HorizontalOptions="CenterAndExpand"
-                              Command="{Binding ToLangSettings}">
+                <ImageButton Grid.Column="1"
+                             Source="ic_left_gray.png"
+                             VerticalOptions="CenterAndExpand"
+                             HorizontalOptions="CenterAndExpand"
+                             Command="{Binding ToLangSettings}">
      
                 </ImageButton>
 

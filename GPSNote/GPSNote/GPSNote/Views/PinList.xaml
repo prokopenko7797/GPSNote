@@ -61,8 +61,7 @@
                   SelectedItem="{Binding SelectedItem}"
                   x:Name="ListView1"
                   BackgroundColor="Transparent"
-                  SeparatorVisibility="None"
-                  >
+                  SeparatorVisibility="None">
 
 
 
@@ -71,14 +70,12 @@
                     <ViewCell>
                         <ViewCell.ContextActions>
                             <MenuItem IconImageSource="ic_delete.png"
-                                      Command="{Binding Path=BindingContext.DeleteCommandTap, 
-                                                     Source={x:Reference ListView1}}" 
+                                      Command="{Binding Path=BindingContext.DeleteCommandTap, Source={x:Reference ListView1}}" 
                                       CommandParameter="{Binding .}"
                                       IsDestructive="True"/>
                             
                             <MenuItem IconImageSource="ic_edit.png"
-                                      Command="{Binding Path=BindingContext.EditCommandTap, 
-                                                        Source={x:Reference ListView1}}" 
+                                      Command="{Binding Path=BindingContext.EditCommandTap, Source={x:Reference ListView1}}" 
                                       CommandParameter="{Binding .}" />
                             
                         </ViewCell.ContextActions>
@@ -99,8 +96,7 @@
                                          Margin="5" 
                                          CornerRadius="6"
                                          BackgroundColor="{StaticResource TransparentColor}"
-                                         Command="{Binding Path=BindingContext.ImageCommandTap, 
-                                                            Source={x:Reference ListView1}}"
+                                         Command="{Binding Path=BindingContext.ImageCommandTap, Source={x:Reference ListView1}}"
                                          CommandParameter="{Binding .}"
                                          IsVisible="{Binding IsEnabled}">
 

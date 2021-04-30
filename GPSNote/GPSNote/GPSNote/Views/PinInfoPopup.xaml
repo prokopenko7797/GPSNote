@@ -5,7 +5,7 @@
                   xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
                   xmlns:prism="http://prismlibrary.com" 
                   BackgroundClickedCommand="{Binding PopupCloseCommand}"
-                  BackgroundColor="Transparent"
+                  BackgroundColor="{StaticResource TransparentColor}"
                   x:Class="GPSNote.Views.PinInfoPopup"
                   NavigationPage.HasNavigationBar="False">
 
@@ -19,121 +19,122 @@
 
 
     <popup:PopupPage.Content>
+        <StackLayout VerticalOptions="FillAndExpand"
+                     HorizontalOptions="FillAndExpand">
+            
+            <StackLayout.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding PopupCloseCommand}"
+                                      CommandParameter="{Binding .}"/>
+            </StackLayout.GestureRecognizers>
 
-        <Frame BackgroundColor="{AppThemeBinding Light={StaticResource System/White}, Dark={StaticResource System/Black}}"        
-               VerticalOptions="End"
-               HorizontalOptions="Fill"
-               Padding="16,16,16,16"
-               CornerRadius="4"
-               HasShadow="False">
+            
+            <Frame BackgroundColor="{AppThemeBinding Light={StaticResource System/White}, Dark={StaticResource System/Black}}"        
+                   VerticalOptions="EndAndExpand"
+                   HorizontalOptions="Fill"
+                   Padding="16,16,16,16"
+                   CornerRadius="4"
+                   HasShadow="False">
 
-            <StackLayout HorizontalOptions="StartAndExpand">
+                <StackLayout HorizontalOptions="StartAndExpand">
 
-                <Grid ColumnDefinitions="0.9*,0.1*"
-                      RowDefinitions="0.5*,0.5*">
+                    <Grid ColumnDefinitions="0.9*,0.1*"
+                          RowDefinitions="0.5*,0.5*">
 
-                    <Label Grid.Column="0"
-                           Grid.Row="0"
-                           Text= "{Binding PinLabel}"
-                           FontAttributes="Bold"
-                           FontSize="20"
-                           VerticalOptions="End"
-                           FontFamily="Montserrat-SemiBold"/>
+                        <Label Grid.Column="0"
+                               Grid.Row="0"
+                               Text= "{Binding PinLabel}"
+                               FontAttributes="Bold"
+                               FontSize="20"
+                               VerticalOptions="End"
+                               FontFamily="Montserrat-SemiBold"/>
 
-                    <Label Text= "{Binding PinLatLong}"
-                           TextColor="{AppThemeBinding Light={StaticResource System/DarkGray}, Dark={StaticResource System/White}}"
-                           VerticalOptions="Start"
-                           FontSize="16"
-                           Grid.Row="1"
-                           Grid.Column="0"/>
+                        <Label Text= "{Binding PinLatLong}"
+                               TextColor="{AppThemeBinding Light={StaticResource System/DarkGray}, Dark={StaticResource System/White}}"
+                               VerticalOptions="Start"
+                               FontSize="16"
+                               Grid.Row="1"
+                               Grid.Column="0"/>
 
+                        <Button Grid.Column="1"
+                                Grid.RowSpan="2"
+                                ImageSource="ic_share.png"
+                                BackgroundColor="{StaticResource TransparentColor}"
+                                HorizontalOptions="End"
+                                VerticalOptions="Center"
+                                Command="{Binding SharePinCommand}"/>
 
-                    <Button Grid.Column="1"
-                            Grid.RowSpan="2"
-                            ImageSource="ic_share.png"
-                            BackgroundColor="{StaticResource TransparentColor}"
-                            HorizontalOptions="End"
-                            VerticalOptions="Center"
-                            Command="{Binding SharePinCommand}">
+                        <BoxView Grid.Row="1"
+                                 Grid.ColumnSpan="2"
+                                 Color="{AppThemeBinding Light={StaticResource Light/Variant}, Dark={StaticResource Dark/Variant}}" 
+                                 HeightRequest="1" 
+                                 VerticalOptions="End" 
+                                 HorizontalOptions="Fill"/>
 
-                    </Button>
-
-
-                    <BoxView Grid.Row="1"
-                             Grid.ColumnSpan="2"
-                             Color="{AppThemeBinding Light={StaticResource Light/Variant}, Dark={StaticResource Dark/Variant}}" 
-                             HeightRequest="1" 
-                             VerticalOptions="End" 
-                             HorizontalOptions="Fill"/>
-
-
-                </Grid>
+                    </Grid>
 
 
-                <Label Text= "{Binding PinDescription}"
-                       Grid.Row="2"/>
+                    <Label Text= "{Binding PinDescription}"
+                           Grid.Row="2"/>
 
-                <Grid ColumnDefinitions="*,*,*,*">
+                    <Grid ColumnDefinitions="*,*,*,*">
                     
-                    <StackLayout Grid.Column="0">
+                        <StackLayout Grid.Column="0">
                         
-                        <Label Text="{Binding Day0}"
-                               HorizontalOptions="Center"/>
+                            <Label Text="{Binding Day0}"
+                                   HorizontalOptions="Center"/>
 
-                        <Image Source="{Binding WeatherIcon0}"
-                               HorizontalOptions="Center"/>
+                            <Image Source="{Binding WeatherIcon0}"
+                                   HorizontalOptions="Center"/>
 
-                        <Label Text="{Binding MaxMinTemp0}"
-                               HorizontalOptions="Center"/>
+                            <Label Text="{Binding MaxMinTemp0}"
+                                   HorizontalOptions="Center"/>
                         
-                    </StackLayout>
+                        </StackLayout>
                     
-                    <StackLayout Grid.Column="1">
+                        <StackLayout Grid.Column="1">
 
-                        <Label Text="{Binding Day1}"
-                               HorizontalOptions="Center"/>
+                            <Label Text="{Binding Day1}"
+                                   HorizontalOptions="Center"/>
 
-                        <Image Source="{Binding WeatherIcon1}"
-                               HorizontalOptions="Center"/>
+                            <Image Source="{Binding WeatherIcon1}"
+                                   HorizontalOptions="Center"/>
 
-                        <Label Text="{Binding MaxMinTemp1}"
-                               HorizontalOptions="Center"/>
+                            <Label Text="{Binding MaxMinTemp1}"
+                                   HorizontalOptions="Center"/>
 
-                    </StackLayout>
+                        </StackLayout>
                     
-                    <StackLayout Grid.Column="2">
+                        <StackLayout Grid.Column="2">
 
-                        <Label Text="{Binding Day2}"
-                               HorizontalOptions="Center"/>
+                            <Label Text="{Binding Day2}"
+                                   HorizontalOptions="Center"/>
 
-                        <Image Source="{Binding WeatherIcon2}"
-                               HorizontalOptions="Center"/>
+                            <Image Source="{Binding WeatherIcon2}"
+                                   HorizontalOptions="Center"/>
 
-                        <Label Text="{Binding MaxMinTemp2}"
-                               HorizontalOptions="Center"/>
+                            <Label Text="{Binding MaxMinTemp2}"
+                                   HorizontalOptions="Center"/>
 
-                    </StackLayout>
+                        </StackLayout>
                     
-                    <StackLayout Grid.Column="3">
+                        <StackLayout Grid.Column="3">
 
-                        <Label Text="{Binding Day3}"
-                               HorizontalOptions="Center"/>
+                            <Label Text="{Binding Day3}"
+                                   HorizontalOptions="Center"/>
 
-                        <Image Source="{Binding WeatherIcon3}"
-                               HorizontalOptions="Center"/>
+                            <Image Source="{Binding WeatherIcon3}"
+                                   HorizontalOptions="Center"/>
 
-                        <Label Text="{Binding MaxMinTemp3}"
-                               HorizontalOptions="Center"/>
+                            <Label Text="{Binding MaxMinTemp3}"
+                                   HorizontalOptions="Center"/>
 
-                    </StackLayout>
-                </Grid>
+                        </StackLayout>
+                    </Grid>
                 
-                
 
-
-            </StackLayout>
-        </Frame>
-
+                </StackLayout>
+            </Frame>
+        </StackLayout>
     </popup:PopupPage.Content>
 
 </popup:PopupPage>

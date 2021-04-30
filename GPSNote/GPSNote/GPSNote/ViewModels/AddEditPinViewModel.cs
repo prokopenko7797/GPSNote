@@ -28,7 +28,7 @@ namespace GPSNote.ViewModels
         private readonly IPinService _PinService;
         private readonly IAuthorizationService _authorizationService;
 
-        private PinViewModel _pinViewModel = new PinViewModel();
+        private PinViewModel _pinViewModel;
 
         public AddEditPinViewModel(INavigationService navigationService,
                                 ILocalizationService localizationService,
@@ -41,6 +41,8 @@ namespace GPSNote.ViewModels
             _authorizationService = authorizationService;
             _PageDialogService = pageDialogService;
             
+            _pinViewModel = new PinViewModel();
+
             ObsPins = new ObservableCollection<PinViewModel>();
 
             

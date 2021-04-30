@@ -29,12 +29,12 @@
 
 
             <customcontrols:SearchEntry TextEntry="{Binding SearchBarText}"
-                                            PlaceholderText="{Binding Resources[Search]}"
-                                            EntryBorderColor="{StaticResource TransparentColor}"
-                                            IsEntryFocused="{Binding IsListViewVisible}"
-                                            Grid.Column="1"
-                                            Grid.ColumnSpan="2"
-                                            HorizontalOptions="Center"/>
+                                        PlaceholderText="{Binding Resources[Search]}"
+                                        EntryBorderColor="{StaticResource TransparentColor}"
+                                        IsEntryFocused="{Binding IsListViewVisible}"
+                                        Grid.Column="1"
+                                        Grid.ColumnSpan="2"
+                                        HorizontalOptions="Center"/>
 
 
 
@@ -94,6 +94,7 @@
                                            Text="{Binding Label}" 
                                            FontAttributes="Bold"
                                            LineBreakMode="TailTruncation"/>
+                                    
                                     <Label Grid.Row="1" 
                                            Text="{Binding Description}"
                                            TextColor="{AppThemeBinding Light={StaticResource System/DarkGray}, Dark={StaticResource System/LightGray}}"

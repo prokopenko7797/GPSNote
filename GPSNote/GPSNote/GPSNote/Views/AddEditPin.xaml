@@ -12,6 +12,8 @@
 
 
     <Grid RowDefinitions="0.1*, 0.9*">
+        
+        <!--Navigation bar-->
         <Grid Grid.Row="0"
               ColumnDefinitions="0.1*, 0.8*, 0.1*"
               Padding="16,0,16,0">
@@ -65,9 +67,9 @@
                                         VerticalOptions="Start"/>
 
                 <Label Text="{Binding Resources[Description]}"
-                   Padding="12,0,0,0"
-                   Grid.Row="2"
-                   VerticalOptions="End"/>
+                       Padding="12,0,0,0"
+                       Grid.Row="2"
+                       VerticalOptions="End"/>
 
                 <custommap:FramedEntry TextEntry="{Binding Description}"
                                         PlaceholderText="{Binding Resources[Description]}"
@@ -75,31 +77,31 @@
                                         HeightRequest="58"/>
 
                 <Label Text="{Binding Resources[Coordinates]}"
-                   Padding="12,0,0,0"
-                   Grid.Row="4"
-                   VerticalOptions="End"/>
+                       Padding="12,0,0,0"
+                       Grid.Row="4"
+                       VerticalOptions="End"/>
 
 
                 <Grid Grid.Row="5" >
 
                     <custommap:FramedEntry TextEntry="{Binding Latitude}"
-                                   PlaceholderText="{Binding Resources[Latitude]}"
-                                   Grid.Column="0"/>
+                                           PlaceholderText="{Binding Resources[Latitude]}"
+                                           Grid.Column="0"/>
 
                     <custommap:FramedEntry TextEntry="{Binding Longtitude}"
-                                       PlaceholderText="{Binding Resources[Longtitude]}"
-                                       Grid.Column="1"/>
+                                           PlaceholderText="{Binding Resources[Longtitude]}"
+                                           Grid.Column="1"/>
 
                 </Grid>
 
             </Grid>
 
             <custommap:CustomMap  Grid.Row="1"  
-                              ObsPins ="{Binding ObsPins}">
+                                  ObsPins ="{Binding ObsPins}">
                 <custommap:CustomMap.Behaviors>
                     <prism:EventToCommandBehavior EventName="MapClicked"
-                                              Command="{Binding ItemTappedCommand}"
-                                              EventArgsParameterPath="Point" />
+                                                  Command="{Binding ItemTappedCommand}"
+                                                  EventArgsParameterPath="Point" />
                 </custommap:CustomMap.Behaviors>
             </custommap:CustomMap>
 

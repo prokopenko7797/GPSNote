@@ -13,6 +13,7 @@
             UnselectedTabColor="{AppThemeBinding Light={StaticResource Light/Disacled}, Dark={StaticResource Dark/Disacled}}"
             NavigationPage.HasNavigationBar="False">
 
+    
     <TabbedPage.Behaviors>
         <behaviors:TabbedPageNavigationBehavior />
     </TabbedPage.Behaviors>

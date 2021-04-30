@@ -29,15 +29,7 @@ namespace GPSNote.CustomControls
             defaultValue: default,
             propertyChanged: ObsPinsPropertyChanged);
 
-        private static void ObsPinsPropertyChanged(BindableObject bindable, object oldValue, object newValue)
-        {
-            var control = (CustomMap)bindable;
-            control.Pins.Clear();
-            foreach (PinViewModel pin in (ObservableCollection<PinViewModel>)newValue)
-            {
-                control.Pins.Add(pin.ToPin());
-            }
-        }
+
 
         public ObservableCollection<PinViewModel> ObsPins
         {
@@ -53,6 +45,33 @@ namespace GPSNote.CustomControls
             defaultValue: default,
             propertyChanged: MoveToPropertyChanged);
 
+
+
+        public MapSpan MoveTo
+        {
+            get { return (MapSpan)GetValue(MoveToProperty); }
+            set { SetValue(MoveToProperty, value); }
+        }
+        #endregion
+
+        #region -- Private Helpers --
+
+        private static void ObsPinsPropertyChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            var control = (CustomMap)bindable;
+            control.Pins.Clear();
+
+
+            if (newValue != null)
+            {
+                foreach (PinViewModel pin in (ObservableCollection<PinViewModel>)newValue)
+                {
+                    control.Pins.Add(pin.ToPin());
+                }
+            }
+    
+        }
+
         private static void MoveToPropertyChanged(BindableObject bindable, object oldValue, object newValue)
         {
             var control = (CustomMap)bindable;
@@ -60,11 +79,6 @@ namespace GPSNote.CustomControls
 
         }
 
-        public MapSpan MoveTo
-        {
-            get { return (MapSpan)GetValue(MoveToProperty); }
-            set { SetValue(MoveToProperty, value); }
-        }
         #endregion
     }
 }
