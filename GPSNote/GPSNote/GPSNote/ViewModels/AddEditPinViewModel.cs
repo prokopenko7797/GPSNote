@@ -17,6 +17,7 @@ using Xamarin.Forms.GoogleMaps;
 using System.Threading.Tasks;
 using OpenWeatherMap;
 using System.Collections.ObjectModel;
+using System.Globalization;
 
 namespace GPSNote.ViewModels
 {
@@ -74,15 +75,15 @@ namespace GPSNote.ViewModels
             set { SetProperty(ref _Description, value); }
         }
 
-        private double _Latitude;
-        public double Latitude
+        private string _Latitude;
+        public string Latitude
         {
             get { return _Latitude; }
             set { SetProperty(ref _Latitude, value); }
         }
 
-        private double _Longtitude;
-        public double Longtitude
+        private string _Longtitude;
+        public string Longtitude
         {
             get { return _Longtitude; }
             set { SetProperty(ref _Longtitude, value); }
@@ -120,8 +121,8 @@ namespace GPSNote.ViewModels
                 _pinViewModel = parameters.GetValue<PinViewModel>(nameof(PinViewModel));
                 Name = _pinViewModel.Label;
                 Description = _pinViewModel.Description;
-                Latitude = _pinViewModel.Latitude;
-                Longtitude = _pinViewModel.Longitude;
+                Latitude = _pinViewModel.Latitude.ToString("G", CultureInfo.InvariantCulture);
+                Longtitude = _pinViewModel.Longitude.ToString("G", CultureInfo.InvariantCulture);
 
                 Title = Resources["EditPinTitle"];
 
@@ -137,10 +138,19 @@ namespace GPSNote.ViewModels
             base.OnPropertyChanged(args);
             if (args.PropertyName == nameof(Latitude) || args.PropertyName == nameof(Longtitude))
             {
-                if (ObsPins.First().Latitude != Latitude || ObsPins.First().Longitude != Longtitude)
+                if (ObsPins.Count == 1)
+                {
+                    if (ObsPins.First().Latitude.ToString("G", CultureInfo.InvariantCulture) != Latitude
+                    || ObsPins.First().Longitude.ToString("G", CultureInfo.InvariantCulture) != Longtitude)
+                    {
+                        UpdatePin();
+                    }
+                }
+                else
                 {
                     UpdatePin();
                 }
+                
             }
         }
 
@@ -159,9 +169,9 @@ namespace GPSNote.ViewModels
             Position position = (Position)sender;
 
 
-            Latitude = position.Latitude;
-            Longtitude = position.Longitude;
-            
+            Latitude = position.Latitude.ToString("G", CultureInfo.InvariantCulture);
+            Longtitude = position.Longitude.ToString("G", CultureInfo.InvariantCulture);
+
 
         }
 
@@ -171,11 +181,11 @@ namespace GPSNote.ViewModels
             PinViewModel pinViewModel = new PinViewModel()
             {
                 Label = Resources["NewPin"],
-                Latitude = Latitude,
-                Longitude = Longtitude,
+                Latitude = Convert.ToDouble(Latitude), тут хуйня
+                Longitude = Convert.ToDouble(Longtitude),
                 IsEnabled = true
             };
-
+            //TODO jhfjhfjhf
             ObservableCollection<PinViewModel> newPins = new ObservableCollection<PinViewModel>();
             newPins.Add(pinViewModel);
 
@@ -193,8 +203,8 @@ namespace GPSNote.ViewModels
             {
                 _pinViewModel.Label = Name;
                 _pinViewModel.Description = Description;
-                _pinViewModel.Latitude = Latitude;
-                _pinViewModel.Longitude = Longtitude;
+                _pinViewModel.Latitude = Convert.ToDouble(Latitude);
+                _pinViewModel.Longitude = Convert.ToDouble(Longtitude);
                 _pinViewModel.UserId = _authorizationService.IdUser;
                 _pinViewModel.IsEnabled = true;
 
