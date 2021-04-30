@@ -19,6 +19,9 @@
 
 
     <popup:PopupPage.Content>
+
+        <!-- Transparent background -->
+        
         <StackLayout VerticalOptions="FillAndExpand"
                      HorizontalOptions="FillAndExpand">
             
@@ -27,6 +30,7 @@
                                       CommandParameter="{Binding .}"/>
             </StackLayout.GestureRecognizers>
 
+            <!-- PopUp -->
             
             <Frame BackgroundColor="{AppThemeBinding Light={StaticResource System/White}, Dark={StaticResource System/Black}}"        
                    VerticalOptions="EndAndExpand"
@@ -37,9 +41,12 @@
 
                 <StackLayout HorizontalOptions="StartAndExpand">
 
+                    <!-- PinInfo -->
+                    
                     <Grid ColumnDefinitions="0.9*,0.1*"
                           RowDefinitions="0.5*,0.5*">
 
+                        
                         <Label Grid.Column="0"
                                Grid.Row="0"
                                Text= "{Binding PinLabel}"
@@ -76,6 +83,8 @@
                     <Label Text= "{Binding PinDescription}"
                            Grid.Row="2"/>
 
+                    <!-- Weather -->
+                    
                     <Grid ColumnDefinitions="*,*,*,*">
                     
                         <StackLayout Grid.Column="0">

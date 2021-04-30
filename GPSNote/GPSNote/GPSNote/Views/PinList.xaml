@@ -13,6 +13,8 @@
     <Grid Grid.RowDefinitions ="0.1*, 0.9*"
           Padding="16,0,16,16" >
 
+        <!-- NavigationBar -->
+        
         <Grid Grid.Row="0" 
               Grid.ColumnDefinitions="0.1*,0.8*,0.1*"
               VerticalOptions="End"
@@ -25,8 +27,6 @@
                     HorizontalOptions="Start"
                     VerticalOptions="Center"/>
 
-
-
             <customcontrols:SearchEntry TextEntry="{Binding SearchBarText}"
                                         PlaceholderText="{Binding Resources[Search]}"
                                         EntryBorderColor="{StaticResource TransparentColor}"
@@ -35,25 +35,25 @@
                                         HorizontalOptions="Center"/>
 
 
-
             <Button Grid.Column="2"
                     ImageSource="ic_exid.png"
                     Command="{Binding LogOutCommand}"
                     HorizontalOptions="End"
                     BackgroundColor="{StaticResource TransparentColor}"/>
 
-
-
         </Grid>
 
 
-
+        <!-- If no pins -->
+        
         <Label Text="{Binding Resources[NoPins]}" 
                Grid.Row="1"
                HorizontalOptions="Center"
                VerticalOptions="Center"
                IsVisible="{Binding IsVisible}"/>
 
+        <!-- ListofPins -->
+        
         <ListView Grid.Row="1" 
                   ItemsSource="{Binding PinObs}" 
                   RowHeight="100" 
@@ -102,6 +102,8 @@
 
                                 </ImageButton>
 
+                                <!-- PinInfo -->
+                                
                                 <Label Grid.Column="1" 
                                        Grid.Row="0" 
                                        Text="{Binding Label}" 
@@ -137,6 +139,8 @@
             </ListView.ItemTemplate>
         </ListView>
 
+
+        <!-- Shadow for button -->
         <Frame Grid.Row="1" 
                CornerRadius="30"
                WidthRequest="60" 
@@ -147,10 +151,12 @@
                HorizontalOptions="End"
                Padding="0">
             
-            
         </Frame>
 
-        <Button Grid.Row="1" BackgroundColor="{StaticResource Light/Primary}"
+        <!-- AddPin -->
+        
+        <Button Grid.Row="1" 
+                BackgroundColor="{StaticResource Light/Primary}"
                 Command="{Binding AddEditButtonClicked}" 
                 CornerRadius="30"
                 WidthRequest="60" 

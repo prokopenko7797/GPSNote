@@ -14,19 +14,24 @@
     
     <Grid RowDefinitions ="0.1*, 0.9*">
 
+        <!-- Navigation bar -->
+        
         <Grid Grid.Row="0" 
               Grid.ColumnDefinitions="0.1*,0.8*,0.1*"
               VerticalOptions="End"
               Padding="16,0,16,0">
+
+            <!-- Settings -->
 
             <Button Grid.Column="0"
                     ImageSource="ic_settings.png"
                     Command="{Binding SettingsNavigation}"
                     BackgroundColor="{StaticResource TransparentColor}"
                     HorizontalOptions="Start"
-                    VerticalOptions="Center">
-            </Button>
+                    VerticalOptions="Center"/>
 
+
+            <!-- Search -->
 
             <customcontrols:SearchEntry TextEntry="{Binding SearchBarText}"
                                         PlaceholderText="{Binding Resources[Search]}"
@@ -36,18 +41,19 @@
                                         Grid.ColumnSpan="2"
                                         HorizontalOptions="Center"/>
 
-
+            <!-- Exit -->
 
             <Button Grid.Column="2"
                     ImageSource="ic_exid.png"
                     HorizontalOptions="End"
                     Command="{Binding LogOutCommand}"
-                    BackgroundColor="{StaticResource TransparentColor}">
-                
-            </Button>
+                    BackgroundColor="{StaticResource TransparentColor}"/>
+
 
         </Grid>
 
+        <!-- Map -->
+        
         <custommap:CustomMap Grid.Row="1"   
                              ObsPins ="{Binding ControlObs}" 
                              MoveTo="{Binding MoveTo}">
@@ -63,7 +69,7 @@
             </custommap:CustomMap.Behaviors>
         </custommap:CustomMap>
 
-
+        <!-- Search List -->
 
         <ListView Grid.Row="1" 
                   ItemsSource="{Binding PinObs}" 

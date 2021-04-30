@@ -14,6 +14,7 @@
     <Grid RowDefinitions="0.1*, 0.9*">
         
         <!--Navigation bar-->
+        
         <Grid Grid.Row="0"
               ColumnDefinitions="0.1*, 0.8*, 0.1*"
               Padding="16,0,16,0">
@@ -53,6 +54,8 @@
         <Grid Grid.Row="1"
               Grid.RowDefinitions="0.5*, 0.5*" >
 
+            <!-- Text input -->
+            
             <Grid Grid.Row="0"
                   Padding="16,0,16,16">
 
@@ -95,6 +98,9 @@
                 </Grid>
 
             </Grid>
+
+
+            <!-- Map input -->
 
             <custommap:CustomMap  Grid.Row="1"  
                                   ObsPins ="{Binding ObsPins}">

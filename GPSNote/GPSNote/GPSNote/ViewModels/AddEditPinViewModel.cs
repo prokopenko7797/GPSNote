@@ -137,7 +137,10 @@ namespace GPSNote.ViewModels
             base.OnPropertyChanged(args);
             if (args.PropertyName == nameof(Latitude) || args.PropertyName == nameof(Longtitude))
             {
-                UpdatePin();
+                if (ObsPins.First().Latitude != Latitude || ObsPins.First().Longitude != Longtitude)
+                {
+                    UpdatePin();
+                }
             }
         }
 

@@ -12,6 +12,9 @@
     <Grid RowDefinitions="0.1*,0.9*"
           BackgroundColor="{StaticResource TransparentColor}">
 
+
+        <!-- Navigation bar -->
+
         <Grid Grid.Row="0" 
               ColumnDefinitions="0.1*, 0.8*, 0.1*"
               Padding="16,0,16,0">
@@ -41,10 +44,11 @@
 
         </Grid>
 
-
+        <!-- Language Stack -->
+        
         <StackLayout Grid.Row="1"
                      BackgroundColor="{StaticResource TransparentColor}">
-
+            <!--En-->
 
             <Grid ColumnDefinitions="0.1*, 0.9*"
                   Margin="16, 16, 16, 16">
@@ -63,9 +67,6 @@
                        VerticalOptions="Center"
                        HorizontalOptions="StartAndExpand"/>
 
-
-  
-                
             </Grid>
 
 
@@ -75,6 +76,8 @@
                      VerticalOptions="End" 
                      HorizontalOptions="Fill"/>
 
+            <!--Ru-->
+            
             <Grid ColumnDefinitions="0.1*, 0.9*"
                   Margin="16, 16, 16, 16">
 

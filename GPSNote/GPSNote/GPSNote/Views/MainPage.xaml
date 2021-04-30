@@ -10,6 +10,8 @@
 
     <Grid RowDefinitions="0.7*, 0.3*">
 
+        <!-- Main image&Label -->
+        
         <Grid RowDefinitions="0.7*, 0.3*"
               RowSpacing="20"
               Padding="20">
@@ -36,14 +38,17 @@
                      Padding="20"
                      Spacing="20">
 
+            <!-- Log in button -->
+            
             <Button Text="{Binding Resources[Log in]}" 
                     Font="17"
                     CharacterSpacing="1"
                     FontFamily="Montserrat-SemiBold"
                     Style="{StaticResource blueButtonStyle}"
-                    Command="{Binding LogInCommand}"
-                    />
+                    Command="{Binding LogInCommand}"/>
 
+            <!-- Sign in button -->
+            
             <Button Text="{Binding Resources[CreateAccount]}" 
                     BackgroundColor="{StaticResource TransparentColor}"
                     Command="{Binding CreateAccountCommand}"
