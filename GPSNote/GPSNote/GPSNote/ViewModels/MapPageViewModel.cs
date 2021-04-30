@@ -41,6 +41,16 @@ namespace GPSNote.ViewModels
             _pinService = pinService;
             _authorizationService = authorizationService;
             _permissionService = permissionService;
+
+            PinObs = new ObservableCollection<PinViewModel>();
+            SelectedListItem = new PinViewModel();
+
+
+            MoveTo = new MapSpan(new Position(Constant.RomeLatitude, Constant.RomeLongtitude), 1, 1);
+
+            IsListViewVisible = false;
+            IsPinTapped = false;
+
         }
 
         #region -- Public properties --
@@ -104,8 +114,16 @@ namespace GPSNote.ViewModels
             set { SetProperty(ref _pinList, value); }
         }
 
-        private PinViewModel _SelectedItem;
+        private PinViewModel _SelectedListItem;
         public PinViewModel SelectedListItem
+        {
+            get { return _SelectedListItem; }
+            set { SetProperty(ref _SelectedListItem, value); }
+        }
+
+
+        private Pin _SelectedItem;
+        public Pin SelectedItem
         {
             get { return _SelectedItem; }
             set { SetProperty(ref _SelectedItem, value); }
@@ -188,6 +206,7 @@ namespace GPSNote.ViewModels
             base.Initialize(parameters);
 
 
+
             PinObs = new ObservableCollection<PinViewModel>((await _pinService.GetUserPinsAsync()).ToPinViewObservableCollection());
             ControlObs = PinObs;
 
@@ -205,9 +224,14 @@ namespace GPSNote.ViewModels
 
             }
 
-            if (parameters.TryGetValue<PinViewModel>(nameof(SelectedListItem), out var newSelectedItem))
+            if (parameters.TryGetValue<PinViewModel>(nameof(SelectedItem), out var newSelectedItem))
             {
-                SelectedListItem = newSelectedItem;
+                if (newSelectedItem != null)
+                {
+                    DisplayInfoPinViewModel(newSelectedItem);
+                    MoveTo = new MapSpan(new Position(newSelectedItem.Latitude, newSelectedItem.Longitude), 1, 1).WithZoom(10);
+                }
+                
             }
 
             bool IsUpdated = false;
@@ -226,13 +250,28 @@ namespace GPSNote.ViewModels
         {
             base.OnPropertyChanged(args);
 
+            if (args.PropertyName == nameof(SelectedItem))
+            {
+                if (SelectedItem != null)
+                {
+                    MoveTo = new MapSpan(SelectedItem.Position, 1, 1).WithZoom(10);
+                    IsListViewVisible = false;
+                    IsSelected = SelectedItem != null;
+                }
+
+
+            }
+
             if (args.PropertyName == nameof(SelectedListItem))
             {
-                MoveTo = new MapSpan(new Position(SelectedListItem.Latitude, SelectedListItem.Longitude), 1, 1).WithZoom(10);
-                IsListViewVisible = false;
-                IsSelected = SelectedListItem != null;
+                if (SelectedListItem != null)
+                {
+                    MoveTo = new MapSpan(new Position(SelectedListItem.Latitude, SelectedListItem.Longitude), 1, 1).WithZoom(10);
+                    IsListViewVisible = false;
+                    IsSelected = SelectedItem != null;
+                }
+                
 
-                DisplayInfoPinViewModel(ControlObs.Where(pinView => pinView.Label.Contains(SelectedListItem.Label)).First());
 
             }
 
@@ -292,9 +331,12 @@ namespace GPSNote.ViewModels
                 string low = SearchBarText.ToLower();
 
                 PinObs = new ObservableCollection<PinViewModel>(ControlObs.Where(pin => (pin.Label.ToLower()).Contains(low) ||
-                                                                                  (pin.Description.ToLower()).Contains(low) ||
+                                                                                  (!string.IsNullOrWhiteSpace(pin.Description) &&
+                                                                                  (pin.Description.ToLower()).Contains(low)) ||
                                                                                   (pin.Latitude.ToString()).Contains(low) ||
                                                                                   (pin.Longitude.ToString()).Contains(low)));
+
+      
             }
             ChangeHeight();
         }
@@ -320,10 +362,10 @@ namespace GPSNote.ViewModels
 
         private void OnPinClicked(object sender)
         {
-            Pin SelectedPin = (Pin)sender;
+            var pin = (Pin)sender;
 
 
-            DisplayInfoPinViewModel(ControlObs.Where(pinView => pinView.Label.Contains(SelectedPin.Label)).First());
+            DisplayInfoPinViewModel(ControlObs.Where(pinView => pinView.Label.Contains(pin.Label)).First());
         }
 
 

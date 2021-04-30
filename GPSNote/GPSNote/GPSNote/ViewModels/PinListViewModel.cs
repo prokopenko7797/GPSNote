@@ -37,6 +37,9 @@ namespace GPSNote.ViewModels
         {
             _authorizationService = authorizationService;
             _pinService = pinService;
+
+            PinObs = new ObservableCollection<PinViewModel>();
+            SelectedItem = new PinViewModel();
         }
 
         #region -- Public properties --
@@ -95,10 +98,6 @@ namespace GPSNote.ViewModels
             _ImageCommandTap ?? (_ImageCommandTap = new DelegateCommand<object>(OnChangeVisibilityComand));
 
 
-        private DelegateCommand<object> _ItemTappedCommand;
-        public DelegateCommand<object> ItemTappedCommand =>
-            _ItemTappedCommand ?? (_ItemTappedCommand = new DelegateCommand<object>(OnItemTappedAsyncCommand));
-
         #endregion
 
         #region --Overrides--
@@ -144,14 +143,22 @@ namespace GPSNote.ViewModels
                 OnSearchCommand();
             }
 
+
+            if (args.PropertyName == nameof(SelectedItem))
+            {
+
+                OnItemTappedAsyncCommand();
+            }
+
         }
 
         #endregion
 
         #region -- Private helpers --
 
-        private async void OnItemTappedAsyncCommand(object sender)
+        private async void OnItemTappedAsyncCommand()
         {
+
             var parameters = new NavigationParameters
                 {
                     { nameof(SelectedItem), SelectedItem }
@@ -172,7 +179,8 @@ namespace GPSNote.ViewModels
                 string low = SearchBarText.ToLower();
 
                 PinObs = new ObservableCollection<PinViewModel>(_ControlObs.Where(pin => (pin.Label.ToLower()).Contains(low) ||
-                                                                                  (pin.Description.ToLower()).Contains(low) ||
+                                                                                  (!string.IsNullOrWhiteSpace(pin.Description) &&
+                                                                                  (pin.Description.ToLower()).Contains(low)) ||
                                                                                   (pin.Latitude.ToString()).Contains(low) ||
                                                                                   (pin.Longitude.ToString()).Contains(low)));
             }

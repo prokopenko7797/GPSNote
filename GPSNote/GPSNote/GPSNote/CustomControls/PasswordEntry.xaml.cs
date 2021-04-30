@@ -120,11 +120,11 @@ namespace GPSNote.CustomControls
             entry.IsPassword = !entry.IsPassword;
             if (entry.IsPassword)
             {
-                eyeButton.Source = "ic_eye.png";
+                eyeButton.Source = "ic_eye_off.png";
             }
             else
             {
-                eyeButton.Source = "ic_eye_off.png";
+                eyeButton.Source = "ic_eye.png";
             }
         }
 

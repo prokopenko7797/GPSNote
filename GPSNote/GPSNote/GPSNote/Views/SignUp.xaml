@@ -13,7 +13,8 @@
 
     <Grid RowDefinitions="0.1*, 0.9*">
 
-        <Grid Grid.Row="0" ColumnDefinitions="0.1*, 0.8*, 0.1*">
+        <Grid Grid.Row="0" ColumnDefinitions="0.1*, 0.8*, 0.1*"
+              Padding="16,0,16,0">
 
             <Button ImageSource="ic_left_blue.png"
                     Grid.Column="0"

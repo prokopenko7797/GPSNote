@@ -11,6 +11,7 @@ using Prism.Navigation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace GPSNote.ViewModels
@@ -30,6 +31,8 @@ namespace GPSNote.ViewModels
 
             _weatherService = weatherService;
             _pinShareService = pinShareService;
+
+
         }
 
         #region -- Public properties --
@@ -157,33 +160,37 @@ namespace GPSNote.ViewModels
                 PinLatLong = $"{pinViewModel.Latitude}, {pinViewModel.Longitude}";
                 PinDescription = pinViewModel.Description;
 
+                NetworkAccess networkAccess = Connectivity.NetworkAccess;
 
-                OneCallModel oneCallModel = await _weatherService.GetOneCallForecast(newPinViewModel.Latitude, newPinViewModel.Longitude);
-
-                MaxMinTemp0 = $"{(int)oneCallModel.Daily[0].Temp.Max} ° {(int)oneCallModel.Daily[0].Temp.Min} °";
-                MaxMinTemp1 = $"{(int)oneCallModel.Daily[1].Temp.Max} ° {(int)oneCallModel.Daily[1].Temp.Min} °";
-                MaxMinTemp2 = $"{(int)oneCallModel.Daily[2].Temp.Max} ° {(int)oneCallModel.Daily[2].Temp.Min} °";
-                MaxMinTemp3 = $"{(int)oneCallModel.Daily[3].Temp.Max} ° {(int)oneCallModel.Daily[3].Temp.Min} °";
-
-                WeatherIcon0 = $"http://openweathermap.org/img/wn/{oneCallModel.Daily[0].Weather[0].Icon}@2x.png";
-                WeatherIcon1 = $"http://openweathermap.org/img/wn/{oneCallModel.Daily[1].Weather[0].Icon}@2x.png";
-                WeatherIcon2 = $"http://openweathermap.org/img/wn/{oneCallModel.Daily[2].Weather[0].Icon}@2x.png";
-                WeatherIcon3 = $"http://openweathermap.org/img/wn/{oneCallModel.Daily[3].Weather[0].Icon}@2x.png";
-
-                List<string> ld = new List<string>();
-
-                for (int i = 0; i < 4; i++)
+                if (networkAccess == NetworkAccess.Internet)
                 {
-                    DateTime dt = UnixTimeStampToDateTime(oneCallModel.TimezoneOffset + oneCallModel.Daily[i].Dt);
+                    OneCallModel oneCallModel = await _weatherService.GetOneCallForecast(newPinViewModel.Latitude, newPinViewModel.Longitude);
 
-                    DayOfWeek d = dt.DayOfWeek;
-                    ld.Add(d.ToString().Substring(0, 3));
+                    MaxMinTemp0 = $"{(int)oneCallModel.Daily[0].Temp.Max} ° {(int)oneCallModel.Daily[0].Temp.Min} °";
+                    MaxMinTemp1 = $"{(int)oneCallModel.Daily[1].Temp.Max} ° {(int)oneCallModel.Daily[1].Temp.Min} °";
+                    MaxMinTemp2 = $"{(int)oneCallModel.Daily[2].Temp.Max} ° {(int)oneCallModel.Daily[2].Temp.Min} °";
+                    MaxMinTemp3 = $"{(int)oneCallModel.Daily[3].Temp.Max} ° {(int)oneCallModel.Daily[3].Temp.Min} °";
+
+                    WeatherIcon0 = $"http://openweathermap.org/img/wn/{oneCallModel.Daily[0].Weather[0].Icon}@2x.png";
+                    WeatherIcon1 = $"http://openweathermap.org/img/wn/{oneCallModel.Daily[1].Weather[0].Icon}@2x.png";
+                    WeatherIcon2 = $"http://openweathermap.org/img/wn/{oneCallModel.Daily[2].Weather[0].Icon}@2x.png";
+                    WeatherIcon3 = $"http://openweathermap.org/img/wn/{oneCallModel.Daily[3].Weather[0].Icon}@2x.png";
+
+                    List<string> ld = new List<string>();
+
+                    for (int i = 0; i < 4; i++)
+                    {
+                        DateTime dt = UnixTimeStampToDateTime(oneCallModel.TimezoneOffset + oneCallModel.Daily[i].Dt);
+
+                        DayOfWeek d = dt.DayOfWeek;
+                        ld.Add(d.ToString().Substring(0, 3));
+                    }
+
+                    Day0 = ld[0];
+                    Day1 = ld[1];
+                    Day2 = ld[2];
+                    Day3 = ld[3];
                 }
-
-                Day0 = ld[0];
-                Day1 = ld[1];
-                Day2 = ld[2];
-                Day3 = ld[3];
 
             }
 

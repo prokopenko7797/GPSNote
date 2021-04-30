@@ -23,12 +23,12 @@
                     ImageSource="ic_settings.png"
                     Command="{Binding SettingsNavigation}"
                     BackgroundColor="{StaticResource TransparentColor}"
-                    HorizontalOptions="Center"
+                    HorizontalOptions="Start"
                     VerticalOptions="Center">
             </Button>
 
 
-                <customcontrols:SearchEntry TextEntry="{Binding SearchBarText}"
+            <customcontrols:SearchEntry TextEntry="{Binding SearchBarText}"
                                             PlaceholderText="{Binding Resources[Search]}"
                                             EntryBorderColor="{StaticResource TransparentColor}"
                                             IsEntryFocused="{Binding IsListViewVisible}"
@@ -39,28 +39,18 @@
 
 
             <Button Grid.Column="2"
-                         ImageSource="ic_exid.png"
-                         Command="{Binding LogOutCommand}"
-                         BackgroundColor="{StaticResource TransparentColor}">
+                    ImageSource="ic_exid.png"
+                    HorizontalOptions="End"
+                    Command="{Binding LogOutCommand}"
+                    BackgroundColor="{StaticResource TransparentColor}">
+                
             </Button>
 
         </Grid>
 
-
-        <Button Grid.Row="1" 
-                Text="{Binding Resources[FocusToSelected]}" 
-                Command="{Binding MoveToCommand}" 
-                HorizontalOptions="Center" 
-                VerticalOptions="Start"
-                IsVisible="{Binding IsSelected}">
-
-        </Button>
-
-
         <custommap:CustomMap Grid.Row="1"   
                              ObsPins ="{Binding ControlObs}" 
-                             MoveTo="{Binding MoveTo}"
-                             SelectedPin="{Binding SelectedPin}">
+                             MoveTo="{Binding MoveTo}">
             
             <custommap:CustomMap.Behaviors>
                 <prism:EventToCommandBehavior EventName="MapClicked"

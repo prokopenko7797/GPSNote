@@ -70,7 +70,10 @@
                     Value="{StaticResource System/Gray}" />
             <Setter Property="FontFamily"
                     Value="Montserrat-Regular" />
+            <Setter Property="Keyboard"
+                    Value="Plain" />
         </Style>
+
 
         <Style TargetType="Label">
             <Setter Property="TextColor"

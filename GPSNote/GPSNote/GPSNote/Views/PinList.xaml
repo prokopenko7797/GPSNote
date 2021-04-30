@@ -22,9 +22,9 @@
                     ImageSource="ic_settings.png"
                     Command="{Binding SettingsNavigation}"
                     BackgroundColor="{StaticResource TransparentColor}"
-                    HorizontalOptions="Center"
-                    VerticalOptions="Center">
-            </Button>
+                    HorizontalOptions="Start"
+                    VerticalOptions="Center"/>
+
 
 
             <customcontrols:SearchEntry TextEntry="{Binding SearchBarText}"
@@ -37,10 +37,12 @@
 
 
             <Button Grid.Column="2"
-                         ImageSource="ic_exid.png"
-                         Command="{Binding LogOutCommand}"
-                         BackgroundColor="{StaticResource TransparentColor}">
-            </Button>
+                    ImageSource="ic_exid.png"
+                    Command="{Binding LogOutCommand}"
+                    HorizontalOptions="End"
+                    BackgroundColor="{StaticResource TransparentColor}"/>
+
+
 
         </Grid>
 
@@ -62,13 +64,7 @@
                   SeparatorVisibility="None"
                   >
 
-            <ListView.Behaviors>
-                <prism:EventToCommandBehavior
-                    EventName="ItemTapped"
-                    Command="{Binding ItemTappedCommand}"
-                    CommandParameter="{Binding .}"/>
-                
-            </ListView.Behaviors>
+
 
             <ListView.ItemTemplate>
                 <DataTemplate>

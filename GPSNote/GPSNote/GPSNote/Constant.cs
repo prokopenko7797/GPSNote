@@ -22,6 +22,8 @@ namespace GPSNote
         public const string Host = "gpsnote.page.link";
         public const string Action = "pin";
         public const string WeatherAPIKey = "9600b0e0a8807fdc09ff9b5e467e5d71";
+        public const double RomeLatitude = 41.89;
+        public const double RomeLongtitude = 12.49;
 
         public static class ResourcesLangConst
         {

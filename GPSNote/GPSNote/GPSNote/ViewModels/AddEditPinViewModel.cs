@@ -40,7 +40,10 @@ namespace GPSNote.ViewModels
             _PinService = pinService;
             _authorizationService = authorizationService;
             _PageDialogService = pageDialogService;
+            
             ObsPins = new ObservableCollection<PinViewModel>();
+
+            
 
             Title = Resources["AddPinTitle"];
         }
@@ -119,6 +122,8 @@ namespace GPSNote.ViewModels
                 Longtitude = _pinViewModel.Longitude;
 
                 Title = Resources["EditPinTitle"];
+
+                ObsPins = new ObservableCollection<PinViewModel>();
             }
 
 
