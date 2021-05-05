@@ -52,12 +52,6 @@ namespace GPSNote.Droid
 
     }
 
-    //public override void OnBackPressed()
-    //{
-    //    PopupPlugin.OnBackPressed();
-    //}
-
-
     public class AndroidInitializer : IPlatformInitializer
     {
         public void RegisterTypes(IContainerRegistry containerRegistry)

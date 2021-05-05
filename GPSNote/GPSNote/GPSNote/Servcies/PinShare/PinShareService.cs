@@ -21,16 +21,12 @@ namespace GPSNote.Servcies.PinShare
 
         public async void SharePinAsync(PinModel pinModel)
         {
-
-
-
             string text = $"https://gpsnote.page.link/pin" +
                 $"?{pinModel.Label.Replace(" ","*")}&{pinModel.Description.Replace(" ", "*")}&{pinModel.Latitude}&{pinModel.Longitude}";
 
             await Share.RequestAsync(new ShareTextRequest
             {
                 Title = _localizationService["SharingTitle"],
-                Text = pinModel.Label,
                 Uri = text
             });
         }
