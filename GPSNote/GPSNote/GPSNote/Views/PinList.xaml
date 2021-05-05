@@ -89,7 +89,11 @@
                                          CornerRadius="6"
                                          BackgroundColor="{AppThemeBinding Light={StaticResource Light/Variant}, Dark={StaticResource Dark/Variant}}"
                                          Command="{Binding Path=BindingContext.ImageCommandTap, Source={x:Reference ListView1}}"
-                                         CommandParameter="{Binding .}" />
+                                         CommandParameter="{Binding .}"
+                                         HeightRequest="70"
+                                         WidthRequest="70"
+                                         HorizontalOptions="Center"
+                                         VerticalOptions="Center"/>
 
                                 <ImageButton Grid.RowSpan="2" 
                                          Source="ic_like_blue.png"  
@@ -98,7 +102,11 @@
                                          BackgroundColor="{StaticResource TransparentColor}"
                                          Command="{Binding Path=BindingContext.ImageCommandTap, Source={x:Reference ListView1}}"
                                          CommandParameter="{Binding .}"
-                                         IsVisible="{Binding IsEnabled}">
+                                         IsVisible="{Binding IsEnabled}"
+                                         HeightRequest="70"
+                                         WidthRequest="70"
+                                         HorizontalOptions="Center"
+                                         VerticalOptions="Center">
 
                                 </ImageButton>
 

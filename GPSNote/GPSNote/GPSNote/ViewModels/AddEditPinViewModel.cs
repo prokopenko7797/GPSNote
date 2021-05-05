@@ -121,8 +121,8 @@ namespace GPSNote.ViewModels
                 _pinViewModel = parameters.GetValue<PinViewModel>(nameof(PinViewModel));
                 Name = _pinViewModel.Label;
                 Description = _pinViewModel.Description;
-                Latitude = _pinViewModel.Latitude.ToString("G", CultureInfo.InvariantCulture);
-                Longtitude = _pinViewModel.Longitude.ToString("G", CultureInfo.InvariantCulture);
+                Latitude = _pinViewModel.Latitude.ToString();
+                Longtitude = _pinViewModel.Longitude.ToString();
 
                 Title = Resources["EditPinTitle"];
 
@@ -140,8 +140,8 @@ namespace GPSNote.ViewModels
             {
                 if (ObsPins.Count == 1)
                 {
-                    if (ObsPins.First().Latitude.ToString("G", CultureInfo.InvariantCulture) != Latitude
-                    || ObsPins.First().Longitude.ToString("G", CultureInfo.InvariantCulture) != Longtitude)
+                    if (ObsPins.First().Latitude.ToString() != Latitude
+                    || ObsPins.First().Longitude.ToString() != Longtitude)
                     {
                         UpdatePin();
                     }
@@ -169,8 +169,8 @@ namespace GPSNote.ViewModels
             Position position = (Position)sender;
 
 
-            Latitude = position.Latitude.ToString("G", CultureInfo.InvariantCulture);
-            Longtitude = position.Longitude.ToString("G", CultureInfo.InvariantCulture);
+            Latitude = position.Latitude.ToString();
+            Longtitude = position.Longitude.ToString();
 
 
         }
@@ -178,18 +178,24 @@ namespace GPSNote.ViewModels
 
         private void UpdatePin() 
         {
-            PinViewModel pinViewModel = new PinViewModel()
+            if (Latitude != null && Longtitude != null)
             {
-                Label = Resources["NewPin"],
-                Latitude = Convert.ToDouble(Latitude), тут хуйня
-                Longitude = Convert.ToDouble(Longtitude),
-                IsEnabled = true
-            };
-            //TODO jhfjhfjhf
-            ObservableCollection<PinViewModel> newPins = new ObservableCollection<PinViewModel>();
-            newPins.Add(pinViewModel);
+                PinViewModel pinViewModel = new PinViewModel()
+                {
+                    Label = Resources["NewPin"],
+                    Latitude = Convert.ToDouble(Latitude),
+                    Longitude = Convert.ToDouble(Longtitude),
+                    IsEnabled = true
+                };
 
-            ObsPins = newPins;
+
+
+                ObservableCollection<PinViewModel> newPins = new ObservableCollection<PinViewModel>();
+                newPins.Add(pinViewModel);
+
+                ObsPins = newPins;
+            }
+  
         }
 
         private async void OnSaveToolBarAsync()
