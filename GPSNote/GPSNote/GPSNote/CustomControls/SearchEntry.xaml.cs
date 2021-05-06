@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -31,6 +32,37 @@ namespace GPSNote.CustomControls
         {
             get => (string)GetValue(TextEntryProperty);
             set => SetValue(TextEntryProperty, value);
+        }
+
+
+        public static readonly BindableProperty LeftIconTapCommandProperty =
+            BindableProperty.Create(nameof(LeftIconTapCommand),
+                                    typeof(ICommand),
+                                    typeof(SearchEntry),
+                                    defaultValue: default(ICommand),
+                                    defaultBindingMode: BindingMode.TwoWay,
+                                    propertyChanged: LeftIconTapCommandPropertyChanged);
+
+
+        public ICommand LeftIconTapCommand
+        {
+            get => (ICommand)GetValue(LeftIconTapCommandProperty);
+            set => SetValue(LeftIconTapCommandProperty, value);
+        }
+
+
+        public static readonly BindableProperty RightIconTapCommandProperty =
+           BindableProperty.Create(nameof(RightIconTapCommand),
+                                   typeof(ICommand),
+                                   typeof(SearchEntry),
+                                   defaultValue: default(ICommand),
+                                   defaultBindingMode: BindingMode.TwoWay,
+                                   propertyChanged: RightIconTapCommandPropertyChanged);
+
+        public ICommand RightIconTapCommand
+        {
+            get => (ICommand)GetValue(RightIconTapCommandProperty);
+            set => SetValue(RightIconTapCommandProperty, value);
         }
 
 
@@ -101,6 +133,27 @@ namespace GPSNote.CustomControls
 
         #region -- Private helpers --
 
+        private static void LeftIconTapCommandPropertyChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            SearchEntry navBar = bindable as SearchEntry;
+
+            if (navBar != null)
+            {
+                navBar.leftButton.Command = (ICommand)newValue;
+            }
+        }
+
+
+        private static void RightIconTapCommandPropertyChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            SearchEntry navBar = bindable as SearchEntry;
+
+            if (navBar != null)
+            {
+                navBar.rightButton.Command = (ICommand)newValue;
+            }
+        }
+
 
         private static void EntryBackGroundColorChanged(BindableObject bindable, object oldValue, object newValue)
         {
@@ -137,7 +190,7 @@ namespace GPSNote.CustomControls
             SearchEntry customEntry = bindable as SearchEntry;
             if (customEntry != null)
             {
-
+                
             }
         }
 
@@ -154,7 +207,11 @@ namespace GPSNote.CustomControls
         private void OnUnfocused(object sender, FocusEventArgs e)
         {
             clearButton.IsVisible = false;
+            backButton.IsVisible = false;
+            leftButton.IsVisible = true;
             IsEntryFocused = false;
+            rightButton.IsVisible = true;
+            Grid.SetColumnSpan(frame, 1);
         }
 
 
@@ -162,21 +219,16 @@ namespace GPSNote.CustomControls
         private void OnFocused(object sender, FocusEventArgs e)
         {
             IsEntryFocused = true;
+            backButton.IsVisible = true;
+            leftButton.IsVisible = false;
+            clearButton.IsVisible = true;
+            rightButton.IsVisible = false;
+            Grid.SetColumnSpan(frame, 2);
         }
 
         private void OnTextChanged(object sender, TextChangedEventArgs e)
         {
             TextEntry = e.NewTextValue;
-
-
-            if (entry.Text != string.Empty)
-            {
-                clearButton.IsVisible = true;
-            }
-            else
-            {
-                clearButton.IsVisible = false;
-            }
         }
 
 
@@ -185,6 +237,14 @@ namespace GPSNote.CustomControls
             entry.Text = string.Empty;
         }
 
+
+        private void BackButtonClicked(object sender, EventArgs e)
+        {
+            IsEntryFocused = false;
+        }
+
+        
+        
         #endregion
     }
 }

@@ -5,6 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="CustomControls\Cus\**" />
+    <EmbeddedResource Remove="CustomControls\Cus\**" />
+    <None Remove="CustomControls\Cus\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Resources\Fonts\Montserrat-Black.ttf" />
     <None Remove="Resources\Fonts\Montserrat-BlackItalic.ttf" />
     <None Remove="Resources\Fonts\Montserrat-Bold.ttf" />
@@ -106,10 +112,6 @@
     <EmbeddedResource Update="Views\MainTabbedPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="CustomControls\Cus\" />
   </ItemGroup>
 
 </Project>

@@ -65,6 +65,8 @@ namespace GPSNote.ViewModels
 
 
 
+        
+
         private bool _IsSelected;
 
         public bool IsSelected
@@ -80,7 +82,6 @@ namespace GPSNote.ViewModels
             get { return _PinLatLong; }
             set { SetProperty(ref _PinLatLong, value); }
         }
-
 
 
         private string _PinLabel;
@@ -205,12 +206,8 @@ namespace GPSNote.ViewModels
 
             base.Initialize(parameters);
 
-
-
             PinObs = new ObservableCollection<PinViewModel>((await _pinService.GetUserPinsAsync()).ToPinViewObservableCollection());
             ControlObs = PinObs;
-
-
         }
 
 
@@ -221,7 +218,6 @@ namespace GPSNote.ViewModels
             {
                 PinObs = newPinsValue;
                 ControlObs = newPinsValue;
-
             }
 
             if (parameters.TryGetValue<PinViewModel>(nameof(SelectedItem), out var newSelectedItem))
@@ -231,12 +227,10 @@ namespace GPSNote.ViewModels
                     DisplayInfoPinViewModel(newSelectedItem);
                     MoveTo = new MapSpan(new Position(newSelectedItem.Latitude, newSelectedItem.Longitude), 1, 1).WithZoom(10);
                 }
-                
             }
 
-            bool IsUpdated = false;
 
-            if (parameters.TryGetValue<bool>(nameof(IsUpdated), out var newUpdate))
+            if (parameters.TryGetValue<bool>("IsUpdated", out var newUpdate))
             {
                 if (newUpdate)
                 {
@@ -258,8 +252,6 @@ namespace GPSNote.ViewModels
                     IsListViewVisible = false;
                     IsSelected = SelectedItem != null;
                 }
-
-
             }
 
             if (args.PropertyName == nameof(SelectedListItem))
@@ -270,9 +262,6 @@ namespace GPSNote.ViewModels
                     IsListViewVisible = false;
                     IsSelected = SelectedItem != null;
                 }
-                
-
-
             }
 
             if (args.PropertyName == nameof(IsListViewVisible))
@@ -282,7 +271,6 @@ namespace GPSNote.ViewModels
 
             if (args.PropertyName == nameof(SearchBarText))
             {
-
                 OnTextChangedCommand();
             }
 

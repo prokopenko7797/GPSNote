@@ -10,36 +10,19 @@
                        NavigationPage.HasNavigationBar="False">
 
 
-    <Grid Grid.RowDefinitions ="0.1*, 0.9*"
-          Padding="16,0,16,16" >
+    <Grid Grid.RowDefinitions ="0.1*, 0.9*" >
 
         <!-- NavigationBar -->
         
-        <Grid Grid.Row="0" 
-              Grid.ColumnDefinitions="0.1*,0.8*,0.1*"
-              VerticalOptions="End"
-              Padding="16,0,16,0">
+        <Grid Grid.Row="0" >
 
-            <Button Grid.Column="0"
-                    ImageSource="ic_settings.png"
-                    Command="{Binding SettingsNavigation}"
-                    BackgroundColor="{StaticResource TransparentColor}"
-                    HorizontalOptions="Start"
-                    VerticalOptions="Center"/>
 
             <customcontrols:SearchEntry TextEntry="{Binding SearchBarText}"
                                         PlaceholderText="{Binding Resources[Search]}"
                                         EntryBorderColor="{StaticResource TransparentColor}"
-                                        Grid.Column="1"
-                                        Grid.ColumnSpan="2"
+                                        LeftIconTapCommand="{Binding SettingsNavigation}"
+                                        RightIconTapCommand="{Binding LogOutCommand}"
                                         HorizontalOptions="Center"/>
-
-
-            <Button Grid.Column="2"
-                    ImageSource="ic_exid.png"
-                    Command="{Binding LogOutCommand}"
-                    HorizontalOptions="End"
-                    BackgroundColor="{StaticResource TransparentColor}"/>
 
         </Grid>
 
@@ -79,7 +62,7 @@
                                       CommandParameter="{Binding .}" />
                             
                         </ViewCell.ContextActions>
-                        <Grid>
+                        <Grid Padding="16,0,16,0">
                             <Grid ColumnDefinitions ="0.2*, 0.8*"
                                   RowDefinitions="*,*">
 

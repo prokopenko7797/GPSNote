@@ -16,7 +16,7 @@
     <item name="colorPrimaryDark">#3b3b3b</item>
     <!-- colorAccent is used as the default value for colorControlActivated
          which is used to tint widgets -->
-    <item name="colorAccent">#FF4081</item>
+    <item name="colorAccent">#596EFB</item>
     <!-- You can also set colorControlNormal, colorControlActivated
          colorControlHighlight and colorSwitchThumbNormal. -->
     <item name="windowActionModeOverlay">true</item>
@@ -33,12 +33,12 @@
   </style>
 
   <style name="AppCompatDialogStyle" parent="Theme.AppCompat.Light.Dialog">
-    <item name="colorAccent">#FF4081</item>
+    <item name="colorAccent">#596EFB</item>
   </style>
 
 	
-	<color name="ListViewSelected">#96BCE3</color>
-	<color name="ListViewHighlighted">#acacac</color>
+	<color name="ListViewSelected">@android:color/transparent</color>
+	<color name="ListViewHighlighted">#0000001f</color>
 	
 	
 	

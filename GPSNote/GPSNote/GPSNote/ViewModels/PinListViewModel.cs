@@ -97,6 +97,14 @@ namespace GPSNote.ViewModels
         public DelegateCommand<object> ImageCommandTap => 
             _ImageCommandTap ?? (_ImageCommandTap = new DelegateCommand<object>(OnChangeVisibilityComand));
 
+        private DelegateCommand<object> _SettingsNavigation;
+        public DelegateCommand<object> SettingsNavigation =>
+            _SettingsNavigation ?? (_SettingsNavigation = new DelegateCommand<object>(OnSettingsNavigation));
+
+        private DelegateCommand<object> _LogOutCommand;
+        public DelegateCommand<object> LogOutCommand =>
+            _LogOutCommand ?? (_LogOutCommand = new DelegateCommand<object>(OnLogOutCommand));
+
 
         #endregion
 
@@ -155,6 +163,18 @@ namespace GPSNote.ViewModels
         #endregion
 
         #region -- Private helpers --
+
+
+        private async void OnSettingsNavigation(object sender)
+        {
+            await NavigationService.NavigateAsync(nameof(Settings));
+        }
+
+        private async void OnLogOutCommand(object sender)
+        {
+            _authorizationService.LogOut();
+            await NavigationService.NavigateAsync($"/{nameof(MainPage)}");
+        }
 
         private async void OnItemTappedAsyncCommand()
         {

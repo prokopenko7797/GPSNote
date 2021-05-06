@@ -1,14 +1,43 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
-             x:Class="GPSNote.CustomControls.SearchEntry">
-    <StackLayout>
+             x:Class="GPSNote.CustomControls.SearchEntry"
+             x:Name="SearchNavBar">
+    
+    <Grid ColumnDefinitions="0.15*,0.7*,0.15*"
+          VerticalOptions="FillAndExpand"
+          HorizontalOptions ="FillAndExpand"
+          Padding="16,0,16,0">
 
+        <!-- backButton -->
+
+        <Button x:Name="backButton"
+                Grid.Column="0"
+                ImageSource="ic_left_blue.png"
+                Clicked="BackButtonClicked"
+                BackgroundColor="{StaticResource TransparentColor}"
+                HorizontalOptions="Start"
+                VerticalOptions="Center"
+                IsVisible="false"/>
+        
+        <!-- Settings -->
+
+        <Button x:Name="leftButton"
+                BindingContext="{x:Reference Name=SearchNavBar}"
+                Grid.Column="0"
+                ImageSource="ic_settings.png"
+                Command="{Binding SettingsNavigation}"
+                BackgroundColor="{StaticResource TransparentColor}"
+                HorizontalOptions="Start"
+                VerticalOptions="Center"/>
+
+        <!--Search entry -->
         <Frame x:Name="frame"
+               Grid.Column="1"
                CornerRadius="4"
                BorderColor="{StaticResource TransparentColor}"
                BackgroundColor="{AppThemeBinding Light={StaticResource Light/Variant}, Dark={StaticResource Dark/Variant}}"
-               Padding="15,0,0,0"
+               Padding="15,0,15,0"
                HasShadow="False">
 
             <Grid ColumnDefinitions="0.9*, 0.1*"
@@ -25,7 +54,7 @@
 
                 <ImageButton  x:Name="clearButton"
                               Grid.Column="1"
-                              VerticalOptions="Center"
+                              VerticalOptions="CenterAndExpand"
                               Source="ic_clear.png"
                               BackgroundColor="{StaticResource TransparentColor}"
                               Clicked="ClearButtonClicked"
@@ -36,6 +65,15 @@
         </Frame>
 
 
+        <!-- Exit -->
 
-    </StackLayout>
+        <Button x:Name="rightButton"
+                BindingContext="{x:Reference Name=SearchNavBar}"
+                Grid.Column="2"
+                ImageSource="ic_exid.png"
+                HorizontalOptions="End"
+                Command="{Binding LogOutCommand}"
+                BackgroundColor="{StaticResource TransparentColor}"/>
+
+    </Grid>
 </ContentView>
