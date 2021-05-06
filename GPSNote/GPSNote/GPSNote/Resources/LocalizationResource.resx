@@ -121,13 +121,16 @@
     <value>Add Pin</value>
   </data>
   <data name="ConfPas" xml:space="preserve">
-    <value>Confirm Password</value>
+    <value>Confirm password</value>
   </data>
   <data name="Coordinates" xml:space="preserve">
     <value>Coordinates</value>
   </data>
   <data name="CreateAccount" xml:space="preserve">
     <value>Create account</value>
+  </data>
+  <data name="CreateAnAccount" xml:space="preserve">
+    <value>Create an account</value>
   </data>
   <data name="DarkTheme" xml:space="preserve">
     <value>Dark theme:</value>
@@ -156,6 +159,21 @@
   <data name="EmailExist" xml:space="preserve">
     <value>E-mail already exist.</value>
   </data>
+  <data name="EnterDescription" xml:space="preserve">
+    <value>Write a description</value>
+  </data>
+  <data name="EnterEmail" xml:space="preserve">
+    <value>Enter email</value>
+  </data>
+  <data name="EnterLabel" xml:space="preserve">
+    <value>Enter the label</value>
+  </data>
+  <data name="EnterName" xml:space="preserve">
+    <value>Enter your name</value>
+  </data>
+  <data name="EnterPassword" xml:space="preserve">
+    <value>Enter password</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
   </data>
@@ -170,6 +188,9 @@
   </data>
   <data name="InRange" xml:space="preserve">
     <value>Not in range</value>
+  </data>
+  <data name="Label" xml:space="preserve">
+    <value>Label</value>
   </data>
   <data name="LangTitle" xml:space="preserve">
     <value>Language</value>
@@ -248,6 +269,9 @@
   </data>
   <data name="PinListTitle" xml:space="preserve">
     <value>Pin List</value>
+  </data>
+  <data name="RepeatPassword" xml:space="preserve">
+    <value>RepeatPassword</value>
   </data>
   <data name="Search" xml:space="preserve">
     <value>Search</value>

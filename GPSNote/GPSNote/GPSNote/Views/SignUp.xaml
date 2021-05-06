@@ -5,14 +5,15 @@
                        xmlns:prism="http://prismlibrary.com" xmlns:customcontrols="clr-namespace:GPSNote.CustomControls"
                        prism:ViewModelLocator.AutowireViewModel="True"
                        x:Class="GPSNote.Views.SignUp" 
-                       Title="{Binding Resources[SignUpTitle]}"
+                       Title="{Binding Resources[CreateAccount]}"
                        BackgroundColor="{AppThemeBinding Light={StaticResource System/White}, Dark={StaticResource System/Black}}"
                        NavigationPage.HasNavigationBar="False">
 
 
-
     <Grid RowDefinitions="0.1*, 0.9*">
 
+        <!-- Navbar -->
+        
         <Grid Grid.Row="0" ColumnDefinitions="0.1*, 0.8*, 0.1*"
               Padding="16,0,16,0">
 
@@ -24,7 +25,7 @@
                     VerticalOptions="Center" />
 
             <Label Grid.Column="1"
-                   Text="{Binding Resources[SignInTitle]}" 
+                   Text="{Binding Resources[CreateAnAccount]}" 
                    FontSize="Large"
                    FontFamily="Montserrat-SemiBold"
                    HorizontalOptions="Center"
@@ -34,7 +35,7 @@
 
         </Grid>
 
-
+         <!-- First stage registration -->
         <Grid Grid.Row="1" 
               Padding="16,0,16,16" 
               Grid.RowDefinitions ="0.4*, 0.1*, 0.1*, 0.1*, 0.3*" >
@@ -49,7 +50,7 @@
                        VerticalOptions="End"/>
 
                 <customcontrols:FramedEntry TextEntry="{Binding Name}"
-                                            PlaceholderText="{Binding Resources[Name]}"
+                                            PlaceholderText="{Binding Resources[EnterName]}"
                                             Grid.Row="1"
                                             EntryBorderColor="{Binding NameBorderColor}"/>
 
@@ -66,7 +67,7 @@
                        Grid.Row="3"
                        VerticalTextAlignment="End"/>
 
-                <customcontrols:FramedEntry PlaceholderText = "{Binding Resources[Email]}" 
+                <customcontrols:FramedEntry PlaceholderText = "{Binding Resources[EnterEmail]}" 
                                             TextEntry="{Binding Email}" 
                                             Grid.Row="4"
                                             EntryBorderColor="{Binding EmailBorderColor}"/>
@@ -98,6 +99,8 @@
                        BackgroundColor="{AppThemeBinding Light={StaticResource System/White}, Dark={StaticResource System/Black}}"/>
             </Grid>
 
+            <!-- Placeholders -->
+            
             <Grid Grid.Row="3" 
                   Grid.ColumnDefinitions="0.3*,0.3*,0.3*">
 

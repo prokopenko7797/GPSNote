@@ -98,16 +98,15 @@ namespace GPSNote
                 {
                     if (uri.Segments[1] == Constant.Action)
                     {
-
                         PinViewModel pinView = uri.ToPinViewModel();
 
                         pinView.Label.Replace("*", " ");
                         pinView.Description.Replace("*", " ");
 
                         var parametrs = new NavigationParameters
-                            {
-                                { nameof(PinViewModel),  pinView}
-                            };
+                        {
+                            { nameof(PinViewModel),  pinView}
+                        };
                         await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(MainTabbedPage)}/{nameof(AddEditPin)}");
                     }
 

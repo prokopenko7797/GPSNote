@@ -59,13 +59,13 @@
             <Grid Grid.Row="0"
                   Padding="16,0,16,16">
 
-                <Label Text="{Binding Resources[Name]}"  
+                <Label Text="{Binding Resources[Label]}"  
                        Padding="12,0,0,0"
                        Grid.Row="0"
                        VerticalOptions="End"/>
 
                 <custommap:FramedEntry TextEntry="{Binding Name}"
-                                        PlaceholderText="{Binding Resources[Name]}"
+                                        PlaceholderText="{Binding Resources[EnterLabel]}"
                                         Grid.Row="1"
                                         VerticalOptions="Start"/>
 
@@ -75,7 +75,7 @@
                        VerticalOptions="End"/>
 
                 <custommap:FramedEntry TextEntry="{Binding Description}"
-                                        PlaceholderText="{Binding Resources[Description]}"
+                                        PlaceholderText="{Binding Resources[EnterDescription]}"
                                         Grid.Row="3"
                                         HeightRequest="58"/>
 

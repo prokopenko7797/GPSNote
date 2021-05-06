@@ -6,7 +6,7 @@
                        xmlns:customcontrols="clr-namespace:GPSNote.CustomControls"
                        prism:ViewModelLocator.AutowireViewModel="True"
                        x:Class="GPSNote.Views.CreateAccount" 
-                       Title="{Binding Resources[SignUpTitle]}"
+                       Title="{Binding Resources[CreateAccount]}"
                        BackgroundColor="{AppThemeBinding Light={StaticResource System/White}, Dark={StaticResource System/Black}}"
                        NavigationPage.HasNavigationBar="False">
 
@@ -28,7 +28,7 @@
                     />
 
             <Label Grid.Column="1"
-                   Text="{Binding Resources[SignInTitle]}" 
+                   Text="{Binding Resources[CreateAnAccount]}" 
                    FontSize="Large"
                    FontFamily="Montserrat-SemiBold"
                    HorizontalOptions="Center"
@@ -58,7 +58,7 @@
                        VerticalOptions="End"/>
 
 
-                <customcontrols:PasswordEntry PlaceholderText = "{Binding Resources[Password]}" 
+                <customcontrols:PasswordEntry PlaceholderText = "{Binding Resources[EnterPassword]}" 
                                               TextEntry="{Binding Password}" 
                                               Grid.Row="1"
                                               EntryBorderColor="{Binding PasswordBorderColor}"/>
@@ -76,7 +76,7 @@
                        VerticalTextAlignment="End"/>
 
 
-                <customcontrols:PasswordEntry PlaceholderText = "{Binding Resources[ConfPas]}" 
+                <customcontrols:PasswordEntry PlaceholderText = "{Binding Resources[RepeatPassword]}" 
                                               TextEntry="{Binding ConfirmPassword}" 
                                               Grid.Row="4"
                                               EntryBorderColor="{Binding ConfPasBorderColor}"/>
@@ -92,7 +92,7 @@
 
             
             <Button Grid.Row="1" 
-                    Text="{Binding Resources[SignUpButton]}" 
+                    Text="{Binding Resources[CreateAccount]}" 
                     Style="{StaticResource blueButtonStyle}"
                     Command="{Binding AddUserButtonTapCommand}"/>
 

@@ -129,6 +129,9 @@
   <data name="CreateAccount" xml:space="preserve">
     <value>Создать аккаунт</value>
   </data>
+  <data name="CreateAnAccount" xml:space="preserve">
+    <value>Создание аккаунта</value>
+  </data>
   <data name="DarkTheme" xml:space="preserve">
     <value>Темная тема:</value>
   </data>
@@ -156,6 +159,21 @@
   <data name="EmailExist" xml:space="preserve">
     <value>Email уже зарегистрирован.</value>
   </data>
+  <data name="EnterDescription" xml:space="preserve">
+    <value>Напишите описание</value>
+  </data>
+  <data name="EnterEmail" xml:space="preserve">
+    <value>Введите email</value>
+  </data>
+  <data name="EnterLabel" xml:space="preserve">
+    <value>Назовите метку</value>
+  </data>
+  <data name="EnterName" xml:space="preserve">
+    <value>Введите ваше имя</value>
+  </data>
+  <data name="EnterPassword" xml:space="preserve">
+    <value>Введите пароль</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Ошибка</value>
   </data>
@@ -170,6 +188,9 @@
   </data>
   <data name="InRange" xml:space="preserve">
     <value>Не в диапазоне</value>
+  </data>
+  <data name="Label" xml:space="preserve">
+    <value>Метка</value>
   </data>
   <data name="LangTitle" xml:space="preserve">
     <value>Язык</value>
@@ -248,6 +269,9 @@
   </data>
   <data name="PinListTitle" xml:space="preserve">
     <value>Закладки</value>
+  </data>
+  <data name="RepeatPassword" xml:space="preserve">
+    <value>Повторите пароль</value>
   </data>
   <data name="Search" xml:space="preserve">
     <value>Поиск</value>

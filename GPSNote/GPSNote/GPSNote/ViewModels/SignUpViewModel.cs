@@ -188,15 +188,15 @@ namespace GPSNote.ViewModels
                 else
                 {
                     NameError = string.Empty;
-                    NameBorderColor = (Color)App.Current.Resources["System/Gray"];
+                    NameBorderColor = (Color)App.Current.Resources["System/LightGray"];
 
                     if (!await _AuthenticationService.CheckUserExistAsync(Email))
                     {
 
                         NameError = string.Empty;
-                        NameBorderColor = (Color)App.Current.Resources["System/Gray"];
+                        NameBorderColor = (Color)App.Current.Resources["System/LightGray"];
                         EmailError = string.Empty;
-                        EmailBorderColor = (Color)App.Current.Resources["System/Gray"];
+                        EmailBorderColor = (Color)App.Current.Resources["System/LightGray"];
 
                         var p = new NavigationParameters();
                         p.Add(nameof(Name), Name);

@@ -6,13 +6,15 @@
                        xmlns:customcontrols="clr-namespace:GPSNote.CustomControls"
                        prism:ViewModelLocator.AutowireViewModel="True"
                        x:Class="GPSNote.Views.SignIn"
-                       Title="{Binding Resources[SignInTitle]}"
+                       Title="{Binding Resources[Log in]}"
                        BackgroundColor="{AppThemeBinding Light={StaticResource System/White}, Dark={StaticResource System/Black}}"
                        NavigationPage.HasNavigationBar="False">
   
 
     <Grid RowDefinitions="0.1*, 0.9*">
-
+        
+         <!-- Navbar -->
+        
         <Grid Grid.Row="0" ColumnDefinitions="0.1*, 0.8*, 0.1*"
               Padding="16,0,16,0">
 
@@ -25,7 +27,7 @@
                     />
 
             <Label Grid.Column="1"
-                   Text="{Binding Resources[SignInTitle]}" 
+                   Text="{Binding Resources[Log in]}" 
                    FontSize="Large"
                    FontFamily="Montserrat-SemiBold"
                    HorizontalOptions="Center"
@@ -35,7 +37,7 @@
 
         </Grid>
         
-        
+        <!-- LogIn -->
         <Grid Grid.Row="1" 
               Padding="16,0,16,16" 
               Grid.RowDefinitions ="0.4*, 0.1*, 0.1*, 0.1*, 0.3*" >
@@ -50,7 +52,7 @@
                        VerticalOptions="End"/>
 
                 <customcontrols:FramedEntry TextEntry="{Binding Email}"
-                                            PlaceholderText="{Binding Resources[Email]}"
+                                            PlaceholderText="{Binding Resources[EnterEmail]}"
                                             Grid.Row="1"
                                             EntryBorderColor="{Binding EmailBorderColor}"/>
             
@@ -67,7 +69,7 @@
                        Grid.Row="3"
                        VerticalTextAlignment="End"/>
 
-                <customcontrols:PasswordEntry PlaceholderText = "{Binding Resources[Password]}" 
+                <customcontrols:PasswordEntry PlaceholderText = "{Binding Resources[EnterPassword]}" 
                                               TextEntry="{Binding Password}" 
                                               Grid.Row="4"
                                               EntryBorderColor="{Binding PasswordBorderColor}"/>
@@ -82,7 +84,7 @@
 
 
             <Button Grid.Row="1" 
-                    Text="{Binding Resources[SignInButton]}" 
+                    Text="{Binding Resources[Log in]}" 
                     Style="{StaticResource blueButtonStyle}"
                     Command="{Binding NavigateMainListButtonTapCommand}"/>
 
@@ -99,6 +101,8 @@
                        BackgroundColor="{AppThemeBinding Light={StaticResource System/White}, Dark={StaticResource System/Black}}"/>
             </Grid>
 
+            <!-- Autorization placeholders -->
+            
             <Grid Grid.Row="3" 
                   Grid.ColumnDefinitions="0.3*,0.3*,0.3*">
             

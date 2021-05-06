@@ -181,7 +181,7 @@ namespace GPSNote.ViewModels
                 else
                 {
                     EmailError = string.Empty;
-                    EmailBorderColor = (Color)App.Current.Resources["System/Gray"];
+                    EmailBorderColor = (Color)App.Current.Resources["System/LightGray"];
                 }
 
                 if (Application.Current.UserAppTheme == OSAppTheme.Light)
