@@ -13,16 +13,15 @@
     <Grid Grid.RowDefinitions ="0.1*, 0.9*" >
 
         <!-- NavigationBar -->
-        
-        <Grid Grid.Row="0" >
 
+        <Grid Grid.Row="0">
 
             <customcontrols:SearchEntry TextEntry="{Binding SearchBarText}"
                                         PlaceholderText="{Binding Resources[Search]}"
                                         EntryBorderColor="{StaticResource TransparentColor}"
                                         LeftIconTapCommand="{Binding SettingsNavigation}"
                                         RightIconTapCommand="{Binding LogOutCommand}"
-                                        HorizontalOptions="Center"/>
+                                        />
 
         </Grid>
 
@@ -39,7 +38,7 @@
         
         <ListView Grid.Row="1" 
                   ItemsSource="{Binding PinObs}" 
-                  RowHeight="100" 
+                  RowHeight="80" 
                   Margin="10"
                   SelectedItem="{Binding SelectedItem}"
                   x:Name="ListView1"
@@ -66,32 +65,34 @@
                             <Grid ColumnDefinitions ="0.2*, 0.8*"
                                   RowDefinitions="*,*">
 
-                                <ImageButton Grid.RowSpan="2" 
-                                         Source="ic_like_gray.png" 
-                                         Margin="5"
-                                         CornerRadius="6"
-                                         BackgroundColor="{AppThemeBinding Light={StaticResource Light/Variant}, Dark={StaticResource Dark/Variant}}"
-                                         Command="{Binding Path=BindingContext.ImageCommandTap, Source={x:Reference ListView1}}"
-                                         CommandParameter="{Binding .}"
-                                         HeightRequest="70"
-                                         WidthRequest="70"
-                                         HorizontalOptions="Center"
-                                         VerticalOptions="Center"/>
+                                <Button Grid.RowSpan="2" 
+                                        ImageSource="ic_like_gray.png" 
+                                        Margin="5"
+                                        CornerRadius="6"
+                                        BackgroundColor="{AppThemeBinding Light={StaticResource Light/Variant}, Dark={StaticResource Dark/Variant}}"
+                                        Command="{Binding Path=BindingContext.ImageCommandTap, Source={x:Reference ListView1}}"
+                                        CommandParameter="{Binding .}"
+                                        HeightRequest="50"
+                                        WidthRequest="50"
+                                        HorizontalOptions="Center"
+                                        VerticalOptions="Center"
+                                        Scale="1.2"/>
 
-                                <ImageButton Grid.RowSpan="2" 
-                                         Source="ic_like_blue.png"  
-                                         Margin="5" 
-                                         CornerRadius="6"
-                                         BackgroundColor="{StaticResource TransparentColor}"
-                                         Command="{Binding Path=BindingContext.ImageCommandTap, Source={x:Reference ListView1}}"
-                                         CommandParameter="{Binding .}"
-                                         IsVisible="{Binding IsEnabled}"
-                                         HeightRequest="70"
-                                         WidthRequest="70"
-                                         HorizontalOptions="Center"
-                                         VerticalOptions="Center">
+                                <Button Grid.RowSpan="2" 
+                                        ImageSource="ic_like_blue.png"  
+                                        Margin="5" 
+                                        CornerRadius="6"
+                                        BackgroundColor="{StaticResource TransparentColor}"
+                                        Command="{Binding Path=BindingContext.ImageCommandTap, Source={x:Reference ListView1}}"
+                                        CommandParameter="{Binding .}"
+                                        IsVisible="{Binding IsEnabled}"
+                                        HeightRequest="50"
+                                        WidthRequest="50"
+                                        HorizontalOptions="Center"
+                                        VerticalOptions="Center"
+                                        Scale="1.2">
 
-                                </ImageButton>
+                                </Button>
 
                                 <!-- PinInfo -->
                                 
@@ -99,7 +100,7 @@
                                        Grid.Row="0" 
                                        Text="{Binding Label}" 
                                        VerticalOptions="Center"
-                                       FontFamily="Montserrat-SemiBold"
+                                       FontFamily="Montserrat-Medium"
                                        LineBreakMode="TailTruncation"/>
                                 
                                 <StackLayout Orientation="Horizontal" 
@@ -107,9 +108,12 @@
                                              Grid.Row="1" >
 
                                     <Label Text="{Binding Latitude}" 
-                                           LineBreakMode="NoWrap"/>
+                                           LineBreakMode="NoWrap"
+                                           TextColor="{AppThemeBinding Light={StaticResource System/DarkGray}, Dark={StaticResource System/LightGray}}"
+                                           />
                                     
-                                    <Label Text=","  />
+                                    <Label Text=","  
+                                           VerticalOptions="Start"/>
 
                                     <Label Text="{Binding Longitude}" 
                                            LineBreakMode="NoWrap"/>
@@ -117,7 +121,7 @@
                                 </StackLayout>
 
                             </Grid>
-                            <BoxView  Color="{StaticResource System/LightGray}" 
+                            <BoxView  Color="{AppThemeBinding Light={StaticResource Light/Variant}, Dark={StaticResource Dark/Variant}}" 
                                       HeightRequest="1" 
                                       VerticalOptions="End"
                                       HorizontalOptions="FillAndExpand"/>

@@ -29,7 +29,8 @@
                               Source="ic_clear.png"
                               BackgroundColor="{StaticResource TransparentColor}"
                               Clicked="ClearButtonClicked"
-                              IsVisible="False"/>
+                              IsVisible="False"
+                              Scale="1.2"/>
                 
             </Grid>
 

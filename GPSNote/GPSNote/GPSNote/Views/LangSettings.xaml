@@ -24,7 +24,8 @@
                     BackgroundColor="{StaticResource TransparentColor}"
                     Command="{Binding BackButtonCommand}"
                     HorizontalOptions="Start"
-                    VerticalOptions="Center"/>
+                    VerticalOptions="Center"
+                    Scale="1.2"/>
 
             <Label Grid.Column="1"
                    Text="{Binding Resources[SettingsTitle]}" 

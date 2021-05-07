@@ -24,7 +24,8 @@
                     BackgroundColor="{StaticResource TransparentColor}"
                     Command="{Binding BackButtonCommand}"
                     HorizontalOptions="Start"
-                    VerticalOptions="Center"/>
+                    VerticalOptions="Center"
+                    Scale="1.2"/>
 
             <Label Grid.Column="1"
                    Text="{Binding Title}" 
@@ -39,7 +40,8 @@
                     BackgroundColor="{StaticResource TransparentColor}"
                     Command="{Binding SaveToolBarCommand}"
                     HorizontalOptions="End"
-                    VerticalOptions="Center"/>
+                    VerticalOptions="Center"
+                    Scale="1.2"/>
 
             <BoxView Grid.Row="0"
                      Grid.ColumnSpan="3"

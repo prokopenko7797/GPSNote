@@ -333,11 +333,11 @@ namespace GPSNote.ViewModels
         {
             if (PinObs.Count() < 4)
             {
-                HeightRequest = PinObs.Count() * 50;
+                HeightRequest = PinObs.Count() * 60;
             }
             else
             {
-                HeightRequest = 200;
+                HeightRequest = 240;
             }
         }
 

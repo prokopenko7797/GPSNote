@@ -25,7 +25,7 @@
                     Command="{Binding BackButtonCommand}"
                     HorizontalOptions="Start"
                     VerticalOptions="Center"
-                    />
+                    Scale="1.2"  />
 
             <Label Grid.Column="1"
                    Text="{Binding Resources[CreateAnAccount]}" 
@@ -98,7 +98,7 @@
 
 
             <Grid Grid.Row="2">
-                <BoxView  Color="{StaticResource System/LightGray}" 
+                <BoxView  Color="{AppThemeBinding Light={StaticResource Light/Variant}, Dark={StaticResource Dark/Variant}}" 
                           HeightRequest="1" 
                           VerticalOptions="Center"/>
                 

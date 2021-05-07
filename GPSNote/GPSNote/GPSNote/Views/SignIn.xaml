@@ -24,7 +24,7 @@
                     Command="{Binding BackButtonCommand}"
                     HorizontalOptions="Start"
                     VerticalOptions="Center"
-                    />
+                    Scale="1.2"/>
 
             <Label Grid.Column="1"
                    Text="{Binding Resources[Log in]}" 

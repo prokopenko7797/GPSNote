@@ -4,10 +4,10 @@
              x:Class="GPSNote.CustomControls.SearchEntry"
              x:Name="SearchNavBar">
     
-    <Grid ColumnDefinitions="0.15*,0.7*,0.15*"
+    <Grid ColumnDefinitions="0.1*,0.8*,0.11*"
           VerticalOptions="FillAndExpand"
           HorizontalOptions ="FillAndExpand"
-          Padding="16,0,16,0">
+          Padding="16,16,16,0">
 
         <!-- backButton -->
 
@@ -18,7 +18,8 @@
                 BackgroundColor="{StaticResource TransparentColor}"
                 HorizontalOptions="Start"
                 VerticalOptions="Center"
-                IsVisible="false"/>
+                IsVisible="false"
+                Scale="1.2"/>
         
         <!-- Settings -->
 
@@ -29,7 +30,8 @@
                 Command="{Binding SettingsNavigation}"
                 BackgroundColor="{StaticResource TransparentColor}"
                 HorizontalOptions="Start"
-                VerticalOptions="Center"/>
+                VerticalOptions="Center"
+                Scale="1.2"/>
 
         <!--Search entry -->
         <Frame x:Name="frame"
@@ -58,7 +60,8 @@
                               Source="ic_clear.png"
                               BackgroundColor="{StaticResource TransparentColor}"
                               Clicked="ClearButtonClicked"
-                              IsVisible="False"/>
+                              IsVisible="False"
+                              Scale="1.2"/>
 
             </Grid>
 
@@ -73,7 +76,8 @@
                 ImageSource="ic_exid.png"
                 HorizontalOptions="End"
                 Command="{Binding LogOutCommand}"
-                BackgroundColor="{StaticResource TransparentColor}"/>
+                BackgroundColor="{StaticResource TransparentColor}"
+                Scale="1.2"/>
 
     </Grid>
 </ContentView>
