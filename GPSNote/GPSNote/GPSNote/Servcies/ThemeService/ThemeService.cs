@@ -14,6 +14,7 @@ namespace GPSNote.Servcies.ThemeService
             _settingsManager = settingsManager;
         }
 
+        #region -- IThemeService implementation --
 
         public OSAppTheme GetCurrentTheme()
         {
@@ -25,5 +26,6 @@ namespace GPSNote.Servcies.ThemeService
             _settingsManager.Theme = (int)theme;
             Application.Current.UserAppTheme = theme;
         }
+        #endregion
     }
 }

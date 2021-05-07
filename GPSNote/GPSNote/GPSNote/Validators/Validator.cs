@@ -26,9 +26,6 @@ namespace GPSNote.Validators
 
         public static bool CheckInRange(string str, int min, int max)
         {
-            //var inRange = new Regex($@"^(.{{{min}}}|.{{{max}}})$");
-
-            //return inRange.IsMatch(str);
             return str.Length >= min && str.Length <= max;
         }
 
