@@ -83,11 +83,21 @@ namespace GPSNote.ViewModels
         {
             base.OnPropertyChanged(args);
 
-            if (args.PropertyName == nameof(SelectedLang))
+            if (args.PropertyName == nameof(IsCheckedEn))
             {
-                Resources.ChangeCulture(SelectedLang);
-                Resources.Lang = SelectedLang;
+                if (IsCheckedEn)
+                {
+                    Resources.ChangeCulture(Constant.ResourcesLangConst.En);
+                    Resources.Lang = Constant.ResourcesLangConst.En;
+                }
+                else
+                {
+                    Resources.ChangeCulture(Constant.ResourcesLangConst.Ru);
+                    Resources.Lang = Constant.ResourcesLangConst.Ru;
+                }    
             }
+
+    
         }
 
 

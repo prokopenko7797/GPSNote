@@ -62,7 +62,7 @@
                             
                         </ViewCell.ContextActions>
                         <Grid Padding="16,0,16,0">
-                            <Grid ColumnDefinitions ="0.2*, 0.8*"
+                            <Grid ColumnDefinitions ="0.2*, 0.6*, 0.2*"
                                   RowDefinitions="*,*">
 
                                 <Button Grid.RowSpan="2" 
@@ -113,12 +113,20 @@
                                            />
                                     
                                     <Label Text=","  
-                                           VerticalOptions="Start"/>
+                                           VerticalOptions="Start"
+                                           />
 
                                     <Label Text="{Binding Longitude}" 
                                            LineBreakMode="NoWrap"/>
 
                                 </StackLayout>
+
+                                <Image Grid.Column="2"
+                                       Source="ic_left_gray.png"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center"
+                                       Scale="1.2"
+                                       Grid.RowSpan="2" />
 
                             </Grid>
                             <BoxView  Color="{AppThemeBinding Light={StaticResource Light/Variant}, Dark={StaticResource Dark/Variant}}" 
