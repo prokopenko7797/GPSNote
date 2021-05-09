@@ -23,7 +23,6 @@ using Prism.Common;
 namespace GPSNote.ViewModels
 {
    
-
     public class PinListViewModel : ViewModelBase
     {
         private readonly IPinService _pinService;
@@ -135,7 +134,7 @@ namespace GPSNote.ViewModels
         {
             base.OnNavigatedFrom(parameters);
 
-            parameters.Add(nameof(PinViewModel), _ControlObs);
+            parameters.Add(nameof(ObservableCollection<PinViewModel>), _ControlObs);
         }
 
 
@@ -147,14 +146,12 @@ namespace GPSNote.ViewModels
 
             if (args.PropertyName == nameof(SearchBarText))
             {
-
                 OnSearchCommand();
             }
 
 
             if (args.PropertyName == nameof(SelectedItem))
             {
-
                 OnItemTappedAsyncCommand();
             }
 
@@ -163,7 +160,6 @@ namespace GPSNote.ViewModels
         #endregion
 
         #region -- Private helpers --
-
 
         private async void OnSettingsNavigation(object sender)
         {
@@ -180,9 +176,9 @@ namespace GPSNote.ViewModels
         {
 
             var parameters = new NavigationParameters
-                {
-                    { nameof(SelectedItem), SelectedItem }
-                };
+            {
+                { nameof(SelectedItem), SelectedItem }
+            };
 
             await NavigationService.SelectTabAsync(nameof(MapPage), parameters);
         }
@@ -192,7 +188,7 @@ namespace GPSNote.ViewModels
         {
             if (string.IsNullOrWhiteSpace(SearchBarText))
             {
-                PinObs = _ControlObs;
+                PinObs = new ObservableCollection<PinViewModel>(_ControlObs);
             }
             else
             {
@@ -208,7 +204,7 @@ namespace GPSNote.ViewModels
 
         private async void OnDeleteCommand(object sender)
         {
-            if (!(sender is PinViewModel userPinsV)) return;
+            PinViewModel userPinsV = sender as PinViewModel;
 
             var result = await UserDialogs.Instance.ConfirmAsync(new ConfirmConfig
             {
@@ -216,6 +212,7 @@ namespace GPSNote.ViewModels
                 OkText = Resources["Yes"],
                 CancelText = Resources["No"]
             });
+
             if (result)
             {
                 await _pinService.DeletePinModelAsync(userPinsV.Id);
@@ -245,11 +242,16 @@ namespace GPSNote.ViewModels
         {
             PinViewModel pin = sender as PinViewModel;
 
-            int i = PinObs.IndexOf(pin);
-            int j = _ControlObs.IndexOf(pin);
             pin.IsEnabled = !pin.IsEnabled;
-            PinObs[i] = pin;
-            _ControlObs[j] = pin;
+
+            if (pin.IsEnabled)
+            {
+                pin.Image = "ic_like_blue.png";
+            }
+            else
+            {
+                pin.Image = "ic_like_gray.png";
+            }
 
             await _pinService.EditPinModelAsync(pin.ToPinModel());
         }
@@ -273,7 +275,7 @@ namespace GPSNote.ViewModels
         private async void UpdateCollectionAsync()
         {
             PinObs = new ObservableCollection<PinViewModel>((await _pinService.GetUserPinsAsync()).ToPinViewObservableCollection());
-            _ControlObs = PinObs;
+            _ControlObs = new ObservableCollection<PinViewModel>(PinObs);
             IsVisible = PinObs.Count() == 0;
         }
 

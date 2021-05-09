@@ -39,6 +39,17 @@ namespace GPSNote.Extensions
 
         public static PinViewModel ToPinViewModel(this PinModel pin)
         {
+            string image;
+
+            if (pin.IsEnabled)
+            {
+                image = "ic_like_blue.png";
+            }
+            else
+            {
+                image = "ic_like_gray.png";
+            }
+
             var result = new PinViewModel()
             {
                 Id = pin.Id,
@@ -47,7 +58,9 @@ namespace GPSNote.Extensions
                 IsEnabled = pin.IsEnabled,
                 Latitude = pin.Latitude,
                 Longitude = pin.Longitude,
-                Description = pin.Description
+                Description = pin.Description,
+                LatitudeLongtitude = pin.Latitude.ToString() + ", " + pin.Longitude.ToString(),
+                Image = image
             };
             return result;
         }
@@ -73,7 +86,8 @@ namespace GPSNote.Extensions
                 Label = parts[0].Replace("?", string.Empty),
                 Description = parts[1],
                 Latitude = Convert.ToDouble(parts[2]),
-                Longitude = Convert.ToDouble(parts[3])
+                Longitude = Convert.ToDouble(parts[3]),
+                LatitudeLongtitude = Convert.ToDouble(parts[2]).ToString() + ", " + Convert.ToDouble(parts[3]).ToString()
             };
             return pin;
         }

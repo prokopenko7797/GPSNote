@@ -116,9 +116,9 @@ namespace GPSNote.ViewModels
 
         public override void OnNavigatedTo(INavigationParameters parameters)
         {
-            if (parameters.GetValue<PinViewModel>(nameof(PinViewModel)) != null)
+            if (parameters.TryGetValue<PinViewModel>(nameof(PinViewModel), out var newPinVM))
             {
-                _pinViewModel = parameters.GetValue<PinViewModel>(nameof(PinViewModel));
+                _pinViewModel = newPinVM;
                 Name = _pinViewModel.Label;
                 Description = _pinViewModel.Description;
                 Latitude = _pinViewModel.Latitude.ToString();

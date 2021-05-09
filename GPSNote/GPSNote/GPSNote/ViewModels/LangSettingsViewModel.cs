@@ -12,11 +12,9 @@ namespace GPSNote.ViewModels
 {
     public class LangSettingsViewModel : ViewModelBase
     {
-        public LangSettingsViewModel(INavigationService navigationService, ILocalizationService localizationService, IPinService pinService)
-            : base(navigationService, localizationService)
-        {
-            
-        }
+        public LangSettingsViewModel(INavigationService navigationService, ILocalizationService localizationService)
+            : base(navigationService, localizationService) 
+        { }
 
         #region -- Public properties --
 
@@ -55,9 +53,6 @@ namespace GPSNote.ViewModels
 
         #region --Overrides--
 
-
-
-
         public override void Initialize(INavigationParameters parameters)
         {
             base.Initialize(parameters);
@@ -75,9 +70,7 @@ namespace GPSNote.ViewModels
                     break;
             }
 
-
         }
-
 
         protected override void OnPropertyChanged(PropertyChangedEventArgs args)
         {
@@ -96,23 +89,16 @@ namespace GPSNote.ViewModels
                     Resources.Lang = Constant.ResourcesLangConst.Ru;
                 }    
             }
-
-    
         }
-
-
 
         #endregion
 
         #region -- Private helpers --
 
-
-
         private async void OnBackButtonCommand()
         {
             await NavigationService.GoBackAsync();
         }
-
 
         #endregion
 

@@ -27,7 +27,6 @@ namespace GPSNote.ViewModels
 
         #region -- Public properties --
 
-
         private bool _IsChecked;
 
         public bool IsChecked
@@ -53,9 +52,6 @@ namespace GPSNote.ViewModels
 
         #region --Overrides--
 
-
-
-
         public override void Initialize(INavigationParameters parameters)
         {
             base.Initialize(parameters);
@@ -71,7 +67,6 @@ namespace GPSNote.ViewModels
                 IsChecked = true;
             }
         }
-
 
         protected override void OnPropertyChanged(PropertyChangedEventArgs args)
         {
@@ -92,24 +87,19 @@ namespace GPSNote.ViewModels
             }
         }
 
-
         #endregion
 
         #region -- Private helpers --
-
-
-        
+    
         private async void OnToLangSettingsCommand()
         {
             await NavigationService.NavigateAsync(nameof(LangSettings));
         }
 
-
         private async void OnBackButtonCommand()
         {
             await NavigationService.GoBackAsync();
         }
-
 
         #endregion
 

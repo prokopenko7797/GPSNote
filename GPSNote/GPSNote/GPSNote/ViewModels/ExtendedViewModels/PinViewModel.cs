@@ -54,11 +54,23 @@ namespace GPSNote.ViewModels.ExtendedViewModels
         private bool _IsEnabled;
         public bool IsEnabled
         {
-            get 
-            {
-                return _IsEnabled;
-            }
+            get { return _IsEnabled; }
             set { SetProperty(ref _IsEnabled, value); }
         }
+
+        private string _LatitudeLongtitude;
+        public string LatitudeLongtitude
+        {
+            get { return _LatitudeLongtitude; }
+            set { SetProperty(ref _LatitudeLongtitude, value); }
+        }
+
+        private string _Image;
+        public string Image
+        {
+            get { return _Image; }
+            set { SetProperty(ref _Image, value); }
+        }
+
     }
 }

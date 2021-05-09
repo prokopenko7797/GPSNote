@@ -28,16 +28,11 @@ namespace GPSNote.ViewModels
             IWeatherService weatherService, IPinShareService pinShareService)
             : base(navigationService, localizationService)
         {
-
             _weatherService = weatherService;
             _pinShareService = pinShareService;
-
-
         }
 
         #region -- Public properties --
-
-
 
         private string _PinLatLong;
         public string PinLatLong
@@ -157,7 +152,7 @@ namespace GPSNote.ViewModels
                 pinViewModel = newPinViewModel;
 
                 PinLabel = pinViewModel.Label;
-                PinLatLong = $"{pinViewModel.Latitude}, {pinViewModel.Longitude}";
+                PinLatLong = pinViewModel.LatitudeLongtitude;
                 PinDescription = pinViewModel.Description;
 
                 NetworkAccess networkAccess = Connectivity.NetworkAccess;
@@ -191,19 +186,12 @@ namespace GPSNote.ViewModels
                     Day2 = ld[2];
                     Day3 = ld[3];
                 }
-
             }
-
-
         }
-
-
 
         #endregion
 
         #region --Private helpers--
-
-
 
 
         private DateTime UnixTimeStampToDateTime(long unixTimeStamp)
@@ -225,10 +213,6 @@ namespace GPSNote.ViewModels
             await NavigationService.GoBackAsync();
         }
 
-
-
-
         #endregion
-
     }
 }

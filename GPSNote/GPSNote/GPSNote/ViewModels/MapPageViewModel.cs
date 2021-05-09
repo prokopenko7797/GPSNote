@@ -45,7 +45,6 @@ namespace GPSNote.ViewModels
             PinObs = new ObservableCollection<PinViewModel>();
             SelectedListItem = new PinViewModel();
 
-
             MoveTo = new MapSpan(new Position(Constant.RomeLatitude, Constant.RomeLongtitude), 1, 1);
 
             IsListViewVisible = false;
@@ -63,9 +62,6 @@ namespace GPSNote.ViewModels
             set { SetProperty(ref _IsPinTapped, value); }
         }
 
-
-
-        
 
         private bool _IsSelected;
 
@@ -207,17 +203,17 @@ namespace GPSNote.ViewModels
             base.Initialize(parameters);
 
             PinObs = new ObservableCollection<PinViewModel>((await _pinService.GetUserPinsAsync()).ToPinViewObservableCollection());
-            ControlObs = PinObs;
+            ControlObs = new ObservableCollection<PinViewModel>(PinObs);
         }
 
 
         public override async void OnNavigatedTo(INavigationParameters parameters)
         {
             base.OnNavigatedTo(parameters);
-            if (parameters.TryGetValue<ObservableCollection<PinViewModel>>(nameof(PinViewModel), out var newPinsValue))
+            if (parameters.TryGetValue<ObservableCollection<PinViewModel>>(nameof(ObservableCollection<PinViewModel>), out var newPinsValue))
             {
-                PinObs = newPinsValue;
-                ControlObs = newPinsValue;
+                PinObs = new ObservableCollection<PinViewModel>(newPinsValue);
+                ControlObs = new ObservableCollection<PinViewModel>(newPinsValue);
             }
 
             if (parameters.TryGetValue<PinViewModel>(nameof(SelectedItem), out var newSelectedItem))
@@ -352,7 +348,6 @@ namespace GPSNote.ViewModels
         {
             var pin = (Pin)sender;
 
-
             DisplayInfoPinViewModel(ControlObs.Where(pinView => pinView.Label.Contains(pin.Label)).First());
         }
 
@@ -362,9 +357,9 @@ namespace GPSNote.ViewModels
             IsPinTapped = true;
 
             NavigationParameters parameter = new NavigationParameters
-                {
-                    {nameof(PinViewModel), pinView }
-                };
+            {
+                {nameof(PinViewModel), pinView }
+            };
 
             await NavigationService.NavigateAsync(nameof(PinInfoPopup), parameter, true, true);
 

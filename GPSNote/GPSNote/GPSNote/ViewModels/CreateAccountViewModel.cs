@@ -148,8 +148,6 @@ namespace GPSNote.ViewModels
         #endregion
 
         #region -----Private Helpers-----
-
-
         private async void OnBackButtonCommand()
         {
             await NavigationService.GoBackAsync();
@@ -158,7 +156,6 @@ namespace GPSNote.ViewModels
         private bool CheckPass(string password, string confirmpassword)
         {
             bool result = true;
-
 
             if (!Validator.CheckInRange(password, Constant.MinPasswordLength, Constant.MaxPasswordLength) 
                 || !Validator.HasUpLowNum(password))

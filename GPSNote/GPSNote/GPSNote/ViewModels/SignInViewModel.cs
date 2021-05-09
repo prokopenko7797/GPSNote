@@ -107,7 +107,6 @@ namespace GPSNote.ViewModels
             {
                 Email = email;
             }
-
         }
 
         protected override void OnPropertyChanged(PropertyChangedEventArgs args)
@@ -137,25 +136,20 @@ namespace GPSNote.ViewModels
             }
         }
 
-
         public override void Initialize(INavigationParameters parameters)
         {
             base.Initialize(parameters);
             _permissionService.CheckPermissionsAsync(new LocationPermission());
         }
 
-
         #endregion
 
         #region -- Private helpers --
-
 
         private async void OnBackButtonCommand()
         {
             await NavigationService.GoBackAsync();
         }
-
-
 
         private async void ExecuteNavigateMainViewCommand()
         {
@@ -195,7 +189,6 @@ namespace GPSNote.ViewModels
 
                 PasswordError = Resources["WrongPass"];
             }
-
         }
 
         #endregion

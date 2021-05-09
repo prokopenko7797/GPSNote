@@ -96,7 +96,6 @@ namespace GPSNote.ViewModels
         #endregion
 
         #region -- Overrides --
-
         protected override void OnPropertyChanged(PropertyChangedEventArgs args)
         {
             base.OnPropertyChanged(args);
@@ -129,12 +128,10 @@ namespace GPSNote.ViewModels
 
         #region -----Private Helpers-----
 
-
         private async void OnBackButtonCommand()
         {
             await NavigationService.GoBackAsync();
         }
-
 
         private bool LoginCheck(string name, string email)
         {
@@ -154,15 +151,11 @@ namespace GPSNote.ViewModels
                 result = false;
             }
 
-
-
             if (!Validator.IsEmail(email))
             {
                 EmailError = Resources["EmailError"];
-
                 result = false;
             }
-
 
             return result;
         }
