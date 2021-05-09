@@ -216,7 +216,7 @@ namespace GPSNote.ViewModels
                 ControlObs = new ObservableCollection<PinViewModel>(newPinsValue);
             }
 
-            if (parameters.TryGetValue<PinViewModel>(nameof(SelectedItem), out var newSelectedItem))
+            if (parameters.TryGetValue<PinViewModel>(nameof(PinViewModel), out var newSelectedItem))
             {
                 if (newSelectedItem != null)
                 {
@@ -231,7 +231,7 @@ namespace GPSNote.ViewModels
                 if (newUpdate)
                 {
                     PinObs = new ObservableCollection<PinViewModel>((await _pinService.GetUserPinsAsync()).ToPinViewObservableCollection());
-                    ControlObs = PinObs;
+                    ControlObs = new ObservableCollection<PinViewModel>(PinObs);
                 }
             }
         }

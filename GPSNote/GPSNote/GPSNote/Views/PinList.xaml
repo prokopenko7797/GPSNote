@@ -40,78 +40,105 @@
                   ItemsSource="{Binding PinObs}" 
                   RowHeight="80" 
                   Margin="10"
-                  SelectedItem="{Binding SelectedItem}"
                   x:Name="ListView1"
                   BackgroundColor="Transparent"
                   SeparatorVisibility="None">
 
-
-
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <ViewCell.ContextActions>
-                            <MenuItem IconImageSource="ic_delete.png"
-                                      Command="{Binding Path=BindingContext.DeleteCommandTap, Source={x:Reference ListView1}}" 
-                                      CommandParameter="{Binding .}"
-                                      IsDestructive="True"/>
 
-                            <MenuItem IconImageSource="ic_edit.png"
-                                      Command="{Binding Path=BindingContext.EditCommandTap, Source={x:Reference ListView1}}" 
-                                      CommandParameter="{Binding .}" />
+                        <SwipeView>
 
-                        </ViewCell.ContextActions>
+                            <SwipeView.RightItems>
 
-                        <Grid Padding="16,0,16,0">
-                            <Grid ColumnDefinitions ="0.2*, 0.6*, 0.2*"
-                                  RowDefinitions="*,*">
+                                <SwipeItems>
 
-                                <Button Grid.RowSpan="2"
-                                        Grid.Column="0" 
-                                        Grid.Row="0" 
-                                        ImageSource="{Binding Image}" 
-                                        Margin="5"
-                                        CornerRadius="6"
-                                        BackgroundColor="{AppThemeBinding Light={StaticResource Light/Variant}, Dark={StaticResource Dark/Variant}}"
-                                        Command="{Binding Path=BindingContext.ImageCommandTap, Source={x:Reference ListView1}}"
-                                        CommandParameter="{Binding .}"
-                                        HeightRequest="50"
-                                        WidthRequest="50"
-                                        HorizontalOptions="Center"
-                                        VerticalOptions="Center"
-                                        Scale="1.2"/>
+                                    <SwipeItemView BackgroundColor="{AppThemeBinding Light={StaticResource Light/Primary},
+                                                   Dark={StaticResource Dark/Primary}}"
+                                                   WidthRequest="65"
+                                                   HeightRequest="80"
+                                                   Command="{Binding Path=BindingContext.EditCommandTap, Source={x:Reference ListView1}}" 
+                                                   CommandParameter="{Binding .}">
+
+                                        <Image Source="ic_edit.png"
+                                               HeightRequest="24"
+                                               WidthRequest="24"/>
+
+                                    </SwipeItemView>
+
+                                    <SwipeItemView BackgroundColor="{AppThemeBinding Light={StaticResource Light/Error},
+                                                   Dark={StaticResource Dark/Error}}"
+                                                   WidthRequest="65"
+                                                   HeightRequest="80"
+                                                   Command="{Binding Path=BindingContext.DeleteCommandTap, Source={x:Reference ListView1}}" 
+                                                   CommandParameter="{Binding .}">
+
+                                        <Image Source="ic_delete.png"
+                                               HeightRequest="24"
+                                               WidthRequest="24"/>
+
+                                    </SwipeItemView>
+
+                                </SwipeItems>
+
+                            </SwipeView.RightItems>
+
+                            <Grid Padding="16,0,16,0">
+                                <Grid ColumnDefinitions ="0.2*, 0.6*, 0.2*"
+                                      RowDefinitions="*,*">
+
+                                    <Button Grid.RowSpan="2"
+                                            Grid.Column="0" 
+                                            Grid.Row="0" 
+                                            ImageSource="{Binding Image}" 
+                                            Margin="5"
+                                            CornerRadius="6"
+                                            BackgroundColor="{AppThemeBinding Light={StaticResource Light/Variant}, Dark={StaticResource Dark/Variant}}"
+                                            Command="{Binding Path=BindingContext.ImageCommandTap, Source={x:Reference ListView1}}"
+                                            CommandParameter="{Binding .}"
+                                            HeightRequest="50"
+                                            WidthRequest="50"
+                                            HorizontalOptions="Center"
+                                            VerticalOptions="Center"
+                                            Scale="1.2"/>
 
 
-                                <!-- PinInfo -->
+                                    <!-- PinInfo -->
 
-                                <Label Grid.Column="1" 
-                                       Grid.Row="0" 
-                                       Text="{Binding Label}" 
-                                       VerticalOptions="Center"
-                                       FontFamily="Montserrat-Medium"
-                                       LineBreakMode="TailTruncation"/>
+                                    <Label Grid.Column="1" 
+                                           Grid.Row="0" 
+                                           Text="{Binding Label}" 
+                                           VerticalOptions="Center"
+                                           FontFamily="Montserrat-Medium"
+                                           LineBreakMode="TailTruncation"/>
 
 
-                                <Label Text="{Binding LatitudeLongtitude}"
+                                    <Label Text="{Binding LatitudeLongtitude}"
                                            Grid.Column="1" 
                                            Grid.Row="1"
                                            LineBreakMode="TailTruncation"
                                            TextColor="{AppThemeBinding Light={StaticResource System/DarkGray}, Dark={StaticResource System/LightGray}}"
                                            />
 
-                                <Image Grid.Column="2"
-                                       Source="ic_left_gray.png"
-                                       HorizontalOptions="Center"
-                                       VerticalOptions="Center"
-                                       Scale="1.2"
-                                       Grid.RowSpan="2" />
+                                    <ImageButton Grid.Column="2"
+                                                 Command="{Binding Path=BindingContext.ArrowTapCommand, Source={x:Reference ListView1}}"
+                                                 CommandParameter="{Binding .}"
+                                                 Source="ic_left_gray.png"
+                                                 HorizontalOptions="Center"
+                                                 VerticalOptions="Center"
+                                                 Scale="1.2"
+                                                 Grid.RowSpan="2" />
 
+                                </Grid>
+                                <BoxView  Color="{AppThemeBinding Light={StaticResource Light/Variant}, Dark={StaticResource Dark/Variant}}" 
+                                          HeightRequest="1" 
+                                          VerticalOptions="End"
+                                          HorizontalOptions="FillAndExpand"/>
                             </Grid>
-                            <BoxView  Color="{AppThemeBinding Light={StaticResource Light/Variant}, Dark={StaticResource Dark/Variant}}" 
-                                      HeightRequest="1" 
-                                      VerticalOptions="End"
-                                      HorizontalOptions="FillAndExpand"/>
-                        </Grid>
+
+                        </SwipeView>
+
 
                     </ViewCell>
                 </DataTemplate>

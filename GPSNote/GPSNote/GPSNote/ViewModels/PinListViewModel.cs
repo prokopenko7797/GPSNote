@@ -38,7 +38,6 @@ namespace GPSNote.ViewModels
             _pinService = pinService;
 
             PinObs = new ObservableCollection<PinViewModel>();
-            SelectedItem = new PinViewModel();
         }
 
         #region -- Public properties --
@@ -54,14 +53,6 @@ namespace GPSNote.ViewModels
         {
             get { return _IsVisible; }
             set { SetProperty(ref _IsVisible, value); }
-        }
-
-
-        private PinViewModel _SelectedItem;
-        public PinViewModel SelectedItem
-        {
-            get { return _SelectedItem; }
-            set { SetProperty(ref _SelectedItem, value); }
         }
 
 
@@ -103,6 +94,10 @@ namespace GPSNote.ViewModels
         private DelegateCommand<object> _LogOutCommand;
         public DelegateCommand<object> LogOutCommand =>
             _LogOutCommand ?? (_LogOutCommand = new DelegateCommand<object>(OnLogOutCommand));
+
+        private DelegateCommand<object> _ArrowTapCommand;
+        public DelegateCommand<object> ArrowTapCommand => 
+            _ArrowTapCommand ?? (_ArrowTapCommand = new DelegateCommand<object>(OnArrowTapCommandAsync));
 
 
         #endregion
@@ -149,12 +144,6 @@ namespace GPSNote.ViewModels
                 OnSearchCommand();
             }
 
-
-            if (args.PropertyName == nameof(SelectedItem))
-            {
-                OnItemTappedAsyncCommand();
-            }
-
         }
 
         #endregion
@@ -172,15 +161,19 @@ namespace GPSNote.ViewModels
             await NavigationService.NavigateAsync($"/{nameof(MainPage)}");
         }
 
-        private async void OnItemTappedAsyncCommand()
+        private async void OnArrowTapCommandAsync(object sender)
         {
+            PinViewModel pin = sender as PinViewModel;
 
-            var parameters = new NavigationParameters
+            if (pin != null)
             {
-                { nameof(SelectedItem), SelectedItem }
-            };
+                NavigationParameters parameters = new NavigationParameters
+                {
+                    { nameof(PinViewModel), pin }
+                };
 
-            await NavigationService.SelectTabAsync(nameof(MapPage), parameters);
+                await NavigationService.SelectTabAsync(nameof(MapPage), parameters);
+            } 
         }
 
 
