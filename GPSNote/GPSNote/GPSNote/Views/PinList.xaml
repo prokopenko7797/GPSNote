@@ -56,27 +56,23 @@
 
                                     <SwipeItemView BackgroundColor="{AppThemeBinding Light={StaticResource Light/Primary},
                                                    Dark={StaticResource Dark/Primary}}"
-                                                   WidthRequest="65"
-                                                   HeightRequest="80"
+                                                  
                                                    Command="{Binding Path=BindingContext.EditCommandTap, Source={x:Reference ListView1}}" 
-                                                   CommandParameter="{Binding .}">
+                                                   CommandParameter="{Binding .}"
+                                                   Padding="15,25,15,25">
 
-                                        <Image Source="ic_edit.png"
-                                               HeightRequest="24"
-                                               WidthRequest="24"/>
+                                        <Image Source="ic_edit.png"/>
 
                                     </SwipeItemView>
 
                                     <SwipeItemView BackgroundColor="{AppThemeBinding Light={StaticResource Light/Error},
                                                    Dark={StaticResource Dark/Error}}"
-                                                   WidthRequest="65"
-                                                   HeightRequest="80"
+                                                   
                                                    Command="{Binding Path=BindingContext.DeleteCommandTap, Source={x:Reference ListView1}}" 
-                                                   CommandParameter="{Binding .}">
+                                                   CommandParameter="{Binding .}"
+                                                   Padding="18,25,18,25">
 
-                                        <Image Source="ic_delete.png"
-                                               HeightRequest="24"
-                                               WidthRequest="24"/>
+                                        <Image Source="ic_delete.png"/>
 
                                     </SwipeItemView>
 
@@ -84,7 +80,7 @@
 
                             </SwipeView.RightItems>
 
-                            <Grid Padding="16,0,16,0">
+                            <Grid>
                                 <Grid ColumnDefinitions ="0.2*, 0.6*, 0.2*"
                                       RowDefinitions="*,*">
 
@@ -101,7 +97,8 @@
                                             WidthRequest="50"
                                             HorizontalOptions="Center"
                                             VerticalOptions="Center"
-                                            Scale="1.2"/>
+                                            Scale="1.2"
+                                            Padding="16,0,0,0"/>
 
 
                                     <!-- PinInfo -->
@@ -128,7 +125,8 @@
                                                  HorizontalOptions="Center"
                                                  VerticalOptions="Center"
                                                  Scale="1.2"
-                                                 Grid.RowSpan="2" />
+                                                 Grid.RowSpan="2" 
+                                                 Padding="0,0,0,16"/>
 
                                 </Grid>
                                 <BoxView  Color="{AppThemeBinding Light={StaticResource Light/Variant}, Dark={StaticResource Dark/Variant}}" 

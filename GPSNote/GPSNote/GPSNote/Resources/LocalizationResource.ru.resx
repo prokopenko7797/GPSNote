@@ -204,6 +204,9 @@
   <data name="Login" xml:space="preserve">
     <value>Логин</value>
   </data>
+  <data name="LogOut?" xml:space="preserve">
+    <value>Выйти с аккаунта?</value>
+  </data>
   <data name="LogVal1" xml:space="preserve">
     <value>Логин должен быть хотя бы</value>
   </data>

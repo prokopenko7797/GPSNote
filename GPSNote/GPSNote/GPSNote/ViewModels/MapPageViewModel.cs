@@ -22,6 +22,7 @@ using GPSNote.Servcies.PinShare;
 using GPSNote.Servcies.Permission;
 using Plugin.Permissions;
 using Plugin.Permissions.Abstractions;
+using Acr.UserDialogs;
 
 namespace GPSNote.ViewModels
 {
@@ -284,8 +285,18 @@ namespace GPSNote.ViewModels
 
         private async void OnLogOutCommand(object sender)
         {
-            _authorizationService.LogOut();
-            await NavigationService.NavigateAsync($"/{nameof(MainPage)}");
+            var result = await UserDialogs.Instance.ConfirmAsync(new ConfirmConfig
+            {
+                Message = Resources["LogOut?"],
+                OkText = Resources["Yes"],
+                CancelText = Resources["No"]
+            });
+
+            if (result)
+            {
+                _authorizationService.LogOut();
+                await NavigationService.NavigateAsync($"/{nameof(MainPage)}");
+            }
         }
 
         private void OnItemTappedCommand(object p)

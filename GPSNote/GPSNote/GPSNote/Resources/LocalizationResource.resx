@@ -204,6 +204,9 @@
   <data name="Login" xml:space="preserve">
     <value>Login</value>
   </data>
+  <data name="LogOut?" xml:space="preserve">
+    <value>Log out from account?</value>
+  </data>
   <data name="LogVal1" xml:space="preserve">
     <value>Login must be at least</value>
   </data>
