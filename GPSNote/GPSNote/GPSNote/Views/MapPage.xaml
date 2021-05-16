@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<views:BaseContentPage xmlns:views="clr-namespace:GPSNote.Views"  
+                       xmlns="http://xamarin.com/schemas/2014/forms"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                       xmlns:prism="http://prismlibrary.com"
+                       prism:ViewModelLocator.AutowireViewModel="True"
+                       x:Class="GPSNote.Views.MapPage"
+                       xmlns:custommap="clr-namespace:GPSNote.CustomControls"
+                       xmlns:customcontrols="clr-namespace:GPSNote.CustomControls"
+                       BackgroundColor="{AppThemeBinding Light={StaticResource System/White}, Dark={StaticResource System/Black}}"
+                       Title="{Binding Resources[MapTitle]}"
+                       NavigationPage.HasNavigationBar="False">
+
+    
+    <Grid RowDefinitions ="0.1*, 0.9*">
+
+        <!-- Navigation bar -->
+
+        <Grid Grid.Row="0">
+
+
+            <!-- Search -->
+
+            <customcontrols:SearchEntry TextEntry="{Binding SearchBarText}"
+                                        PlaceholderText="{Binding Resources[Search]}"
+                                        EntryBorderColor="{StaticResource TransparentColor}"
+                                        IsEntryFocused="{Binding IsListViewVisible}"
+                                        LeftIconTapCommand="{Binding SettingsNavigation}"
+                                        RightIconTapCommand="{Binding LogOutCommand}"/>
+
+
+        </Grid>
+
+        <!-- Map -->
+        
+        <custommap:CustomMap Grid.Row="1"   
+                             ObsPins ="{Binding ControlObs}" 
+                             MoveTo="{Binding MoveTo}">
+            
+            <custommap:CustomMap.Behaviors>
+                <prism:EventToCommandBehavior EventName="MapClicked"
+                                              Command="{Binding ItemTappedCommand}"
+                                              EventArgsParameterPath="Point" />
+                
+                <prism:EventToCommandBehavior EventName="PinClicked"
+                                              Command="{Binding PinClickedCommand}"
+                                              EventArgsParameterPath="Pin" />
+            </custommap:CustomMap.Behaviors>
+        </custommap:CustomMap>
+
+        <!-- Search List -->
+
+        <ListView Grid.Row="1" 
+                  ItemsSource="{Binding PinObs}" 
+                  RowHeight="60" 
+                  HorizontalOptions="Center" 
+                  VerticalOptions="Start"
+                  SelectedItem="{Binding SelectedListItem}"
+                  x:Name="ListView1"
+                  BackgroundColor="{AppThemeBinding Light={StaticResource System/White}, Dark={StaticResource System/Black}}"
+                  IsVisible="{Binding IsListViewVisible}"
+                  HeightRequest="{Binding HeightRequest}"
+                  SeparatorVisibility="None">
+
+
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid>
+                            <BoxView  Color="{AppThemeBinding Light={StaticResource Light/Variant}, Dark={StaticResource Dark/Variant}}" 
+                                      HeightRequest="1" 
+                                      VerticalOptions="End"
+                                      HorizontalOptions="FillAndExpand"/>
+                            
+                            <Grid ColumnDefinitions="0.1*, 0.9*"
+                                  Padding="0,8,0,8">
+                            
+                                <Button BackgroundColor="{StaticResource TransparentColor}"
+                                        ImageSource="ic_pin_gray.png"
+                                        Grid.Column="0"
+                                        Margin="16,0,0,0"
+                                        Scale="1.2"/>
+                            
+                                <Grid Grid.Column="1"
+                                      Margin="0,0,16,0">
+                                
+                                    <Label Grid.Row="0" 
+                                           Text="{Binding Label}" 
+                                           FontAttributes="Bold"
+                                           VerticalOptions="End"
+                                           LineBreakMode="TailTruncation"/>
+                                    
+                                    <Label Grid.Row="1" 
+                                           Text="{Binding Description}"
+                                           TextColor="{AppThemeBinding Light={StaticResource System/DarkGray}, Dark={StaticResource System/LightGray}}"
+                                           LineBreakMode="TailTruncation"
+                                           VerticalOptions="Start"
+                                           FontFamily="Montserrat-Light"/>
+                                           
+
+                                </Grid>
+
+                            
+                            </Grid>
+                            
+                        </Grid>
+
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+       
+    </Grid>
+
+</views:BaseContentPage>

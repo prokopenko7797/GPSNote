@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<prism:PrismApplication xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="http://prismlibrary.com"
+             x:Class="GPSNote.App">
+  <Application.Resources>
+
+        <Color x:Key="TransparentColor">#00ffffff</Color>
+        <!-- Light colors -->
+        <Color x:Key="Light/Primary">#596EFB</Color>
+        <Color x:Key="Light/Disacled">#C7CDF5</Color>
+        <Color x:Key="Light/HoverdeFocused">#273BC6</Color>
+        <Color x:Key="Light/Pressed">#192680</Color>
+        <Color x:Key="Light/Variant">#F1F3FD</Color>
+        <Color x:Key="Light/Error">#F24545</Color>
+        <Color x:Key="Light/Confirm">#F6EA62</Color>
+        <Color x:Key="Light/Success">#32D27F</Color>
+
+        <!-- Dark colors -->
+        <Color x:Key="Dark/Primary">#7485FB</Color>
+        <Color x:Key="Dark/Disacled">#3D4475</Color>
+        <Color x:Key="Dark/HoveredFocused">#5F73FA</Color>
+        <Color x:Key="Dark/Pressed">#3953FE</Color>
+        <Color x:Key="Dark/Variant">#33374E</Color>
+        <Color x:Key="Dark/Error">#FA545F</Color>
+        <Color x:Key="Dark/Confirm">#F8FD4D</Color>
+        <Color x:Key="Dark/Success">#00FFB1</Color>
+
+        <!-- Text & Background -->
+        <Color x:Key="System/White">#FEFEFD</Color>
+        <Color x:Key="System/LightGray">#D7DDE8</Color>
+        <Color x:Key="System/Gray">#858E9E</Color>
+        <Color x:Key="System/DarkGray">#3D4E61</Color>
+        <Color x:Key="System/Black">#1E242B</Color>
+
+        
+
+        
+
+
+        <!-- Named styles -->
+        <Style x:Key="blueButtonStyle"
+            TargetType="Button">
+            <Setter Property="BackgroundColor"
+                    Value="{AppThemeBinding Light={StaticResource Light/Primary}, Dark={StaticResource Dark/Primary}}" />
+            <Setter Property="TextColor"
+                    Value="{StaticResource System/White}" />
+ 
+        </Style>
+
+        <Style x:Key="errorLabelStyle"
+            TargetType="Label">
+            <Setter Property="TextColor"
+                    Value="{AppThemeBinding Light={StaticResource Light/Error}, Dark={StaticResource Dark/Error}}" />
+        </Style>
+
+
+        <!-- Target styles -->
+        <Style TargetType="NavigationPage">
+            <Setter Property="BarBackgroundColor"
+                    Value="{AppThemeBinding Light={StaticResource System/White}, Dark={StaticResource System/Black}}" />
+            <Setter Property="BarTextColor"
+                    Value="{AppThemeBinding Light={StaticResource System/Black}, Dark={StaticResource System/White}}" />
+        </Style>
+
+        <Style TargetType="Entry">
+            <Setter Property="TextColor"
+                    Value="{AppThemeBinding Light={StaticResource System/Black}, Dark={StaticResource System/White}}" />
+            <Setter Property="PlaceholderColor"
+                    Value="{StaticResource System/Gray}" />
+            <Setter Property="FontFamily"
+                    Value="Montserrat-Regular" />
+            <Setter Property="Keyboard"
+                    Value="Plain" />
+        </Style>
+
+
+        <Style TargetType="Label">
+            <Setter Property="TextColor"
+                    Value="{AppThemeBinding Light={StaticResource System/Black}, Dark={StaticResource System/White}}" />
+            <Setter Property="FontFamily"
+                    Value="Montserrat-Regular" />
+        </Style>
+
+        <Style TargetType="RadioButton">
+            <Setter Property="TextColor"
+                    Value="{AppThemeBinding Light={StaticResource System/Black}, Dark={StaticResource System/White}}" />
+            
+        </Style>
+
+        <Style TargetType="Button">
+            <Setter Property="TextTransform"
+                    Value="None" /> 
+            <Setter Property="FontFamily"
+                    Value="Montserrat-SemiBold" />
+            <Setter Property="CornerRadius"
+                    Value="1" />
+            <Setter Property="Font"
+                    Value="17"/>
+            <Setter Property="CharacterSpacing"
+                    Value="1"/>
+
+            
+            
+            
+        </Style>
+
+
+        <Style TargetType="Editor">
+            <Setter Property="TextColor"
+                    Value="{AppThemeBinding Light={StaticResource System/Black}, Dark={StaticResource System/White}}" />
+            <Setter Property="PlaceholderColor"
+                    Value="{StaticResource System/Gray}" />
+            <Setter Property="BackgroundColor"
+                    Value="{AppThemeBinding Light={StaticResource System/White}, Dark={StaticResource System/Black}}" />
+            <Setter Property="FontFamily"
+                    Value="Montserrat-Regular" />
+        </Style>
+
+
+        <Style TargetType="ImageButton">
+            <Setter Property="BackgroundColor"
+                    Value="{StaticResource TransparentColor}" />
+
+        </Style>
+
+
+
+
+
+    </Application.Resources>
+</prism:PrismApplication>

@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<views:BaseContentPage  xmlns:views="clr-namespace:GPSNote.Views" 
+                        xmlns="http://xamarin.com/schemas/2014/forms"
+                        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                        xmlns:prism="http://prismlibrary.com" 
+                        xmlns:custommap="clr-namespace:GPSNote.CustomControls"
+                        prism:ViewModelLocator.AutowireViewModel="True"
+                        x:Class="GPSNote.Views.AddEditPin"
+                        Title="{Binding Title}"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource System/White}, Dark={StaticResource System/Black}}"
+                        NavigationPage.HasNavigationBar="False">
+
+
+    <Grid RowDefinitions="0.1*, 0.9*">
+        
+        <!--Navigation bar-->
+        
+        <Grid Grid.Row="0"
+              ColumnDefinitions="0.1*, 0.8*, 0.1*"
+              Padding="16,0,16,0">
+
+            <Button ImageSource="ic_left_blue.png"
+                    Grid.Column="0"
+                    BackgroundColor="{StaticResource TransparentColor}"
+                    Command="{Binding BackButtonCommand}"
+                    HorizontalOptions="Start"
+                    VerticalOptions="Center"
+                    Scale="1.2"/>
+
+            <Label Grid.Column="1"
+                   Text="{Binding Title}" 
+                   FontSize="Large"
+                   FontFamily="Montserrat-SemiBold"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"/>
+
+
+            <Button ImageSource="ic_save.png"
+                    Grid.Column="2"
+                    BackgroundColor="{StaticResource TransparentColor}"
+                    Command="{Binding SaveToolBarCommand}"
+                    HorizontalOptions="End"
+                    VerticalOptions="Center"
+                    Scale="1.2"/>
+
+            <BoxView Grid.Row="0"
+                     Grid.ColumnSpan="3"
+                     Color="{AppThemeBinding Light={StaticResource Light/Variant}, Dark={StaticResource Dark/Variant}}" 
+                     HeightRequest="1" 
+                     VerticalOptions="End" 
+                     HorizontalOptions="Fill"/>
+                             
+        </Grid>
+
+
+        <Grid Grid.Row="1"
+              Grid.RowDefinitions="0.5*, 0.5*" >
+
+            <!-- Text input -->
+            
+            <StackLayout Grid.Row="0"
+                  Padding="16,0,16,16">
+
+                <Label Text="{Binding Resources[Label]}"  
+                       Padding="12,0,0,0"
+                       
+                       VerticalOptions="End"/>
+
+                <custommap:FramedEntry TextEntry="{Binding Name}"
+                                        PlaceholderText="{Binding Resources[EnterLabel]}"
+                                        
+                                        VerticalOptions="Start"/>
+
+                <Label Text="{Binding Resources[Description]}"
+                       Padding="12,0,0,0"
+                       VerticalOptions="End"/>
+
+                <custommap:FramedEntry TextEntry="{Binding Description}"
+                                        PlaceholderText="{Binding Resources[EnterDescription]}"
+                                        HeightRequest="58"/>
+
+                <Label Text="{Binding Resources[Coordinates]}"
+                       Padding="12,0,0,0"
+                       VerticalOptions="End"/>
+
+
+                <Grid>
+
+                    <custommap:FramedEntry TextEntry="{Binding Latitude}"
+                                           PlaceholderText="{Binding Resources[Latitude]}"
+                                           Grid.Column="0"/>
+
+                    <custommap:FramedEntry TextEntry="{Binding Longtitude}"
+                                           PlaceholderText="{Binding Resources[Longtitude]}"
+                                           Grid.Column="1"/>
+
+                </Grid>
+
+            </StackLayout>
+
+
+            <!-- Map input -->
+
+            <custommap:CustomMap  Grid.Row="1"  
+                                  ObsPins ="{Binding ObsPins}">
+                <custommap:CustomMap.Behaviors>
+                    <prism:EventToCommandBehavior EventName="MapClicked"
+                                                  Command="{Binding ItemTappedCommand}"
+                                                  EventArgsParameterPath="Point" />
+                </custommap:CustomMap.Behaviors>
+            </custommap:CustomMap>
+
+
+        </Grid>
+    </Grid>
+</views:BaseContentPage>

@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<views:BaseContentPage  xmlns:views="clr-namespace:GPSNote.Views"
+                        xmlns="http://xamarin.com/schemas/2014/forms"
+                        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                        xmlns:prism="http://prismlibrary.com"
+                        prism:ViewModelLocator.AutowireViewModel="True"
+                        x:Class="GPSNote.Views.LangSettings" 
+                        BackgroundColor="{AppThemeBinding Light={StaticResource System/White}, Dark={StaticResource System/Black}}"
+                        Title="{Binding Resources[LangTitle]}"
+                        NavigationPage.HasNavigationBar="False">
+
+    <Grid RowDefinitions="0.1*,0.9*"
+          BackgroundColor="{StaticResource TransparentColor}">
+
+
+        <!-- Navigation bar -->
+
+        <Grid Grid.Row="0" 
+              ColumnDefinitions="0.1*, 0.8*, 0.1*"
+              Padding="16,0,16,0">
+
+            <Button ImageSource="ic_left_blue.png"
+                    Grid.Column="0"
+                    BackgroundColor="{StaticResource TransparentColor}"
+                    Command="{Binding BackButtonCommand}"
+                    HorizontalOptions="Start"
+                    VerticalOptions="Center"
+                    Scale="1.2"/>
+
+            <Label Grid.Column="1"
+                   Text="{Binding Resources[SettingsTitle]}" 
+                   FontSize="Large"
+                   FontFamily="Montserrat-SemiBold"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"/>
+
+
+
+            <BoxView Grid.Row="0"
+                     Grid.ColumnSpan="3"
+                     Color="{AppThemeBinding Light={StaticResource Light/Variant}, Dark={StaticResource Dark/Variant}}" 
+                     HeightRequest="1" 
+                     VerticalOptions="End" 
+                     HorizontalOptions="Fill"/>
+
+        </Grid>
+
+        <!-- Language Stack -->
+        
+        <StackLayout Grid.Row="1"
+                     BackgroundColor="{StaticResource TransparentColor}">
+            <!--En-->
+
+            <Grid ColumnDefinitions="0.1*, 0.9*"
+                  Margin="16, 16, 16, 16">
+
+
+                <RadioButton Value="en-US" 
+                             GroupName="Lang"
+                             IsChecked="{Binding IsCheckedEn}"
+                             Grid.Column="0"
+                             VerticalOptions="CenterAndExpand"
+                             HorizontalOptions="CenterAndExpand"/>
+
+                <Label Text="English" 
+                       Grid.Column="1"
+                       FontSize="Medium"
+                       VerticalOptions="Center"
+                       HorizontalOptions="StartAndExpand"/>
+
+            </Grid>
+
+
+
+            <BoxView Color="{AppThemeBinding Light={StaticResource Light/Variant}, Dark={StaticResource Dark/Variant}}" 
+                     HeightRequest="1" 
+                     VerticalOptions="End" 
+                     HorizontalOptions="Fill"/>
+
+            <!--Ru-->
+            
+            <Grid ColumnDefinitions="0.1*, 0.9*"
+                  Margin="16, 16, 16, 16">
+
+                <RadioButton Value="ru" 
+                             GroupName="Lang"
+                             IsChecked="{Binding IsCheckedRu}"
+                             Grid.Column="0"
+                             VerticalOptions="CenterAndExpand"
+                             HorizontalOptions="CenterAndExpand"/>
+
+                <Label Text="Русский" 
+                       Grid.Column="1"
+                       FontSize="Medium"
+                       VerticalOptions="Center"
+                       HorizontalOptions="StartAndExpand"/>
+
+
+            </Grid>
+
+
+
+            <BoxView Color="{AppThemeBinding Light={StaticResource Light/Variant}, Dark={StaticResource Dark/Variant}}" 
+                     HeightRequest="1" 
+                     VerticalOptions="End" 
+                     HorizontalOptions="Fill"/>
+
+        
+
+        </StackLayout>
+
+    </Grid>
+
+
+
+</views:BaseContentPage>

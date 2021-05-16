@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<views:BaseContentPage xmlns:views="clr-namespace:GPSNote.Views" 
+                       xmlns="http://xamarin.com/schemas/2014/forms"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                       xmlns:prism="http://prismlibrary.com"
+                       prism:ViewModelLocator.AutowireViewModel="True"
+                       x:Class="GPSNote.Views.MainPage"
+                       BackgroundColor="{AppThemeBinding Light={StaticResource System/White}, Dark={StaticResource System/Black}}"
+                       NavigationPage.HasNavigationBar="False">
+
+    <Grid RowDefinitions="0.7*, 0.3*">
+
+        <!-- Main image&Label -->
+        
+        <Grid RowDefinitions="0.7*, 0.3*"
+              RowSpacing="20"
+              Padding="20">
+
+            <Image Source="pic_enter_page.png"
+                   VerticalOptions="EndAndExpand"
+                   HorizontalOptions="Fill"
+                   Scale="1.2"/>
+
+            <Label Grid.Row="1"
+               Text="{Binding Resources[MapNotepad]}"
+               FontSize="22"
+               HorizontalOptions="Center"
+               VerticalOptions="Start"
+               FontFamily="Montserrat-Bold"
+               CharacterSpacing="1"
+               TextColor="{StaticResource Light/Primary}"/>
+
+            
+        </Grid>
+
+        <StackLayout Grid.Row="1"
+                     VerticalOptions="End"
+                     Padding="20"
+                     Spacing="20">
+
+            <!-- Log in button -->
+            
+            <Button Text="{Binding Resources[Log in]}" 
+                    Font="17"
+                    CharacterSpacing="1"
+                    FontFamily="Montserrat-SemiBold"
+                    Style="{StaticResource blueButtonStyle}"
+                    Command="{Binding LogInCommand}"/>
+
+            <!-- Sign in button -->
+            
+            <Button Text="{Binding Resources[CreateAccount]}" 
+                    BackgroundColor="{StaticResource TransparentColor}"
+                    Command="{Binding CreateAccountCommand}"
+                    BorderColor="{AppThemeBinding Light={StaticResource Light/Primary}, Dark={StaticResource Dark/Primary}}"
+                    BorderWidth="1"
+                    TextColor="{AppThemeBinding Light={StaticResource Light/Primary}, Dark={StaticResource Dark/Primary}}"
+                    Font="17"
+                    FontFamily="Montserrat-SemiBold"
+                    CharacterSpacing="1"/>
+
+        </StackLayout>
+    </Grid>
+
+</views:BaseContentPage>

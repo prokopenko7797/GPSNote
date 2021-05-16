@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<views:BaseContentPage xmlns:views="clr-namespace:GPSNote.Views"  xmlns="http://xamarin.com/schemas/2014/forms"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                       xmlns:prism="http://prismlibrary.com"
+                       prism:ViewModelLocator.AutowireViewModel="True"
+                       x:Class="GPSNote.Views.Settings"
+                       BackgroundColor="{AppThemeBinding Light={StaticResource System/White}, Dark={StaticResource System/Black}}"
+                       Title="{Binding Resources[SettingsTitle]}"
+                       NavigationPage.HasNavigationBar="False">
+
+
+    <Grid RowDefinitions="0.1*,0.9*"
+          BackgroundColor="{StaticResource TransparentColor}">
+
+        <!-- NavigationBar -->
+        
+        <Grid Grid.Row="0" 
+              ColumnDefinitions="0.1*, 0.8*, 0.1*"
+              Padding="16,0,16,0">
+
+            <Button ImageSource="ic_left_blue.png"
+                    Grid.Column="0"
+                    BackgroundColor="{StaticResource TransparentColor}"
+                    Command="{Binding BackButtonCommand}"
+                    HorizontalOptions="Start"
+                    VerticalOptions="Center"
+                    Scale="1.2"/>
+
+            <Label Grid.Column="1"
+                   Text="{Binding Resources[SettingsTitle]}" 
+                   FontSize="Large"
+                   FontFamily="Montserrat-SemiBold"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"/>
+
+
+            <BoxView Grid.Row="0"
+                     Grid.ColumnSpan="3"
+                     Color="{AppThemeBinding Light={StaticResource Light/Variant}, Dark={StaticResource Dark/Variant}}" 
+                     HeightRequest="1" 
+                     VerticalOptions="End" 
+                     HorizontalOptions="Fill"/>
+
+        </Grid>
+
+
+
+        <StackLayout Grid.Row="1"
+                     BackgroundColor="{StaticResource TransparentColor}">
+
+
+            <!-- Select Theme -->
+
+            <Grid ColumnDefinitions="0.8*, 0.2*"
+                  Margin="16, 16, 16, 16">
+
+                <Label Text="{Binding Resources[DarkTheme]}" 
+                       Grid.Column="0"
+                       FontSize="Medium"
+                       VerticalOptions="Center"
+                       HorizontalOptions="StartAndExpand"/>
+                
+                <Switch IsToggled="{Binding IsChecked}" 
+                        Grid.Column="1"
+                        VerticalOptions="CenterAndExpand"
+                        HorizontalOptions="CenterAndExpand" />
+
+            </Grid>
+
+            <BoxView Color="{AppThemeBinding Light={StaticResource Light/Variant}, Dark={StaticResource Dark/Variant}}" 
+                     HeightRequest="1" 
+                     VerticalOptions="End" 
+                     HorizontalOptions="Fill"/>
+
+
+
+            <!-- Lang Navig -->
+
+            <Grid ColumnDefinitions="0.8*, 0.2*"
+                  Margin="16, 16, 16, 16">
+
+                <Label Grid.Column="0"
+                       Text="{Binding Resources[SelectLang]}"
+                       FontSize="Medium"
+                       VerticalOptions="Center"
+                       HorizontalOptions="StartAndExpand"/>
+
+                <ImageButton Grid.Column="1"
+                             Source="ic_left_gray.png"
+                             VerticalOptions="CenterAndExpand"
+                             HorizontalOptions="CenterAndExpand"
+                             Command="{Binding ToLangSettings}">
+     
+                </ImageButton>
+
+            </Grid>
+
+            <BoxView Color="{AppThemeBinding Light={StaticResource Light/Variant}, Dark={StaticResource Dark/Variant}}" 
+                     HeightRequest="1" 
+                     VerticalOptions="End" 
+                     HorizontalOptions="Fill"/>
+
+        </StackLayout>
+
+    </Grid>
+
+</views:BaseContentPage>
